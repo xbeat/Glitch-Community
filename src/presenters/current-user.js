@@ -4,12 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import {
-  configureScope,
-  captureException,
-  captureMessage,
-  addBreadcrumb,
-} from '../utils/sentry';
+import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import useLocalStorage from './includes/local-storage';
 
 const Context = React.createContext();
@@ -48,7 +43,7 @@ function identifyUser(user) {
   }
   try {
     if (analytics && analytics.identify && user && user.login) {
-      const emailObj = Array.isArray(user.emails) && user.emails.find(email => email.primary);
+      const emailObj = Array.isArray(user.emails) && user.emails.find((email) => email.primary);
       const email = emailObj && emailObj.email;
       analytics.identify(
         user.id,
@@ -120,10 +115,7 @@ class CurrentUserManager extends React.Component {
       identifyUser(cachedUser);
     }
 
-    if (
-      !usersMatch(cachedUser, sharedUser)
-      || !usersMatch(sharedUser, prev.sharedUser)
-    ) {
+    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       // delay loading a moment so both items from storage have a chance to update
       setTimeout(() => this.load(), 1);
     }
@@ -163,10 +155,7 @@ class CurrentUserManager extends React.Component {
       }
       return data;
     } catch (error) {
-      if (
-        error.response
-        && (error.response.status === 401 || error.response.status === 404)
-      ) {
+      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
         // 401 means our token is bad, 404 means the user doesn't exist
         return 'error';
       }
@@ -252,18 +241,14 @@ class CurrentUserManager extends React.Component {
   }
 
   render() {
-    const {
-      children,
-      sharedUser,
-      cachedUser,
-    } = this.props;
+    const { children, sharedUser, cachedUser } = this.props;
     return children({
       api: this.api(),
       currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
-      login: user => this.login(user),
-      update: changes => this.update(changes),
+      login: (user) => this.login(user),
+      update: (changes) => this.update(changes),
       clear: () => this.logout(),
     });
   }
@@ -288,11 +273,7 @@ export const CurrentUserProvider = ({ children }) => {
   const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   return (
     <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
-      {({ api, ...props }) => (
-        <Context.Provider value={props}>
-          {children(api)}
-        </Context.Provider>
-      )}
+      {({ api, ...props }) => <Context.Provider value={props}>{children(api)}</Context.Provider>}
     </CurrentUserManager>
   );
 };
@@ -300,10 +281,8 @@ CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const CurrentUserConsumer = props => (
-  <Context.Consumer>
-    {({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}
-  </Context.Consumer>
+export const CurrentUserConsumer = (props) => (
+  <Context.Consumer>{({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}</Context.Consumer>
 );
 CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
@@ -316,7 +295,7 @@ export function normalizeUser(user, currentUser) {
 }
 
 export function normalizeUsers(users, currentUser) {
-  return users.map(user => normalizeUser(user, currentUser));
+  return users.map((user) => normalizeUser(user, currentUser));
 }
 
 export function normalizeProject({ users, ...project }, currentUser) {
@@ -324,5 +303,5 @@ export function normalizeProject({ users, ...project }, currentUser) {
 }
 
 export function normalizeProjects(projects, currentUser) {
-  return projects.map(project => normalizeProject(project, currentUser));
+  return projects.map((project) => normalizeProject(project, currentUser));
 }

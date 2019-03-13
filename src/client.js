@@ -9,7 +9,7 @@ import relativeTimePlugin from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { render } from 'react-dom';
 import convertPlugin from '../shared/dayjs-convert';
-import { configureScope } from './utils/sentry';
+import { captureException, configureScope } from './utils/sentry';
 import App from './app';
 
 dayjs.extend(relativeTimePlugin);
@@ -17,7 +17,8 @@ dayjs.extend(convertPlugin);
 
 // This function is used in index.ejs to set up the app
 window.bootstrap = () => {
-  if (location.hash.startsWith('#!/')) { // eslint-disable-line no-restricted-globals
+  if (location.hash.startsWith('#!/')) {
+    // eslint-disable-line no-restricted-globals
     window.location.replace(EDITOR_URL + window.location.hash);
     return;
   }
@@ -34,3 +35,12 @@ window.bootstrap = () => {
   document.body.appendChild(dom);
   render(<App />, dom);
 };
+
+// Make sure react exists because that's an issue that is happening
+try {
+  if (!React.Component) {
+    throw new Error('React.Component is not defined?');
+  }
+} catch (error) {
+  captureException(error);
+}

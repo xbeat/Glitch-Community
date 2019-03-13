@@ -26,15 +26,8 @@ class AddCollectionProject extends React.Component {
       initialProjects = this.props.currentUser.projects;
     }
     return (
-      <PopoverWithButton
-        buttonClass="add-project"
-        buttonText="Add Project"
-        passToggleToPop
-      >
-        <AddCollectionProjectPop
-          initialProjects={initialProjects.slice(0, 20)}
-          {...this.props}
-        />
+      <PopoverWithButton buttonClass="add-project" buttonText="Add Project" passToggleToPop>
+        <AddCollectionProjectPop initialProjects={initialProjects.slice(0, 20)} {...this.props} />
       </PopoverWithButton>
     );
   }

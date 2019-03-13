@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 
-import Markdown from './markdown';
+import Markdown from '../../components/text/markdown';
 import { OptimisticValue } from './field-helpers';
 
 class EditableDescriptionImpl extends React.Component {
@@ -32,7 +32,7 @@ class EditableDescriptionImpl extends React.Component {
       <TextArea
         className="description content-editable"
         value={description}
-        onChange={evt => this.props.update(evt.target.value)}
+        onChange={(evt) => this.props.update(evt.target.value)}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         placeholder={placeholder}
@@ -49,9 +49,7 @@ class EditableDescriptionImpl extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        <Markdown>
-          {description}
-        </Markdown>
+        <Markdown>{description}</Markdown>
       </p>
     );
   }
@@ -69,11 +67,7 @@ EditableDescriptionImpl.defaultProps = {
 const EditableDescription = ({ description, placeholder, update }) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
-      <EditableDescriptionImpl
-        description={optimisticValue}
-        update={optimisticUpdate}
-        placeholder={placeholder}
-      />
+      <EditableDescriptionImpl description={optimisticValue} update={optimisticUpdate} placeholder={placeholder} />
     )}
   </OptimisticValue>
 );
@@ -87,31 +81,22 @@ EditableDescription.defaultProps = {
   placeholder: '',
 };
 
-export const StaticDescription = ({ description }) => (description ? (
-  <p className="description read-only">
-    <Markdown>
-      {description}
-    </Markdown>
-  </p>
-) : null);
+export const StaticDescription = ({ description }) =>
+  description ? (
+    <p className="description read-only">
+      <Markdown>{description}</Markdown>
+    </p>
+  ) : null;
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({
-  authorized,
-  description,
-  placeholder,
-  update,
-}) => (authorized ? (
-  <EditableDescription
-    description={description}
-    update={update}
-    placeholder={placeholder}
-  />
-) : (
-  <StaticDescription description={description} />
-));
+export const AuthDescription = ({ authorized, description, placeholder, update }) =>
+  authorized ? (
+    <EditableDescription description={description} update={update} placeholder={placeholder} />
+  ) : (
+    <StaticDescription description={description} />
+  );
 AuthDescription.propTypes = {
   authorized: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,

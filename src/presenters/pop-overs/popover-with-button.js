@@ -2,21 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container';
 
-const PopoverWithButton = props => (
+const PopoverWithButton = (props) => (
   <PopoverContainer>
     {({ visible, togglePopover }) => {
       let childrenToShow = props.children;
       if (props.passToggleToPop) {
-        childrenToShow = React.Children.map(props.children, child => React.cloneElement(child, { togglePopover }));
+        childrenToShow = React.Children.map(props.children, (child) => React.cloneElement(child, { togglePopover }));
       }
       return (
         <div className={`button-wrap ${props.containerClass}`}>
-          <button
-            className={props.buttonClass}
-            data-track={props.dataTrack}
-            onClick={togglePopover}
-            type="button"
-          >
+          <button className={props.buttonClass} data-track={props.dataTrack} onClick={togglePopover} type="button">
             {props.buttonText}
           </button>
           {visible && childrenToShow}
