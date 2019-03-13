@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
@@ -9,6 +10,13 @@ const constants = require('./constants');
 
 module.exports = function(external) {
   const app = express.Router();
+  
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'fast.wistia.com', 'ajax.googleapis.com', 'glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com'],
+    }
+  }));
 
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
