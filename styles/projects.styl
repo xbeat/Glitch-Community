@@ -65,6 +65,8 @@ project-avatar-size = 42px
     display: grid
     grid-template-columns: 1fr 1fr 1fr
     grid-template-rows: auto
+    @media (max-width: mediumViewport)
+      grid-template-columns: 1fr
     
     > li
       float: left
@@ -74,7 +76,6 @@ project-avatar-size = 42px
       display: grid
       align-content: end
       min-width: calc(33.3% - 10px)
-      // min-height: 275px 
       
       @media (max-width: mediumViewport)
         width: 100%
