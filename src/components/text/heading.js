@@ -5,6 +5,9 @@ import styles from './heading.styl';
 
 const cx = classNames.bind(styles);
 
+export const TAG_NAMES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+export const SIZES = ['small']; // I'm into sizes being different from tagNames after I took a nap, maybe?
+
 /**
  * Heading Component
  */
@@ -17,7 +20,7 @@ const Heading = ({ children, length }) => {
     dangerZone: type === 'dangerZone',
     hover,
   });
-  return <span className={className} />;
+  return <TAG_NAMES className={className}> /;
 };
 
 Heading.propTypes = {
