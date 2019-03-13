@@ -11,10 +11,15 @@ const constants = require('./constants');
 module.exports = function(external) {
   const app = express.Router();
   
+  // questionable
+  // *.litix.i, tracking via wistia
+  
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'fast.wistia.com', 'ajax.googleapis.com', 'glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'fast.wistia.com', 'ajax.googleapis.com', 'glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com'],
+      styleSrc: ["'self'", 'cdn.glitch.com', 'cdn.gomix.com'],
+      imgSrc: ["'self'", 'cdn.glitch.com'],
     }
   }));
 
