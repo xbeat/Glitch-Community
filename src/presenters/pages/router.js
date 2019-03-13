@@ -161,7 +161,7 @@ const Router = ({ api }) => (
         <Route key={route} path={route} render={({ location }) => <ExternalPageReloader key={location.key} />} />
       ))}
 
-      <Route render={({ location }) => <NotFoundPage api={api} key={location.key} />} />
+      <Route render={({ location }) => <NotFoundPage api={api} key={location.key} status={404} />} />
     </Switch>
   </>
 );
