@@ -19,6 +19,7 @@ import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
 import ProjectsLoader from '../projects-loader';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Heading from '../components/text';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({ login }));

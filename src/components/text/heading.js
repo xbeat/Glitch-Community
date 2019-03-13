@@ -30,7 +30,7 @@ const Heading = ({ children, tagName, className }) => {
     [className]: className !== undefined,
   });
 
-  return <tagName className={className}>{children}</tagName>;
+  return <tagName className={classNames}>{children}</tagName>;
 };
 
 Heading.propTypes = {
