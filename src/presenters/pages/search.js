@@ -20,23 +20,23 @@ const Filters = ({
   setFilter, activeFilter, teamsCount, usersCount, projectsCount,
 }) => (
   <div className="search-filters">
-    <Button size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={() => setFilter('all')}>
+    <Button size="small" type={activeFilter !== 'all' ? 'tertiary' : null} onClick={() => setFilter('all')}>
       All
     </Button>
     {teamsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'teams' && 'tertiary'} onClick={() => setFilter('teams')}>
+      <Button size="small" type={activeFilter !== 'teams' ? 'tertiary' : null} onClick={() => setFilter('teams')}>
          Teams ({teamsCount})
       </Button>
     )
     }
     {usersCount > 0 && (
-      <Button size="small" type={activeFilter !== 'users' && 'tertiary'} onClick={() => setFilter('users')}>
+      <Button size="small" type={activeFilter !== 'users' ? 'tertiary' : null} onClick={() => setFilter('users')}>
          Users ({usersCount})
       </Button>
     )
     }
     {projectsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'projects' && 'tertiary'} onClick={() => setFilter('projects')}>
+      <Button size="small" type={activeFilter !== 'projects' ? 'tertiary' : null} onClick={() => setFilter('projects')}>
          Projects ({projectsCount})
       </Button>
     )
@@ -189,6 +189,11 @@ class SearchResults extends React.Component {
           usersCount={users ? users.length : 0}
           projectsCount={projects ? projects.length : 0}
         />
+        { this.state.activeFilter === 'all' && 
+          <h1>
+            {showResults.length
+          </h1>
+        }
         { showTeams && <TeamResults teams={teams} />}
         { showUsers && <UserResults users={users} />}
         { showProjects && (
