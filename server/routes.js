@@ -96,18 +96,7 @@ module.exports = function(external) {
   }
 
   const {CDN_URL} = constants.current;
-  
-  
-  // set up a route to redirect http to https
-  app.get('*', function(req, res, next) {
-    console.log(req.headers);
-    if (!req.secure) {
-      console.log('insecure')
-      res.redirect(301, 'https://' + req.headers.host + req.url);
-    } else {
-      return next();
-    }
-  });
+
 
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
