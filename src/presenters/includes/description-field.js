@@ -28,6 +28,15 @@ class EditableDescriptionImpl extends React.Component {
     this.setState({ focused: false });
   }
 
+      //   <p
+      //   className="description content-editable"
+      //   placeholder={placeholder}
+      //   aria-label={placeholder}
+      //   role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+      //   tabIndex={0}
+      //   onFocus={this.onFocus}
+      //   onBlur={this.onBlur}
+      // >
   render() {
     const { description, placeholder, maxLength } = this.props;
     return this.state.focused ? (
@@ -44,16 +53,11 @@ class EditableDescriptionImpl extends React.Component {
       />
     ) : (
       <p
-        className="description content-editable"
-        placeholder={placeholder}
-        aria-label={placeholder}
-        role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0}
         onFocus={this.onFocus}
-        onBlur={this.onBlur}
       >
-        <Markdown>{description}</Markdown>
-      </p>
+        hereee?
+     </p>
     );
   }
 }
