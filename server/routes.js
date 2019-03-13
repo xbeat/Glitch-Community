@@ -1,7 +1,7 @@
-const express = require("express");
-const fs = require("fs");
-const util = require("util");
-const dayjs = require("dayjs");
+const express = require('express');
+const fs = require('fs');
+const util = require('util');
+const dayjs = require('dayjs');
 
 const { getProject, getTeam, getUser, getZine } = require('./api');
 const initWebpack = require('./webpack');
@@ -20,13 +20,12 @@ module.exports = function(external) {
   initWebpack(app);
   const buildTime = dayjs();
 
-  const ms = dayjs.convert(7, "days", "miliseconds");
-  app.use(express.static("public", { index: false }));
-  app.use(express.static("build", { index: false, maxAge: ms }));
+  const ms = dayjs.convert(7, 'days', 'miliseconds');
+  app.use(express.static('public', { index: false }));
+  app.use(express.static('build', { index: false, maxAge: ms }));
 
   const readFilePromise = util.promisify(fs.readFile);
-  const imageDefault =
-    'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+  const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   async function render(res, title, description, image = imageDefault) {
     let built = true;
 
@@ -50,9 +49,7 @@ module.exports = function(external) {
         }
       });
     } catch (error) {
-      console.error(
-        "Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.",
-      );
+      console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
       built = false;
     }
 
@@ -94,12 +91,7 @@ module.exports = function(external) {
     }
     const user = await getUser(name);
     if (user) {
-      await render(
-        res,
-        user.name || `@${user.login}`,
-        user.description,
-        user.avatarThumbnailUrl,
-      );
+      await render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
