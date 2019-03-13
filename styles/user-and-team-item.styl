@@ -11,53 +11,38 @@
     display: block
     margin-right: 10px
     margin-bottom: 1rem
-    width: calc(33.3% - 10px)
     position: relative
+    width: calc(33.3% - 10px)
     @media (max-width: largeViewport)
       width: calc(50% - 10px)
     @media (max-width: 592px)
       width: 100%
-    &:last-child
-      margin-right: 0
-      margin-bottom: 0
 
   a
     color: primary
     &:hover
-      text-decoration: none
-
-  // .team-users
-  //   display: none
+      text-decoration: none 
       
   .item
     border-radius: 5px
-    padding: 12px
-
-    // .overflow-mask
-    //   position: absolute
-    //   width: 100%
-    //   bottom: 0
-    //   left: 0
-    //   height: 12px
-    //   opacity: .6
-    //   border-bottom-left-radius: 5px
-    //   border-bottom-right-radius: 5px
-    //   background-color: section-line
-
+  .cover
+    width: 100%
+    height: 10px
+    border-top-right-radius: 5px
+    border-top-left-radius: 5px
+    
   .content
+    margin-top: 0
     padding: 12px
     background-color: section-line
-    border-radius: 5px
-    margin-top: 0
-
-    .users
-      display: block
-      margin-top: 1rem
-      margin-bottom: 0
+    border-bottom-right-radius: 5px
+    border-bottom-left-radius: 5px    
+    overflow: hidden
 
   .avatar
     display: inline-block
     width: 30%
+    max-width: 75px
     height: auto
     margin-right: 4%
     overflow: hidden
@@ -65,12 +50,18 @@
   .information
     display: inline-block
     vertical-align: top
-    width: 65%
+    width: 64%
+    
+    .button
+      margin-bottom: 0.3em
+      max-width: 100%
+      overflow-wrap: break-word
 
     .name
       font-size: 14px
       margin-top: 0
-      margin-bottom: 0.8em
+      max-width: 100%
+      overflow-wrap: break-word
 
     p
       margin-top: 0.8em
@@ -83,16 +74,31 @@
         width: 18px
         height: 18px
 
-    .description
-      // pointer-events: none
-      a
-        color: link
-        &:hover
-          text-decoration: underline
-
+  .description
+    font-size: 14px
+    margin-top: 0
+    margin-bottom: 0
+    overflow: hidden
+    a
+      color: link
+      &:hover
+        text-decoration: underline
+  .users
+    display: block
+    margin-top: 0rem
+    margin-bottom: 0
+    padding-top: 0.25rem
+    max-height: 55px
+    
+    img
+      width: 25px 
+      height: 25px 
+      
   .verified
     vertical-align: -5px
 
 .users-container
+  .name
+    color: tertiary
   .avatar
     border-radius: 50%

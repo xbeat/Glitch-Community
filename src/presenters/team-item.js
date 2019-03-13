@@ -14,7 +14,8 @@ export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });
   const teamThanksCount = team.users.reduce((total, { thanksCount }) => total + thanksCount, 0);
   return (
-    <WrappingLink href={getLink(team)} className="item button-area" style={style}>
+    <WrappingLink href={getLink(team)} className="item button-area" >
+      <div className="cover" style={style} />
       <div className="content">
         <img className="avatar" src={getAvatarUrl(team)} alt="" />
         <div className="information">

@@ -1,10 +1,27 @@
 .search-results
-
-  // .users
-  //   margin-bottom: 0
-
-  article
-    margin: 0
+  
+  .search-filters
+    margin-top: 1rem
+    button
+      margin-right: 5px
+  
+  .projects-container, .teams-container, .users-container
+    overflow: initial
+    border-radius: 5px
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    align-items: flex-start
+    >li
+      width: calc(25% - 1rem)
+      @media (max-width: hugeViewport)
+        width: calc(25% - 1rem)
+      @media (max-width: largeViewport)
+        width: calc(50% - 1rem)
+      @media (max-width: mediumViewport)
+        width: calc(50% - 1rem)
+      @media (max-width: mediumSmallViewport)
+        width: 100%          
   
   .projects
     margin-top: 0
@@ -18,23 +35,6 @@
     
     // > h2
     //   margin-bottom: calc(0.83em - 10px)
-    
-    .projects-container,
-    .users-container
-      overflow: initial
-      border-radius: 5px
-      display: flex
-      flex-direction: row
-      flex-wrap: wrap
-      align-items: flex-end
-
-    .users-container
-      .user
-        width: initial
-        height: initial
-      img.avatar
-        border-radius: 50%
-
       
   .no-results
     margin-bottom: 2rem
