@@ -76,6 +76,21 @@ storiesOf('Text Input', module)
 
 storiesOf('Note', module)
   .addDecorator(StoryRouter())
+  .add('(coming soon) a new note with placeholder text', () => ( //Note the placeholder text does not show up until we import global styles here or move everything into components
+    <div style={{ margin: '70px', width: '300px' }}>
+      <Note
+        currentUser={{
+          color: '#9cf989',
+          id: 123,
+          login: 'glitch',
+          name: 'Glitch',
+        }}
+        update={yourUpdatedNote => console.log("This is your updated note:",yourUpdatedNote)}
+        project={{ isAddingANewNote: true }}
+        collectionCoverColor="#ddc4fc"
+      />
+    </div>
+  ))
   .add('a saved note', () => (
       <div style={{ margin: '70px', width: '300px' }}>
       <Note
@@ -85,23 +100,8 @@ storiesOf('Note', module)
           login: 'glitch',
           name: 'Glitch',
         }}
-        update={something => console.log(something)}
+        update={yourUpdatedNote => console.log("This is your updated note:",yourUpdatedNote)}
         project={{ note: "This is a *GREAT* note that supports markdown" }}
-        collectionCoverColor="#ddc4fc"
-      />
-    </div>
-  ))
-  .add('a new note with placeholder text (coming soon: this does not work until we move content-editable styles into /components)', () => (
-    <div style={{ margin: '70px', width: '300px' }}>
-      <Note
-        currentUser={{
-          color: '#9cf989',
-          id: 123,
-          login: 'glitch',
-          name: 'Glitch',
-        }}
-        update={something => console.log(something)}
-        project={{ isAddingANewNote: true }}
         collectionCoverColor="#ddc4fc"
       />
     </div>
@@ -115,7 +115,7 @@ storiesOf('Note', module)
           login: 'glitch',
           name: 'Glitch',
         }}
-        update={something => console.log(something)}
+        update={yourUpdatedNote => console.log("This is your updated note:",yourUpdatedNote)}
         project={{ note: "This is a *GREAT* note that supports markdown" }}
         collectionCoverColor="#000000"
       />
