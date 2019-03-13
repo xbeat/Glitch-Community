@@ -24,19 +24,19 @@ const Filters = ({
       All
     </Button>
     {teamsCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'teams' && 'tertiary'} onClick={() => setFilter('teams')}>
+      <Button size="small" type={activeFilter !== 'teams' && 'tertiary'} onClick={() => setFilter('teams')}>
          Teams ({teamsCount})
       </Button>
     )
     }
     {usersCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'users' && 'tertiary'} onClick={() => setFilter('users')}>
+      <Button size="small" type={activeFilter !== 'users' && 'tertiary'} onClick={() => setFilter('users')}>
          Users ({usersCount})
       </Button>
     )
     }
     {projectsCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'projects' && 'tertiary'} onClick={() => setFilter('projects')}>
+      <Button size="small" type={activeFilter !== 'projects' && 'tertiary'} onClick={() => setFilter('projects')}>
          Projects ({projectsCount})
       </Button>
     )
@@ -135,8 +135,8 @@ class SearchResults extends React.Component {
     this.searchUsers().catch(handleError);
     this.searchProjects().catch(handleError);
   }
-  
-  setFilter(filter){
+
+  setFilter(filter) {
     this.setState({ activeFilter: filter });
   }
 
@@ -177,6 +177,9 @@ class SearchResults extends React.Component {
     const noResults = [teams, users, projects].every(
       (results) => !showResults(results),
     );
+    const showTeams = (this.state.activeFilter === 'all' || this.state.activeFilter === 'teams') && showResults(teams);
+    const showUsers = (this.state.activeFilter === 'all' || this.state.activeFilter === 'users') && showResults(users);
+    const showProjects = (this.state.activeFilter === 'all' || this.state.activeFilter === 'projects') && showResults(projects);
     return (
       <main className="search-results">
         <Filters
@@ -186,9 +189,9 @@ class SearchResults extends React.Component {
           usersCount={users ? users.length : 0}
           projectsCount={projects ? projects.length : 0}
         />
-        {(this.state.activeFilter === 'all' || this.state.activeFilter === 'teams') && showResults(teams) && <TeamResults teams={teams} />}
-        {(this.state.activeFilter === 'all' || this.state.activeFilter === 'users') && showResults(users) && <UserResults users={users} />}
-        {(this.state.activeFilter === 'all' || this.state.activeFilter === 'projects') && showResults(projects) && (
+        { showTeams && <TeamResults teams={teams} />}
+        { showUsers && <UserResults users={users} />}
+        { showProjects && (
           <ProjectResults
             projects={projects}
             currentUser={this.props.currentUser}

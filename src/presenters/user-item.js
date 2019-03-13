@@ -22,13 +22,17 @@ export default function UserItem({ user }) {
         <div className="content">
           <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt="" />
           <div className="information">
-            {!!user.name &&
+            { user.name ? (
               <>
-                <Button>{user.name}</Button> 
+                <Button>{user.name}</Button>
                 <p className="name">
                   @{user.login}
                 </p>
               </>
+            )
+              : (
+                <Button>@{user.login}</Button>
+              )
             }
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
             {!!user.description && (
