@@ -24,6 +24,7 @@ const Heading = ({ children, tagName }) => {
 
   const size = TAGS_AND_SIZES[tagName];
   const bold = tagName === 'xlarge' || tagName === 'large';
+  console.log({bold})
   const className = cx({
     [size]: true,
     bold,

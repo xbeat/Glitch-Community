@@ -62,6 +62,12 @@ storiesOf('Text Input', module)
   .add('with error', () => <TextInput placeholder="glitch" error="That team already exists" />)
   .add('text area', () => <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required" />);
 
+storiesOf('Heading', module)
+  .add('h1 xlarge bold', () => (<Heading tagName="h1">H1, size extra large, bold</Heading>))
+  .add('h2 large bold', () => (<Heading tagName="h2">H2, size large, bold</Heading>))
+  .add('h3 medium', () => (<Heading tagName="h3">H3, size medium</Heading>))
+  .add('h4 small', () => (<Heading tagName="h3">H4, size small</Heading>))
+
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
