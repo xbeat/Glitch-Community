@@ -32,6 +32,7 @@ const envs = {
 
 const sources = {
   scripts: [
+    'blob:',
     'cdn.segment.com',
     'ajax.googleapis.com',
     '*.glitch.com',
@@ -42,8 +43,8 @@ const sources = {
     'fast.wistia.com',
   ],
   styles: ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
-  images: ['*.glitch.com', '*.gomix.com', 'cdn.hyperdev.com', 's3.amazonaws.com', '*.webtype.com', 'fast.wistia.com', 'culture-zine.glitch.me'],
-  fonts: ['*.webtype.com'],
+  images: ['*.glitch.com', '*.gomix.com', 'cdn.hyperdev.com', 's3.amazonaws.com', '*.webtype.com', 'fast.wistia.com', 'culture-zine.glitch.me', '*.akamaihd.net'],
+  fonts: ['data:', '*.webtype.com'],
   connect: ['api.glitch.com', 'api.segment.io', '*.wistia.com', '*.litix.io', '*.akamaihd.net'],
   frames: ['glitch.com', '*.glitch.me', 'fast.wistia.com'],
 };
