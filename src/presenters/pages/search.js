@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { capitalize, sum } from 'lodash';
-import Pluralize from 'react-pluralize';
 
 import Layout from '../layout';
 
@@ -21,10 +20,13 @@ import UserItem from '../user-item';
 
 const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name: 'users', hits: 0 }, { name: 'projects', hits: 0 }];
 
-const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
+const FilterContainer = ({ activeFilter, setFilter, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  if(!loaded){
-    return <Loader/>;
+  if (!loaded) {
+    return <Loader />;
+  }
+  if (totalHits === 0) {
+    return null;
   }
 
   return (
@@ -181,7 +183,7 @@ class SearchResults extends React.Component {
           query={this.props.query}
           loaded={this.state.loadedResults === filters.length - 1}
         />
-        {activeFilter === 'all' && <h1>All Results for {this.props.query}</h1>}
+        {activeFilter === 'all' && <h1>All results for {this.props.query}</h1>}
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (
