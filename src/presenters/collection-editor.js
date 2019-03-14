@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { orderBy } from 'lodash';
 
 import { useCurrentUser } from './current-user';
 import useErrorHandlers from './error-handlers';
@@ -33,7 +34,7 @@ class CollectionEditor extends React.Component {
     if (collection.id === this.state.id) {
       // add project to collection page
       this.setState(({ projects }) => ({
-        projects: [...projects, project],
+        projects: orderBy([...projects, project], (p) => p.updatedAt),
       }));
     }
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);

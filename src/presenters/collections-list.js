@@ -144,7 +144,7 @@ export class CreateCollectionButton extends React.Component {
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
-  maybeTeam: PropTypes.object,
+maybeTeam: PropTypes.object,
 };
 
 CreateCollectionButton.defaultProps = {
