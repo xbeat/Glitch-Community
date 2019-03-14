@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
-import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { AnalyticsContext, TrackClick } from '../analytics';
+import { useCurrentUser } from '../current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -69,10 +69,12 @@ class WhatIsGlitch extends React.Component {
             </h1>
 
             <OverlayVideo>
-              <div className="button video">
-                <img className="play-button" src={play} alt="How it works" />
-                <span>How it works</span>
-              </div>
+              <TrackClick name="How it works clicked">
+                <div className="button video">
+                  <img className="play-button" src={play} alt="How it works" />
+                  <span>How it works</span>
+                </div>
+              </TrackClick>
             </OverlayVideo>
           </figure>
 
@@ -101,40 +103,26 @@ const MadeInGlitch = () => (
   </section>
 );
 
-const IndexPage = ({ api, user }) => (
-  <main>
-    {!user.login && <WhatIsGlitch />}
-
-    {!!user.projects.length && <RecentProjects api={api} />}
-    {!!user.login && <Questions api={api} />}
-    <Featured isAuthorized={!!user.login} api={api} />
-    <MoreIdeas api={api} />
-    <MadeInGlitch />
-    <ReportButton reportedType="home" />
-  </main>
-);
+const IndexPage = ({ api }) => {
+  const { currentUser } = useCurrentUser();
+  return (
+    <Layout api={api}>
+      <AnalyticsContext properties={{ origin: 'index' }}>
+        <main>
+          {!currentUser.login && <WhatIsGlitch />}
+          {!!currentUser.projects.length && <RecentProjects api={api} />}
+          {!!currentUser.login && <Questions api={api} />}
+          <Featured isAuthorized={!!currentUser.login} api={api} />
+          <MoreIdeas api={api} />
+          <MadeInGlitch />
+          <ReportButton reportedType="home" />
+        </main>
+      </AnalyticsContext>
+    </Layout>
+  );
+};
 IndexPage.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number,
-    login: PropTypes.string,
-  }).isRequired,
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
 };
 
-IndexPage.defaultProps = {
-  api: null,
-};
-
-const IndexPageContainer = ({ api }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'index' }}>
-      <CurrentUserConsumer>{(user) => <IndexPage api={api} user={user} />}</CurrentUserConsumer>
-    </AnalyticsContext>
-  </Layout>
-);
-
-export default IndexPageContainer;
-
-IndexPageContainer.defaultProps = {
-  api: PropTypes.any,
-};
+export default IndexPage;
