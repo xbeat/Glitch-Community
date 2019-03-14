@@ -1,21 +1,22 @@
 {
-  "presets" : [
-    "@babel/preset-react",
-    ["@babel/preset-env", {
-      "modules": false,
-      "targets": {
-        "chrome": "41",
-        "ie": "11",
-        "edge": "16"
-      },
-      "useBuiltIns": "usage",
-      "debug":true
-    }],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["IE >= 11"]
+        },
+        "useBuiltIns": "usage",
+        "debug": true
+      }
+    ],
+    "@babel/preset-react"
   ],
   "plugins": [
     "lodash",
     "@babel/syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties"
   ],
-  "sourceType": "unambiguous"
+  "sourceType": "unambiguous",
+  "ignore": ["/node_modules/*"]
 }
