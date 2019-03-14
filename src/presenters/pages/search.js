@@ -22,17 +22,22 @@ const filters = [{name: 'all', hits: null}, {name: 'teams', hits: 0}, {name: 'us
 
 const FilterButtons = ({
   setFilter, activeFilter
-}) => (
-  <div className="search-filters segmented-buttons">
-    {filters.map((filter) =>  (
-      <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
-         { capitalize(filter.name) }
-         {( filter.hits > 0 && 
-           <div className="status-badge">{filter.hits}</div>
-         )}
-      </Button>
-     ))}
-  </div>    
+}) => {
+  return (
+    <div className="search-filters segmented-buttons">
+      {filters.map((filter) =>  (
+        ((filter.hits === null || filter.hits > 0) &&
+          <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
+             { capitalize(filter.name) }
+             {( filter.hits > 0 && 
+               <div className="status-badge">{filter.hits}</div>
+             )}
+          </Button>
+         )
+       ))}
+    </div>   
+    )
+  }
 );
 
 FilterButtons.propTypes = {
@@ -182,10 +187,12 @@ class SearchResults extends React.Component {
     
     return (
       <main className="search-results">
-        <FilterButtons
-          setFilter={this.setFilter}
-          activeFilter={activeFilter}
-        />
+        { this.state.loadedResults === filters.length-1 &&  
+          <FilterButtons
+            setFilter={this.setFilter}
+            activeFilter={activeFilter}
+          />
+        }
         { activeFilter === 'all' &&
           <h1>
             { this.state.loadedResults !== filters.length-1 ? 
