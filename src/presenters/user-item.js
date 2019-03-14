@@ -34,12 +34,12 @@ export default function UserItem({ user }) {
                 <Button>@{user.login}</Button>
               )
             }
-            {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
             {!!user.description && (
               <p className="description">
                 <TruncatedMarkdown length={96}>{user.description}</TruncatedMarkdown>
               </p>
             )}
+            {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
           </div>
         </div>
       </div>

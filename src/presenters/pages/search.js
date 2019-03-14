@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { capitalize, sum } from 'lodash';
-import Pluralize from 'react-pluralize';
 
 import Layout from '../layout';
 
@@ -23,22 +22,33 @@ const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name
 
 const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  if(!loaded){
-    return <Loader/>;
+  if (!loaded) {
+    return (
+      <>
+        <Loader />
+        <h1>All results for {query}</h1>
+      </>
+    );
+  }
+  if (loaded && totalHits === 0) {
+    return null;
   }
 
   return (
-    <div className="search-filters segmented-buttons">
-      {filters.map(
-        (filter) =>
-          (filter.hits === null || filter.hits > 0) && (
-            <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
-              {capitalize(filter.name)}
-              {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
-            </Button>
-          ),
-      )}
-    </div>
+    <>
+      <div className="search-filters segmented-buttons">
+        {filters.map(
+          (filter) =>
+            (filter.hits === null || filter.hits > 0) && (
+              <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
+                {capitalize(filter.name)}
+                {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
+              </Button>
+            ),
+        )}
+      </div>
+      {activeFilter === 'all' && <h1>All results for {query}</h1>}
+    </>
   );
 };
 
@@ -181,7 +191,6 @@ class SearchResults extends React.Component {
           query={this.props.query}
           loaded={this.state.loadedResults === filters.length - 1}
         />
-        {activeFilter === 'all' && <h1>All Results for {this.props.query}</h1>}
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (
