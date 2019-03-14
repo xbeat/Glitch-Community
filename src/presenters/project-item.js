@@ -10,12 +10,12 @@ import UsersList from './users-list';
 import Note from './note';
 
 const ProjectItem = ({
-  api, project, currentUser, collectionCoverColor, ...props
+  api, project, author, collectionCoverColor, ...props
 }) => (
   <li>
     <Note
       collectionCoverColor={collectionCoverColor}
-      currentUser={currentUser}
+      author={author}
       project={project}
       update={(note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id })}
     />
@@ -42,7 +42,7 @@ const ProjectItem = ({
 ProjectItem.propTypes = {
   api: PropTypes.func,
   collectionCoverColor: PropTypes.string.isRequired,
-  currentUser: PropTypes.object,
+  author: PropTypes.object,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
@@ -58,7 +58,7 @@ ProjectItem.propTypes = {
 
 ProjectItem.defaultProps = {
   api: null,
-  currentUser: null,
+  author: null,
   projectOptions: {},
 };
 

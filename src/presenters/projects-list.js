@@ -75,13 +75,12 @@ ExpandyProjects.defaultProps = {
 export const ProjectsUL = ({ ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} {...{ project, collectionCoverColor: props.collectionCoverColor }} {...props} />
+      <ProjectItem key={project.id} {...{ project }} {...props} />
     ))}
   </ul>
 );
 
 ProjectsUL.propTypes = {
-  collectionCoverColor: PropTypes.string.isRequired,
   projects: PropTypes.array.isRequired,
 };
 

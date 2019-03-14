@@ -12,7 +12,7 @@ import { isDarkColor } from '../models/collection';
  * Note Component
  */
 const Note = ({
-  collectionCoverColor, currentUser, project, update,
+  collectionCoverColor, author, project, update,
 }) => {
   if (!project.isAddingANewNote && !project.note) {
     return null;
@@ -34,7 +34,7 @@ const Note = ({
         />
       </div>
       <div className="user">
-        <UserTile user={currentUser} />
+        <UserTile user={author} />
       </div>
     </div>
   );
@@ -43,7 +43,7 @@ const Note = ({
 
 Note.propTypes = {
   collectionCoverColor: PropTypes.string.isRequired,
-  currentUser: PropTypes.object,
+  author: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,
     isAddingANewNote: PropTypes.bool,
@@ -53,7 +53,7 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  currentUser: null,
+  author: null,
   update: null,
 };
 
