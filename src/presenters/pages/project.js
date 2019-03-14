@@ -160,7 +160,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
         <ReadmeLoader api={api} domain={domain} />
       </section>
       <section id="included-in-collections">
-        <IncludedInCollections projectId={project.id} />
+        <IncludedInCollections api={api} projectId={project.id} />
       </section>
       <section id="related">
         <RelatedProjects ignoreProjectId={project.id} {...{ api, teams, users }} />
