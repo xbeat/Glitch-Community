@@ -42,10 +42,9 @@ AnalyticsContext.defaultProps = {
 };
 
 // this gives you a generic track function that pulls in inherited properties
-export const AnalyticsTracker = ({ children }) => (
-  <Context.Consumer>
-    {(inherited) =>
-      children((name, properties, context) => {
+const useAnalytics = () => {
+  const inherited = React.useContext(Context);
+  return (name, properties, context) => {
         try {
           analytics.track(name, resolveProperties(properties, inherited.properties), resolveProperties(context, inherited.context));
         } catch (error) {
@@ -61,9 +60,6 @@ export const AnalyticsTracker = ({ children }) => (
     }
   </Context.Consumer>
 );
-AnalyticsTracker.propTypes = {
-  children: PropTypes.func.isRequired,
-};
 
 // this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
 // this won't work for links that do a full page load, because the request will get cancelled by the nav
