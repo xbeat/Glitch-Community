@@ -41,7 +41,7 @@ const ProjectItem = ({
 
 ProjectItem.propTypes = {
   api: PropTypes.func,
-  collectionCoverColor: PropTypes.string.isRequired,
+  collectionCoverColor: PropTypes.string,
   author: PropTypes.object,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,
@@ -59,6 +59,7 @@ ProjectItem.propTypes = {
 ProjectItem.defaultProps = {
   api: null,
   author: null,
+  collectionCoverColor: null,
   projectOptions: {},
 };
 

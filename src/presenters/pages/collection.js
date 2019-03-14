@@ -137,7 +137,7 @@ const CollectionPageContents = ({
             {collection.projects.length > 0 ? (
               isAuthorized ? (
                 <ProjectsUL
-                  {...{ projects: collection.projects, currentUser, api, collectionCoverColor: collection.coverColor }}
+                  {...{ projects: collection.projects, author: collection.user, api, collectionCoverColor: collection.coverColor }}
                   projectOptions={{
                     removeProjectFromCollection,
                     addProjectToCollection,

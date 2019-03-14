@@ -42,7 +42,7 @@ const Note = ({
 
 
 Note.propTypes = {
-  collectionCoverColor: PropTypes.string.isRequired,
+  collectionCoverColor: PropTypes.string,
   author: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,
@@ -53,8 +53,9 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  author: null,
+  author: {},
   update: null,
+  collectionCoverColor: null,
 };
 
 export default Note;
