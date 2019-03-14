@@ -101,12 +101,13 @@ const CollectionItem = (props) => {
 
 CollectionItem.propTypes = {
   collection: PropTypes.object.isRequired,
-  isAuthorized: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool,
   deleteCollection: PropTypes.func,
 };
 
 CollectionItem.defaultProps = {
   deleteCollection: () => {},
+  isAuthorized: false,
 };
 
 export default CollectionItem;
