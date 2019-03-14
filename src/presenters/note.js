@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 // TODO: let's move these into components
-import { EditableDescription } from '../../presenters/includes/description-field';
-import { UserTile } from '../../presenters/users-list';
+import { EditableDescription } from './includes/description-field';
+import { UserTile } from './users-list';
 
-import { isDarkColor } from '../../models/collection';
+import { isDarkColor } from '../models/collection';
 
 /**
  * Note Component
@@ -24,7 +24,7 @@ const Note = ({
   });
 
   return (
-    <div>
+    <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
         <EditableDescription
           description={project.note || ''}

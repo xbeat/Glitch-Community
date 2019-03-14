@@ -7,7 +7,7 @@ import { ProjectLink } from './includes/link';
 import Markdown from '../components/text/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
-import Note from '../components/fields/note';
+import Note from './note';
 
 const ProjectItem = ({
   api, project, currentUser, collectionCoverColor, ...props
