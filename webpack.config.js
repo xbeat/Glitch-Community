@@ -50,7 +50,7 @@ module.exports = {
         modules: {
           name: "dependencies",
           test: /[\\/]node_modules[\\/]/,
-          priority: -1,
+          // priority: -1,
         },
       },
     },
