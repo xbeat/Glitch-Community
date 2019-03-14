@@ -64,7 +64,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }
     )}
 
     {collection && (
-      <div className={`collection${isAuthorized ? ' authorized' : ''}`} id={`collection-${collection.id}`}>
+      <div className={`collection${isAuthorized ? ' authorized' : ''} ${showUser ? ' show-user' : ''}`} id={`collection-${collection.id}`}>
         <div className="collection-container">
           <CollectionLink collection={collection} className="collection-info button-area" style={{ backgroundColor: collection.coverColor }}>
             <div className="avatar-container" aria-hidden="true">
