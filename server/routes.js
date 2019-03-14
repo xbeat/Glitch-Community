@@ -11,32 +11,6 @@ const crypto = require('crypto');
 
 module.exports = function(external) {
   const app = express.Router();
-  
-  // questionable
-  // *.litix.io, tracking via wistia
-  
-  let nonces = [];
-  const inlineScriptsCount = 3;
-  while (nonces.length < inlineScriptsCount) {
-    nonces.push(crypto.randomBytes(16).toString('base64'));
-  }
-  
-  const {sources} = constants;
-  
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", ...nonces.map(n => `'nonce-${n}'`), ...sources.scripts],
-      // style-src unsafe-inline is required for our SVGs
-      // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
-      styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
-      imgSrc: ["'self'", ...sources.images],
-      fontSrc: ["'self'", "'data:'", ...sources.fonts],
-      connectSrc: ["'self'", ...sources.connect],
-      frameSrc: ["'self'", ...sources.frames],
-    }
-  }));
-  
 
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
@@ -60,6 +34,16 @@ module.exports = function(external) {
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
     console.log(request.method, request.originalUrl, request.body);
+    return next();
+  });
+  
+  // generate new nonces for CSP on each request
+  let nonces = [];
+  app.use((req, res, next) => {
+    const inlineScriptsCount = 3;    
+    while (nonces.length < inlineScriptsCount) {
+      nonces.push(crypto.randomBytes(16).toString('base64'));
+    }
     return next();
   });
   
@@ -106,8 +90,22 @@ module.exports = function(external) {
   }
 
   const {CDN_URL} = constants.current;
-
-
+  const {sources} = constants;
+  
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", ...nonces.map(n => `'nonce-${n}'`), ...sources.scripts],
+      // style-src unsafe-inline is required for our SVGs
+      // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
+      styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
+      imgSrc: ["'self'", ...sources.images],
+      fontSrc: ["'self'", "'data:'", ...sources.fonts],
+      connectSrc: ["'self'", ...sources.connect],
+      frameSrc: ["'self'", ...sources.frames],
+    }
+  }));
+  
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
     const project = await getProject(domain);
