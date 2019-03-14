@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout';
-const { capitalize } = require('lodash');
+const { capitalize, sum } = require('lodash');
 import Pluralize from 'react-pluralize';
 
 import { useCurrentUser } from '../current-user';
@@ -21,9 +21,16 @@ import UserItem from '../user-item';
 const filters = [{name: 'all', hits: null}, {name: 'teams', hits: 0}, {name: 'users', hits: 0}, {name: 'projects', hits: 0}];
 
 const FilterButtons = ({
-  setFilter, activeFilter
+  activeFilter, setFilter, query
 }) => {
+  const totalHits = sum(filters.map(filter => filter.hits));
+  if(totalHits == 0){
+    return null;
+  }
+  
   return (
+    <>
+    <Pluralize count={totalHits} singular="result"/> for {query}
     <div className="search-filters segmented-buttons">
       {filters.map((filter) =>  (
         ((filter.hits === null || filter.hits > 0) &&
@@ -36,9 +43,9 @@ const FilterButtons = ({
          )
        ))}
     </div>   
+    </>
     )
-  }
-);
+};
 
 FilterButtons.propTypes = {
   setFilter: PropTypes.func.isRequired,
@@ -191,15 +198,18 @@ class SearchResults extends React.Component {
           <FilterButtons
             setFilter={this.setFilter}
             activeFilter={activeFilter}
+            query={this.props.query}
           />
         }
         { activeFilter === 'all' &&
           <h1>
-            { this.state.loadedResults !== filters.length-1 ? 
+            { this.state.loadedResults !== filters.length-1 
               <Loader /> 
               :
               <>
-              <Pluralize count={totalResults} singular="result"/> for {this.props.query}
+                totalResults > 0 && 
+                  <Pluralize count={totalResults} singular="result"/> for {this.props.query}
+                )
              </>
             }
           </h1>
