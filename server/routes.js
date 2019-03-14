@@ -7,6 +7,7 @@ const dayjs = require('dayjs');
 const {getProject, getTeam, getUser, getZine} = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
+const crypto = require('crypto');
 
 module.exports = function(external) {
   const app = express.Router();
@@ -14,17 +15,23 @@ module.exports = function(external) {
   // questionable
   // *.litix.io, tracking via wistia
   
+  let nonces = [];
+  const inlineScriptsCount = 3;
+  while (nonces.length < inlineScriptsCount) {
+    nonces.push(crypto.randomBytes(16).toString('base64'));
+  }
+  
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'nonce-2726c7f26c'", "'nonce-1234'", "'nonce-5678'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
+      scriptSrc: ["'self'", ...nonces.map(n => `"'nonce-${n}'"`), ...constants.scriptSources],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
-      styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
-      imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
-      fontSrc: ["'self'", '*.webtype.com', "'data:'"],
-      connectSrc: ["'self'", 'api.glitch.com', 'api.segment.io', '*.wistia.com', '*.litix.io'],
-      frameSrc: ["'self'", 'glitch.com', '*.glitch.me', 'fast.wistia.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", ...constants.styleSources],
+      imgSrc: ["'self'", ...constants.imageSources],
+      fontSrc: ["'self'", "'data:'", ...constants.fontSources],
+      connectSrc: ["'self'", ...constants.connectSources],
+      frameSrc: ["'self'", ...constants.frameSources],
     }
   }));
 
@@ -84,7 +91,7 @@ module.exports = function(external) {
     
     res.render('index.ejs', {
       title, description, image,
-      scripts, styles,
+      scripts, styles, nonces,
       BUILD_COMPLETE: built,
       BUILD_TIMESTAMP: buildTime.toISOString(),
       EXTERNAL_ROUTES: JSON.stringify(external),
