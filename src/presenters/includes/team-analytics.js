@@ -13,7 +13,6 @@ import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
-
 const dateFromTime = (newTime) => {
   const timeMap = {
     'Last 4 Weeks': dayjs()
@@ -185,10 +184,10 @@ class TeamAnalytics extends React.Component {
           {(this.state.isGettingData || this.state.isGettingC3) && <Loader />}
           {!this.state.isGettingC3 && (
             <TeamAnalyticsActivity
-             c3={this.state.c3}
-             analytics={this.state.analytics}
-             isGettingData={this.state.isGettingData}
-             currentTimeFrame={this.state.currentTimeFrame}
+              c3={this.state.c3}
+              analytics={this.state.analytics}
+              isGettingData={this.state.isGettingData}
+              currentTimeFrame={this.state.currentTimeFrame}
             />
           )}
         </section>
