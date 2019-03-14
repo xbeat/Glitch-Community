@@ -23,9 +23,12 @@ const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name
 
 const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
+  if(!loaded){
+    return <Loader/>;
+  }
 
   return (
-    <div className="search-filters segmented-buttons" style={{ visibility: loaded || totalHits > 0 ? 'initial' : 'hidden' }}>
+    <div className="search-filters segmented-buttons">
       {filters.map(
         (filter) =>
           (filter.hits === null || filter.hits > 0) && (
