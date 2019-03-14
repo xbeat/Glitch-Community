@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { partition } from 'lodash';
 
 import * as assets from '../utils/assets';
 
@@ -61,16 +62,26 @@ class UserEditor extends React.Component {
 
   async addPin(id) {
     await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
-    this.setState(({ pins }) => ({
-      pins: [...pins, { projectId: id }],
-    }));
+    this.setState(({ projects, pins }) => {
+      const [pinned, notPinned] = partition(projects, (p) => p.id === id)
+      console.log({ pinned, notPinned })
+      return {
+        pins: [...projects, ...pinned],
+        projects: notPinned,
+      }
+    });
   }
 
   async removePin(id) {
     await this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`);
-    this.setState(({ pins }) => ({
-      pins: pins.filter((p) => p.projectId !== id),
-    }));
+    this.setState(({ projects, pins }) => {
+      const [unpinned, stillPinned] = partition(pins, (p) => p.id === id)
+      console.log({ unpinned, stillPinned })
+      return {
+        pins: stillPinned,
+        projects: [...projects, ...unpinned]
+      }
+    });
   }
 
   async leaveProject(id) {
@@ -186,3 +197,4 @@ UserEditorContainer.propTypes = {
 };
 
 export default UserEditorContainer;
+ 
