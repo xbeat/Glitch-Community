@@ -3,7 +3,7 @@
 
 /* eslint-disable no-extend-native */
 import 'details-element-polyfill';
-import 'core-js';
+// import 'core-js';
 
 if (!String.prototype.trimStart) {
   String.prototype.trimStart = String.prototype.trimLeft;

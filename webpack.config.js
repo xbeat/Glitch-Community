@@ -23,7 +23,7 @@ console.log(`Starting Webpack in ${mode} mode.`);
 module.exports = {
   mode,
   entry: {
-    client: ['@babel/polyfill',`${SRC}/client.js`],
+    client: `${SRC}/client.js`,
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
