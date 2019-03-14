@@ -62,20 +62,23 @@ project-avatar-size = 42px
     padding: 0
     list-style-type: none
     overflow: hidden
-    display: grid
-    grid-template-columns: 1fr 1fr 1fr
-    grid-template-rows: auto
-    @media (max-width: mediumViewport)
-      grid-template-columns: 1fr
+    // display: grid
+    // grid-template-columns: 1fr 1fr 1fr
+    // grid-template-rows: auto
+    // @media (max-width: mediumViewport)
+    //   grid-template-columns: 1fr
     
     > li
       float: left
       margin-right: 10px
       position: relative
       margin-bottom: 12px
-      display: grid
-      align-content: end
-      min-width: calc(33.3% - 10px)
+      
+      display: block
+      width: calc(33.3% - 10px)
+      // display: grid
+      // align-content: end
+      // min-width: calc(33.3% - 10px)
       
       @media (max-width: mediumViewport)
         width: 100%
