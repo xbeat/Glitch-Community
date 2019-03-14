@@ -35,7 +35,6 @@ AnalyticsContext.propTypes = {
   properties: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   context: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
-
 AnalyticsContext.defaultProps = {
   properties: {},
   context: {},
