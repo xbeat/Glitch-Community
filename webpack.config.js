@@ -23,7 +23,7 @@ console.log(`Starting Webpack in ${mode} mode.`);
 module.exports = {
   mode,
   entry: {
-    client: ["@babel/polyfill",`${SRC}/client.js`],
+    client: `${SRC}/client.js`,
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
@@ -31,8 +31,8 @@ module.exports = {
     path: BUILD,
     publicPath: "/",
   },
-  // devtool: mode === "production" ? "source-map" : "cheap-module-source-map",
-  devtool: "none",
+  devtool: mode === "production" ? "source-map" : "cheap-module-source-map",
+  // devtool: "none",
   optimization: {
     splitChunks: {
       chunks: "initial",
