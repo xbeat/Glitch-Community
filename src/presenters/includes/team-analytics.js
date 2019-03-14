@@ -9,18 +9,11 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
 
 import TeamAnalyticsSummary from './team-analytics-summary';
-// import TeamAnalyticsActivity from './team-analytics-activity';
+import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
-// {!this.state.isGettingC3 && (
-//             <TeamAnalyticsActivity
-//               c3={this.state.c3}
-//               analytics={this.state.analytics}
-//               isGettingData={this.state.isGettingData}
-//               currentTimeFrame={this.state.currentTimeFrame}
-//             />
-//           )}
+
 const dateFromTime = (newTime) => {
   const timeMap = {
     'Last 4 Weeks': dayjs()
@@ -77,15 +70,15 @@ class TeamAnalytics extends React.Component {
 
   componentDidMount() {
     // eslint-disable-next-line
-    // import(/* webpackChunkName: "c3-bundle" */ 'c3').then((c3) => {
-    //   this.setState({
-    //     c3,
-    //     isGettingC3: false,
-    //   });
-    //   if (this.props.currentUserIsOnTeam) {
-    //     this.updateAnalytics();
-    //   }
-    // });
+    import(/* webpackChunkName: "c3-bundle" */ 'c3').then((c3) => {
+      this.setState({
+        c3,
+        isGettingC3: false,
+      });
+      if (this.props.currentUserIsOnTeam) {
+        this.updateAnalytics();
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -190,7 +183,14 @@ class TeamAnalytics extends React.Component {
         <section className="activity">
           <figure id="chart" className="c3" />
           {(this.state.isGettingData || this.state.isGettingC3) && <Loader />}
-          {!this.state.isGettingC3 && <div>hi</div>}
+          {!this.state.isGettingC3 && (
+            <TeamAnalyticsActivity
+             c3={this.state.c3}
+             analytics={this.state.analytics}
+             isGettingData={this.state.isGettingData}
+             currentTimeFrame={this.state.currentTimeFrame}
+            />
+          )}
         </section>
 
         <section className="referrers">
