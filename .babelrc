@@ -8,7 +8,7 @@
         "ie": "11",
         "edge": "16"
       },
-      "useBuiltIns": "usage",
+      "useBuiltIns": "entry",
       "debug":true
     }],
   ],
