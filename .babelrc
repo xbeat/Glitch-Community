@@ -9,6 +9,8 @@
         "edge": "16"
       },
       "useBuiltIns": "usage",
+      			"debug":true
+
     }],
   ],
   "plugins": [
