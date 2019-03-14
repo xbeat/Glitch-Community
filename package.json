@@ -74,7 +74,8 @@
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.2",
     "webpack-dev-middleware": "^3.5.2",
-    "helmet": "^3.16.0"
+    "helmet": "^3.16.0",
+    "uuid": "^3.3.2"
   },
   "engines": {
     "node": "10.x"

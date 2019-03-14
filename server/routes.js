@@ -92,18 +92,17 @@ module.exports = function(external) {
 
   const {CDN_URL} = constants.current;
   const {sources} = constants;
-  app.use(csp({
-  directives: {
-    scriptSrc: [
-      "'self'",
-      (req, res) => `'nonce-${res.locals.nonce}'`  // 'nonce-614d9122-d5b0-4760-aecf-3a5d17cf0ac9'
-    ]
-  }
-}))
+  
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", ...sources.scripts, (req, res) => res.locals.nonces.map(n => `'nonce-${n}'`)],
+      scriptSrc: [
+        "'self'",
+        ...sources.scripts,
+        (req, res) => `'nonce-${res.locals.nonces[0]}'`,
+        (req, res) => `'nonce-${res.locals.nonces[1]}'`,
+        (req, res) => `'nonce-${res.locals.nonces[2]}'`,
+      ],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
       styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
