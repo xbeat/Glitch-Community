@@ -35,7 +35,7 @@ const IncludedInCollections = ({ api, projectId }) => {
       <h2>Included in Collections</h2>
       <ul className="collections-container">
         {collections.map((collection) => (
-          <CollectionItem showUser key={collection.id} collection={collection} />
+          <CollectionItem showCurator key={collection.id} collection={collection} />
         ))}
       </ul>
     </div>

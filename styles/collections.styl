@@ -54,6 +54,12 @@ collection-avatar-size = 55px
       
     .down-arrow
       margin: 0
+      
+    .team-avatar
+      display: block
+      
+    .collection-curator
+      display: flex
     
   .collection
     margin-top: 0px
@@ -69,8 +75,8 @@ collection-avatar-size = 55px
     background-color: secondary-background
     &.authorized
       margin-top: 30px
-    &.show-user
-      margin-top: 30px
+    &.show-curator
+      margin-top: 10px
       
     a
       color: primary
@@ -99,7 +105,7 @@ collection-avatar-size = 55px
       a
         color: inherit
         
-    &.show-user .collection-info:after
+    &.show-curator .collection-info:after
     	top: -13px
     	left: 8.5px
     	border: solid transparent
@@ -116,7 +122,7 @@ collection-avatar-size = 55px
       margin-right: 7px
       vertical-align: top
       display: inline-block
-      
+            
     .collection-name-description
       width: 100%
       margin-left: 12px
