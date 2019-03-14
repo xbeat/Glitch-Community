@@ -38,7 +38,7 @@ const sources = {
     'apis.google.com',
     'cdnjs.cloudflare.com',
     'api.segment.io',
-    'static.woopra.com',
+    '*.woopra.com',
     'fast.wistia.com',
   ],
   styles: ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],

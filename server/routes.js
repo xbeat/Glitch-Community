@@ -95,7 +95,7 @@ module.exports = function(external) {
   
   app.use(helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'none'"],
       scriptSrc: [
         "'self'",
         ...sources.scripts,
@@ -107,9 +107,10 @@ module.exports = function(external) {
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
       styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
       imgSrc: ["'self'", ...sources.images],
-      fontSrc: ["'self'", "'data:'", ...sources.fonts],
+      fontSrc: ["'self'", 'data:', ...sources.fonts],
       connectSrc: ["'self'", ...sources.connect],
       frameSrc: ["'self'", ...sources.frames],
+      baseUri: ["'self'"],
     }
   }));
   
