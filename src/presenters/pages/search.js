@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { capitalize } from 'lodash';
-import Pluralize from 'react-pluralize';
-import Helmet from 'react-helmet';
 
+import Helmet from 'react-helmet';
 import Layout from '../layout';
+const { capitalize } = require('lodash');
+import Pluralize from 'react-pluralize';
 
 import { useCurrentUser } from '../current-user';
 
@@ -18,20 +18,21 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const filters = [{ name: 'all', count: null }, { name: 'teams', count: 0 }, { name: 'users', count: 0 }, { name: 'projects', count: 0 }];
+const filters = [{name: 'all', hits: null}, {name: 'teams', hits: 0}, {name: 'users', hits: 0}, {name: 'projects', hits: 0}];
 
 const FilterButtons = ({
-  setFilter, activeFilter,
+  setFilter, activeFilter
 }) => (
-  <div className="search-filters">
-    {filters.map((filter) => (
-      ((filter.count == null || filter.count > 0) &&
-      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
-        { filter.count ? `${capitalize(filter.name)} (${filter.count})` : capitalize(filter.name) }
+  <div className="search-filters segmented-buttons">
+    {filters.map((filter) =>  (
+      <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
+         { capitalize(filter.name) }
+         {( filter.hits > 0 && 
+           <div className="status-badge">{filter.hits}</div>
+         )}
       </Button>
-      )
-    ))}
-  </div>
+     ))}
+  </div>    
 );
 
 FilterButtons.propTypes = {
@@ -111,6 +112,7 @@ class SearchResults extends React.Component {
       users: null,
       projects: null,
       activeFilter: 'all',
+      loadedResults: 0
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
     this.setFilter = this.setFilter.bind(this);
@@ -132,6 +134,7 @@ class SearchResults extends React.Component {
     const { data } = await api.get(`teams/search?q=${query}`);
     this.setState({
       teams: data.slice(0, MAX_USER_TEAM_RESULTS),
+      loadedResults: this.state.loadedResults+1,
     });
   }
 
@@ -140,6 +143,7 @@ class SearchResults extends React.Component {
     const { data } = await api.get(`users/search?q=${query}`);
     this.setState({
       users: data.slice(0, MAX_USER_TEAM_RESULTS),
+      loadedResults: this.state.loadedResults+1,
     });
   }
 
@@ -150,6 +154,7 @@ class SearchResults extends React.Component {
       projects: data
         .filter((project) => !project.notSafeForKids)
         .slice(0, MAX_PROJECT_RESULTS),
+      loadedResults: this.state.loadedResults+1,
     });
   }
 
@@ -168,13 +173,13 @@ class SearchResults extends React.Component {
     const showTeams = (activeFilter === 'all' || activeFilter === 'teams') && showResults(teams);
     const showUsers = (activeFilter === 'all' || activeFilter === 'users') && showResults(users);
     const showProjects = (activeFilter === 'all' || activeFilter === 'projects') && showResults(projects);
-
+  
     // store results per type
-    filters[1].count = (teams ? teams.length : 0);
-    filters[2].count = (users ? users.length : 0);
-    filters[3].count = (projects ? projects.length : 0);
-    const totalResults = filters[1].count + filters[2].count + filters[3].count;
-
+    filters[1].hits = (teams ? teams.length : 0);
+    filters[2].hits = (users ? users.length : 0);
+    filters[3].hits = (projects ? projects.length : 0);    
+    const totalResults = filters[1].hits + filters[2].hits + filters[3].hits;
+    
     return (
       <main className="search-results">
         <FilterButtons
@@ -183,7 +188,13 @@ class SearchResults extends React.Component {
         />
         { activeFilter === 'all' &&
           <h1>
-            <Pluralize count={totalResults} singular="result" /> for {this.props.query}
+            { this.state.loadedResults !== filters.length-1 ? 
+              <Loader /> 
+              :
+              <>
+              <Pluralize count={totalResults} singular="result"/> for {this.props.query}
+             </>
+            }
           </h1>
         }
         { showTeams && <TeamResults teams={teams} />}
