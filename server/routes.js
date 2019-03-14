@@ -3,11 +3,11 @@ const helmet = require('helmet');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
+const uuidv4 = require('uuid/v4');
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
-const crypto = require('crypto');
 
 module.exports = function(external) {
   const app = express.Router();
@@ -38,12 +38,13 @@ module.exports = function(external) {
   });
   
   // generate new nonces for CSP on each request
-  let nonces = [];
   app.use((req, res, next) => {
+    let nonces = [];
     const inlineScriptsCount = 3;    
     while (nonces.length < inlineScriptsCount) {
-      nonces.push(crypto.randomBytes(16).toString('base64'));
+      nonces.push(uuidv4());
     }
+    res.locals.nonces = nonces;
     return next();
   });
   
@@ -78,7 +79,7 @@ module.exports = function(external) {
     
     res.render('index.ejs', {
       title, description, image,
-      scripts, styles, nonces,
+      scripts, styles,
       BUILD_COMPLETE: built,
       BUILD_TIMESTAMP: buildTime.toISOString(),
       EXTERNAL_ROUTES: JSON.stringify(external),
@@ -91,11 +92,18 @@ module.exports = function(external) {
 
   const {CDN_URL} = constants.current;
   const {sources} = constants;
-  
+  app.use(csp({
+  directives: {
+    scriptSrc: [
+      "'self'",
+      (req, res) => `'nonce-${res.locals.nonce}'`  // 'nonce-614d9122-d5b0-4760-aecf-3a5d17cf0ac9'
+    ]
+  }
+}))
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", ...nonces.map(n => `'nonce-${n}'`), ...sources.scripts],
+      scriptSrc: ["'self'", ...sources.scripts, (req, res) => res.locals.nonces.map(n => `'nonce-${n}'`)],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
       styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
