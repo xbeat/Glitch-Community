@@ -9,3 +9,4 @@ export const featuredCollections = [
 
 // More ideas is populated from this team
 export const moreIdeasTeam = 'glitch';
+`
