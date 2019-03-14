@@ -9,7 +9,7 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
 
 import TeamAnalyticsSummary from './team-analytics-summary';
-import TeamAnalyticsActivity from './team-analytics-activity';
+// import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
@@ -182,14 +182,14 @@ class TeamAnalytics extends React.Component {
         <section className="activity">
           <figure id="chart" className="c3" />
           {(this.state.isGettingData || this.state.isGettingC3) && <Loader />}
-          {!this.state.isGettingC3 && (
+          {/*!this.state.isGettingC3 && (
             <TeamAnalyticsActivity
               c3={this.state.c3}
               analytics={this.state.analytics}
               isGettingData={this.state.isGettingData}
               currentTimeFrame={this.state.currentTimeFrame}
             />
-          )}
+          )*/}
         </section>
 
         <section className="referrers">
