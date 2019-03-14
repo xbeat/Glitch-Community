@@ -147,7 +147,4 @@ module.exports = {
       publicPath: true,
     }),
   ],
-  watchOptions: {
-    ignored: /node_modules/,
-  },
 };

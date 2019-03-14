@@ -6,7 +6,6 @@
 
 // import _ from 'lodash';
 // import groupByTime from 'group-by-time';
-// import * as d3Array from 'd3-array';
 
 // const createHistogram = (bins) => {
 //   const histogram = [];
