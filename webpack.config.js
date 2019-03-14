@@ -33,32 +33,32 @@ module.exports = {
   },
   devtool: mode === "production" ? "source-map" : "cheap-module-source-map",
   // devtool: "none",
-  optimization: {
-    splitChunks: {
-      chunks: "initial",
-      maxInitialRequests: 5,
-      cacheGroups: {
-        curated: {
-          name: "curated",
-          test: /[\\/]src[\\/]curated[\\/]/,
-          minSize: 0,
-        },
-        react: {
-          name: "react",
-          test: /[\\/]node_modules[\\/]react[-\\/]/,
-        },
-        modules: {
-          name: "dependencies",
-          test: /[\\/]node_modules[\\/]/,
-          // priority: -1,
-        },
-      },
-    },
-    minimizer: [
-      new TerserPlugin({ terserOptions: { safari10: true }, sourceMap: true }),
-    ],
-    noEmitOnErrors: true,
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "initial",
+  //     maxInitialRequests: 5,
+  //     cacheGroups: {
+  //       curated: {
+  //         name: "curated",
+  //         test: /[\\/]src[\\/]curated[\\/]/,
+  //         minSize: 0,
+  //       },
+  //       react: {
+  //         name: "react",
+  //         test: /[\\/]node_modules[\\/]react[-\\/]/,
+  //       },
+  //       modules: {
+  //         name: "dependencies",
+  //         test: /[\\/]node_modules[\\/]/,
+  //         priority: -1,
+  //       },
+  //     },
+  //   },
+  //   minimizer: [
+  //     new TerserPlugin({ terserOptions: { safari10: true }, sourceMap: true }),
+  //   ],
+  //   noEmitOnErrors: true,
+  // },
   resolve: {
     extensions: [".js"],
   },
