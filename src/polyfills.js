@@ -3,6 +3,7 @@
 
 /* eslint-disable no-extend-native */
 import 'details-element-polyfill';
+import 'core-js/fn/array/of';
 
 if (!String.prototype.trimStart) {
   String.prototype.trimStart = String.prototype.trimLeft;
