@@ -52,14 +52,14 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }) => {
-  const className = `collection${isAuthorized ? ' authorized' : ''} ${showUser ? ' show-user' : ''}`;
+const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator }) => {
+  const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
   return (
     <li>
       {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
 
-      {showUser && (
-        <div>
+      {showCurator && (
+        <div className="collection-curator">
           {collection.user && <UserAvatar user={collection.user} />}
           {collection.team && <TeamAvatar team={collection.team} />}
         </div>
@@ -68,9 +68,11 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }
       {collection && (
         <div className={className} id={`collection-${collection.id}`}>
           <div className="collection-container">
-            <CollectionLink collection={collection} 
-              className="collection-info button-area" 
-              style={{ backgroundColor: collection.coverColor, borderColor: collection.coverColor }}>
+            <CollectionLink
+              collection={collection}
+              className="collection-info button-area"
+              style={{ backgroundColor: collection.coverColor, borderColor: collection.coverColor }}
+            >
               <div className="avatar-container" aria-hidden="true">
                 <div className="avatar">
                   <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
@@ -111,14 +113,14 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }
 CollectionItem.propTypes = {
   collection: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool,
-  showUser: PropTypes.bool,
+  showCurator: PropTypes.bool,
   deleteCollection: PropTypes.func,
 };
 
 CollectionItem.defaultProps = {
   deleteCollection: () => {},
   isAuthorized: false,
-  showUser: false,
+  showCurator: false,
 };
 
 export default CollectionItem;
