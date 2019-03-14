@@ -89,7 +89,6 @@
     margin: 30px 30px 30px 16px
     overflow: visible
     
-    //grid stuff
     display: grid
     grid-template-columns: 1fr 1fr 1fr
     grid-template-rows: auto
@@ -98,15 +97,10 @@
 
 
   .projects-container > li
-    //grid
     display: grid
     align-content: end
-    // min-width: calc(33.3% - 10px)
+    min-width: 95%;
     
-    @media(max-width: largeViewport)
-      width: 31%
-    @media(max-width: mediumViewport)
-      width: 100%
     .project-options-pop
       width: 200px
   .empty-collection-hint
