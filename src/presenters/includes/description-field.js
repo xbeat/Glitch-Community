@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 
-import Markdown from './markdown';
+import Markdown from '../../components/text/markdown';
 import { OptimisticValue } from './field-helpers';
 
 class EditableDescriptionImpl extends React.Component {

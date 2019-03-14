@@ -11,7 +11,7 @@ import { AnalyticsContext } from '../analytics';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
-import Markdown from '../includes/markdown';
+import Markdown from '../../components/text/markdown';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
 import EditableField from '../includes/editable-field';

@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { chunk } from 'lodash';
+import { chunk, keyBy, flatMap, uniq } from 'lodash';
+
+import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
 function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});
-}
-
-function keyByVal(list, key) {
-  return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
 }
 
 class ProjectsLoader extends React.Component {
@@ -29,10 +27,29 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadProjects(...ids) {
-    if (!ids.length) return;
-    const { data } = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-    this.setState(keyByVal(data, 'id'));
+  async loadProjects(...projectIds) {
+    if (!projectIds.length) return;
+
+    let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
+    // Convert projects from the format state expects to an array
+    projects = Object.values(projects);
+
+    // Gather unique user IDs for all of the projects being loaded, based on permissions
+    const uniqueUserIds = uniq(flatMap(projects, ({ permissions }) => permissions.map(({ userId }) => userId)));
+
+    // Load all of the users for this set of projects
+    const allUsers = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
+
+    // Go back over the projects and pick users out of the array by ID based on permissions
+    projects = projects.map((project) => ({
+      ...project,
+      users: project.permissions.map(({ userId }) => allUsers[userId]),
+    }));
+
+    // Put projects back into the format state expects
+    // NOTE: We're not loading teams, but they aren't used in project lists
+    projects = keyBy(projects, 'id');
+    this.setState(projects);
   }
 
   ensureProjects(projects) {
