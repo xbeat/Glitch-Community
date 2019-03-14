@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout';
-const { capitalize, sum } = require('lodash');
 import Pluralize from 'react-pluralize';
 
 import { useCurrentUser } from '../current-user';
+import { capitalize, sum } from 'lodash';
 
 import Button from '../../components/buttons/button';
 
@@ -18,9 +18,10 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+
 const filters = [{name: 'all', hits: null}, {name: 'teams', hits: 0}, {name: 'users', hits: 0}, {name: 'projects', hits: 0}];
 
-const FilterButtons = ({
+const FilterContainer = ({
   activeFilter, setFilter, query
 }) => {
   const totalHits = sum(filters.map(filter => filter.hits));
@@ -30,7 +31,6 @@ const FilterButtons = ({
   
   return (
     <>
-    <Pluralize count={totalHits} singular="result"/> for {query}
     <div className="search-filters segmented-buttons">
       {filters.map((filter) =>  (
         ((filter.hits === null || filter.hits > 0) &&
@@ -43,11 +43,12 @@ const FilterButtons = ({
          )
        ))}
     </div>   
+    <h1><Pluralize count={totalHits} singular="result"/> for {query}</h1>
     </>
     )
 };
 
-FilterButtons.propTypes = {
+FilterContainer.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
 };
@@ -155,18 +156,18 @@ class SearchResults extends React.Component {
     const { data } = await api.get(`users/search?q=${query}`);
     this.setState({
       users: data.slice(0, MAX_USER_TEAM_RESULTS),
-      loadedResults: this.state.loadedResults+1,
+      loadedResults: this.state.loadedResults + 1,
     });
   }
 
   async searchProjects() {
     const { api, query } = this.props;
     const { data } = await api.get(`projects/search?q=${query}`);
-    this.setState({
+    this.setState((prevState) => {
       projects: data
         .filter((project) => !project.notSafeForKids)
         .slice(0, MAX_PROJECT_RESULTS),
-      loadedResults: this.state.loadedResults+1,
+      loadedResults: prevState.loadedResults + 1,
     });
   }
 
@@ -185,35 +186,23 @@ class SearchResults extends React.Component {
     const showTeams = (activeFilter === 'all' || activeFilter === 'teams') && showResults(teams);
     const showUsers = (activeFilter === 'all' || activeFilter === 'users') && showResults(users);
     const showProjects = (activeFilter === 'all' || activeFilter === 'projects') && showResults(projects);
-  
+
     // store results per type
     filters[1].hits = (teams ? teams.length : 0);
     filters[2].hits = (users ? users.length : 0);
-    filters[3].hits = (projects ? projects.length : 0);    
-    const totalResults = filters[1].hits + filters[2].hits + filters[3].hits;
-    
+    filters[3].hits = (projects ? projects.length : 0);
+
     return (
       <main className="search-results">
-        { this.state.loadedResults === filters.length-1 &&  
-          <FilterButtons
+        { this.state.loadedResults === filters.length - 1 &&
+          <FilterContainer
             setFilter={this.setFilter}
             activeFilter={activeFilter}
             query={this.props.query}
           />
         }
-        { activeFilter === 'all' &&
-          <h1>
-            { this.state.loadedResults !== filters.length-1 
-              <Loader /> 
-              :
-              <>
-                totalResults > 0 && 
-                  <Pluralize count={totalResults} singular="result"/> for {this.props.query}
-                )
-             </>
-            }
-          </h1>
-        }
+        { (activeFilter === 'all' && this.state.loadedResults !== filters.length - 1) &&
+          <Loader /> }
         { showTeams && <TeamResults teams={teams} />}
         { showUsers && <UserResults users={users} />}
         { showProjects && (
