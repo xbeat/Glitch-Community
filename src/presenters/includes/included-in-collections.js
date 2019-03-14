@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { sampleSize } from 'lodash';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
 import CollectionItem from '../collection-item';
 
 const getIncludedCollections = async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
-  return Promise.all(
+  const withData = await Promise.all(
     collections.map(async (collection) => {
       const { projects, user, team } = await allByKeys({
         projects: getAllPages(api, `/v1/collections/by/id/projects?id=${collection.id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
@@ -15,6 +16,7 @@ const getIncludedCollections = async (api, projectId) => {
       return { ...collection, projects, user, team };
     }),
   );
+  return sampleSize(withData, 3);
 };
 
 const useAsync = (cb, ...args) => {
