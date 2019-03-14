@@ -28,7 +28,7 @@ function syncPageToLogin(login) {
 const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) => {
   if (!login) {
     return (
-      <Heading tagName="h1" className="login">
+      <Heading tagName="h1">
         Anonymous
       </Heading>
     );
@@ -37,17 +37,17 @@ const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) =>
   if (!isAuthorized) {
     if (!name) {
       return (
-        <Heading tagName="h1" className="login">
+        <Heading tagName="h1">
           @{login}
         </Heading>
       );
     }
     return (
       <>
-        <Heading tagName="h1" className="username">
+        <Heading tagName="h1">
           {name}
         </Heading>
-        <Heading tagName="h2" className="login">
+        <Heading tagName="h2">
           @{login}
         </Heading>
       </>
@@ -56,10 +56,10 @@ const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) =>
   const editableName = name !== null ? name : '';
   return (
     <>
-      <Heading tagName="h1" className="username">
+      <Heading tagName="h1">
         <EditableField value={editableName} update={updateName} placeholder="What's your name?" />
       </Heading>
-      <Heading tagName="h2" className="login">
+      <Heading tagName="h2">
         <EditableField value={login} update={updateLogin} prefix="@" placeholder="Nickname?" />
       </Heading>
     </>

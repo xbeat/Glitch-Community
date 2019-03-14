@@ -63,10 +63,10 @@ storiesOf('Text Input', module)
   .add('text area', () => <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required" />);
 
 storiesOf('Heading', module)
-  .add('h1 xlarge bold ', () => (<Heading tagName="h1">H1, size extra large, bold</Heading>))
-  .add('h2 large bold', () => (<Heading tagName="h2">H2, size large, bold</Heading>))
-  .add('h3 medium customClass', () => (<Heading tagName="h3" className="customClass">H3, size medium</Heading>))
-  .add('h4 small', () => (<Heading tagName="h3">H4, size small</Heading>))
+  .add('h1 ', () => (<Heading tagName="h1">H1, 22px bold</Heading>))
+  .add('h2', () => (<Heading tagName="h2">H2, 18px bold</Heading>))
+  .add('h3', () => (<Heading tagName="h3">H3, 16px</Heading>))
+  .add('h4', () => (<Heading tagName="h4">H4, 14px</Heading>))
 
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
