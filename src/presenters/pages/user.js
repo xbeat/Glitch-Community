@@ -27,29 +27,17 @@ function syncPageToLogin(login) {
 
 const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) => {
   if (!login) {
-    return (
-      <Heading tagName="h1">
-        Anonymous
-      </Heading>
-    );
+    return <Heading tagName="h1">Anonymous</Heading>;
   }
 
   if (!isAuthorized) {
     if (!name) {
-      return (
-        <Heading tagName="h1">
-          @{login}
-        </Heading>
-      );
+      return <Heading tagName="h1">@{login}</Heading>;
     }
     return (
       <>
-        <Heading tagName="h1">
-          {name}
-        </Heading>
-        <Heading tagName="h2">
-          @{login}
-        </Heading>
+        <Heading tagName="h1">{name}</Heading>
+        <Heading tagName="h2">@{login}</Heading>
       </>
     );
   }
