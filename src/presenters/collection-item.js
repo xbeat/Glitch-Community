@@ -52,56 +52,61 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }) => (
-  <li>
-    {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
+const CollectionItem = ({ collection, deleteCollection, isAuthorized, showUser }) => {
+  const className = `collection${isAuthorized ? ' authorized' : ''} ${showUser ? ' show-user' : ''}`;
+  return (
+    <li>
+      {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
 
-    {showUser && (
-      <div>
-        {collection.user && <UserAvatar user={collection.user} />}
-        {collection.team && <TeamAvatar team={collection.team} />}
-      </div>
-    )}
-
-    {collection && (
-      <div className={`collection${isAuthorized ? ' authorized' : ''} ${showUser ? ' show-user' : ''}`} id={`collection-${collection.id}`}>
-        <div className="collection-container">
-          <CollectionLink collection={collection} className="collection-info button-area" style={{ backgroundColor: collection.coverColor }}>
-            <div className="avatar-container" aria-hidden="true">
-              <div className="avatar">
-                <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
-              </div>
-            </div>
-            <div className="collection-name-description button-area">
-              <div className="button">
-                <span className="project-badge private-project-badge" aria-label="private" />
-                <div className="project-name">{collection.name}</div>
-              </div>
-              <div
-                className="description"
-                style={{
-                  color: isDarkColor(collection.coverColor) ? 'white' : '',
-                }}
-              >
-                <Markdown length={96}>{collection.description}</Markdown>
-              </div>
-            </div>
-
-            <div className="overflow-mask" />
-          </CollectionLink>
-
-          {collection.projects ? (
-            <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection} isAuthorized={isAuthorized} />
-          ) : (
-            <div className="collection-link">
-              <Loader />
-            </div>
-          )}
+      {showUser && (
+        <div>
+          {collection.user && <UserAvatar user={collection.user} />}
+          {collection.team && <TeamAvatar team={collection.team} />}
         </div>
-      </div>
-    )}
-  </li>
-);
+      )}
+
+      {collection && (
+        <div className={className} id={`collection-${collection.id}`}>
+          <div className="collection-container">
+            <CollectionLink collection={collection} 
+              className="collection-info button-area" 
+              style={{ backgroundColor: collection.coverColor, borderColor: collection.coverColor }}>
+              <div className="avatar-container" aria-hidden="true">
+                <div className="avatar">
+                  <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
+                </div>
+              </div>
+              <div className="collection-name-description button-area">
+                <div className="button">
+                  <span className="project-badge private-project-badge" aria-label="private" />
+                  <div className="project-name">{collection.name}</div>
+                </div>
+                <div
+                  className="description"
+                  style={{
+                    color: isDarkColor(collection.coverColor) ? 'white' : '',
+                  }}
+                >
+                  <Markdown length={96}>{collection.description}</Markdown>
+                </div>
+              </div>
+
+              <div className="overflow-mask" />
+            </CollectionLink>
+
+            {collection.projects ? (
+              <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection} isAuthorized={isAuthorized} />
+            ) : (
+              <div className="collection-link">
+                <Loader />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </li>
+  );
+};
 
 CollectionItem.propTypes = {
   collection: PropTypes.object.isRequired,
