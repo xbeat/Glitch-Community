@@ -21,37 +21,31 @@ import UserItem from '../user-item';
 
 const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name: 'users', hits: 0 }, { name: 'projects', hits: 0 }];
 
-const FilterContainer = ({ activeFilter, setFilter, query }) => {
+const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  if (totalHits === 0) {
-    return null;
+  if(!loaded){
+    return <Loader/>;
   }
 
   return (
-    <>
-      <div className="search-filters segmented-buttons">
-        {filters.map(
-          (filter) =>
-            (filter.hits === null || filter.hits > 0) && (
-              <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
-                {capitalize(filter.name)}
-                {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
-              </Button>
-            ),
-        )}
-      </div>
-      { activeFilter === 'all' &&
-        <h1>
-          <Pluralize count={totalHits} singular="result" /> for {query}
-        </h1>
-      }
-    </>
+    <div className="search-filters segmented-buttons">
+      {filters.map(
+        (filter) =>
+          (filter.hits === null || filter.hits > 0) && (
+            <Button key={filter.name} size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
+              {capitalize(filter.name)}
+              {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
+            </Button>
+          ),
+      )}
+    </div>
   );
 };
 
 FilterContainer.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
+  loaded: PropTypes.bool.isRequired,
 };
 
 const TeamResults = ({ teams }) => (
@@ -181,10 +175,13 @@ class SearchResults extends React.Component {
 
     return (
       <main className="search-results">
-        {this.state.loadedResults === filters.length - 1 && (
-          <FilterContainer setFilter={this.setFilter} activeFilter={activeFilter} query={this.props.query} />
-        )}
-        {activeFilter === 'all' && this.state.loadedResults !== filters.length - 1 && <Loader />}
+        <FilterContainer
+          setFilter={this.setFilter}
+          activeFilter={activeFilter}
+          query={this.props.query}
+          loaded={this.state.loadedResults === filters.length - 1}
+        />
+        {activeFilter === 'all' && <h1>All Results for {this.props.query}</h1>}
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (
