@@ -15,8 +15,7 @@
   "plugins": [
     "lodash",
     "@babel/syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties",
-    "transform-es2015-for-of"
+    "@babel/plugin-proposal-class-properties"
   ],
-  "sourceType": "unambiguous"
+  "sourceType": "module"
 }
