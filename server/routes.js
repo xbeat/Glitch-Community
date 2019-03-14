@@ -21,19 +21,22 @@ module.exports = function(external) {
     nonces.push(crypto.randomBytes(16).toString('base64'));
   }
   
+  const {sources} = constants;
+  
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", ...nonces.map(n => `"'nonce-${n}'"`), ...constants.scriptSources],
+      scriptSrc: ["'self'", ...nonces.map(n => `'nonce-${n}'`), ...sources.scripts],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
-      styleSrc: ["'self'", "'unsafe-inline'", ...constants.styleSources],
-      imgSrc: ["'self'", ...constants.imageSources],
-      fontSrc: ["'self'", "'data:'", ...constants.fontSources],
-      connectSrc: ["'self'", ...constants.connectSources],
-      frameSrc: ["'self'", ...constants.frameSources],
+      styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
+      imgSrc: ["'self'", ...sources.images],
+      fontSrc: ["'self'", "'data:'", ...sources.fonts],
+      connectSrc: ["'self'", ...sources.connect],
+      frameSrc: ["'self'", ...sources.frames],
     }
   }));
+  
 
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {

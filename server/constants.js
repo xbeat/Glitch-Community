@@ -40,17 +40,19 @@ const sources = {
     'api.segment.io',
     'static.woopra.com',
     'fast.wistia.com',
-  ]
-const styleSources = ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'];
-const imageSources = ['*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'];
-const fontSources = ['*.webtype.com'];
-const connectSources = ['api.glitch.com', 'api.segment.io', '*.wistia.com', '*.litix.io'];
-const frameSources = ['glitch.com', '*.glitch.me', 'fast.wistia.com'];
+  ],
+  styles: ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
+  images: ['*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
+  fonts: ['*.webtype.com'],
+  connect: ['api.glitch.com', 'api.segment.io', '*.wistia.com', '*.litix.io'],
+  frames: ['glitch.com', '*.glitch.me', 'fast.wistia.com'],
+};
 
 // in the backend, just switch between staging and production
 const currentEnv = process.env.RUNNING_ON === 'staging' ? 'staging' : 'production';
 module.exports = {
   ...envs,
+  sources,
   current: envs[currentEnv],
   currentEnv,
 };
