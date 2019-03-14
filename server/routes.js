@@ -110,6 +110,7 @@ module.exports = function(external) {
       frameSrc: ["'self'", ...sources.frames],
       mediaSrc: ["'self'", ...sources.media],
       baseUri: ["'self'"],
+      // reportUri: TODO
     }
   }));
   
