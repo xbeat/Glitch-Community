@@ -99,9 +99,7 @@ module.exports = function(external) {
       scriptSrc: [
         "'self'",
         ...sources.scripts,
-        (req, res) => `'nonce-${res.locals.nonces[0]}'`,
-        (req, res) => `'nonce-${res.locals.nonces[1]}'`,
-        (req, res) => `'nonce-${res.locals.nonces[2]}'`,
+        (req, res) => res.locals.nonces.map(n => `'nonce-${n}'`).join(' ')
       ],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
