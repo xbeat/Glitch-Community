@@ -108,6 +108,7 @@ module.exports = function(external) {
       fontSrc: ["'self'", ...sources.fonts],
       connectSrc: ["'self'", ...sources.connect],
       frameSrc: ["'self'", ...sources.frames],
+      mediaSrc: ["'self'", ...sources.media],
       baseUri: ["'self'"],
     }
   }));

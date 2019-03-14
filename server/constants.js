@@ -44,9 +44,10 @@ const sources = {
   ],
   styles: ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
   images: ['*.glitch.com', '*.gomix.com', 'cdn.hyperdev.com', 's3.amazonaws.com', '*.webtype.com', 'fast.wistia.com', 'culture-zine.glitch.me', '*.akamaihd.net'],
-  fonts: ['data:', '*.webtype.com'],
+  fonts: ['data:', '*.webtype.com', 'fonts.gstatic.com'],
   connect: ['api.glitch.com', 'api.segment.io', '*.wistia.com', '*.litix.io', '*.akamaihd.net'],
   frames: ['glitch.com', '*.glitch.me', 'fast.wistia.com'],
+  media: ['fast.wistia.net'],
 };
 
 // in the backend, just switch between staging and production
