@@ -62,26 +62,21 @@ class UserEditor extends React.Component {
 
   async addPin(id) {
     await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
-    this.setState(({ projects, pins }) => {
-      const [pinned, notPinned] = partition(projects, (p) => p.id === id)
-      console.log({ pinned, notPinned })
-      return {
-        pins: [...projects, ...pinned],
-        projects: notPinned,
-      }
-    });
+    this.setState(({ pins, projects }) => ({
+      pins: [...pins, { projectId: id }],
+      projects: projects.filter((p) => p.projectId !== id),
+    }));
   }
 
   async removePin(id) {
     await this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`);
     this.setState(({ projects, pins }) => {
-      const [unpinned, stillPinned] = partition(pins, (p) => p.id === id)
-      console.log({ unpinned, stillPinned })
-      return {
-        pins: stillPinned,
-        projects: [...projects, ...unpinned]
-      }
-    });
+      const [unpinned, stillPinned]
+ = pin.   
+    } ({
+      pins: pins.filter((p) => p.projectId !== id),
+      projects: [...projects, ...pins.filter((p) => p.projectId === id)],
+    }));
   }
 
   async leaveProject(id) {
