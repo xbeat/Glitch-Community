@@ -1,6 +1,8 @@
 import React, { createRef, useState, useEffect } from 'react';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
+import CollectionItem from '../collection-item';
+
 const getIncludedCollections = async (api, projectId) => {
   // TODO: are we only getting 3 collections here?
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
@@ -16,7 +18,7 @@ const getIncludedCollections = async (api, projectId) => {
   );
 };
 
-const useAPI = (cb, ...args) => {
+const useAsync = (cb, ...args) => {
   const [result, setResult] = useState(null)
   useEffect(() => {
     cb(...args).then(setResult);
@@ -25,15 +27,25 @@ const useAPI = (cb, ...args) => {
 };
 
 const IncludedInCollections = ({ api, projectId }) => {
-  const data = useAPI(getIncludedCollections, api, projectId);
-  if (!data) {
+  const collections = useAsync(getIncludedCollections, api, projectId);
+  if (!collections) {
     return null;
   }
-  console.log(data);
+  console.log(collections);
   return (
-    <>
+    <div className="collections">
       <h2>Included in Collections</h2>
-    </>
+      <ul className="collections-container">
+        {collections.map(collection => (
+          <CollectionItem
+            key={collection.id}
+            collection={collection}
+            api={api}
+            isAuthorized={false}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
