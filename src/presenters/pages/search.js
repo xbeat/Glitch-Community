@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { capitalize, sum } from 'lodash';
-import Pluralize from 'react-pluralize';
 
 import Layout from '../layout';
 
@@ -21,9 +20,17 @@ import UserItem from '../user-item';
 
 const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name: 'users', hits: 0 }, { name: 'projects', hits: 0 }];
 
-const FilterContainer = ({ activeFilter, setFilter, query }) => {
+const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  if (totalHits === 0) {
+  if (!loaded) {
+    return (
+      <>
+        <Loader />
+        <h1>All results for {query}</h1>
+      </>
+    );
+  }
+  if (loaded && totalHits === 0) {
     return null;
   }
 
@@ -40,11 +47,7 @@ const FilterContainer = ({ activeFilter, setFilter, query }) => {
             ),
         )}
       </div>
-      { activeFilter === 'all' &&
-        <h1>
-          <Pluralize count={totalHits} singular="result" /> for {query}
-        </h1>
-      }
+      {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
 };
@@ -52,6 +55,7 @@ const FilterContainer = ({ activeFilter, setFilter, query }) => {
 FilterContainer.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
+  loaded: PropTypes.bool.isRequired,
 };
 
 const TeamResults = ({ teams }) => (
@@ -181,10 +185,12 @@ class SearchResults extends React.Component {
 
     return (
       <main className="search-results">
-        {this.state.loadedResults === filters.length - 1 && (
-          <FilterContainer setFilter={this.setFilter} activeFilter={activeFilter} query={this.props.query} />
-        )}
-        {activeFilter === 'all' && this.state.loadedResults !== filters.length - 1 && <Loader />}
+        <FilterContainer
+          setFilter={this.setFilter}
+          activeFilter={activeFilter}
+          query={this.props.query}
+          loaded={this.state.loadedResults === filters.length - 1}
+        />
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (

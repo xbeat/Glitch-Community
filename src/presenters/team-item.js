@@ -24,12 +24,12 @@ export default function TeamItem({ team }) {
           </TeamLink>
           {!!team.isVerified && <VerifiedBadge />}
           <UsersList users={team.users} />
-          {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
           {!!team.description && (
             <p className="description">
               <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
             </p>
           )}
+          {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
         </div>
       </div>
     </WrappingLink>
