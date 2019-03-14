@@ -40,9 +40,11 @@ const FilterContainer = ({ activeFilter, setFilter, query }) => {
             ),
         )}
       </div>
-      <h1>
-        <Pluralize count={totalHits} singular="result" /> for {query}
-      </h1>
+      { activeFilter == 'all' && 
+        <h1>
+          <Pluralize count={totalHits} singular="result" /> for {query}
+        </h1>
+      }
     </>
   );
 };
