@@ -22,13 +22,10 @@ console.log(`Starting Webpack in ${mode} mode.`);
 
 module.exports = {
   mode,
-      entry: [ 'babel-polyfill', `${SRC}/client.js`],
-
-//   entry: {
-//     client: `${SRC}/client.js`,
-//     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
-    
-//   },
+  entry: {
+    client: `${SRC}/client.js`,
+    [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
+  },
   output: {
     filename: "[name].js?[contenthash]",
     path: BUILD,
