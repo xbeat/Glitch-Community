@@ -69,6 +69,9 @@ storiesOf('Heading', module)
   .add('h3', () => <Heading tagName="h3">H3, 16px</Heading>)
   .add('h4', () => <Heading tagName="h4">H4, 14px</Heading>);
 
+storiesOf('Text', module)
+  .add('regular ', () => <Text>Regular, 20px</Text>);
+
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
