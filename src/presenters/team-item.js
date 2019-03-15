@@ -9,7 +9,7 @@ import { Thanks } from './includes/thanks';
 import UsersList from './users-list';
 import WrappingLink from './includes/wrapping-link';
 import { VerifiedBadge } from './includes/team-elements';
-import Button from '../../components/buttons/button';
+import Button from '../components/buttons/button';
 
 export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });
