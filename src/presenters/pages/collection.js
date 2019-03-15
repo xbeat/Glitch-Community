@@ -84,126 +84,132 @@ const CollectionPageContents = ({
   addNoteField,
   ...props
 }) => {
-  console.log("hi")
-  
   const collectionHasProjects = !!collection && !!collection.projects;
+  const userIsLoggedIn = currentUser && currentUser.login;
   
   return (
-  <>
-    <Helmet>
-      <title>{collection.name}</title>
-    </Helmet>
-    <main className="collection-page">
-      <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
-        <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
-          <div className="collection-image-container">
-            <CollectionAvatar color={collection.coverColor} />
-          </div>
+    <>
+      <Helmet>
+        <title>{collection.name}</title>
+      </Helmet>
+      <main className="collection-page">
+        <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
+          <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
+            <div className="collection-image-container">
+              <CollectionAvatar color={collection.coverColor} />
+            </div>
 
-          <EditCollectionNameAndUrl
-            isAuthorized={userIsAuthor}
-            name={collection.name}
-            url={collection.url}
-            update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
-          />
-
-          {collection.team && <TeamTile team={collection.team} />}
-          {collection.user && <UserTile user={collection.user} />}
-
-          <div className="collection-description">
-            <AuthDescription
-              authorized={userIsAuthor}
-              description={collection.description}
-              update={updateDescription}
-              placeholder="Tell us about your collection"
+            <EditCollectionNameAndUrl
+              isAuthorized={userIsAuthor}
+              name={collection.name}
+              url={collection.url}
+              update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
             />
-          </div>
 
-          {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
-        </header>
-        { 
-          !collectionHasProjects && userIsAuthor && (
-            <div className="empty-collection-hint">
-              <img
-                src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
-                alt=""
+            {collection.team && <TeamTile team={collection.team} />}
+            {collection.user && <UserTile user={collection.user} />}
+
+            <div className="collection-description">
+              <AuthDescription
+                authorized={userIsAuthor}
+                description={collection.description}
+                update={updateDescription}
+                placeholder="Tell us about your collection"
               />
-              <p>You can add any project, created by any user</p>
             </div>
-          )
-        }
-        {
-          !collectionHasProjects && !userIsAuthor && (
-            <div className="empty-collection-hint">
-              No projects to see in this collection just yet.
-            </div>
-          )
-        }
-        { collectionHasProjects && (
-        <>
-          <div className="collection-contents">
-            <div className="collection-project-container-header">
-              <h3>
-                Projects ({collection.projects.length})
-              </h3>
 
-              {
-                !!userIsAuthor && (
-                  <AddCollectionProject
-                    addProjectToCollection={addProjectToCollection}
-                    collection={collection}
-                    api={api}
-                    currentUser={currentUser}
-                  />
-                )
-              }
-            </div>
-            { collectionHasProjects && userIsAuthor
-                <ProjectsUL
-                  {...props}
-                  projects={collection.projects}
-                  author={collection.user}
-                  api={api}
-                  collectionCoverColor={collection.coverColor}
-                  projectOptions={{
-                    removeProjectFromCollection,
-                    addProjectToCollection,
-                    updateOrAddNote,
-                    addNoteField,
-                  }}
+            {userIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
+          </header>
+          { 
+            !collectionHasProjects && userIsAuthor && (
+              <div className="empty-collection-hint">
+                <img
+                  src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
+                  alt=""
                 />
-              ) : currentUser && currentUser.login ? (
-                <ProjectsUL
-                  {...props}
-                  projects={collection.projects}
-                  author={collection.user}
-                  api={api}
-                  collectionCoverColor={collection.coverColor}
-                  projectOptions={{
-                    addProjectToCollection,
-                  }}
-                />
-              ) : (
-                <ProjectsUL
-                  {...props}
-                  projects={collection.projects}
-                  author={collection.user}
-                  api={api}
-                  collectionCoverColor={collection.coverColor}
-                  projectOptions={{}}
-                />
-              )
+                <p>You can add any project, created by any user</p>
+              </div>
             )
           }
-          </div>
-        </>
-        )}
-      </article>
-      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
-    </main>
-    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
-  </>
-)};
+          {
+            !collectionHasProjects && !userIsAuthor && (
+              <div className="empty-collection-hint">
+                No projects to see in this collection just yet.
+              </div>
+            )
+          }
+          { 
+            collectionHasProjects && (
+              <>
+                <div className="collection-contents">
+                  <div className="collection-project-container-header">
+                    <h3>
+                      Projects ({collection.projects.length})
+                    </h3>
+                    {
+                      userIsAuthor && (
+                        <AddCollectionProject
+                          addProjectToCollection={addProjectToCollection}
+                          collection={collection}
+                          api={api}
+                          currentUser={currentUser}
+                        />
+                      )
+                    }
+                  </div>
+                  { 
+                    userIsAuthor && (
+                      <ProjectsUL
+                        {...props}
+                        projects={collection.projects}
+                        author={collection.user}
+                        api={api}
+                        collectionCoverColor={collection.coverColor}
+                        projectOptions={{
+                          removeProjectFromCollection,
+                          addProjectToCollection,
+                          updateOrAddNote,
+                          addNoteField,
+                        }}
+                      />
+                    )
+                  }
+                  { 
+                    !userIsAuthor && userIsLoggedIn && (
+                      <ProjectsUL
+                        {...props}
+                        projects={collection.projects}
+                        author={collection.user}
+                        api={api}
+                        collectionCoverColor={collection.coverColor}
+                        projectOptions={{
+                          addProjectToCollection,
+                        }}
+                      />
+                    )
+                  }
+                  { 
+                    !userIsAuthor && !userIsLoggedIn && (
+                      <ProjectsUL
+                        {...props}
+                        projects={collection.projects}
+                        author={collection.user}
+                        api={api}
+                        collectionCoverColor={collection.coverColor}
+                        projectOptions={{}}
+                      />
+                    )
+                  }
+                </div>
+              </>
+              )}
+            </article>
+        {!userIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
+      </main>
+      {userIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
+    </>
+  )
+};
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
