@@ -18,20 +18,18 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-class FilterContainer extends React.Component {
-  componentDidMount(){
-    console.log('component did mount');
+const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
+  const totalHits = sum(filters.map((filter) => filter.hits));
+
+  const setDefaultActiveBtn = () => {
+    // set the all button to be active by default - this isn't working yet...
     const allBtn = document.querySelector('.segmented-buttons button');
-    if(allBtn) {
+    if (allBtn) {
       allBtn.classList.add('active');
-      console.log('set default btn');
     }
-  }
-  
-  render(){
-    const { filters, activeFilter, setFilter, query, loaded } = this.props;
-    const totalHits = sum(filters.map((filter) => filter.hits));
-    if (!loaded) {
+  };
+
+  if (!loaded) {
     return (
       <>
         <Loader />
@@ -57,10 +55,10 @@ class FilterContainer extends React.Component {
         )}
       </div>
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
+      {setDefaultActiveBtn()}
     </>
   );
-  }
-}
+};
 
 FilterContainer.propTypes = {
   filters: PropTypes.array.isRequired,
