@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 // TODO: let's move these into components
-import { EditableDescription } from './includes/description-field';
+import { AuthDescription } from './includes/description-field';
 import { UserTile } from './users-list';
 
 import { isDarkColor } from '../models/collection';
@@ -22,25 +22,24 @@ const Note = ({
     descriptionContainer: true,
     dark: isDarkColor(collectionCoverColor),
   });
-  if (author) {
-    
-    return (
-      <div className="note">
-        <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
-          <EditableDescription
-            description={project.note || ''}
-            placeholder="Share why you love this app."
-            update={update}
-            maxLength={75}
-          />
-        </div>
-        <div className="user">
-          <UserTile user={author} />
-        </div>
+ 
+  console.log("UPDATE?", !!update)
+  return (
+    <div className="note">
+      <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
+        <AuthDescription
+          authorized={!!update}
+          description={project.note || ''}
+          placeholder="Share why you love this app."
+          update={update}
+          maxLength={75}
+        />
       </div>
-    );
-  }
-  return null;
+      <div className="user">
+        <UserTile user={author} />
+      </div>
+    </div>
+  );
 };
 
 

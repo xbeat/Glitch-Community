@@ -83,7 +83,10 @@ const CollectionPageContents = ({
   updateOrAddNote,
   addNoteField,
   ...props
-}) => (
+}) => {
+  console.log("hi")
+  const noProjects = 
+  return (
   <>
     <Helmet>
       <title>{collection.name}</title>
@@ -191,7 +194,7 @@ const CollectionPageContents = ({
     </main>
     {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
-);
+)};
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
