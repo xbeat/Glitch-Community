@@ -60,14 +60,10 @@ class CollectionEditor extends React.Component {
         return { ...project };
       }),
     }));
-    try {
-      await this.props.api.patch(
-        `collections/${this.state.id}/project/${projectId}`,
-        { annotation: note },
-      );
-    } catch (e) {
-      console.log('hit an error:', e);
-    }
+    await this.props.api.patch(
+      `collections/${this.state.id}/project/${projectId}`,
+      { annotation: note },
+    );
   }
 
   addNoteField(projectId) {

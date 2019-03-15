@@ -7,7 +7,6 @@ dependencies:
   '@babel/preset-react': 7.0.0
   '@sentry/browser': 4.6.3
   '@sentry/node': 4.6.3
-  '@storybook/addon-actions': 4.1.14
   '@storybook/react': 4.1.13
   autoprefixer-stylus: 0.14.0
   axios: 0.18.0
@@ -59,7 +58,6 @@ dependencies:
   react-select: 2.4.1
   react-textarea-autosize: 7.1.0
   stats-webpack-plugin: 0.7.0
-  storybook-react-router: 1.0.2
   stylus: 0.54.5
   stylus-loader: 3.0.2
   terser-webpack-plugin: 1.2.2
@@ -2308,27 +2306,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-GNZjIErN99gqJfLMC1L4X4lzu3x1l562UGpuiv3iMQXoNCy8mpNeKtjizoocCGTLHmWB91m6wd2WTHH7P0POjA==
-  /@storybook/addon-actions/4.1.14:
-    dependencies:
-      '@emotion/core': 0.13.1
-      '@emotion/provider': /@emotion/provider/0.11.2/@emotion!core@0.13.1
-      '@emotion/styled': 0.10.6
-      '@storybook/addons': 4.1.14
-      '@storybook/components': 4.1.14
-      '@storybook/core-events': 4.1.14
-      core-js: 2.6.5
-      deep-equal: 1.0.1
-      global: 4.3.2
-      lodash: 4.17.11
-      make-error: 1.3.5
-      prop-types: 15.7.2
-      react-inspector: 2.3.1
-      uuid: 3.3.2
-    dev: false
-    peerDependencies:
-      react: '*'
-    resolution:
-      integrity: sha512-zq8MSSLXv+D+e/m3LdRrAMVrJP5xcETO4OtutJCdJeAkIjMvstnWncUEUHMltv/+bTBQgb77uoTFKVN4zrJL2g==
   /@storybook/addons/4.1.13:
     dependencies:
       '@storybook/channels': 4.1.13
@@ -2338,15 +2315,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5WqXwFOc5Oj/ccem7I5FXTWJlCxfgzCgUlWGwkut/ahfuKkcvAPFKuRslReCWLT0sBZl8iap49HgYSNGDztAbA==
-  /@storybook/addons/4.1.14:
-    dependencies:
-      '@storybook/channels': 4.1.14
-      '@storybook/components': 4.1.14
-      global: 4.3.2
-      util-deprecate: 1.0.2
-    dev: false
-    resolution:
-      integrity: sha512-nAieZLLeXzuUY8TIHshzVX8VUtUowsyohIKilZSzLIBFMpCEYlyPBilrE9ULqUEtVQWi5peAiKRZ1xJQxx/TIA==
   /@storybook/channel-postmessage/4.1.13:
     dependencies:
       '@storybook/channels': 4.1.13
@@ -2359,10 +2327,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-58GNagdBKagAGDVhdkNVB2cFOLBDAft7Ky2qDdha9pZyyTwJy5VqchvNQokv7kgwCusmic2vYEO35fVY1/v2cQ==
-  /@storybook/channels/4.1.14:
-    dev: false
-    resolution:
-      integrity: sha512-2BpKF7MXWfJeY9lRHrUseJ6JoZXshmo9B4np7TAex3NXOeRLsptQMCfQXgMgUMDQhABc0o9XBAruQOb9zMyd7w==
   /@storybook/client-logger/4.1.13:
     dev: false
     resolution:
@@ -2406,32 +2370,10 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-EATXdzCJa9UfLcmVTR0TuspOnYHuTCv5wiitDVLPDdpvuqWEDEXxVHBhYOolElo0PeLqC7Dxm2OHLNzh1Su5gQ==
-  /@storybook/components/4.1.14:
-    dependencies:
-      '@emotion/core': 0.13.1
-      '@emotion/provider': /@emotion/provider/0.11.2/@emotion!core@0.13.1
-      '@emotion/styled': 0.10.6
-      global: 4.3.2
-      lodash: 4.17.11
-      prop-types: 15.7.2
-      react-inspector: 2.3.1
-      react-split-pane: 0.1.85
-      react-textarea-autosize: 7.1.0
-      render-fragment: /render-fragment/0.1.1/prop-types@15.7.2
-    dev: false
-    peerDependencies:
-      react: '*'
-      react-dom: '*'
-    resolution:
-      integrity: sha512-UdSwxZutRUW8umaaPnris5M9pGz2220KXs/5g2URaw3rEL8eUaKLKJXSpFSOeXPhlCnV7B9R/qanG9GXGQKXmg==
   /@storybook/core-events/4.1.13:
     dev: false
     resolution:
       integrity: sha512-nRado+I9Jxv9CSH/u0qECbaTQpuoBCJ6+9sJm2lg04jjBvczqmjCi7RoY0NTlVp2VbVeAjht74KMOAfPQ2D+IA==
-  /@storybook/core-events/4.1.14:
-    dev: false
-    resolution:
-      integrity: sha512-UBVTWZonTD5hHR7huWs15mYMKJONjQC6GBQy5AvKDpAIXtAlHe75mv5aZM5gRTP/ThtNE9V1HO4IF3C54dvUjg==
   /@storybook/core/4.1.13:
     dependencies:
       '@babel/plugin-proposal-class-properties': 7.3.3
@@ -7466,10 +7408,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==
-  /make-error/1.3.5:
-    dev: false
-    resolution:
-      integrity: sha512-c3sIjNUow0+8swNwVpqoH4YCShKNFkMaw6oH1mNS2haDZQqkeZFlHS3dhoeEbKKmJB4vXpJucU6oH75aDYeE9g==
   /mamacro/0.0.3:
     dev: false
     resolution:
@@ -9989,18 +9927,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-  /storybook-react-router/1.0.2:
-    dependencies:
-      prop-types: 15.7.2
-    dev: false
-    peerDependencies:
-      '@storybook/addon-actions': ^4.0.0
-      '@storybook/addons': ^4.0.0
-      react: '*'
-      react-dom: '*'
-      react-router: ^4.0.0
-    resolution:
-      integrity: sha512-+dV0wMO8DW3oUaUykoQJKC11uugwgwZRHsXksmO6bRo36CDoJPGFjfnT8LAkDpT1E9FaDZ668xOhJ+7Ml0qUDQ==
   /stream-browserify/2.0.2:
     dependencies:
       inherits: 2.0.3
@@ -11092,7 +11018,6 @@ specifiers:
   '@babel/preset-react': ^7.0.0
   '@sentry/browser': ^4.5.3
   '@sentry/node': ^4.4.1
-  '@storybook/addon-actions': ^4.1.1
   '@storybook/react': ^4.1.1
   autoprefixer-stylus: ^0.14.0
   axios: ^0.18.0
@@ -11144,7 +11069,6 @@ specifiers:
   react-select: ^2.4.0
   react-textarea-autosize: ^7.1.0
   stats-webpack-plugin: ^0.7.0
-  storybook-react-router: ^1.0.2
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
   terser-webpack-plugin: ^1.2.2

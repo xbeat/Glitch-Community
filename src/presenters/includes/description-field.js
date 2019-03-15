@@ -26,7 +26,6 @@ class EditableDescriptionImpl extends React.Component {
     this.setState({ focused: false });
   }
 
-
   render() {
     const { description, placeholder, maxLength } = this.props;
     return this.state.focused ? (
@@ -69,7 +68,7 @@ EditableDescriptionImpl.defaultProps = {
   maxLength: 524288, // this is the built in default
 };
 
-export const EditableDescription = ({
+const EditableDescription = ({
   description, placeholder, update, maxLength,
 }) => (
   <OptimisticValue value={description} update={update}>
@@ -105,9 +104,9 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({ authorized, description, placeholder, update }) =>
+export const AuthDescription = ({ authorized, description, placeholder, update, maxLength }) =>
   authorized ? (
-    <EditableDescription description={description} update={update} placeholder={placeholder} />
+    <EditableDescription description={description} update={update} placeholder={placeholder} maxLength={maxLength} />
   ) : (
     <StaticDescription description={description} />
   );
@@ -117,8 +116,10 @@ AuthDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  maxLength: PropTypes.number,
 };
 
 AuthDescription.defaultProps = {
   placeholder: '',
+  maxLength: null,
 };

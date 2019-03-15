@@ -1,13 +1,11 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
-import StoryRouter from 'storybook-react-router';
 
 import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
-import Note from '../src/components/fields/note';
 import Markdown from '../src/components/text/markdown';
 
 storiesOf('Button', module)
