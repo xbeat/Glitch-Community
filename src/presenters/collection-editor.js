@@ -33,7 +33,7 @@ class CollectionEditor extends React.Component {
     if (collection.id === this.state.id) {
       // add project to collection page
       this.setState(({ projects }) => ({
-        projects: [...projects, project],
+        projects: [project, ...projects],
       }));
     }
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
