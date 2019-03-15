@@ -14,9 +14,11 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+import Heading from '../../components/text/heading';
+
 const TeamResults = ({ teams }) => (
   <article>
-    <h2>Teams</h2>
+    <Heading tagName="h2">Teams</Heading>
     <ul className="teams-container">
       {teams ? (
         teams.map((team) => (
@@ -33,7 +35,7 @@ const TeamResults = ({ teams }) => (
 
 const UserResults = ({ users }) => (
   <article>
-    <h2>Users</h2>
+    <Heading tagName="h2">Users</Heading>
     <ul className="users-container">
       {users ? (
         users.map((user) => (
@@ -52,7 +54,7 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   if (!projects) {
     return (
       <article>
-        <h2>Projects</h2>
+        <Heading tagName="h2">Projects</Heading>
         <Loader />
       </article>
     );
