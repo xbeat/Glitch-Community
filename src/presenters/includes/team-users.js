@@ -6,7 +6,7 @@ import { TrackClick } from '../analytics';
 import { WhitelistedDomainIcon } from './team-elements';
 import { UserAvatar } from './avatar';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop';
-import PopoverWithButton from '../pop-overs/popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 import PopoverContainer from '../pop-overs/popover-container';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';

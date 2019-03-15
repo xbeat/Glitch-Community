@@ -4,7 +4,7 @@ import { parseOneAddress } from 'email-addresses';
 import _ from 'lodash';
 import axios from 'axios';
 import { PureEditableField } from '../includes/editable-field';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { getAbuseReportTitle, getAbuseReportBody } from '../../utils/abuse-reporting';
 import { Loader } from '../includes/loader';

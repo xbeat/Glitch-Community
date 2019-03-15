@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 import PopoverButton from './popover-button';
 import { useCurrentUser } from '../current-user';
 

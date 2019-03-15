@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import { Link } from '../includes/link';
 import useLocalStorage from '../includes/local-storage';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
