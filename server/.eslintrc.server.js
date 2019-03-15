@@ -21,6 +21,6 @@ module.exports = {
     'no-confusing-arrow': OFF,
   },
   settings: {
-    'import/resolver': path.join(__dirname, 'webpack.config.js'),
+    'import/resolver': path.join(__dirname, '../webpack.config.js'),
   },
 };
