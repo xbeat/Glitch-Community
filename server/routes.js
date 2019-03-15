@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const enforce = require('express-sslify');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
@@ -11,6 +12,8 @@ const constants = require('./constants');
 
 module.exports = function(external) {
   const app = express.Router();
+
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
