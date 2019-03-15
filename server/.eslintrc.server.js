@@ -1,3 +1,5 @@
+const path = require("path");
+
 const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
@@ -19,6 +21,6 @@ module.exports = {
     'no-confusing-arrow': OFF,
   },
   settings: {
-    'import/resolver': 'webpack',
+    'import/resolver': path.join(__dirname, 'webpack.config.js'),
   },
 };
