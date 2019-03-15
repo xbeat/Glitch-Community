@@ -5,8 +5,6 @@ import { UserLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import { Thanks } from './includes/thanks';
 
-import Button from '../components/buttons/button';
-
 import { ANON_AVATAR_URL, getAvatarUrl, getProfileStyle } from '../models/user';
 
 function addDefaultSrc(event) {
@@ -24,14 +22,14 @@ export default function UserItem({ user }) {
           <div className="information">
             { user.name ? (
               <>
-                <Button>{user.name}</Button>
+                <div className="button">{user.name}</div>
                 <p className="name">
                   @{user.login}
                 </p>
               </>
             )
               : (
-                <Button>@{user.login}</Button>
+                <div className="button">@{user.login}</div>
               )
             }
             {!!user.description && (
