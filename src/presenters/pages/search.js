@@ -20,11 +20,12 @@ import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  function setDefaultActiveBtn(){
+  const setDefaultActiveBtn = () => {
     // set the all button to be active by default
     console.log('set default');
     document.querySelector('.segmented-buttons button').classList.add('active')
   }
+  
   if (!loaded) {
     return (
       <>
@@ -51,7 +52,8 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
         )}
       </div>
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
-      {this.setDefaultActiveBtn()}
+      {setDefaultActiveBtn()}
+      {() => document.querySelector('.segmented-buttons button').classList.add('active')}
     </>
   );
 };
