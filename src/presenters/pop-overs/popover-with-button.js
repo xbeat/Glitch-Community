@@ -12,10 +12,9 @@ const PopoverWithButton = (props) => (
       }
       return (
         <div className={`button-wrap ${props.containerClass}`}>
-          {/*<button className={props.buttonClass} data-track={props.dataTrack} onClick={togglePopover} type="button">
+          <Button size="small" onClick={togglePopover}>
             {props.buttonText}
-          </button>*/}
-          <Button size="small" onClick={togglePopover}>{props.buttonText}</Button>
+          </Button>
           {visible && childrenToShow}
         </div>
       );
@@ -24,18 +23,14 @@ const PopoverWithButton = (props) => (
 );
 
 PopoverWithButton.propTypes = {
-  buttonClass: PropTypes.string,
   containerClass: PropTypes.string,
-  dataTrack: PropTypes.string,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
   passToggleToPop: PropTypes.bool,
 };
 
 PopoverWithButton.defaultProps = {
-  buttonClass: '',
-  containerClass: '',
-  dataTrack: '',
+  containerClass: null,
   passToggleToPop: false,
 };
 
