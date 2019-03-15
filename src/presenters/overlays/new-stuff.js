@@ -93,11 +93,11 @@ class NewStuff extends React.Component {
             <TooltipContainer
               id="new-stuff-tooltip"
               type="info"
-              target={
+              target={(
                 <button className="button-unstyled new-stuff" onClick={show}>
                   <figure className="new-stuff-avatar" alt="New Stuff" />
                 </button>
-              }
+              )}
               tooltip="New"
               persistent
               align={['top']}
