@@ -103,7 +103,7 @@ module.exports = function(external) {
       ],
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
-      // styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
+      styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
       imgSrc: ["'self'", ...sources.images],
       fontSrc: ["'self'", ...sources.fonts],
       connectSrc: ["'self'", ...sources.connect],
