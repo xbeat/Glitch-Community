@@ -10,7 +10,7 @@ export const TAGS = ['h1', 'h2', 'h3', 'h4'];
 const Heading = ({ children, tagName: TagName }) => <TagName className={styles[TagName]}>{children}</TagName>;
 
 Heading.propTypes = {
-  /** element(s) to display in the button */
+  /** element(s) to display in the heading */
   children: PropTypes.node.isRequired,
   /** heading tag to be rendered */
   tagName: PropTypes.oneOf(TAGS).isRequired,

@@ -33,7 +33,7 @@ const Markdown = ({ children, length }) => {
 };
 
 Markdown.propTypes = {
-  /** element(s) to display in the button */
+  /** element(s) to display in the markdown */
   children: PropTypes.node.isRequired,
   /** length to truncate rendered Markdown to */
   length: PropTypes.number,
