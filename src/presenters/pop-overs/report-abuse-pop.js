@@ -6,10 +6,7 @@ import axios from 'axios';
 import { PureEditableField } from '../includes/editable-field';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import {
-  getAbuseReportTitle,
-  getAbuseReportBody,
-} from '../../utils/abuse-reporting';
+import { getAbuseReportTitle, getAbuseReportBody } from '../../utils/abuse-reporting';
 import { Loader } from '../includes/loader';
 
 import { CurrentUserConsumer } from '../current-user';
@@ -24,9 +21,7 @@ class ReportAbusePop extends React.Component {
     } else if (this.props.reportedType === 'home') {
       this.defaultReason = "[Something here] doesn't seem appropriate for Glitch because...";
     } else {
-      this.defaultReason = `This ${
-        props.reportedType
-      } doesn't seem appropriate for Glitch because...`;
+      this.defaultReason = `This ${props.reportedType} doesn't seem appropriate for Glitch because...`;
     }
 
     this.state = {
@@ -59,11 +54,7 @@ class ReportAbusePop extends React.Component {
       return (
         <section className="pop-over-info">
           <p className="info-description right">
-            from
-            {' '}
-            <strong>
-              {this.props.currentUser.login}
-            </strong>
+            from <strong>{this.props.currentUser.login}</strong>
           </p>
         </section>
       );
@@ -83,13 +74,7 @@ class ReportAbusePop extends React.Component {
   }
 
   formatRaw() {
-    return getAbuseReportBody(
-      this.props.currentUser,
-      this.state.email,
-      this.props.reportedType,
-      this.props.reportedModel,
-      this.state.reason,
-    );
+    return getAbuseReportBody(this.props.currentUser, this.state.email, this.props.reportedType, this.props.reportedModel, this.state.reason);
   }
 
   async submitReport() {
@@ -103,10 +88,7 @@ class ReportAbusePop extends React.Component {
 
       await axios.post('https://support-poster.glitch.me/post', {
         raw: this.formatRaw(),
-        title: getAbuseReportTitle(
-          this.props.reportedModel,
-          this.props.reportedType,
-        ),
+        title: getAbuseReportTitle(this.props.reportedModel, this.props.reportedType),
       });
       this.setState({ submitted: true, submitSuccess: true, loading: false });
     } catch (error) {
@@ -127,15 +109,8 @@ class ReportAbusePop extends React.Component {
   }
 
   validateReason() {
-    let errorObj = this.validateNotEmpty(
-      'reason',
-      'reasonError',
-      'A description of the issue',
-    );
-    if (
-      errorObj.reasonError === ''
-      && this.state.reason === this.defaultReason
-    ) {
+    let errorObj = this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
+    if (errorObj.reasonError === '' && this.state.reason === this.defaultReason) {
       errorObj = { reasonError: 'Reason is required' };
       this.setState(errorObj);
     }
@@ -206,11 +181,7 @@ class ReportAbusePop extends React.Component {
           {this.state.loading ? (
             <Loader />
           ) : (
-            <button
-              className="button button-small"
-              onClick={this.submitReport}
-              type="button"
-            >
+            <button className="button button-small" onClick={this.submitReport} type="button">
               Submit Report
             </button>
           )}
@@ -227,9 +198,7 @@ class ReportAbusePop extends React.Component {
       <section className="pop-over-actions">
         <div className="notification notifySuccess">Report Sent</div>
         <p className="pop-description tight-line">
-          Thanks for helping to keep Glitch a safe, friendly community
-          {' '}
-          <span className="emoji park" role="img" aria-label="" />
+          Thanks for helping to keep Glitch a safe, friendly community <span className="emoji park" role="img" aria-label="" />
         </p>
       </section>
     </>
@@ -245,27 +214,18 @@ class ReportAbusePop extends React.Component {
       </section>
       <section className="pop-over-info">
         <p className="info-description">
-          But you can still send us your message by emailing the details below
-          to
+          But you can still send us your message by emailing the details below to
           <b>support@glitch.com</b>
         </p>
       </section>
       <section className="pop-over-actions">
-        <textarea
-          className="content-editable tall-text traditional"
-          value={_.trimStart(this.formatRaw())}
-          readOnly
-        />
+        <textarea className="content-editable tall-text traditional" value={_.trimStart(this.formatRaw())} readOnly />
       </section>
     </>
   );
 
   render() {
-    return (
-      <dialog className="pop-over wide-pop top-right report-abuse-pop">
-        {this.pickFormBody()}
-      </dialog>
-    );
+    return <dialog className="pop-over wide-pop top-right report-abuse-pop">{this.pickFormBody()}</dialog>;
   }
 }
 
@@ -275,21 +235,13 @@ ReportAbusePop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-const ReportAbusePopContainer = props => (
-  <CurrentUserConsumer>
-    {currentUser => <ReportAbusePop currentUser={currentUser} {...props} />}
-  </CurrentUserConsumer>
+const ReportAbusePopContainer = (props) => (
+  <CurrentUserConsumer>{(currentUser) => <ReportAbusePop currentUser={currentUser} {...props} />}</CurrentUserConsumer>
 );
 
-const ReportAbusePopButton = props => (
-  <PopoverWithButton
-    buttonClass="button-small button-tertiary margin"
-    buttonText="Report Abuse"
-  >
-    <ReportAbusePopContainer
-      reportedType={props.reportedType}
-      reportedModel={props.reportedModel}
-    />
+const ReportAbusePopButton = (props) => (
+  <PopoverWithButton buttonClass="button-small button-tertiary margin" buttonText="Report Abuse">
+    <ReportAbusePopContainer reportedType={props.reportedType} reportedModel={props.reportedModel} />
   </PopoverWithButton>
 );
 

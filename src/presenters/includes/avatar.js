@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 
-import {
-  DEFAULT_TEAM_AVATAR,
-  getAvatarUrl as getTeamAvatarUrl,
-} from '../../models/team';
-import {
-  ANON_AVATAR_URL,
-  getAvatarThumbnailUrl,
-  getDisplayName,
-} from '../../models/user';
+import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
+import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
 // UserAvatar
 
-export const Avatar = ({
-  name, src, color, srcFallback, type, hideTooltip,
-}) => {
+export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withinButton }) => {
+  let onError = null;
+  if (srcFallback) {
+    onError = (event) => {
+      event.target.src = srcFallback;
+    };
+  }
+
   const contents = (
     <img
       width="32px"
@@ -25,13 +23,7 @@ export const Avatar = ({
       src={src}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={
-        srcFallback
-          ? (event) => {
-            event.target.src = srcFallback;
-          }
-          : null
-      }
+      onError={onError}
       className={`${type}-avatar`}
     />
   );
@@ -44,6 +36,7 @@ export const Avatar = ({
         type="action"
         id={`avatar-tooltip-${name}`}
         align={['left']}
+        fallback={withinButton}
       />
     );
   }
@@ -57,6 +50,7 @@ Avatar.propTypes = {
   type: PropTypes.string.isRequired,
   color: PropTypes.string,
   hideTooltip: PropTypes.bool,
+  withinButton: PropTypes.bool,
 };
 
 Avatar.defaultProps = {
@@ -86,7 +80,9 @@ TeamAvatar.defaultProps = {
   hideTooltip: false,
 };
 
-export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
+export const UserAvatar = ({
+  user, suffix = '', hideTooltip, withinButton,
+}) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
@@ -94,6 +90,7 @@ export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
     srcFallback={ANON_AVATAR_URL}
     type="user"
     hideTooltip={hideTooltip}
+    withinButton={withinButton}
   />
 );
 UserAvatar.propTypes = {
@@ -106,9 +103,11 @@ UserAvatar.propTypes = {
   }).isRequired,
   suffix: PropTypes.string,
   hideTooltip: PropTypes.bool,
+  withinButton: PropTypes.bool,
 };
 
 UserAvatar.defaultProps = {
   suffix: '',
   hideTooltip: false,
+  withinButton: false,
 };

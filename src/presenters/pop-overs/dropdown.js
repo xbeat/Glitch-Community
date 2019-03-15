@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select'; // https://react-select.com/
 
 // Options passed to Dropdown are expected to be formatted like options = [ {value: optionValue, label: optionLabel}, ... ]
-const Dropdown = props => (
+const Dropdown = (props) => (
   <Select
     autoWidth
     value={props.selection}

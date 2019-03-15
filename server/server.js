@@ -1,10 +1,10 @@
-const express = require("express");
-const compression = require("compression");
+const express = require('express');
+const compression = require('compression');
 const constants = require('./constants');
 const sentryHelpers = require('../shared/sentryHelpers');
 
 // https://docs.sentry.io/error-reporting/quickstart/?platform=node
-const Sentry = require("@sentry/node");
+const Sentry = require('@sentry/node');
 
 try {
   Sentry.init({
@@ -17,8 +17,8 @@ try {
       return sentryHelpers.beforeBreadcrumb(breadcrumb);
     },
   });
-  Sentry.configureScope(scope => {
-    scope.setTag("PROJECT_DOMAIN", process.env.PROJECT_DOMAIN);
+  Sentry.configureScope((scope) => {
+    scope.setTag('PROJECT_DOMAIN', process.env.PROJECT_DOMAIN);
   });
 } catch (error) {
   console.error('Failed to initialize Sentry!', error);
@@ -32,14 +32,14 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 
 // Accept JSON as req.body
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
 app.get('/edit', function(req, res) {
   res.status(500);
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.send('Sorry, no editor for remixes!');
 });
 
@@ -49,13 +49,16 @@ redirects(app);
 const proxy = require('./proxy');
 const proxied = proxy(app);
 
+const logger = require('./logger');
+app.use(logger)
+
 const router = require('./routes');
 app.use('/', router(['/edit', ...proxied]));
 
 // Add an explicit no-cache to 404 responses
 // Since this is the last handler it will only be hit when all other handlers miss
 app.use(function(req, res, next) {
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   return next();
 });
 

@@ -151,7 +151,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
         <article className="project-remixes">
           <h4>Latest Remixes</h4>
           {this.state.projectRemixes.length === 0 && <p>No remixes yet (／_^)／ ●</p>}
-          {this.state.projectRemixes.map(remix => (
+          {this.state.projectRemixes.map((remix) => (
             <ProjectRemixItem key={remix.id} remix={remix} />
           ))}
         </article>

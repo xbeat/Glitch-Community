@@ -52,8 +52,8 @@ module.exports = function(external) {
   });
 
   const readFilePromise = util.promisify(fs.readFile);
-  const imageDefault =
-    'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+  const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+
   async function render(res, title, description, image = imageDefault) {
     let built = true;
 
@@ -166,11 +166,7 @@ module.exports = function(external) {
   });
 
   app.get('*', async (req, res) => {
-    await render(
-      res,
-      'Glitch',
-      'The friendly community where everyone can discover & create the best stuff on the web',
-    );
+    await render(res, 'Glitch', 'The friendly community where everyone can discover & create the best stuff on the web');
   });
 
   return app;

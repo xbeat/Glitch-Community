@@ -11,18 +11,12 @@ import { getLink as getUserLink } from '../../models/user';
 /* global EXTERNAL_ROUTES */
 const external = Array.from(EXTERNAL_ROUTES);
 
-export const Link = React.forwardRef((
-  { to, children, ...props },
-  ref,
-) => {
+export const Link = React.forwardRef(({ to, children, ...props }, ref) => {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
 
-    if (
-      targetUrl.origin !== currentUrl.origin
-      || external.some(route => targetUrl.pathname.startsWith(route))
-    ) {
+    if (targetUrl.origin !== currentUrl.origin || external.some((route) => targetUrl.pathname.startsWith(route))) {
       return (
         <a href={to} {...props} ref={ref}>
           {children}

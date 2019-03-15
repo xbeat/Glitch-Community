@@ -9,7 +9,7 @@ export const TYPES = ['action', 'info'];
 export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
 function TooltipContainer({
-  id, type, tooltip, target, align, persistent, children,
+  id, type, tooltip, target, align, persistent, children, fallback,
 }) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
@@ -24,17 +24,27 @@ function TooltipContainer({
     right: align.includes('right'),
     'new-stuff': id === 'new-stuff-tooltip',
     persistent,
+    fallback,
   });
+  const tooltipFallbackClassName = fallback ? 'fallback' : '';
 
   let role;
   let extendedTarget;
-  if (type === 'action') {
+  if (fallback && target.type === 'img') {
+    extendedTarget = (
+      <div data-tooltip={tooltip} className={tooltipFallbackClassName}>
+        {target}
+      </div>
+    );
+  } else if (type === 'action') {
     // action tooltips are visible on hover and focus, click triggers a separate action
     // they should always be populated with their content, even when they are "hidden"
 
     role = 'tooltip';
     extendedTarget = React.cloneElement(target, {
       'aria-labelledby': id,
+      'data-tooltip': tooltip,
+      className: `${target.props.className} ${tooltipFallbackClassName}`,
     });
   } else if (type === 'info') {
     // info tooltips are visible on hover and focus, they provide supplementary info
@@ -43,13 +53,24 @@ function TooltipContainer({
     role = 'status';
     extendedTarget = React.cloneElement(target, {
       'aria-describedby': id,
+      'data-tooltip': tooltip,
+      className: `${target.props.className} ${tooltipFallbackClassName}`,
     });
   }
 
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
+  let tooltipNode = null;
+  if (!fallback) {
+    tooltipNode = (
+      <div role={role} id={id} className={`${tooltipClassName} tooltip`} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
+        {type === 'info' || shouldShowTooltip ? tooltip : null}
+      </div>
+    );
+  }
+
   return (
-    <div className={tooltipContainerClassName}>
+    <div className={`${tooltipContainerClassName} tooltip-container`}>
       <div
         onMouseEnter={() => setTooltipIsActive(true)}
         onMouseLeave={() => setTooltipIsActive(false)}
@@ -58,9 +79,7 @@ function TooltipContainer({
       >
         {extendedTarget}
       </div>
-      <div role={role} id={id} className={tooltipClassName} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
-        {type === 'info' || shouldShowTooltip ? tooltip : null}
-      </div>
+      {tooltipNode}
       {children}
     </div>
   );
@@ -80,6 +99,8 @@ TooltipContainer.propTypes = {
   align: PropTypes.arrayOf(PropTypes.oneOf(ALIGNMENTS)),
   /* whether to persistently show the tooltip */
   persistent: PropTypes.bool,
+  /* whether to use CSS tooltips as a fallback (for < FF 66) */
+  fallback: PropTypes.bool,
 };
 
 TooltipContainer.defaultProps = {
@@ -87,6 +108,7 @@ TooltipContainer.defaultProps = {
   children: null,
   tooltip: '',
   persistent: false,
+  fallback: false,
 };
 
 export default TooltipContainer;

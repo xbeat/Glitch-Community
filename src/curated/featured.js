@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'What Were the First Tweets?',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Tweet%20v2.jpg?1551709691713',
-    link: 'https://firsttweets.glitch.me/',
+    title: 'Shout out your peoples',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_shoutout.jpg?1552302001451',
+    link: 'https://glitch.com/~shout-out',
   },
   {
-    title: 'Take a Virtual Road Trip',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Library%20v2.jpg?1551709692203',
-    link: 'https://library-of-places.glitch.me/',
+    title: 'A dating app for biscuit lovers',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_biscuit.jpg?1552302002356',
+    link: 'https://biscuittinder.glitch.me/',
   },
   {
-    title: 'Hmm... Which Emoji?',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Emoji%20v2.jpg?1551709692864',
-    link: 'https://emoji-suggester.glitch.me/',
+    title: 'Remember the metaverse? D\'oh!',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_homer.jpg?1552302001952',
+    link: 'https://homer-metaverse.glitch.me/',  
   }
 ];

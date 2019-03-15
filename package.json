@@ -43,6 +43,7 @@
     "eslint-scope": "^4.0.0",
     "express": "^4.16.4",
     "express-http-proxy": "^1.5.1",
+    "express-winston": "^3.1.0",
     "group-by-time": "^1.0.0",
     "html-truncate": "^1.2.2",
     "lodash": "^4.17.11",
@@ -76,6 +77,7 @@
     "webpack-dev-middleware": "^3.5.2",
     "helmet": "^3.16.0",
     "uuid": "^3.3.2"
+    "winston": "^3.2.1"
   },
   "engines": {
     "node": "10.x"
