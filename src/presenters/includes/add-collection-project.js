@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import PopoverWithButtonComp from 'Source/components/popovers/popover-with-button';
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
-import PopoverWithButtonComp from '../../components/popovers/popover-with-button';
 
 class AddCollectionProject extends React.Component {
   constructor(props) {

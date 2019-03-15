@@ -26,6 +26,7 @@ dependencies:
   email-addresses: 3.0.3
   eslint: 5.15.1
   eslint-config-airbnb: 17.1.0
+  eslint-import-resolver-webpack: 0.11.0
   eslint-loader: 2.1.2
   eslint-plugin-import: 2.16.0
   eslint-plugin-jsx-a11y: 6.2.1
@@ -3114,6 +3115,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-fajPLiZijtcygDWB/SH2fKzS7uw=
+  /array-find/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-bI4obRHtdoMn+OYuzuhzU8o+eLg=
   /array-flatten/1.1.1:
     dev: false
     resolution:
@@ -5217,6 +5222,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1MkrZNvWTKCaigbn+W15elq2BB/L22nqrSY5DKlo3X6+vclJm8Bb5djXJBmEX6fS3+zCh/F4VBK5Z2KxJt4s2Q==
+  /enhanced-resolve/0.9.1:
+    dependencies:
+      graceful-fs: 4.1.15
+      memory-fs: 0.2.0
+      tapable: 0.1.10
+    dev: false
+    engines:
+      node: '>=0.6'
+    resolution:
+      integrity: sha1-TW5omzcl+GCQknzMhs2fFjW4ni4=
   /enhanced-resolve/4.1.0:
     dependencies:
       graceful-fs: 4.1.15
@@ -5336,6 +5351,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-sfmTqJfPSizWu4aymbPr4Iidp5yKm8yDkHp+Ir3YiTHiiDfxh69mOUsmiqW6RZ9zRXFaF64GtYmN7e+8GHBv6Q==
+  /eslint-import-resolver-webpack/0.11.0:
+    dependencies:
+      array-find: 1.0.0
+      debug: 2.6.9
+      enhanced-resolve: 0.9.1
+      find-root: 1.1.0
+      has: 1.0.3
+      interpret: 1.2.0
+      lodash: 4.17.11
+      node-libs-browser: 2.2.0
+      resolve: 1.10.0
+      semver: 5.6.0
+    dev: false
+    peerDependencies:
+      eslint-plugin-import: '>=1.4.0'
+      webpack: '>=1.11.0'
+    resolution:
+      integrity: sha512-vX8rYSPdKtTLkK2FoU1ZRyEsl6wP1FB40ytjrEgMhzUkEkBLuZAkv1KNR+2Ml7lzMOObXI3yaEDiaQ/Yvoczhw==
   /eslint-loader/2.1.2:
     dependencies:
       loader-fs-cache: 1.0.1
@@ -7630,6 +7663,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-eJCwHVLADI68nVM+H46xfjA0hxo=
+  /memory-fs/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-8rslNovBIeORwlIN6Slpyu4KApA=
   /memory-fs/0.4.1:
     dependencies:
       errno: 0.1.7
@@ -10387,6 +10424,12 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-N2RsDAMvDLvYwFcwbPyF3VmVSSkuF+G1e+8inhBLtHpvwXGw4QRPEZhihQNeEN0i1up6/f6ObCJXNdlRG3YVyQ==
+  /tapable/0.1.10:
+    dev: false
+    engines:
+      node: '>=0.6'
+    resolution:
+      integrity: sha1-KcNXB8K3DlDQdIK10gLo7URtr9Q=
   /tapable/1.1.1:
     dev: false
     engines:
@@ -11260,6 +11303,7 @@ specifiers:
   email-addresses: ^3.0.3
   eslint: ^5.14.1
   eslint-config-airbnb: ^17.1.0
+  eslint-import-resolver-webpack: ^0.11.0
   eslint-loader: ^2.1.2
   eslint-plugin-import: ^2.16.0
   eslint-plugin-jsx-a11y: ^6.2.1

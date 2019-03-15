@@ -60,6 +60,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".js"],
+    alias: {
+      Source: SRC,
+    },
   },
   module: {
     rules: [
