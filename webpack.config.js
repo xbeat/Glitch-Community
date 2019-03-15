@@ -61,7 +61,7 @@ module.exports = {
   resolve: {
     extensions: [".js"],
     alias: {
-      '@src': path.join(__dirname, './src'),
+      '@src': SRC,
     },
   },
   module: {
