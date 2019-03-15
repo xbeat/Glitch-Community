@@ -46,8 +46,8 @@ Button.propTypes = {
 Button.defaultProps = {
   onClick: () => {},
   disabled: false,
-  type: '',
-  size: '',
+  type: null,
+  size: null,
   hover: false,
 };
 

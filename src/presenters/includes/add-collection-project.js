@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
-import PopoverWithButton from '../pop-overs/popover-with-button';
+import PopoverWithButtonComp from '../../components/popovers/popover-with-button';
 
 class AddCollectionProject extends React.Component {
   constructor(props) {
@@ -26,9 +26,9 @@ class AddCollectionProject extends React.Component {
       initialProjects = this.props.currentUser.projects;
     }
     return (
-      <PopoverWithButton buttonClass="add-project" buttonText="Add Project" passToggleToPop>
+      <PopoverWithButtonComp buttonText="Add Project" passToggleToPop>
         <AddCollectionProjectPop initialProjects={initialProjects.slice(0, 20)} {...this.props} />
-      </PopoverWithButton>
+      </PopoverWithButtonComp>
     );
   }
 }
