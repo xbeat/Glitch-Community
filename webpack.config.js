@@ -110,7 +110,7 @@ module.exports = {
                 loader: "stylus-loader",
                 options: {
                   compress: mode === "production", // Compress CSS as part of the stylus build
-                  use: ['cache-loader', AutoprefixerStylus()],
+                  use: [AutoprefixerStylus()],
                 },
               },
             ],
