@@ -17,6 +17,7 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
+  console.log({ note: project.note}, update)
 
   const className = classNames({
     descriptionContainer: true,
