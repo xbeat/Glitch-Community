@@ -3,7 +3,9 @@ import React from 'react';
 
 import { TruncatedMarkdown } from './includes/markdown';
 import { Thanks } from './includes/thanks';
+import { UserLink } from './includes/link';
 import WrappingLink from './includes/wrapping-link';
+import Button from '../../components/buttons/button';
 
 import { ANON_AVATAR_URL, getAvatarUrl, getLink, getProfileStyle } from '../models/user';
 
@@ -22,11 +24,13 @@ export default function UserItem({ user }) {
           <div className="information">
             {user.name ? (
               <>
-                <div className="button">{user.name}</div>
+                <UserLink user={user}>
+                  <Button></Button> {user.name}
+                </UserLink>
                 <p className="name">@{user.login}</p>
               </>
             ) : (
-              <div className="button">@{user.login}</div>
+              <UserLink user={user} className="button">@{user.login}</UserLink>
             )}
             {!!user.description && (
               <p className="description">
