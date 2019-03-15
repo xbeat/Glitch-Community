@@ -64,9 +64,9 @@ module.exports = smp.wrap({
   },
   resolve: {
     extensions: [".js"],
-        alias: {
-            src: path.resolve(__dirname + '/src')
-        }
+    alias: {
+        src: SRC,
+    },
   },
   module: {
     rules: [
