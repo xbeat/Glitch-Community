@@ -19,6 +19,7 @@ import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
 import ProjectsLoader from '../projects-loader';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Heading from '../../components/text/heading';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({ login }));
@@ -26,29 +27,29 @@ function syncPageToLogin(login) {
 
 const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) => {
   if (!login) {
-    return <h1 className="login">Anonymous</h1>;
+    return <Heading tagName="h1">Anonymous</Heading>;
   }
 
   if (!isAuthorized) {
     if (!name) {
-      return <h1 className="login">@{login}</h1>;
+      return <Heading tagName="h1">@{login}</Heading>;
     }
     return (
       <>
-        <h1 className="username">{name}</h1>
-        <h2 className="login">@{login}</h2>
+        <Heading tagName="h1">{name}</Heading>
+        <Heading tagName="h2">@{login}</Heading>
       </>
     );
   }
   const editableName = name !== null ? name : '';
   return (
     <>
-      <h1 className="username">
+      <Heading tagName="h1">
         <EditableField value={editableName} update={updateName} placeholder="What's your name?" />
-      </h1>
-      <h2 className="login">
+      </Heading>
+      <Heading tagName="h2">
         <EditableField value={login} update={updateLogin} prefix="@" placeholder="Nickname?" />
-      </h2>
+      </Heading>
     </>
   );
 };

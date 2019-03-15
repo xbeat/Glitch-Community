@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
+import ExpanderContainer from '../components/containers/expander';
 
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
@@ -51,14 +52,16 @@ class ExpandyProjects extends React.Component {
     }
 
     return (
-      <>
-        <ProjectsUL projects={projects} {...props} />
-        {shouldShowButton && (
+      <ExpanderContainer
+        expanded={!shouldShowButton}
+        controlArea={
           <button className="button-tertiary" onClick={this.handleClick} type="button">
             Show {hiddenProjects} More
           </button>
-        )}
-      </>
+        }
+      >
+        <ProjectsUL projects={projects} {...props} />
+      </ExpanderContainer>
     );
   }
 }

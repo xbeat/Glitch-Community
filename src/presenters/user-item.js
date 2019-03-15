@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { TruncatedMarkdown } from './includes/markdown';
-import { Thanks } from './includes/thanks';
 import { UserLink } from './includes/link';
+import Markdown from '../components/text/markdown';
+import { Thanks } from './includes/thanks';
+
 import WrappingLink from './includes/wrapping-link';
 import Button from '../components/buttons/button';
 
@@ -34,7 +35,7 @@ export default function UserItem({ user }) {
             )}
             {!!user.description && (
               <p className="description">
-                <TruncatedMarkdown length={96}>{user.description}</TruncatedMarkdown>
+                <Markdown length={96}>{user.description}</Markdown>
               </p>
             )}
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
