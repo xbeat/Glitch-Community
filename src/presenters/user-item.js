@@ -25,7 +25,7 @@ export default function UserItem({ user }) {
             {user.name ? (
               <>
                 <UserLink user={user}>
-                  <Button></Button> {user.name}
+                  <Button>{user.name}</Button>
                 </UserLink>
                 <p className="name">@{user.login}</p>
               </>
