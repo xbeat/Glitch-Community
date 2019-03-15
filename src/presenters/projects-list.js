@@ -52,12 +52,14 @@ class ExpandyProjects extends React.Component {
     }
 
     return (
-      <ExpanderContainer expanded={!shouldShowButton}
-        controlArea={(
+      <ExpanderContainer
+        expanded={!shouldShowButton}
+        controlArea={
           <button className="button-tertiary" onClick={this.handleClick} type="button">
             Show {hiddenProjects} More
           </button>
-        )}>
+        }
+      >
         <ProjectsUL projects={projects} {...props} />
       </ExpanderContainer>
     );
