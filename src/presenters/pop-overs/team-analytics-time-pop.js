@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 
 const TimeFrameItem = ({ selectTimeFrame, isActive, timeFrame }) => {
   let resultClass = 'result button-unstyled';

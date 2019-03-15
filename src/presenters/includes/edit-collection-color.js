@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EditCollectionColorPop from '../pop-overs/edit-collection-color-pop';
-import PopoverWithButton from '../pop-overs/popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 
 const EditCollectionColor = ({ update, initialColor, ...props }) => (
   <PopoverWithButton containerClass="edit-collection-color-btn" buttonClass="add-project" buttonText="Color" passToggleToPop>

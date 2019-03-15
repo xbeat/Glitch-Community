@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TrackClick } from '../analytics';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
 import { NestedPopover } from './popover-nested';
 import { CurrentUserConsumer } from '../current-user';
 
