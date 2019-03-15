@@ -96,11 +96,11 @@ module.exports = function(external) {
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'none'"],
-      scriptSrc: [
+      /*scriptSrc: [
         "'self'",
         ...sources.scripts,
         (req, res) => res.locals.nonces.map(n => `'nonce-${n}'`).join(' ')
-      ],
+      ],*/
       // style-src unsafe-inline is required for our SVGs
       // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
       // styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
