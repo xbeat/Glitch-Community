@@ -23,7 +23,6 @@ const Note = ({
     dark: isDarkColor(collectionCoverColor),
   });
  
-  console.log("UPDATE?", !!update)
   return (
     <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>

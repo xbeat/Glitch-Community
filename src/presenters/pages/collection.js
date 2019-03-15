@@ -223,7 +223,7 @@ CollectionPageContents.propTypes = {
   }).isRequired,
   currentUser: PropTypes.object.isRequired,
   deleteCollection: PropTypes.func.isRequired,
-  isAuthorized: PropTypes.any.isRequired,
+  userIsAuthor: PropTypes.bool.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
   updateOrAddNote: PropTypes.func,
   addNoteField: PropTypes.func,
