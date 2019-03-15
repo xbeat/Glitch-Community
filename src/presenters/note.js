@@ -22,22 +22,25 @@ const Note = ({
     descriptionContainer: true,
     dark: isDarkColor(collectionCoverColor),
   });
-
-  return (
-    <div className="note">
-      <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
-        <EditableDescription
-          description={project.note || ''}
-          placeholder="Share why you love this app."
-          update={update}
-          maxLength={75}
-        />
+  if (author) {
+    
+    return (
+      <div className="note">
+        <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
+          <EditableDescription
+            description={project.note || ''}
+            placeholder="Share why you love this app."
+            update={update}
+            maxLength={75}
+          />
+        </div>
+        <div className="user">
+          <UserTile user={author} />
+        </div>
       </div>
-      <div className="user">
-        <UserTile user={author} />
-      </div>
-    </div>
-  );
+    );
+  }
+  return null;
 };
 
 

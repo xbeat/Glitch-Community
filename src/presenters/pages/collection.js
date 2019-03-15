@@ -83,10 +83,7 @@ const CollectionPageContents = ({
   updateOrAddNote,
   addNoteField,
   ...props
-}) => {
-  console.log("collection", collection)
-  console.log("collection.user", collection.user)
-  return (
+}) => (
   <>
     <Helmet>
       <title>{collection.name}</title>
@@ -140,28 +137,37 @@ const CollectionPageContents = ({
             {collection.projects.length > 0 ? (
               isAuthorized ? (
                 <ProjectsUL
-                  {...{ projects: collection.projects, author: collection.user, api, collectionCoverColor: collection.coverColor }}
+                  {...props}
+                  projects={collection.projects}
+                  author={collection.user}
+                  api={api}
+                  collectionCoverColor={collection.coverColor}
                   projectOptions={{
                     removeProjectFromCollection,
                     addProjectToCollection,
                     updateOrAddNote,
                     addNoteField,
                   }}
-                  {...props}
                 />
               ) : currentUser && currentUser.login ? (
                 <ProjectsUL
-                  {...{ projects: collection.projects, currentUser, api }}
+                  {...props}
+                  projects={collection.projects}
+                  author={collection.user}
+                  api={api}
+                  collectionCoverColor={collection.coverColor}
                   projectOptions={{
                     addProjectToCollection,
                   }}
-                  {...props}
                 />
               ) : (
                 <ProjectsUL
-                  {...{ projects: collection.projects, currentUser, api }}
-                  projectOptions={{}}
                   {...props}
+                  projects={collection.projects}
+                  author={collection.user}
+                  api={api}
+                  collectionCoverColor={collection.coverColor}
+                  projectOptions={{}}
                 />
               )
             ) : isAuthorized ? (
@@ -174,7 +180,7 @@ const CollectionPageContents = ({
               </div>
             ) : (
               <div className="empty-collection-hint">
-                      No projects to see in this collection just yet.
+                No projects to see in this collection just yet.
               </div>
             )}
           </div>
@@ -185,8 +191,7 @@ const CollectionPageContents = ({
     </main>
     {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
-)
-};
+);
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
