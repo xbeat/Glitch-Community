@@ -18,9 +18,7 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const filters = [{ name: 'all', hits: null }, { name: 'teams', hits: 0 }, { name: 'users', hits: 0 }, { name: 'projects', hits: 0 }];
-
-const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
+const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
   if (!loaded) {
     return (
@@ -40,7 +38,7 @@ const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
         {filters.map(
           (filter) =>
             (filter.hits === null || filter.hits > 0) && (
-              <Button key={filter.name} size="small" type='tertiary' onClick={() => setFilter(filter.name)}>
+              <Button key={filter.name} size="small" type="tertiary" onClick={() => setFilter(filter.name)}>
                 {capitalize(filter.name)}
                 {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
               </Button>
@@ -53,6 +51,7 @@ const FilterContainer = ({ activeFilter, setFilter, query, loaded }) => {
 };
 
 FilterContainer.propTypes = {
+  filters: PropTypes.array.isRequired,
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
   loaded: PropTypes.bool.isRequired,
@@ -174,23 +173,25 @@ class SearchResults extends React.Component {
     const { teams, users, projects, activeFilter } = this.state;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
     // I'm sure there's a better way to do this
-    const showTeams = (activeFilter === 'all' || activeFilter === 'teams') && showResults(teams);
-    const showUsers = (activeFilter === 'all' || activeFilter === 'users') && showResults(users);
-    const showProjects = (activeFilter === 'all' || activeFilter === 'projects') && showResults(projects);
+    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
 
-    // store results per type
-    filters[1].hits = teams ? teams.length : 0;
-    filters[2].hits = users ? users.length : 0;
-    filters[3].hits = projects ? projects.length : 0;
+    const teamHits = teams ? teams.length : 0;
+    const userHits = users ? users.length : 0;
+    const projectHits = projects ? projects.length : 0;
+    const filters = [
+      { name: 'all', hits: null },
+      { name: 'teams', hits: teamHits },
+      { name: 'users', hits: userHits },
+      { name: 'projects', hits: projectHits },
+    ];
+
+    const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
 
     return (
       <main className="search-results">
-        <FilterContainer
-          setFilter={this.setFilter}
-          activeFilter={activeFilter}
-          query={this.props.query}
-          loaded={this.state.loadedResults === filters.length - 1}
-        />
+        <FilterContainer filters={filters} setFilter={this.setFilter} activeFilter={activeFilter} query={this.props.query} loaded={loaded} />
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (

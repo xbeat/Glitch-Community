@@ -15,23 +15,25 @@ export default function TeamItem({ team }) {
   const teamThanksCount = team.users.reduce((total, { thanksCount }) => total + thanksCount, 0);
   return (
     <WrappingLink href={getLink(team)} className="item button-area">
-      <div className="cover" style={style} />
-      <div className="content">
-        <img className="avatar" src={getAvatarUrl(team)} alt="" />
-        <div className="information">
-          <TeamLink team={team} className="button">
-            {team.name}
-          </TeamLink>
-          {!!team.isVerified && <VerifiedBadge />}
-          <UsersList users={team.users} />
-          {!!team.description && (
-            <p className="description">
-              <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
-            </p>
-          )}
-          {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
+      <>
+        <div className="cover" style={style} />
+        <div className="content">
+          <img className="avatar" src={getAvatarUrl(team)} alt="" />
+          <div className="information">
+            <TeamLink team={team} className="button">
+              {team.name}
+            </TeamLink>
+            {!!team.isVerified && <VerifiedBadge />}
+            <UsersList users={team.users} />
+            {!!team.description && (
+              <p className="description">
+                <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
+              </p>
+            )}
+            {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
+          </div>
         </div>
-      </div>
+      </>
     </WrappingLink>
   );
 }
