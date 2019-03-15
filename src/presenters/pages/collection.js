@@ -245,7 +245,7 @@ async function loadCollection(api, ownerName, collectionName) {
       collection.projects = projects.map((project) => {
         const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
         if (collectionProject && collectionProject.annotation) {
-          project.note = collectionProject.annotation;
+          project.note = _.trim(collectionProject.annotation);
           project.isAddingANewNote = true;
         }
         project.collectionCoverColor = collection.coverColor;
