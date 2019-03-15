@@ -96,6 +96,7 @@ module.exports = function(external) {
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'none'"],
+      /*
       scriptSrc: [
         "'self'",
         ...sources.scripts,
@@ -111,6 +112,7 @@ module.exports = function(external) {
       mediaSrc: ["'self'", ...sources.media],
       baseUri: ["'self'"],
       // reportUri: TODO
+      */
     }
   }));
   
