@@ -120,7 +120,7 @@ const CollectionPageContents = ({
 
             {userIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
-          { 
+          {
             !collectionHasProjects && userIsAuthor && (
               <div className="empty-collection-hint">
                 <img
@@ -138,7 +138,7 @@ const CollectionPageContents = ({
               </div>
             )
           }
-          { 
+          {
             collectionHasProjects && (
               <>
                 <div className="collection-contents">
@@ -157,7 +157,7 @@ const CollectionPageContents = ({
                       )
                     }
                   </div>
-                  { 
+                  {
                     userIsAuthor && (
                       <ProjectsUL
                         {...props}
@@ -174,7 +174,7 @@ const CollectionPageContents = ({
                       />
                     )
                   }
-                  { 
+                  {
                     !userIsAuthor && userIsLoggedIn && (
                       <ProjectsUL
                         {...props}
@@ -188,7 +188,7 @@ const CollectionPageContents = ({
                       />
                     )
                   }
-                  { 
+                  {
                     !userIsAuthor && !userIsLoggedIn && (
                       <ProjectsUL
                         projects={collection.projects}
@@ -201,13 +201,13 @@ const CollectionPageContents = ({
                   }
                 </div>
               </>
-              )}
-            </article>
+            )}
+        </article>
         {!userIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
       </main>
       {userIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
     </>
-  )
+  );
 };
 
 CollectionPageContents.propTypes = {
