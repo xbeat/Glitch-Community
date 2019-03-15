@@ -4,7 +4,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
 const StatsPlugin = require("stats-webpack-plugin");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+// const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 const BUILD = path.resolve(__dirname, "build");
 const SRC = path.resolve(__dirname, "src");
@@ -19,11 +19,11 @@ if (process.env.NODE_ENV === "production") {
   mode = "production";
 }
 
-const smp = new SpeedMeasurePlugin({outputFormat: 'humanVerbose' });
+// const smp = new SpeedMeasurePlugin({outputFormat: 'humanVerbose' });
 
 console.log(`Starting Webpack in ${mode} mode.`);
 
-module.exports = smp.wrap({
+module.exports = {
   mode,
   entry: {
     client: `${SRC}/client.js`,
@@ -152,4 +152,4 @@ module.exports = smp.wrap({
   watchOptions: {
     ignored: /node_modules/,
   },
-});
+};
