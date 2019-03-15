@@ -74,7 +74,7 @@ const CollectionPageContents = ({
   collection,
   currentUser,
   deleteCollection,
-  isAuthorized,
+  userIsAuthor,
   updateNameAndUrl,
   updateDescription,
   addProjectToCollection,
@@ -85,7 +85,9 @@ const CollectionPageContents = ({
   ...props
 }) => {
   console.log("hi")
-  const noProjects = 
+  
+  const collectionHasProjects = !!collection && !!collection.projects;
+  
   return (
   <>
     <Helmet>
@@ -99,7 +101,7 @@ const CollectionPageContents = ({
           </div>
 
           <EditCollectionNameAndUrl
-            isAuthorized={isAuthorized}
+            isAuthorized={userIsAuthor}
             name={collection.name}
             url={collection.url}
             update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
@@ -110,7 +112,7 @@ const CollectionPageContents = ({
 
           <div className="collection-description">
             <AuthDescription
-              authorized={isAuthorized}
+              authorized={userIsAuthor}
               description={collection.description}
               update={updateDescription}
               placeholder="Tell us about your collection"
@@ -119,8 +121,25 @@ const CollectionPageContents = ({
 
           {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
         </header>
-        {/* eslint-disable no-nested-ternary */ }
-        {!!collection && !!collection.projects && (
+        { 
+          !collectionHasProjects && userIsAuthor && (
+            <div className="empty-collection-hint">
+              <img
+                src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
+                alt=""
+              />
+              <p>You can add any project, created by any user</p>
+            </div>
+          )
+        }
+        {
+          !collectionHasProjects && !userIsAuthor && (
+            <div className="empty-collection-hint">
+              No projects to see in this collection just yet.
+            </div>
+          )
+        }
+        { collectionHasProjects && (
         <>
           <div className="collection-contents">
             <div className="collection-project-container-header">
@@ -128,17 +147,18 @@ const CollectionPageContents = ({
                 Projects ({collection.projects.length})
               </h3>
 
-              {!!isAuthorized && (
-                <AddCollectionProject
-                  addProjectToCollection={addProjectToCollection}
-                  collection={collection}
-                  api={api}
-                  currentUser={currentUser}
-                />
-              )}
+              {
+                !!userIsAuthor && (
+                  <AddCollectionProject
+                    addProjectToCollection={addProjectToCollection}
+                    collection={collection}
+                    api={api}
+                    currentUser={currentUser}
+                  />
+                )
+              }
             </div>
-            {collection.projects.length > 0 ? (
-              isAuthorized ? (
+            { collectionHasProjects && userIsAuthor
                 <ProjectsUL
                   {...props}
                   projects={collection.projects}
@@ -173,19 +193,8 @@ const CollectionPageContents = ({
                   projectOptions={{}}
                 />
               )
-            ) : isAuthorized ? (
-              <div className="empty-collection-hint">
-                <img
-                  src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
-                  alt=""
-                />
-                <p>You can add any project, created by any user</p>
-              </div>
-            ) : (
-              <div className="empty-collection-hint">
-                No projects to see in this collection just yet.
-              </div>
-            )}
+            )
+          }
           </div>
         </>
         )}
@@ -266,7 +275,7 @@ const CollectionPage = ({ api, ownerName, name, ...props }) => (
                       collection={collectionFromEditor}
                       api={api}
                       currentUser={currentUser}
-                      isAuthorized={userIsAuthor}
+                      userIsAuthor={userIsAuthor}
                       {...funcs}
                       {...props}
                     />
