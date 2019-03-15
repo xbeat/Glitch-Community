@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverContainer from '../presenters/pop-overs/popover-container';
+import PopoverContainer from '../../presenters/pop-overs/popover-container';
 import Button from '../buttons/button';
 
-import styles from './popover-with-button';
+import styles from './popover-with-button.styl';
 
 const PopoverWithButtonComp = (props) => (
   <PopoverContainer>
@@ -31,9 +31,6 @@ PopoverWithButtonComp.propTypes = {
 };
 
 PopoverWithButtonComp.defaultProps = {
-  buttonClass: '',
-  containerClass: '',
-  dataTrack: '',
   passToggleToPop: false,
 };
 
