@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop';
-import PopoverWithButton from 'src/components/pop-overs/popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
+import AddProjectToCollectionPop from 'src/presenters/pop-overs/add-project-to-collection-pop';
 
 const AddProjectToCollection = ({ project, ...props }) => (
   <PopoverWithButton

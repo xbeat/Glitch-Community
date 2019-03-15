@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DeleteTeamPop from '../pop-overs/delete-team-pop';
-import PopoverWithButton from '../pop-overs/popover-with-button';
+import PopoverWithButton from 'src/components/popovers/popover-with-button';
+import DeleteTeamPop from 'src/presenters/pop-overs/delete-team-pop';
 
 const DeleteTeam = ({ ...props }) => (
   <section>

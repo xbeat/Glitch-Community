@@ -13,10 +13,6 @@ const STYLES = path.resolve(__dirname, "styles");
 const NODE_MODULES = path.resolve(__dirname, "node_modules");
 const STYLE_BUNDLE_NAME = "styles";
 
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-
-const smp = new SpeedMeasurePlugin();
-
 let mode = "development";
 if (process.env.NODE_ENV === "production") {
   mode = "production";
@@ -24,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 
 console.log(`Starting Webpack in ${mode} mode.`);
 
-module.exports = smp.wrap({
+module.exports = {
   mode,
   entry: {
     client: `${SRC}/client.js`,
@@ -155,7 +151,5 @@ module.exports = smp.wrap({
   ],
   watchOptions: {
     ignored: /node_modules/,
-    poll: 2000,
-    aggregateTimeout: 2000,
   },
-});
+};
