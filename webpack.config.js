@@ -65,7 +65,7 @@ module.exports = smp.wrap({
   resolve: {
     extensions: [".js"],
     alias: {
-        src: SRC,
+        SRC: SRC,
     },
   },
   module: {
@@ -156,5 +156,6 @@ module.exports = smp.wrap({
   watchOptions: {
     ignored: /node_modules/,
     poll: 2000,
+    aggregateTimeout: 2000,
   },
 });

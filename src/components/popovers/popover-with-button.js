@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'src/components/buttons/button';
 import PopoverContainer from 'src/presenters/popovers/popover-container';
-import Button from '../../components/buttons/button';
 
 const PopoverWithButton = (props) => (
   <PopoverContainer>
