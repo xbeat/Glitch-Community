@@ -83,7 +83,10 @@ const CollectionPageContents = ({
   updateOrAddNote,
   addNoteField,
   ...props
-}) => (
+}) => {
+  console.log("collection", collection)
+  console.log("collection.user", collection.user)
+  return (
   <>
     <Helmet>
       <title>{collection.name}</title>
@@ -122,7 +125,7 @@ const CollectionPageContents = ({
           <div className="collection-contents">
             <div className="collection-project-container-header">
               <h3>
-                      Projects ({collection.projects.length})
+                Projects ({collection.projects.length})
               </h3>
 
               {!!isAuthorized && (
@@ -182,7 +185,8 @@ const CollectionPageContents = ({
     </main>
     {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
-);
+)
+};
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
