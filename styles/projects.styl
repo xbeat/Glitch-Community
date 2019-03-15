@@ -212,10 +212,15 @@ project-avatar-size = 42px
 .pseudo-expander-container
   position: relative
   
-  .pseudo-expander-container__actions
+  .pseudo-expander-container__actions-wrap
+    pointer-events: none
     position: absolute
     bottom: 0
     width: 100%
-    padding-top: 1em
+    height: 200px
+    padding-bottom: 12px
+    display: flex
+    align-items: flex-end
     background: linear-gradient(-180deg, rgba(255,255,255,0.00) 0%, #FFFFFF 100%)
     z-index: 1
+  .pseudo-expander-container__a
