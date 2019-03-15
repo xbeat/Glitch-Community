@@ -112,7 +112,7 @@ module.exports = function(external) {
       mediaSrc: ["'self'", ...sources.media],
       baseUri: ["'self'"],
       */
-      reportUri: 'https://csp-reporting-server.glitch.me/',
+      reportUri: 'https://csp-reporting-server.glitch.me/report',
     }
   }));
   
