@@ -72,13 +72,15 @@ ExpandyProjects.defaultProps = {
   maxCollapsedProjects: 12,
 };
 
-export const ProjectsUL = ({ ...props }) => (
+export const ProjectsUL = ({ ...props }) => {
+  console.log("sup these are the props", props)
+  return (
   <ul className="projects-container">
     {props.projects.map((project) => (
       <ProjectItem key={project.id} {...{ project }} {...props} />
     ))}
   </ul>
-);
+)};
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,

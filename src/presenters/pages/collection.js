@@ -86,7 +86,7 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  
+  console.log("true?", !userIsAuthor && !userIsLoggedIn)
   return (
     <>
       <Helmet>
@@ -191,7 +191,6 @@ const CollectionPageContents = ({
                   { 
                     !userIsAuthor && !userIsLoggedIn && (
                       <ProjectsUL
-                        {...props}
                         projects={collection.projects}
                         author={collection.user}
                         api={api}

@@ -22,7 +22,6 @@ const Note = ({
     descriptionContainer: true,
     dark: isDarkColor(collectionCoverColor),
   });
- 
   return (
     <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
@@ -30,7 +29,7 @@ const Note = ({
           authorized={!!update}
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={update}
+          update={update || (() => {})}
           maxLength={75}
         />
       </div>
@@ -50,7 +49,7 @@ Note.propTypes = {
     isAddingANewNote: PropTypes.bool,
     collectionCoverColor: PropTypes.string,
   }).isRequired,
-  update: PropTypes.func,
+  update: PropTypes.any,
 };
 
 Note.defaultProps = {
