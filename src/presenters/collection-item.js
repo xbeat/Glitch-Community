@@ -4,7 +4,7 @@ import Pluralize from 'react-pluralize';
 
 import Markdown from '../components/text/markdown';
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
-import { CollectionLink, ProjectLink } from './includes/link';
+import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
 import { Loader } from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar';
 import { TeamAvatar, UserAvatar } from './includes/avatar';
@@ -60,8 +60,16 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
 
       {showCurator && (
         <div className="collection-curator">
-          {collection.user && <UserAvatar user={collection.user} />}
-          {collection.team && <TeamAvatar team={collection.team} />}
+          {collection.user && (
+            <UserLink user={collection.user}>
+              <UserAvatar user={collection.user} />
+            </UserLink>
+          )}
+          {collection.team && (
+            <TeamLink team={collection.team}>
+              <TeamAvatar team={collection.team} />
+            </TeamLink>
+          )}
         </div>
       )}
 
