@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { UserLink } from './includes/link';
+import { getLink } from '../models/user';
 import { TruncatedMarkdown } from './includes/markdown';
 import { Thanks } from './includes/thanks';
+import WrappingLink from './includes/wrapping-link';
 
 import { ANON_AVATAR_URL, getAvatarUrl, getProfileStyle } from '../models/user';
 
@@ -14,8 +15,7 @@ function addDefaultSrc(event) {
 export default function UserItem({ user }) {
   const style = getProfileStyle({ ...user, size: 'medium' });
   return (
-    <UserLink user={user} className="button-area">
-      <div className="item">
+    <WrappingLink href={getLink(user)} className="item button-area">
         <div className="cover" style={style} />
         <div className="content">
           <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt="" />
@@ -40,8 +40,7 @@ export default function UserItem({ user }) {
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
           </div>
         </div>
-      </div>
-    </UserLink>
+    </WrappingLink>
   );
 }
 
