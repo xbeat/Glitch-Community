@@ -24,6 +24,21 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
+const PseudoExpanderContainer = ({ expanded, actions, children }) => (
+  <div className="pseudo-expander-container">
+    {children}
+    <div className={`pseudo-expander-container__actions ${expanded ? 'expanded' : ''}`}>
+      {actions}
+    </div>
+  </div>
+)
+
+PseudoExpanderContainer.propTypes = {
+  expanded: PropTypes.bool.isRequired,
+  actions: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+}
+
 class ExpandyProjects extends React.Component {
   constructor(props) {
     super(props);
@@ -51,14 +66,14 @@ class ExpandyProjects extends React.Component {
     }
 
     return (
-      <>
-        <ProjectsUL projects={projects} {...props} />
-        {shouldShowButton && (
+      <PseudoExpanderContainer expanded={!shouldShowButton}
+        actions={(
           <button className="button-tertiary" onClick={this.handleClick} type="button">
             Show {hiddenProjects} More
           </button>
-        )}
-      </>
+        )}>
+        <ProjectsUL projects={projects} {...props} />
+      </PseudoExpanderContainer>
     );
   }
 }
