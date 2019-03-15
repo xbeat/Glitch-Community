@@ -33,14 +33,17 @@
     "details-element-polyfill": "^2.2.0",
     "ejs": "^2.6.1",
     "email-addresses": "^3.0.3",
+    "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.2",
     "eslint-plugin-react-hooks": "^1.2.0",
     "eslint-scope": "^4.0.0",
     "express": "^4.16.4",
     "express-http-proxy": "^1.5.1",
+    "express-winston": "^3.1.0",
     "group-by-time": "^1.0.0",
     "html-truncate": "^1.2.2",
     "lodash": "^4.17.11",
@@ -71,7 +74,8 @@
     "url-join": "^4.0.0",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.2",
-    "webpack-dev-middleware": "^3.5.2"
+    "webpack-dev-middleware": "^3.5.2",
+    "winston": "^3.2.1"
   },
   "engines": {
     "node": "10.x"
@@ -89,9 +93,5 @@
     "./src/utils/progress-promise.js",
     "./src/polyfills.js"
   ],
-  "license": "Apache License Version 2.0",
-  "devDependencies": {
-    "eslint": "^5.15.1",
-    "eslint-plugin-react": "^7.12.4"
-  }
+  "license": "Apache License Version 2.0"
 }
