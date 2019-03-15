@@ -19,17 +19,17 @@ const getIncludedCollections = async (api, projectId) => {
   return sampleSize(withData, 3);
 };
 
-const useAsync = (cb, ...args) => {
+const useAsync = (asyncFunction, ...args) => {
   const [result, setResult] = useState(null);
   useEffect(() => {
-    cb(...args).then(setResult);
+    asyncFunction(...args).then(setResult);
   }, args);
   return result;
 };
 
 const IncludedInCollections = ({ api, projectId }) => {
   const collections = useAsync(getIncludedCollections, api, projectId);
-  if (!collections) {
+  if (!collections || !collections.length) {
     return null;
   }
   return (
