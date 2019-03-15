@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 const OFF = 0;
 const WARN = 1;
@@ -21,6 +21,17 @@ module.exports = {
     'no-confusing-arrow': OFF,
   },
   settings: {
-    'import/resolver': path.join(__dirname, '../webpack.config.js'),
+    'import/resolver': {
+      webpack: {
+        config: {
+          resolve: {
+            extensions: ['.js'],
+            alias: {
+              '@src': path.resolve(__dirname, "../src"),
+            },
+          },
+        },
+      },
+    },
   },
 };
