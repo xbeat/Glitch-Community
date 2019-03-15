@@ -63,15 +63,13 @@ project-avatar-size = 42px
     list-style-type: none
     overflow: hidden
 
-    
     > li
       float: left
+      display: block
       margin-right: 10px
+      width: calc(33.3% - 10px)
       position: relative
       margin-bottom: 12px
-      
-      display: block
-      width: calc(33.3% - 10px)
       
       @media (max-width: mediumViewport)
         width: 100%
