@@ -155,5 +155,6 @@ module.exports = smp.wrap({
   ],
   watchOptions: {
     ignored: /node_modules/,
+    poll: 2000,
   },
 });
