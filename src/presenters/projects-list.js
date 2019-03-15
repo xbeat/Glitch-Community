@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 
+import Heading from '../components/text/heading';
+
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
-    <h2>{title}</h2>
+    <Heading tagName="h2">{title}</Heading>
 
     {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
