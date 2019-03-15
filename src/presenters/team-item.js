@@ -15,7 +15,6 @@ export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });
   const teamThanksCount = team.users.reduce((total, { thanksCount }) => total + thanksCount, 0);
   return (
-<<<<<<< HEAD
     <WrappingLink href={getLink(team)} className="item button-area">
       <>
         <div className="cover" style={style} />
@@ -29,28 +28,11 @@ export default function TeamItem({ team }) {
             <UsersList users={team.users} />
             {!!team.description && (
               <p className="description">
-                <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
+                <Markdown length={96}>{team.description}</Markdown>
               </p>
             )}
             {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
           </div>
-=======
-    <WrappingLink href={getLink(team)} className="item button-area" style={style}>
-      <div className="content">
-        <img className="avatar" src={getAvatarUrl(team)} alt="" />
-        <div className="information">
-          <TeamLink team={team} className="button">
-            {team.name}
-          </TeamLink>
-          {!!team.isVerified && <VerifiedBadge />}
-          <UsersList users={team.users} />
-          {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
-          {!!team.description && (
-            <p className="description">
-              <Markdown length={96}>{team.description}</Markdown>
-            </p>
-          )}
->>>>>>> befd1b8b706b3571f0ec3c081e5820bc484d912f
         </div>
       </>
     </WrappingLink>
