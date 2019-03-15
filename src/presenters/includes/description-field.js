@@ -50,7 +50,7 @@ class EditableDescriptionImpl extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        <Markdown>{description}</Markdown>
+        {description && <Markdown>{description}</Markdown>}
       </p>
     );
   }
