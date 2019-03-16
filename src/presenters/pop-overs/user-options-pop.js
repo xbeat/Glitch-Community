@@ -30,9 +30,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
   }
   return (
     <TrackClick name="Create Team clicked">
-      <button type="button" onClick={showCreateTeam} className="button button-small has-emoji">
-        Create Team <span className="emoji herb" />
-      </button>
+      <PopoverButton text="Create Team" emoji="herb" onClick={showCreateTeam} />
     </TrackClick>
   );
 };
