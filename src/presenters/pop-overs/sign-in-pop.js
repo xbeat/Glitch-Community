@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import { Link } from '../includes/link';
 import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
+import PopoverButton from './popover-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
@@ -30,11 +30,7 @@ function facebookAuthLink() {
 }
 
 const SignInPopButton = (props) => (
-  <PopoverButton text={ `Sign in with  ${props.company}`} emoji={props.emoji} />
-  <Button type="small" link={props.href}>
-  <Button className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
-    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-  </Link>
+  <PopoverButton text={`Sign in with  ${props.company}`} emoji={props.emoji} link={props.href} />
 );
 
 class EmailHandler extends React.Component {
