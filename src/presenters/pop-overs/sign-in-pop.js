@@ -29,14 +29,14 @@ function facebookAuthLink() {
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
 
-const SignInPopButton = (props) => (
-  <Button size="small" link={props.href}>
-    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-  <Button/>
-    <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
-    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-  </Link>
-);
+const SignInPopButton = (props) => {
+  props.onClick();
+  return (
+    <Button size="small" link={props.href}>
+      Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
+    <Button/>
+    )
+};
 
 class EmailHandler extends React.Component {
   constructor(props) {
