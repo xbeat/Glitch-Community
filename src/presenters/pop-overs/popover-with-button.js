@@ -11,7 +11,7 @@ const PopoverWithButton = (props) => (
         childrenToShow = React.Children.map(props.children, (child) => React.cloneElement(child, { togglePopover }));
       }
       return (
-        <div className={`button-wrap ${props.containerClass}`}>
+        <div className={`popover-wrap ${props.containerClass}`}>
           <Button onClick={togglePopover} size={props.buttonClass}>
             {props.buttonText}
           </Button>

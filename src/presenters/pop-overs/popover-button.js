@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '../../components/buttons/button';
 
 const PopoverButton = ({ onClick, text, emoji }) => (
-  <button className="button-small has-emoji button-tertiary" onClick={onClick}>
+  <Button type="tertiary" size="small" onClick={onClick}>
     <span>{text} </span>
     <span className={`emoji ${emoji}`} />
-  </button>
+  </Button>
 );
 
 PopoverButton.propTypes = {

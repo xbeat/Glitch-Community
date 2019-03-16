@@ -10,6 +10,7 @@ import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
+import PopoverButton from './popover-button';
 
 // Create Team button
 
@@ -23,9 +24,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
           </button>{' '}
           to create teams
         </p>
-        <button className="button button-small has-emoji" disabled type="button">
-          Create Team <span className="emoji herb" />
-        </button>
+        <PopoverButton text="Create Team" emoji="herb" disabled />
       </>
     );
   }
