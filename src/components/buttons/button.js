@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Link from '../../presenters/includes/link';
-
 import classNames from 'classnames/bind';
 import styles from './button.styl';
+import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
@@ -28,9 +26,8 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
   const linkOrButton = () => {
     if (onClick) {
       return <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
-    } else {
-      return <Link to={link} className={className}>{children}</Link>;
     }
+    return <Link to={link} className={className}>{children}</Link>;
   };
 
   return linkOrButton();
@@ -40,8 +37,8 @@ Button.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
-  onClick: function(props, propName, componentName) {
-    if (props['link'] == false && (props[propName] == null || typeof props[propName] != 'function')) {
+  onClick(props, propName) {
+    if (props.link === false && (props[propName] === null || typeof props[propName] !== 'function')) {
       return new Error('Please provide a link or an onClick function');
     }
   },
@@ -54,8 +51,8 @@ Button.propTypes = {
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
   /** link when button clicked */
-  link: function(props, propName, componentName) {
-    if (props['onClick'] == false && (props[propName] == null || typeof props[propName] != 'string')) {
+  link(props, propName) {
+    if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
       return new Error('Please provide a link or an onClick function');
     }
   },
