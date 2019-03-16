@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container';
-import Button from '../../components/buttons/button';
+import Button, { TYPES, SIZES } from '../../components/buttons/button';
 
 const PopoverWithButton = (props) => (
   <PopoverContainer>
@@ -12,7 +12,7 @@ const PopoverWithButton = (props) => (
       }
       return (
         <div className={`popover-wrap ${props.containerClass}`}>
-          <Button onClick={togglePopover} size={props.buttonClass}>
+          <Button onClick={togglePopover} size={props.buttonSize} type={props.buttonType}>
             {props.buttonText}
           </Button>
           {visible && childrenToShow}
@@ -23,7 +23,8 @@ const PopoverWithButton = (props) => (
 );
 
 PopoverWithButton.propTypes = {
-  buttonClass: PropTypes.string,
+  buttonType: PropTypes.oneOf(TYPES),
+  buttonSize: PropTypes.oneOf(SIZES),
   containerClass: PropTypes.string,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
@@ -31,7 +32,8 @@ PopoverWithButton.propTypes = {
 };
 
 PopoverWithButton.defaultProps = {
-  buttonClass: null,
+  buttonType: null,
+  buttonSize: null,
   containerClass: null,
   passToggleToPop: false,
 };
