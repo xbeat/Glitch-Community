@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 
 import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
-import PopoverButton from './popover-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
@@ -31,11 +30,12 @@ function facebookAuthLink() {
 
 const SignInPopButton = (props) => {
   props.onClick();
+  debugger;
   return (
     <Button size="small" link={props.href}>
       Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-    <Button/>
-    )
+    </Button>
+  );
 };
 
 class EmailHandler extends React.Component {
