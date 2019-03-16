@@ -5,6 +5,7 @@ import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
+import Button from '.'
 
 import { getRemixUrl } from '../../models/project';
 
@@ -54,9 +55,9 @@ const NewProjectPop = ({ projects }) => (
       </div>
     </section>
     <section className="pop-over-actions last-section pop-over-info">
-      <button className="button-small button-tertiary button-on-secondary-background" onClick={importGitRepo} type="button">
+      <Button size="small" type="tertiary" onClick={importGitRepo}>
         <span>Clone from Git Repo</span>
-      </button>
+      </Button>
     </section>
   </div>
 );
