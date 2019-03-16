@@ -9,6 +9,7 @@ import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
+import Button from '../../components/buttons/button';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -199,15 +200,14 @@ const SignInWithConsumer = (props) => {
 };
 
 const EmailSignInButton = ({ onClick }) => (
-  <button
-    className="button button-small button-link has-emoji"
-    type="button"
+  <Button
+    size="small"
     onClick={() => {
       onClick();
     }}
   >
     Sign in with Email <span className="emoji email" />
-  </button>
+  </Button>
 );
 EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired,
@@ -215,9 +215,9 @@ EmailSignInButton.propTypes = {
 
 const SignInCodeSection = ({ onClick }) => (
   <section className="pop-over-actions last-section pop-over-info">
-    <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
+    <Button size="small" type="tertiary" onClick={onClick}>
       <span>Use a sign in code</span>
-    </button>
+    </Button>
   </section>
 );
 SignInCodeSection.propTypes = {
@@ -279,7 +279,7 @@ SignInPopBase.propTypes = {
 };
 
 const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
+  <PopoverWithButton buttonClass="small" buttonText="Sign in" passToggleToPop>
     <SignInPopBase {...props} />
   </PopoverWithButton>
 );

@@ -5,7 +5,7 @@ import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
-import Button from '.'
+import Button from '../../components/buttons/button';
 
 import { getRemixUrl } from '../../models/project';
 
@@ -98,7 +98,7 @@ class NewProjectPopButton extends React.Component {
 
   render() {
     return (
-      <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
+      <PopoverWithButton buttonClass="small" buttonText="New Project">
         <NewProjectPop projects={this.state.projects} />
       </PopoverWithButton>
     );
