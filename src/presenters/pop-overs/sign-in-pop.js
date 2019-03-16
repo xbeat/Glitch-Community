@@ -30,9 +30,12 @@ function facebookAuthLink() {
 }
 
 const SignInPopButton = (props) => (
-  <Button link={props.href}>
-    Sign in with  {props.company} <span className={`emoji ${props.emoji}`} />
+  <Button size="small" link={props.href}>
+    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
   <Button/>
+    <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
+    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
+  </Link>
 );
 
 class EmailHandler extends React.Component {
