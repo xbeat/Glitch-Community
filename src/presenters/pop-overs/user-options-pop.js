@@ -122,12 +122,8 @@ Are you sure you want to sign out?`)
       </UserLink>
       <TeamList teams={user.teams} showCreateTeam={showCreateTeam} userIsAnon={!user.login} />
       <section className="pop-over-info">
-        <button type="button" onClick={clickNewStuff} className="button-small has-emoji button-tertiary button-on-secondary-background">
-          New Stuff <span className="emoji dog-face" />
-        </button>
-        <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
-          Support <span className="emoji ambulance" />
-        </Link>
+        <PopoverButton text="New Stuff" emoji="dog-face" onClick={clickNewStuff} />
+        <PopoverButton text="Support" emoji="ambulance" link="https://support.glitch.com" />
         <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
           Sign Out <span className="emoji balloon" />
         </button>
