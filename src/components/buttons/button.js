@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Link from '../../presenters/includes/link';
+
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 
@@ -21,17 +24,19 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     dangerZone: type === 'dangerZone',
     hover,
   });
-  
+
   const linkOrButton = () => {
     if (onClick) {
       return (
         <button onClick={onClick} className={className} disabled={disabled}>
           {children}
         </button>
-          );
+      );
     } else {
       return (
-        <Link /></Link>
+        <Link to={link} className={className}>
+          {children}
+        </Link>
       );
     }
   };
