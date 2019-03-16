@@ -27,17 +27,9 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
 
   const linkOrButton = () => {
     if (onClick) {
-      return (
-        <button onClick={onClick} className={className} disabled={disabled}>
-          {children}
-        </button>
-      );
+      return <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
     } else {
-      return (
-        <Link to={link} className={className}>
-          {children}
-        </Link>
-      );
+      return <Link to={link} className={className}>{children}</Link>;
     }
   };
 
