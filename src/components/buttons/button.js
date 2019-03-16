@@ -11,6 +11,7 @@ export const SIZES = ['small'];
 /**
  * Button Component
  */
+
 const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
   const className = cx({
     btn: true,
@@ -20,12 +21,22 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     dangerZone: type === 'dangerZone',
     hover,
   });
+  
+  const linkOrButton = () => {
+    if (onClick) {
+      return (
+        <button onClick={onClick} className={className} disabled={disabled}>
+          {children}
+        </button>
+          );
+    } else {
+      return (
+        <Link /></Link>
+      );
+    }
+  };
 
-  return (
-    <button onClick={onClick} className={className} disabled={disabled}>
-      {children}
-    </button>
-  );
+  return linkOrButton();
 };
 
 Button.propTypes = {
@@ -33,11 +44,9 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
   onClick: function(props, propName, componentName) {
-      if ((props['link'] == false && (props[propName] == undefined || typeof(props[propName]) != 'function'))) {
-        return new Error(
-            'Please provide an onClick function';
-        );
-      }
+    if (props['link'] == false && (props[propName] == undefined || typeof props[propName] != 'function')) {
+      return new Error('Please provide a link or an onClick function');
+    }
   },
   /** button disabled */
   disabled: PropTypes.bool,
@@ -47,10 +56,16 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
+  /** link when button clicked */
+  link: function(props, propName, componentName) {
+    if (props['onClick'] == false && (props[propName] == undefined || typeof props[propName] != 'string')) {
+      return new Error('Please provide a link or an onClick function');
+    }
+  },
 };
 
 Button.defaultProps = {
-  onClick: () => {},
+  onClick: null,
   disabled: false,
   type: null,
   size: null,
