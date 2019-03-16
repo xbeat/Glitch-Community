@@ -41,7 +41,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
   onClick: function(props, propName, componentName) {
-    if (props['link'] == false && (props[propName] == undefined || typeof props[propName] != 'function')) {
+    if (props['link'] == false && (props[propName] == null || typeof props[propName] != 'function')) {
       return new Error('Please provide a link or an onClick function');
     }
   },
@@ -55,7 +55,7 @@ Button.propTypes = {
   hover: PropTypes.bool,
   /** link when button clicked */
   link: function(props, propName, componentName) {
-    if (props['onClick'] == false && (props[propName] == undefined || typeof props[propName] != 'string')) {
+    if (props['onClick'] == false && (props[propName] == null || typeof props[propName] != 'string')) {
       return new Error('Please provide a link or an onClick function');
     }
   },

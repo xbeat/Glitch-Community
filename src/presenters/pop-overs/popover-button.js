@@ -17,8 +17,16 @@ PopoverButton.propTypes = {
 };
 
 PopoverButton.defaultPropTypes = {
-  onClick: null,
-  link: null,
+  onClick: function(props, propName, componentName) {
+    if (props.link === false && (props[propName] === null || typeof props[propName] !== 'function')) {
+      return new Error('Please provide a link or an onClick function');
+    }
+  },
+  link: function(props, propName, componentName) {
+    if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
+      return new Error('Please provide a link or an onClick function');
+    }
+  },
 };
 
 export default PopoverButton;
