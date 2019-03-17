@@ -22,6 +22,7 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     dangerZone: type === 'dangerZone',
     unstyled: ['link', 'dropDown'].includes(type),
     link: type === 'link',
+    dropDown: type === 'dropDown',
     hover,
   });
 
