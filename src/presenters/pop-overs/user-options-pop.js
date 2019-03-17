@@ -11,6 +11,7 @@ import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import PopoverButton from './popover-button';
+import Button from '../../components/buttons/button'
 
 // Create Team button
 
@@ -19,9 +20,9 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     return (
       <>
         <p className="description action-description">
-          <button onClick={showCreateTeam} className="button-unstyled link" type="button">
+          <Button onClick={showCreateTeam} type="link">
             Sign in
-          </button>{' '}
+          </Button>{' '}
           to create teams
         </p>
         <PopoverButton text="Create Team" emoji="herb" onClick={showCreateTeam} disabled />
@@ -124,9 +125,7 @@ Are you sure you want to sign out?`)
       <section className="pop-over-info">
         <PopoverButton text="New Stuff" emoji="dog-face" onClick={clickNewStuff} />
         <PopoverButton text="Support" emoji="ambulance" link="https://support.glitch.com" />
-        <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
-          Sign Out <span className="emoji balloon" />
-        </button>
+        <PopoverButton text="Sign Out" emoji="balloon" onClick={clickSignout} />
       </section>
     </dialog>
   );
@@ -166,10 +165,14 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
         <PopoverContainer startOpen={createTeamOpen}>
           {({ togglePopover, visible }) => {
             const userOptionsButton = (
-              <button className="user" onClick={togglePopover} disabled={!props.user.id} type="button">
+              <Button disabled={!props.user.id} onClick={togglePopover}>
                 <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options" />
                 <span className="down-arrow icon" />
-              </button>
+              </Button>
+              {//<button className="user" onClick={togglePopover} disabled={!props.user.id} type="button">
+                <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options" />
+                <span className="down-arrow icon" />
+              </button>}
             );
 
             return (
