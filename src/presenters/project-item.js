@@ -9,7 +9,7 @@ import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
-  <li>
+  <li className="project-item">
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop {...{ project, api }} {...props} />
     <ProjectLink project={project} className="button-area">
