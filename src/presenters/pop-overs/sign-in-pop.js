@@ -29,11 +29,14 @@ function facebookAuthLink() {
 }
 
 const SignInPopButton = (props) => {
+  useEffect(() => {
+    props.onClick();
+  })
   return (
     <Button size="small" link={props.href}>
       Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
     </Button>
-  );
+  )
 };
 
 class EmailHandler extends React.Component {
