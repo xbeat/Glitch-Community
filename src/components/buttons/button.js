@@ -43,7 +43,7 @@ Button.propTypes = {
     if (props.link === false && (props[propName] === null || typeof props[propName] !== 'function')) {
       return new Error('Please provide a link or an onClick function');
     }
-    return true;
+    return null;
   },
   /** button disabled */
   disabled: PropTypes.bool,
@@ -58,7 +58,7 @@ Button.propTypes = {
     if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
       return new Error('Please provide a link or an onClick function');
     }
-    return true;
+    return null;
   },
 };
 
