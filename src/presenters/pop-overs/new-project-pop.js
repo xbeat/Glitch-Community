@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TrackedExternalLink } from '../analytics';
+import { TrackedExternalWrapper } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
@@ -37,7 +37,7 @@ const NewProjectPop = ({ projects }) => (
       <div className="results">
         {projects.length ? (
           projects.map((project) => (
-            <TrackedExternalLink
+            <TrackedExternalWrapper
               key={project.id}
               to={getRemixUrl(project.domain)}
               name="New Project Clicked"
@@ -47,7 +47,7 @@ const NewProjectPop = ({ projects }) => (
               }}
             >
               <NewProjectResultItem {...project} />
-            </TrackedExternalLink>
+            </TrackedExternalWrapper>
           ))
         ) : (
           <Loader />

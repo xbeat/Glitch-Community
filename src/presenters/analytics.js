@@ -67,7 +67,7 @@ AnalyticsTracker.propTypes = {
 
 // this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
 // this won't work for links that do a full page load, because the request will get cancelled by the nav
-// use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
+// use the TrackedExternalWrapper for that, because it will stall the page for a moment and let the request finish
 export const TrackClick = ({ children, name, properties, context }) => (
   <AnalyticsTracker>
     {(track) =>
@@ -98,7 +98,7 @@ TrackClick.defaultProps = {
 
 // this pulls in segment's trackLink, which stalls the page load until the analytics request is done
 // it forces a full page load at the end, so don't use it for links within the community site
-class TrackedExternalLinkWithoutContext extends React.Component {
+class TrackedExternalWrapperWithoutContext extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
@@ -121,22 +121,22 @@ class TrackedExternalLinkWithoutContext extends React.Component {
     );
   }
 }
-export const TrackedExternalLink = ({ children, name, properties, to, ...props }) => (
+export const TrackedExternalWrapper = ({ children, name, properties, to, ...props }) => (
   <Context.Consumer>
     {(inherited) => (
-      <TrackedExternalLinkWithoutContext to={to} name={name} properties={resolveProperties(properties, inherited.properties)} {...props}>
+      <TrackedExternalWrapperWithoutContext to={to} name={name} properties={resolveProperties(properties, inherited.properties)} {...props}>
         {children}
-      </TrackedExternalLinkWithoutContext>
+      </TrackedExternalWrapperWithoutContext>
     )}
   </Context.Consumer>
 );
-TrackedExternalLink.propTypes = {
+TrackedExternalWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   properties: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   to: PropTypes.string.isRequired,
 };
 
-TrackedExternalLink.defaultProps = {
+TrackedExternalWrapper.defaultProps = {
   properties: {},
 };
