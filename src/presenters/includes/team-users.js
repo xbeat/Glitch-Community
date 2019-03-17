@@ -27,7 +27,7 @@ export const TeamUsers = (props) => (
       const userIsTeamAdmin = props.adminIds.includes(user.id);
 
       return (
-        <li key={user.id}>
+        <li key={user.id} className="user">
           <PopoverWithButton
             containerClass="tooltip-container-button"
             buttonType="dropDown"
