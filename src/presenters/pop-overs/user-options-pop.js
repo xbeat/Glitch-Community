@@ -24,7 +24,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
           </button>{' '}
           to create teams
         </p>
-        <PopoverButton text="Create Team" emoji="herb" disabled />
+        <PopoverButton text="Create Team" emoji="herb" onClick={showCreateTeam} disabled />
       </>
     );
   }

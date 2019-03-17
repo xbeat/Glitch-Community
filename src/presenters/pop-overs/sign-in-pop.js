@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -31,12 +31,13 @@ function facebookAuthLink() {
 const SignInPopButton = (props) => {
   useEffect(() => {
     props.onClick();
-  })
+  });
+
   return (
     <Button size="small" link={props.href}>
       Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
     </Button>
-  )
+  );
 };
 
 class EmailHandler extends React.Component {

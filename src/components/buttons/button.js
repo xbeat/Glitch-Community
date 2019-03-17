@@ -6,7 +6,7 @@ import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'unstyled'];
 export const SIZES = ['small'];
 
 /**
@@ -20,6 +20,7 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
+    unstyled: type === 'unstyled',
     hover,
   });
 
