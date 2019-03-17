@@ -29,7 +29,8 @@ export const TeamUsers = (props) => (
       return (
         <li key={user.id}>
           <PopoverWithButton
-            buttonClass="user button-unstyled tooltip-container-button"
+            containerClass="tooltip-container-button"
+            buttonType="dropDown"
             buttonText={(
               <UserAvatar
                 user={user}
