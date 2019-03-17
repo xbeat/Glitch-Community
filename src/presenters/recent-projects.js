@@ -11,6 +11,13 @@ import ProjectsLoader from './projects-loader';
 import { ProjectsUL } from './projects-list';
 import SignInPop from './pop-overs/sign-in-pop';
 
+const SignInNotice = ({ api }) => (
+  <div className="anon-user-sign-up">
+    <span><SignInPop api={api} /> to create an account for your projects.</span>
+    <span>Otherwise, your projects will only be available for 2 weeks.</span>
+  </div>
+  );
+
 const RecentProjectsContainer = ({ children, user, api }) => (
   <section className="profile recent-projects">
     <h2>
@@ -22,11 +29,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
           <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt="" />
           </UserLink>
-          {!user.login && (
-            <div className="anon-user-sign-up">
-              <SignInPop api={api} />
-            </div>
-          )}
+          {!user.login && (<SignInNotice api={api}/>)}
         </div>
       </div>
       <article className="projects">{children}</article>

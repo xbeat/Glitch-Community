@@ -215,7 +215,7 @@ EmailSignInButton.propTypes = {
 
 const NewUserInfoSection = () => (
   <section className="pop-over-info">
-    <span>New to Glitch?  Create an account by signing in.</span>
+    <span><span className="emoji carp_streamer"></span> New to Glitch?  Create an account by signing in.</span>
   </section>
 );
 
