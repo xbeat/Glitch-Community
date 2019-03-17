@@ -80,7 +80,11 @@ const Header = ({ api, maybeUser, clearUser, searchQuery, showNewStuffOverlay })
       <NewProjectPop api={api} />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop api={api} />}
-      {!!maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
+      {!!maybeUser && (
+        <div className="user-options-pop-button">
+          <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />
+        </div>
+      )}
     </nav>
   </header>
 );
