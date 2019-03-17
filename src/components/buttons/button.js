@@ -6,7 +6,7 @@ import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link', 'dropDown'];
 export const SIZES = ['small'];
 
 /**
@@ -20,7 +20,7 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-    unstyled: type === 'link', // there may be additional button types in the future that require unstyled buttons
+    unstyled: ['link', 'dropDown'].includes(type),
     link: type === 'link',
     hover,
   });

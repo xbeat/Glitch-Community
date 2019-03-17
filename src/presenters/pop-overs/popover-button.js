@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/buttons/button';
 
-const PopoverButton = ({ onClick, text, emoji, link }) => (
-  <Button type="tertiary" size="small" onClick={onClick} link={link}>
+const PopoverButton = ({ onClick, text, emoji, link, disabled }) => (
+  <Button type="tertiary" size="small" onClick={onClick} link={link} disabled>
     <span>{text} </span>
     <span className={`emoji ${emoji}`} />
   </Button>
@@ -26,11 +26,13 @@ PopoverButton.propTypes = {
       return new Error('Please provide a link or an onClick function');
     }
   },
+  disabled: PropTypes.bool,
 };
 
 PopoverButton.defaultProps = {
   onClick: null,
   link: null,
+  disabled: false,
 };
 
 export default PopoverButton;
