@@ -25,7 +25,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
           </Button>{' '}
           to create teams
         </p>
-        <Button onClick={showCreateTeam} disabled>
+        <Button onClick={showCreateTeam} size="small" disabled>
           Create Team <span className="emoji herb" />
         </Button>
       </>
@@ -33,7 +33,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
   }
   return (
     <TrackClick name="Create Team clicked">
-      <Button onClick={showCreateTeam}>
+      <Button onClick={showCreateTeam} size="small">
         Create Team <span className="emoji herb" />
       </Button>
     </TrackClick>
