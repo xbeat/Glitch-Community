@@ -13,8 +13,8 @@ import SignInPop from './pop-overs/sign-in-pop';
 
 const SignInNotice = ({ api }) => (
   <div className="anon-user-sign-up">
-    <span><SignInPop api={api} /> to create an account for your projects.</span>
-    <p>Otherwise, your projects will expire after 2 weeks.</p>
+    <span><SignInPop api={api} /> to keep your projects.</span>
+    <div className="note">Anonymous projects expire after 2 weeks.</div>
   </div>
   );
 
@@ -23,13 +23,13 @@ const RecentProjectsContainer = ({ children, user, api }) => (
     <h2>
       <UserLink user={user}>Your Projects →</UserLink>
     </h2>
+    {!user.login && (<SignInNotice api={api}/>)}
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt="" />
           </UserLink>
-          {!user.login && (<SignInNotice api={api}/>)}
         </div>
       </div>
       <article className="projects">{children}</article>
