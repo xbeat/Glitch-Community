@@ -213,6 +213,12 @@ EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const NewUserInfoSection = () => (
+  <section className="pop-over-info">
+    <span>New to Glitch?  Create an account by signing in.</span>
+  </section>
+);
+
 const SignInCodeSection = ({ onClick }) => (
   <section className="pop-over-actions last-section pop-over-info">
     <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
@@ -256,6 +262,7 @@ const SignInPopWithoutRouter = (props) => {
                   }}
                 />
               </section>
+              <NewUserInfoSection/>
               <SignInCodeSection
                 onClick={() => {
                   onClick();
@@ -279,7 +286,7 @@ SignInPopBase.propTypes = {
 };
 
 const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
+  <PopoverWithButton buttonClass="button button-small button-cta" buttonText="Sign in" passToggleToPop>
     <SignInPopBase {...props} />
   </PopoverWithButton>
 );
