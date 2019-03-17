@@ -7,6 +7,7 @@ import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
 import TextInput from '../components/fields/text-input';
+import Button from '../components/buttons/button';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -16,7 +17,9 @@ import { CurrentUserConsumer } from './current-user';
 
 const ResumeCoding = () => (
   <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
-    Resume Coding
+    <Button type="cta" size="small" link={EDITOR_URL}>
+      Resume Coding
+    </Button>
   </TrackedExternalLink>
 );
 
