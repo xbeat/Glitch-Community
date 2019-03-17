@@ -11,7 +11,7 @@ import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import PopoverButton from './popover-button';
-import Button from '../../components/buttons/button'
+import Button from '../../components/buttons/button';
 
 // Create Team button
 
@@ -25,13 +25,17 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
           </Button>{' '}
           to create teams
         </p>
-        <PopoverButton text="Create Team" emoji="herb" onClick={showCreateTeam} disabled />
+        <Button onClick={showCreateTeam} disabled>
+          Create Team <span className="emoji herb" />
+        </Button>
       </>
     );
   }
   return (
     <TrackClick name="Create Team clicked">
-      <PopoverButton text="Create Team" emoji="herb" onClick={showCreateTeam} />
+      <Button onClick={showCreateTeam}>
+        Create Team <span className="emoji herb" />
+      </Button>
     </TrackClick>
   );
 };
@@ -168,10 +172,6 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
               <Button type="dropDown" disabled={!props.user.id} onClick={togglePopover}>
                 <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options" />
                 <span className="down-arrow icon" />
-              {/*<button className="user" onClick={togglePopover} disabled={!props.user.id} type="button">
-                <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options" />
-                <span className="down-arrow icon" />
-              </button>*/}
               </Button>
             );
 
