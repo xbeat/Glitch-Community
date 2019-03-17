@@ -14,7 +14,7 @@ import SignInPop from './pop-overs/sign-in-pop';
 const SignInNotice = ({ api }) => (
   <div className="anon-user-sign-up">
     <span><SignInPop api={api} /> to create an account for your projects.</span>
-    <span>Otherwise, your projects will only be available for 2 weeks.</span>
+    <p>Otherwise, your projects will expire after 2 weeks.</p>
   </div>
   );
 
