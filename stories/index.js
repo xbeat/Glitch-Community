@@ -69,3 +69,4 @@ storiesOf('Text Input', module)
   .add('text area', () => (
     <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
   ));
+
