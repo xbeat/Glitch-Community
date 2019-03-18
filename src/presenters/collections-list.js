@@ -8,6 +8,8 @@ import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
 import { NotificationConsumer } from './notifications';
 
+import Heading from '../components/text/heading';
+
 class CollectionsList extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +39,7 @@ class CollectionsList extends React.Component {
     }
     return (
       <article className="collections">
-        <h2>{title}</h2>
+        <Heading tagName="h2">{title}</Heading>
         {canMakeCollections && (
           <>
             <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
