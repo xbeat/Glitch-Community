@@ -24,6 +24,7 @@ import AddProjectToCollection from '../includes/add-project-to-collection';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
+import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
 
 import { CurrentUserConsumer } from '../current-user';
@@ -157,6 +158,9 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
       </section>
       <section id="readme">
         <ReadmeLoader api={api} domain={domain} />
+      </section>
+      <section id="included-in-collections">
+        <IncludedInCollections api={api} projectId={project.id} />
       </section>
       <section id="related">
         <RelatedProjects ignoreProjectId={project.id} {...{ api, teams, users }} />
