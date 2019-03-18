@@ -113,11 +113,3 @@ _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes.
 
 #### Updating a Glitch Remix from your local machine
 Sometimes it's helpful to work on your local machine, then push your changes back to Glitch. To do this, run `./sh/update.sh my-remix` to get your changes to Github, then run `git pull my-remote my-remix` from your remix's console to pull the changes from Github to Glitch. If you're a member of the Glitch Github organization, my-remote will be `origin`. If not, you'll have to add a remote in your remix pointing to your fork of the project and use that.
-
---------------------
-
-**Making Live Edits**
-
- _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
-  
-Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, editing .md files, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
