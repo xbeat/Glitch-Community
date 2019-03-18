@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Button from '../../components/buttons/button';
-import Button from '@src/components/buttons/button';
+import Button from '@components/buttons/button';
 
 const PopoverButton = ({ onClick, text, emoji, link, disabled }) => (
   <Button type="tertiary" size="small" onClick={onClick} link={link} disabled={disabled}>

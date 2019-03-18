@@ -25,9 +25,11 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
   return (
     <>
       <section id="featured-project-embed">
-        <h2>{featuredTitle}</h2>
+        <div class="featured-project-embed-header">
+          <h2>{featuredTitle}</h2>
 
-        {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
+          {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
+        </div>
         <Embed domain={featuredProject.domain} />
 
         {isAuthorized ? (
