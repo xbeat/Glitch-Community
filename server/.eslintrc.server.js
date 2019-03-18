@@ -23,7 +23,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        map: [['@components', '../src/components']],
+        map: [['Components', "src/components"]],
         extensions: ['.js'],
       },
     },

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@components/buttons/button';
+import Button from 'Components/buttons/button';
 import PopoverContainer from './popover-container';
 import PopoverButton from './popover-button';
 
