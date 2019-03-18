@@ -63,7 +63,12 @@ module.exports = {
   resolve: {
     extensions: [".js"],
     alias: {
-      '_comp': CSS_MODULES,
+      'Components': CSS_MODULES,
+      'Utils': path.resolve(__dirname, "src/utils"),
+      'Curated': path.resolve(__dirname, "src/curated"),
+      'Models': path.resolve(__dirname, "src/models"),
+      'Shared': SHARED,
+      'Src': SRC,
     },
   },
   module: {
