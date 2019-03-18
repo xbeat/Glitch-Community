@@ -26,12 +26,20 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     transparent,
     hover,
   });
-  console.log(children.map(child => {child.type()}));
+  console.log(React.Children.map(children, (child) => child.type ? child.type.displayName : "no type"));
   const linkOrButton = () => {
     if (onClick) {
-      return <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
+      return (
+        <button onClick={onClick} className={className} disabled={disabled}>
+          {children}
+        </button>
+      );
     }
-    return <Link to={href} className={className}>{children}</Link>;
+    return (
+      <Link to={href} className={className}>
+        {children}
+      </Link>
+    );
   };
 
   return linkOrButton();
