@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import sampleAnalytics, { sampleAnalyticsTime } from '../../curated/sample-analytics';
+import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';

@@ -7,7 +7,6 @@ module.exports = {
         ['Curated', './src/curated'],
         ['Models', './src/models'],
         ['Shared', './shared'],
-        ['Src', './src'],
       ]
     }
   }

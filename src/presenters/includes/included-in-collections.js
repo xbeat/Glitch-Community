@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sampleSize } from 'lodash';
-import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
+import { getSingleItem, getAllPages, allByKeys } from 'Shared/api';
 
 import CollectionItem from '../collection-item';
 

@@ -68,7 +68,6 @@ module.exports = {
       'Curated': path.resolve(__dirname, "src/curated"),
       'Models': path.resolve(__dirname, "src/models"),
       'Shared': SHARED,
-      'Src': SRC,
     },
   },
   module: {

@@ -13,7 +13,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
+const Button = ({ onClick, href, disabled, type, size, hover, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -30,7 +30,7 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     if (onClick) {
       return <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
     }
-    return <Link to={link} className={className}>{children}</Link>;
+    return <Link to={href} className={className}>{children}</Link>;
   };
 
   return linkOrButton();
@@ -41,8 +41,8 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
   onClick(props, propName) {
-    if (props.link === false && (props[propName] === null || typeof props[propName] !== 'function')) {
-      return new Error('Please provide a link or an onClick function');
+    if (props.href === false && (props[propName] === null || typeof props[propName] !== 'function')) {
+      return new Error('Please provide a href or an onClick function');
     }
     return null;
   },
@@ -55,9 +55,9 @@ Button.propTypes = {
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
   /** link when button clicked */
-  link(props, propName) {
+  href(props, propName) {
     if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
-      return new Error('Please provide a link or an onClick function');
+      return new Error('Please provide a href or an onClick function');
     }
     return null;
   },
@@ -69,7 +69,7 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
-  link: null,
+  href: null,
 };
 
 export default Button;
