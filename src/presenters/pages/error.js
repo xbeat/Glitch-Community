@@ -9,6 +9,8 @@ import { getShowUrl } from '../../models/project';
 import { useCurrentUser } from '../current-user';
 import NotFound from '../includes/not-found';
 
+import Heading from '../../components/text/heading';
+
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export const NotFoundPage = ({ api }) => (
@@ -17,7 +19,7 @@ export const NotFoundPage = ({ api }) => (
     <main className="error-page-container">
       <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
       <div className="error-msg">
-        <h1>Page Not Found</h1>
+        <Heading tagName="h1">Page Not Found</Heading>
         <p>Maybe a typo, or perhaps it's moved?</p>
         <a className="button button-link" href="/">
           Back to Glitch

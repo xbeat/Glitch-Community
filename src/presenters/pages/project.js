@@ -11,6 +11,7 @@ import { AnalyticsContext } from '../analytics';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
+import Heading from '../../components/text/heading';
 import Markdown from '../../components/text/markdown';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
@@ -106,7 +107,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
       <section id="info">
         <InfoContainer>
           <ProjectInfoContainer style={{ backgroundImage: `url('${getAvatarUrl(project.id)}')` }}>
-            <h1>
+            <Heading tagName="h1">
               {isAuthorized ? (
                 <EditableField
                   value={domain}
@@ -119,7 +120,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
                   {domain} {project.private && <PrivateBadge />}
                 </>
               )}
-            </h1>
+            </Heading>
             <div className="users-information">
               <UsersList users={users} />
               {!!teams.length && <TeamsList teams={teams} />}
