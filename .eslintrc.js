@@ -2,7 +2,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: [
-        ['@comp', './src/components'],
+        ['_comp', './src/components'],
       ]
     }
   }

@@ -63,7 +63,7 @@ module.exports = {
   resolve: {
     extensions: [".js"],
     alias: {
-      '@comp': CSS_MODULES,
+      '_comp': CSS_MODULES,
     },
   },
   module: {
