@@ -9,11 +9,9 @@ import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
-  <li className="project-item">
-    <div className="project-item-header">
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
-      <ProjectOptionsPop {...{ project, api }} {...props} />
-    </div>
+  <li>
+    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
+    <ProjectOptionsPop {...{ project, api }} {...props} />
     <ProjectLink project={project} className="button-area">
       <div className={['project', project.private ? 'private-project' : ''].join(' ')} data-track="project" data-track-label={project.domain}>
         <div className="project-container">
