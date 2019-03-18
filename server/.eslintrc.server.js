@@ -25,4 +25,9 @@ module.exports = {
       'babel-module': {}
     },
   },
+   parserOptions: {
+    babelOptions: {
+      configFile: path.resolve('../.babelrc.js'),
+    },
+  },
 };
