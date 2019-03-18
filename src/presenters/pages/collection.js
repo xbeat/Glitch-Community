@@ -20,6 +20,7 @@ import EditCollectionColor from '../includes/edit-collection-color';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url';
 import AddCollectionProject from '../includes/add-collection-project';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Button from '../../components/buttons/button'
 
 import CollectionAvatar from '../includes/collection-avatar';
 import { TeamTile } from '../teams-list';
@@ -44,8 +45,8 @@ class DeleteCollectionBtn extends React.Component {
       return <Redirect to={getOwnerLink(this.props.collection)} />;
     }
     return (
-      <button
-        className="button delete-collection button-tertiary"
+      <Button
+        type="dangerZone"
         onClick={() => {
           if (!window.confirm('Are you sure you want to delete your collection?')) {
             return;
@@ -55,7 +56,7 @@ class DeleteCollectionBtn extends React.Component {
         }}
       >
         Delete Collection
-      </button>
+      </Button>
     );
   }
 }

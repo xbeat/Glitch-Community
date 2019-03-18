@@ -22,7 +22,7 @@ ButtonLink.defaultProps = {
 };
 
 export const ShowButton = ({ name, className, ...props }) => (
-  <ButtonLink href={getShowUrl(name)} className={`has-emoji ${className}`} {...props}>
+  <Button link={getShowUrl(name)} >
     <img src={showIcon} alt="" /> Show
   </ButtonLink>
 );

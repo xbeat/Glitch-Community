@@ -5,7 +5,7 @@ import EditCollectionColorPop from '../pop-overs/edit-collection-color-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const EditCollectionColor = ({ update, initialColor, ...props }) => (
-  <PopoverWithButton containerClass="edit-collection-color-btn" buttonClass="add-project" buttonText="Color" passToggleToPop>
+  <PopoverWithButton containerClass="edit-collection-color-btn" buttonText="Color" passToggleToPop>
     <EditCollectionColorPop {...props} updateColor={update} initialColor={initialColor} />
   </PopoverWithButton>
 );
