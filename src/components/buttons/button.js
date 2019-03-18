@@ -23,10 +23,11 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     unstyled: ['link', 'dropDown'].includes(type),
     link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
+    hasEmoji: React.Children.some(children, (child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     transparent,
     hover,
   });
-  console.log(React.Children.map(children, (child) => child.type ? child.type.displayName : "no type"));
+
   const linkOrButton = () => {
     if (onClick) {
       return (
