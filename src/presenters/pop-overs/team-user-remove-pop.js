@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 
 import { TrackClick } from '../analytics';
 import { Loader } from '../includes/loader';
-import { NotificationConsumer } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 import { getAvatarUrl as getProjectAvatarUrl } from '../../models/project';
 
-class TeamUserRemovePopBase extends React.Component {
+class TeamUserRemovePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,9 +93,11 @@ class TeamUserRemovePopBase extends React.Component {
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <NestedPopoverTitle>Remove {getDisplayName(this.props.user)}</NestedPopoverTitle>
 
-        {projects && <section className="pop-over-actions" id="user-team-projects">
-          {projects}
-        </section>}
+        {projects && (
+          <section className="pop-over-actions" id="user-team-projects">
+            {projects}
+          </section>
+        )}
 
         <section className="pop-over-actions danger-zone">
           <TrackClick name="Remove from Team submitted">
@@ -109,7 +110,7 @@ class TeamUserRemovePopBase extends React.Component {
     );
   }
 }
-TeamUserRemovePopBase.propTypes = {
+TeamUserRemovePop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -126,9 +127,5 @@ TeamUserRemovePopBase.propTypes = {
   }).isRequired,
   removeUser: PropTypes.func.isRequired,
 };
-
-const TeamUserRemovePop = (props) => (
-  <NotificationConsumer>{(notifyFuncs) => <TeamUserRemovePopBase {...notifyFuncs} {...props} />}</NotificationConsumer>
-);
 
 export default TeamUserRemovePop;

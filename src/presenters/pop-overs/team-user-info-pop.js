@@ -8,7 +8,7 @@ import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
-
+import { useNotifications } from '../notifications';
 import TeamUserRemovePop from './team-user-remove-pop';
 
 const MEMBER_ACCESS_LEVEL = 20;
@@ -132,11 +132,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, userTea
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
 const TeamUserInfoAndRemovePop = (props) => {
-  function removeUser(selectedProjects = []) {
-    props.createNotification(`${getDisplayName(props.user)} removed from Team`);
-    props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
-  }
-
+  const { createNotification } = useNotifications();
   const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null });
   useEffect(() => {
     props.api.get(`users/${props.user.id}`).then(({ data }) => {
@@ -146,6 +142,11 @@ const TeamUserInfoAndRemovePop = (props) => {
       });
     });
   }, [props.user.id]);
+
+  function removeUser(selectedProjects = []) {
+    createNotification(`${getDisplayName(props.user)} removed from Team`);
+    props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
+  }
 
   const propsWithUserRemoval = { ...props, removeUser, userTeamProjects };
 
