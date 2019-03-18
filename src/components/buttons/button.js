@@ -13,7 +13,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, transparent, hover, children, emoji }) => {
+const Button = ({ onClick, href, disabled, type, size, transparent, hover, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -24,10 +24,9 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
     transparent,
-    hasEmoji: emoji !== null,
     hover,
   });
-
+  console.log(children.map(child => {child.type()}));
   const linkOrButton = () => {
     if (onClick) {
       return <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
@@ -65,7 +64,6 @@ Button.propTypes = {
     }
     return null;
   },
-  emoji: PropTypes.string,
 };
 
 Button.defaultProps = {
