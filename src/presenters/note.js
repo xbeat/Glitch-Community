@@ -19,9 +19,10 @@ const Note = ({
   }
 
   const className = classNames({
-    descriptionContainer: true,
+    'description-container': true,
     dark: isDarkColor(collectionCoverColor),
   });
+
   return (
     <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
