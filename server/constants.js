@@ -32,7 +32,7 @@ const envs = {
 
 const sources = {
   scripts: [
-    'sha256-05325B15DCE231EBF3950D80F326BF02182964BFBBAC977664AB9185BC9EEDA5=',
+    'sha256-05325b15dce231ebf3950d80f326bf02182964bfbbac977664ab9185bc9eeda5=',
     'blob:',
     'cdn.segment.com',
     'ajax.googleapis.com',
