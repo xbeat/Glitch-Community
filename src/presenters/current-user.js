@@ -117,7 +117,7 @@ class CurrentUserManager extends React.Component {
 
     if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       // delay loading a moment so both items from storage have a chance to update
-    setTimeout(() => this.load(), 1);
+      setTimeout(() => this.load(), 1);
     }
 
     // hooks for easier debugging
