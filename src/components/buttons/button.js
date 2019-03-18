@@ -13,7 +13,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, transparent, hover, children }) => {
+const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -24,7 +24,7 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
     hasEmoji: React.Children.some(children, (child) => child.type && (child.type.name === 'Emoji' || 'Image')),
-    transparent,
+    opaque,
     hover,
   });
 
