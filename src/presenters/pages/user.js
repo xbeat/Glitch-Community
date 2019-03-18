@@ -87,7 +87,6 @@ const UserPage = ({
   addPin,
   removePin,
   leaveProject,
-  leaveTeamProject,
   deleteProject,
   undeleteProject,
   featureProject,
@@ -149,7 +148,6 @@ const UserPage = ({
         projectOptions={{
           featureProject,
           leaveProject,
-          leaveTeamProject,
           deleteProject,
           addProjectToCollection,
         }}
@@ -178,7 +176,6 @@ const UserPage = ({
         projectOptions={{
           featureProject,
           leaveProject,
-          leaveTeamProject,
           deleteProject,
           addProjectToCollection,
         }}
@@ -197,9 +194,6 @@ UserPage.propTypes = {
   maybeCurrentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   leaveProject: PropTypes.func.isRequired,
-  leaveProject: PropTypes.func.isRequired,
-  leaveProject: PropTypes.func.isRequired,
-  
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
   user: PropTypes.shape({
