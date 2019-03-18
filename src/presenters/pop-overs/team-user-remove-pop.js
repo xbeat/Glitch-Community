@@ -38,8 +38,7 @@ class TeamUserRemovePopBase extends React.Component {
 
   removeUser() {
     this.props.togglePopover();
-    this.props.createNotification(`${getDisplayName(this.props.user)} removed from Team`);
-    this.props.removeUserFromTeam(this.props.user.id, Array.from(this.state.selectedProjects));
+    this.props.removeUser(this.props.user.id, Array.from(this.state.selectedProjects));
   }
 
   selectAllProjects() {
@@ -107,9 +106,9 @@ class TeamUserRemovePopBase extends React.Component {
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <NestedPopoverTitle>Remove {getDisplayName(this.props.user)}</NestedPopoverTitle>
 
-        <section className="pop-over-actions" id="user-team-projects">
-          {projects || <p className="action-description">{getDisplayName(this.props.user)} is not a member of any projects</p>}
-        </section>
+        {projects && <section className="pop-over-actions" id="user-team-projects">
+          {projects}
+        </section>}
 
         <section className="pop-over-actions danger-zone">
           <TrackClick name="Remove from Team submitted">
@@ -134,8 +133,7 @@ TeamUserRemovePopBase.propTypes = {
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-  createNotification: PropTypes.func.isRequired,
+  removeUser: PropTypes.func.isRequired,
 };
 
 const TeamUserRemovePop = (props) => (

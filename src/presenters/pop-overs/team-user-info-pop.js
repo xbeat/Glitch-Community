@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getAvatarThumbnailUrl } from '../../models/user';
+import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
 import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
@@ -75,7 +75,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
   const currentUserHasRemovePriveleges = currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   const canRemoveUser = !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin);
   const canCurrentUserRemoveUser = canRemoveUser && currentUserHasRemovePriveleges;
-
+  
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
@@ -122,11 +122,28 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
 // Team User Info or Remove
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
-const TeamUserInfoAndRemovePop = (props) => (
-  <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} />}>
-    {(showRemove) => <TeamUserInfo {...props} showRemove={showRemove} />}
-  </NestedPopover>
-);
+const TeamUserInfoAndRemovePop = (props) => {
+  function removeUser(selectedProjects = []) {
+    props.createNotification(`${getDisplayName(props.user)} removed from Team`);
+    props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
+  }
+  
+  const [userTeamProjects, 
+  
+  async function getUserWithProjects() {
+    const { data } = await this.props.api.get(`users/${this.props.user.id}`);
+    this.setState({
+      userTeamProjects: data.projects.filter((userProj) => this.props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
+      gettingUser: false,
+    });
+  }
+  
+  return (
+    <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} removeUser={removeUser} />}>
+      {(showRemove) => <TeamUserInfo {...props} showRemove={showRemove} removeUser={removeUser} />}
+    </NestedPopover>
+  );
+}
 
 TeamUserInfoAndRemovePop.propTypes = {
   user: PropTypes.shape({
