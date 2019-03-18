@@ -18,7 +18,7 @@ class Embed extends React.Component {
   browserSatisfiesRequirements = () => {
     try {
       if (URLSearchParams.name !== 'URLSearchParams') {
-        throw new Error('URLSearchParams is minified, so it must be polyfilled');
+        throw new Error('URLSearchParams is minified, so it must have been polyfilled');
       }
       return true;
     } catch (error) {
