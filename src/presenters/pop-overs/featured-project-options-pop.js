@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'Components/buttons/button';
 import PopoverContainer from './popover-container';
 import PopoverButton from './popover-button';
 
@@ -18,9 +17,9 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject }) {
     <PopoverContainer>
       {({ togglePopover, visible }) => (
         <div>
-          <Button type="dropDown" onClick={togglePopover}>
+          <button className="project-options button-borderless" onClick={togglePopover}>
             <div className="down-arrow" />
-          </Button>
+          </button>
           {visible && (
             <dialog className="pop-over project-options-pop">
               <section className="pop-over-actions">

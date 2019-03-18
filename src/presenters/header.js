@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect } from 'react-router-dom';
-import { TrackedExternalWrapper } from './analytics';
+import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
 import TextInput from '../components/fields/text-input';
@@ -16,11 +16,11 @@ import NewStuffContainer from './overlays/new-stuff';
 import { CurrentUserConsumer } from './current-user';
 
 const ResumeCoding = () => (
-  <TrackedExternalWrapper name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
+  <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
     <Button type="cta" size="small" href={EDITOR_URL}>
       Resume Coding
     </Button>
-  </TrackedExternalWrapper>
+  </TrackedExternalLink>
 );
 
 class SearchForm extends React.Component {

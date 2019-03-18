@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TrackedExternalWrapper } from '../analytics';
+import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
-import Button from '../../components/buttons/button';
 
 import { getRemixUrl } from '../../models/project';
 
@@ -37,7 +36,7 @@ const NewProjectPop = ({ projects }) => (
       <div className="results">
         {projects.length ? (
           projects.map((project) => (
-            <TrackedExternalWrapper
+            <TrackedExternalLink
               key={project.id}
               to={getRemixUrl(project.domain)}
               name="New Project Clicked"
@@ -47,7 +46,7 @@ const NewProjectPop = ({ projects }) => (
               }}
             >
               <NewProjectResultItem {...project} />
-            </TrackedExternalWrapper>
+            </TrackedExternalLink>
           ))
         ) : (
           <Loader />
@@ -55,9 +54,9 @@ const NewProjectPop = ({ projects }) => (
       </div>
     </section>
     <section className="pop-over-actions last-section pop-over-info">
-      <Button size="small" type="tertiary" onClick={importGitRepo}>
+      <button className="button-small button-tertiary button-on-secondary-background" onClick={importGitRepo} type="button">
         <span>Clone from Git Repo</span>
-      </Button>
+      </button>
     </section>
   </div>
 );
@@ -98,7 +97,7 @@ class NewProjectPopButton extends React.Component {
 
   render() {
     return (
-      <PopoverWithButton buttonSize="small" buttonText="New Project">
+      <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
         <NewProjectPop projects={this.state.projects} />
       </PopoverWithButton>
     );

@@ -27,10 +27,9 @@ export const TeamUsers = (props) => (
       const userIsTeamAdmin = props.adminIds.includes(user.id);
 
       return (
-        <li key={user.id} className="user">
+        <li key={user.id}>
           <PopoverWithButton
-            containerClass="tooltip-container-button"
-            buttonType="dropDown"
+            buttonClass="user button-unstyled tooltip-container-button"
             buttonText={(
               <UserAvatar
                 user={user}
