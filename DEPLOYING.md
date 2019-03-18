@@ -48,7 +48,7 @@ Go to [https://glitch.com/~community-staging](https://glitch.com/~community-stag
   
   # That last step should never need to merge.
   # If it does, something went wrong or somebody edited community-staging directly.
-  # Ask Jude or Greg for help. 
+  # Ask someone on the team in #community for help!
   
   refresh # Update the Glitch editor with the new files and kick off the build.
   ```
