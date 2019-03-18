@@ -9,7 +9,7 @@ import { getShowUrl } from '../../models/project';
 import { useCurrentUser } from '../current-user';
 import NotFound from '../includes/not-found';
 
-import Text from '../../components/text/text'
+import Text from '../../components/text/text';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
