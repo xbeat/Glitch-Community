@@ -32,6 +32,7 @@ const envs = {
 
 const sources = {
   scripts: [
+    'sha256-194CB9E4A3DBA329929190DEF5C23FE2DDDB0A4A60D5D763F3733F14FC29A8E4=',
     'blob:',
     'cdn.segment.com',
     'ajax.googleapis.com',
