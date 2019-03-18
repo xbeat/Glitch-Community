@@ -44,10 +44,10 @@ const emojiMap = {
  */
 
 const Emoji = ({ name }) => {
-  const className = cx({
-    emoji: true,
-    name: true,
-  });
+  const classNameObj = { emoji: true };
+  classNameObj[name] = true;
+
+  const className = cx(classNameObj);
 
   return <img className={className} src={emojiMap[name]} alt={name} />;
 };
