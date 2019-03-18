@@ -24,20 +24,17 @@ const getSingleItem = async (api, url, key) => {
   return null;
 };
 
-const getPages = async (api, url, maxPages = 1) => {
+const getAllPages = async (api, url) => {
   let hasMore = true;
   let results = [];
-  while (hasMore && maxPages > 0) {
+  while (hasMore) {
     const data = await getFromApi(api, url);
     results.push(...data.items);
     hasMore = data.hasMore;
     url = data.nextPage;
-    maxPages--;
   }
   return results;
 };
-
-const getAllPages = (api, url) => getPages(api, url, Infinity)
 
 // like Promise.all but with an object instead of an array, e.g.
 // `let { user, projects } = await allByKeys({ user: getUser(id), projects: getProjects(id) })`
@@ -54,7 +51,6 @@ module.exports = {
   joinIdsToQueryString,
   getFromApi,
   getSingleItem,
-  getPages,
   getAllPages,
   allByKeys,
 };
