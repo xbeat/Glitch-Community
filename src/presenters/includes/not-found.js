@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Text from '../../components/text/text'
+import Text from '../../components/text/text';
 
 const compass = 'https://cdn.glitch.com/bc50f686-4c0a-4e20-852f-3999b29e8092%2Fcompass.svg?1545073264846';
 const needle = 'https://cdn.glitch.com/bc50f686-4c0a-4e20-852f-3999b29e8092%2Fneedle.svg?1545073265096';

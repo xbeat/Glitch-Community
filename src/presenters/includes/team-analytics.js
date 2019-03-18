@@ -13,7 +13,7 @@ import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
-import Text from '../../components/text/text'
+import Text from '../../components/text/text';
 
 const dateFromTime = (newTime) => {
   const timeMap = {

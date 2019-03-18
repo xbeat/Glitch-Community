@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Text from '../components/text/text';
+
 const context = React.createContext();
 const { Provider } = context;
 export const NotificationConsumer = context.Consumer;
 export const useNotifications = () => React.useContext(context);
-
-import Text from '../components/text/text'
 
 const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
