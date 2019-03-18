@@ -1,0 +1,61 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import styles from './button.styl';
+import { Link } from '../../presenters/includes/link';
+
+const cx = classNames.bind(styles);
+
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link', 'dropDown'];
+export const SIZES = ['small'];
+
+/**
+ * Emoji Component
+ */
+
+const Emoji = ({ emojiName }) => {
+  
+  return <img className={styles.emoji} src={}></img>
+}
+
+Emoji.propTypes = {
+  /** element(s) to display in the button */
+  children: PropTypes.node.isRequired,
+  /** callback when button clicked */
+  onClick(props, propName) {
+    if (props.href === false && (props[propName] === null || typeof props[propName] !== 'function')) {
+      return new Error('Please provide a href or an onClick function');
+    }
+    return null;
+  },
+  /** button disabled */
+  disabled: PropTypes.bool,
+  /** type of button */
+  type: PropTypes.oneOf(TYPES),
+  /** size of button */
+  size: PropTypes.oneOf(SIZES),
+  /** whether or not the button's hover state should be active */
+  hover: PropTypes.bool,
+  /** whether or not the button takes on the colour of the background */
+  transparent: PropTypes.bool,
+  /** link when button clicked */
+  href(props, propName) {
+    if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
+      return new Error('Please provide a href or an onClick function');
+    }
+    return null;
+  },
+};
+
+Emoji.defaultProps = {
+  onClick: null,
+  disabled: false,
+  type: null,
+  size: null,
+  hover: false,
+  transparent: false,
+  href: null,
+  emoji: null,
+};
+
+export default Emoji;
