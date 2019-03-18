@@ -11227,7 +11227,7 @@ specifiers:
   details-element-polyfill: ^2.3.1
   ejs: ^2.6.1
   email-addresses: ^3.0.3
-  eslint: ^5.14.1
+  eslint: ^5.15.1
   eslint-config-airbnb: ^17.1.0
   eslint-loader: ^2.1.2
   eslint-plugin-import: ^2.16.0
@@ -11251,10 +11251,10 @@ specifiers:
   prop-types: ^15.6.2
   quantize: ^1.0.2
   randomcolor: ^0.5.4
-  react: ^16.8.3
-  react-dom: ^16.8.3
+  react: ^16.8.4
+  react-dom: ^16.8.4
   react-helmet: ^5.2.0
-  react-is: ^16.8.3
+  react-is: ^16.8.4
   react-konami: ^0.5.0
   react-onclickoutside: ^6.8.0
   react-pluralize: ^1.5.0
