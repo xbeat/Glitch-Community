@@ -20,6 +20,9 @@ import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
+  
+  function setFirst(){
+  console.log ('hello')};
 
   if (!loaded) {
     return (
@@ -47,6 +50,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
         )}
       </div>
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
+      {setFirst()}
     </>
   );
 };
