@@ -11,7 +11,7 @@ import { TrackClick } from './analytics';
 const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
-      <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
+      <ReportButton reportedType="project" reportedModel={featuredProject} />
     </div>
   );
 
@@ -34,7 +34,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
 
         {isAuthorized ? (
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized} />
+            <EditButton name={featuredProject.id} isMember={isAuthorized} />
           </div>
         ) : (
           reportBtn
