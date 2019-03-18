@@ -30,7 +30,7 @@ const Note = ({
           authorized={!!update}
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={update || (() => {})}
+          update={update}
           maxLength={75}
         />
       </div>
