@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button, { TYPES, SIZES } from 'Components/buttons/button';
 import PopoverContainer from './popover-container';
 
 const PopoverWithButton = (props) => (
@@ -11,10 +10,10 @@ const PopoverWithButton = (props) => (
         childrenToShow = React.Children.map(props.children, (child) => React.cloneElement(child, { togglePopover }));
       }
       return (
-        <div className={`popover-wrap ${props.containerClass}`}>
-          <Button onClick={togglePopover} size={props.buttonSize} type={props.buttonType}>
+        <div className={`button-wrap ${props.containerClass}`}>
+          <button className={props.buttonClass} data-track={props.dataTrack} onClick={togglePopover} type="button">
             {props.buttonText}
-          </Button>
+          </button>
           {visible && childrenToShow}
         </div>
       );
@@ -23,18 +22,18 @@ const PopoverWithButton = (props) => (
 );
 
 PopoverWithButton.propTypes = {
-  buttonType: PropTypes.oneOf(TYPES),
-  buttonSize: PropTypes.oneOf(SIZES),
+  buttonClass: PropTypes.string,
   containerClass: PropTypes.string,
+  dataTrack: PropTypes.string,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
   passToggleToPop: PropTypes.bool,
 };
 
 PopoverWithButton.defaultProps = {
-  buttonType: null,
-  buttonSize: null,
+  buttonClass: null,
   containerClass: null,
+  dataTrack: null,
   passToggleToPop: false,
 };
 

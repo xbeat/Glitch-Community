@@ -181,7 +181,7 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
 
   return (
     <PopoverWithButton
-      buttonType="dropDown"
+      buttonClass="project-options button-borderless button-small"
       buttonText={<div className="down-arrow" aria-label="options" />}
       containerClass="project-options-pop-btn"
       passToggleToPop

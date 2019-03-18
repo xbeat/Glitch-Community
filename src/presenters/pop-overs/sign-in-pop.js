@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+import { Link } from '../includes/link';
 import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
-import Button from '../../components/buttons/button';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -28,17 +28,11 @@ function facebookAuthLink() {
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
 
-const SignInPopButton = (props) => {
-  useEffect(() => {
-    props.onClick();
-  });
-
-  return (
-    <Button size="small" href={props.href}>
-      Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-    </Button>
-  );
-};
+const SignInPopButton = (props) => (
+  <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
+    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
+  </Link>
+);
 
 class EmailHandler extends React.Component {
   constructor(props) {
@@ -205,14 +199,15 @@ const SignInWithConsumer = (props) => {
 };
 
 const EmailSignInButton = ({ onClick }) => (
-  <Button
-    size="small"
+  <button
+    className="button button-small button-link has-emoji"
+    type="button"
     onClick={() => {
       onClick();
     }}
   >
     Sign in with Email <span className="emoji email" />
-  </Button>
+  </button>
 );
 EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired,
@@ -220,9 +215,9 @@ EmailSignInButton.propTypes = {
 
 const SignInCodeSection = ({ onClick }) => (
   <section className="pop-over-actions last-section pop-over-info">
-    <Button size="small" type="tertiary" onClick={onClick}>
+    <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
       <span>Use a sign in code</span>
-    </Button>
+    </button>
   </section>
 );
 SignInCodeSection.propTypes = {
@@ -284,7 +279,7 @@ SignInPopBase.propTypes = {
 };
 
 const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonSize="small" buttonText="Sign in" passToggleToPop>
+  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
     <SignInPopBase {...props} />
   </PopoverWithButton>
 );

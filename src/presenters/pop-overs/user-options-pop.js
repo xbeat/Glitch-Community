@@ -5,12 +5,11 @@ import { orderBy } from 'lodash';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
 import { TrackClick } from '../analytics';
-import { TeamLink, UserLink } from '../includes/link';
+import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
-import PopoverButton from './popover-button';
 import Button from '../../components/buttons/button';
 
 // Create Team button
@@ -25,17 +24,17 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
           </Button>{' '}
           to create teams
         </p>
-        <Button onClick={showCreateTeam} size="small" disabled>
+        <button className="button button-small has-emoji" disabled type="button">
           Create Team <span className="emoji herb" />
-        </Button>
+        </button>
       </>
     );
   }
   return (
     <TrackClick name="Create Team clicked">
-      <Button onClick={showCreateTeam} size="small">
+      <button type="button" onClick={showCreateTeam} className="button button-small has-emoji">
         Create Team <span className="emoji herb" />
-      </Button>
+      </button>
     </TrackClick>
   );
 };
@@ -127,9 +126,15 @@ Are you sure you want to sign out?`)
       </UserLink>
       <TeamList teams={user.teams} showCreateTeam={showCreateTeam} userIsAnon={!user.login} />
       <section className="pop-over-info">
-        <PopoverButton text="New Stuff" emoji="dog-face" onClick={clickNewStuff} transparent />
-        <PopoverButton text="Support" emoji="ambulance" href="https://support.glitch.com" transparent />
-        <PopoverButton text="Sign Out" emoji="balloon" onClick={clickSignout} transparent />
+        <button type="button" onClick={clickNewStuff} className="button-small has-emoji button-tertiary button-on-secondary-background">
+          New Stuff <span className="emoji dog-face" />
+        </button>
+        <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
+          Support <span className="emoji ambulance" />
+        </Link>
+        <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
+          Sign Out <span className="emoji balloon" />
+        </button>
       </section>
     </dialog>
   );
@@ -169,10 +174,10 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
         <PopoverContainer startOpen={createTeamOpen}>
           {({ togglePopover, visible }) => {
             const userOptionsButton = (
-              <Button type="dropDown" disabled={!props.user.id} onClick={togglePopover}>
+              <button className="user" onClick={togglePopover} disabled={!props.user.id} type="button">
                 <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options" />
                 <span className="down-arrow icon" />
-              </Button>
+              </button>
             );
 
             return (

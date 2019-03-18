@@ -240,7 +240,7 @@ const ReportAbusePopContainer = (props) => (
 );
 
 const ReportAbusePopButton = (props) => (
-  <PopoverWithButton buttonSize="small" buttonType="tertiary" buttonText="Report Abuse">
+  <PopoverWithButton buttonClass="button-small button-tertiary margin" buttonText="Report Abuse">
     <ReportAbusePopContainer reportedType={props.reportedType} reportedModel={props.reportedModel} />
   </PopoverWithButton>
 );
