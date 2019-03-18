@@ -30,7 +30,7 @@ class CreateTeamPopBase extends React.Component {
   async componentDidMount() {
     try {
       const teamName = await getTeamPair();
-      this.setState(prevState => (!prevState.teamName ? { teamName } : {}));
+      this.setState((prevState) => (!prevState.teamName ? { teamName } : {}));
     } catch (error) {
       // If something goes wrong just leave the field empty
     }
@@ -86,9 +86,7 @@ class CreateTeamPopBase extends React.Component {
       let description = 'A team that makes things';
       try {
         const predicates = await getPredicates();
-        description = `A ${predicates[0]} team that makes ${
-          predicates[1]
-        } things`;
+        description = `A ${predicates[0]} team that makes ${predicates[1]} things`;
       } catch (error) {
         // Just use the plain description
       }
@@ -105,10 +103,7 @@ class CreateTeamPopBase extends React.Component {
       });
       this.props.history.push(getLink(data));
     } catch (error) {
-      const message = error
-        && error.response
-        && error.response.data
-        && error.response.data.message;
+      const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
         isLoading: false,
         error: message || 'Something went wrong',
@@ -125,31 +120,20 @@ class CreateTeamPopBase extends React.Component {
         </NestedPopoverTitle>
 
         <section className="pop-over-info">
-          <p className="info-description">
-            Showcase your projects in one place, manage collaborators, and view analytics
-          </p>
+          <p className="info-description">Showcase your projects in one place, manage collaborators, and view analytics</p>
         </section>
 
         <section className="pop-over-actions">
           <form onSubmit={this.handleSubmit}>
-            <TextInput
-              value={this.state.teamName}
-              onChange={this.handleChange}
-              placeholder={placeholder}
-              error={this.state.error}
-            />
-            <p className="action-description team-url-preview">
-              /@{_.kebabCase(this.state.teamName || placeholder)}
-            </p>
+            <TextInput value={this.state.teamName} onChange={this.handleChange} placeholder={placeholder} error={this.state.error} />
+            <p className="action-description team-url-preview">/@{_.kebabCase(this.state.teamName || placeholder)}</p>
 
             {this.state.isLoading ? (
               <Loader />
             ) : (
               <TrackClick name="Create Team submitted">
                 <button type="submit" className="button-small has-emoji">
-                  Create Team
-                  {' '}
-                  <span className="emoji thumbs_up" />
+                  Create Team <span className="emoji thumbs_up" />
                 </button>
               </TrackClick>
             )}
@@ -174,20 +158,17 @@ const CreateTeamPop = withRouter(CreateTeamPopBase);
 
 const CreateTeamPopOrSignIn = ({ api }) => (
   <CurrentUserConsumer>
-    {user => (user && user.login ? (
-      <CreateTeamPop api={api} />
-    ) : (
-      <SignInPopBase
-        api={api}
-        hash="create-team"
-        header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
-        prompt={(
-          <p className="action-description">
-            You'll need to sign in to create a team
-          </p>
-        )}
-      />
-    ))
+    {(user) =>
+      user && user.login ? (
+        <CreateTeamPop api={api} />
+      ) : (
+        <SignInPopBase
+          api={api}
+          hash="create-team"
+          header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
+          prompt={<p className="action-description">You'll need to sign in to create a team</p>}
+        />
+      )
     }
   </CurrentUserConsumer>
 );

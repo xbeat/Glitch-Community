@@ -16,7 +16,7 @@ import { Loader } from '../includes/loader';
 
 // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
 function getTeamOptions(teams) {
-  const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+  const orderedTeams = orderBy(teams, (team) => team.name.toLowerCase());
 
   const teamOptions = orderedTeams.map((team) => {
     const option = {};
@@ -128,7 +128,7 @@ class CreateCollectionPop extends React.Component {
       ? collections.filter(({ teamId }) => teamId === this.state.selection.value)
       : collections.filter(({ userId }) => userId === this.props.currentUser.id);
 
-    if (!!collections && selectedOwnerCollections.some(c => c.url === kebabCase(query))) {
+    if (!!collections && selectedOwnerCollections.some((c) => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this name';
     }
     if (this.state.newCollectionUrl) {
@@ -139,12 +139,10 @@ class CreateCollectionPop extends React.Component {
       <NotificationConsumer>
         {({ createNotification }) => (
           <dialog className="pop-over create-collection-pop wide-pop">
-            <NestedPopoverTitle>
-              {`Add ${this.props.project.domain} to a new collection`}
-            </NestedPopoverTitle>
+            <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
 
             <section className="pop-over-actions">
-              <form onSubmit={event => this.handleSubmit(event, createNotification)}>
+              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
                 <PureEditableField
                   className="pop-over-input create-input"
                   value={query}
@@ -169,7 +167,7 @@ class CreateCollectionPop extends React.Component {
                 {!this.state.loading ? (
                   <TrackClick
                     name="Create Collection clicked"
-                    properties={inherited => ({
+                    properties={(inherited) => ({
                       ...inherited,
                       origin: `${inherited.origin} project`,
                     })}

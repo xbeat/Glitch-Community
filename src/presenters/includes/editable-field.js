@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
 
-import {
-  OptimisticValue,
-  TrimmedValue,
-  FieldErrorIcon,
-  FieldErrorMessage,
-} from './field-helpers';
+import { OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage } from './field-helpers';
 
 class PureEditableFieldHolder extends React.Component {
   constructor(props) {
@@ -28,9 +23,7 @@ class PureEditableFieldHolder extends React.Component {
   }
 
   render() {
-    const classes = ['content-editable', this.props.error ? 'error' : ''].join(
-      ' ',
-    );
+    const classes = ['content-editable', this.props.error ? 'error' : ''].join(' ');
     const inputProps = {
       id: this.state.id,
       className: classes,
@@ -46,21 +39,11 @@ class PureEditableFieldHolder extends React.Component {
 
     const maybeErrorIcon = !!this.props.error && <FieldErrorIcon />;
 
-    const maybeErrorMessage = !!this.props.error && (
-      <FieldErrorMessage error={this.props.error} hideIcon />
-    );
+    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error} hideIcon />;
 
-    const maybePrefix = !!this.props.prefix && (
-      <span className={`content-editable-affix ${classes}`}>
-        {this.props.prefix}
-      </span>
-    );
+    const maybePrefix = !!this.props.prefix && <span className={`content-editable-affix ${classes}`}>{this.props.prefix}</span>;
 
-    const maybeSuffix = !!this.props.suffix && (
-      <span className={`content-editable-affix ${classes}`}>
-        {this.props.suffix}
-      </span>
-    );
+    const maybeSuffix = !!this.props.suffix && <span className={`content-editable-affix ${classes}`}>{this.props.suffix}</span>;
 
     return (
       <label htmlFor={inputProps.id}>
@@ -98,10 +81,8 @@ PureEditableFieldHolder.defaultProps = {
   error: '',
 };
 
-export const PureEditableTextArea = props => (
-  <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => <textarea {...inputProps} ref={inputRef} />}
-  </PureEditableFieldHolder>
+export const PureEditableTextArea = (props) => (
+  <PureEditableFieldHolder {...props}>{(inputProps, inputRef) => <textarea {...inputProps} ref={inputRef} />}</PureEditableFieldHolder>
 );
 
 PureEditableTextArea.propTypes = {
@@ -125,10 +106,8 @@ PureEditableTextArea.defaultProps = {
   inputType: 'text',
 };
 
-export const PureEditableField = props => (
-  <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => <input {...inputProps} ref={inputRef} />}
-  </PureEditableFieldHolder>
+export const PureEditableField = (props) => (
+  <PureEditableFieldHolder {...props}>{(inputProps, inputRef) => <input {...inputProps} ref={inputRef} />}</PureEditableFieldHolder>
 );
 
 PureEditableField.propTypes = {
@@ -156,9 +135,7 @@ const EditableField = ({ value, update, ...props }) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
     {({ optimisticValue, optimisticUpdate, error }) => (
       <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
-        {valueProps => (
-          <PureEditableField {...props} {...valueProps} error={error} />
-        )}
+        {(valueProps) => <PureEditableField {...props} {...valueProps} error={error} />}
       </TrimmedValue>
     )}
   </OptimisticValue>

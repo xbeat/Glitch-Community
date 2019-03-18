@@ -8,29 +8,16 @@ import { PureEditableWrappingField } from './editable-wrapping-field';
 // This recreates EditableField but OptimisticValue tracks both the name and url
 // That way the url preview updates in real time as you type into the name field
 
-const EditCollectionNameAndUrl = ({
-  name,
-  url,
-  update,
-  isAuthorized,
-}) => {
+const EditCollectionNameAndUrl = ({ name, url, update, isAuthorized }) => {
   const placeholder = 'Name your collection';
   return (
     <OptimisticValue value={{ name, url }} update={update} resetOnError={false}>
       {({ optimisticValue, optimisticUpdate, error }) => (
-        <TrimmedValue
-          value={optimisticValue.name}
-          update={newName => optimisticUpdate({ name: newName, url: kebabCase(newName) })}
-        >
+        <TrimmedValue value={optimisticValue.name} update={(newName) => optimisticUpdate({ name: newName, url: kebabCase(newName) })}>
           {({ value: trimmedValue, update: trimmedUpdate }) => (
             <h1 className="collection-name">
               {isAuthorized ? (
-                <PureEditableWrappingField
-                  value={trimmedValue}
-                  update={trimmedUpdate}
-                  placeholder={placeholder}
-                  error={error}
-                />
+                <PureEditableWrappingField value={trimmedValue} update={trimmedUpdate} placeholder={placeholder} error={error} />
               ) : (
                 name
               )}

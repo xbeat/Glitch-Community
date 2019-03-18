@@ -18,7 +18,8 @@ dayjs.extend(convertPlugin);
 
 // This function is used in index.ejs to set up the app
 window.bootstrap = () => {
-  if (location.hash.startsWith('#!/')) { // eslint-disable-line no-restricted-globals
+  if (location.hash.startsWith('#!/')) {
+    // eslint-disable-line no-restricted-globals
     window.location.replace(EDITOR_URL + window.location.hash);
     return;
   }

@@ -81,10 +81,7 @@ export class TrimmedValue extends React.Component {
 
   render() {
     return this.props.children({
-      value:
-        this.state.value.trim() === this.props.value
-          ? this.state.value
-          : this.props.value,
+      value: this.state.value.trim() === this.props.value ? this.state.value : this.props.value,
       update: this.update,
     });
   }

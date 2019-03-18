@@ -20,9 +20,7 @@ const ZineItems = () => {
   return (
     <section>
       <ul className="zine-items">
-        {posts.map(({
-          id, title, url, feature_image, primary_tag,
-        }, n) => (
+        {posts.map(({ id, title, url, feature_image, primary_tag }, n) => (
           <li key={id} className="zine-item">
             <Link to={`/culture${url}`}>
               {!!feature_image && (
@@ -31,14 +29,8 @@ const ZineItems = () => {
                 </div>
               )}
               <div className="zine-item-meta">
-                <h1 className="zine-item-title">
-                  {title}
-                </h1>
-                {!!primary_tag && (
-                  <p className="zine-item-tag">
-                    {primary_tag.name}
-                  </p>
-                )}
+                <h1 className="zine-item-title">{title}</h1>
+                {!!primary_tag && <p className="zine-item-tag">{primary_tag.name}</p>}
               </div>
             </Link>
           </li>
@@ -52,9 +44,7 @@ const FeaturedPanel = ({ img, link, title }) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
       <img className="featured" src={img} alt="" />
-      <p className="project-name">
-        {title}
-      </p>
+      <p className="project-name">{title}</p>
     </div>
   </Link>
 );
@@ -72,7 +62,7 @@ const Featured = ({ featured, api }) => (
 
     <section>
       <ul className="featured-items">
-        {featured.map(item => (
+        {featured.map((item) => (
           <li key={item.link}>
             <FeaturedPanel {...item} />
           </li>
@@ -89,9 +79,7 @@ Featured.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const FeaturedContainer = ({ isAuthorized, api }) => (
-  <Featured featured={FeaturedItems} isAuthorized={isAuthorized} api={api} />
-);
+const FeaturedContainer = ({ isAuthorized, api }) => <Featured featured={FeaturedItems} isAuthorized={isAuthorized} api={api} />;
 
 FeaturedContainer.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
