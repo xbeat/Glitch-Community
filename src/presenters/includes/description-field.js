@@ -115,11 +115,12 @@ AuthDescription.propTypes = {
   authorized: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  update: PropTypes.func.isRequired,
+  update: PropTypes.func,
   maxLength: PropTypes.number,
 };
 
 AuthDescription.defaultProps = {
   placeholder: '',
   maxLength: null,
+  update: null,
 };

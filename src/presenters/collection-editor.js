@@ -12,7 +12,7 @@ class CollectionEditor extends React.Component {
     };
   }
 
-  userIsAuthor() {
+  currentUserIsAuthor() {
     if (!this.props.currentUser) return false;
     if (this.state.teamId > 0) {
       return this.props.currentUser.teams.some((team) => team.id === this.state.teamId);
@@ -89,7 +89,7 @@ class CollectionEditor extends React.Component {
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
     };
-    return this.props.children(this.state, funcs, this.userIsAuthor());
+    return this.props.children(this.state, funcs, this.currentUserIsAuthor());
   }
 }
 CollectionEditor.propTypes = {

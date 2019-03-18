@@ -74,7 +74,7 @@ const CollectionPageContents = ({
   collection,
   currentUser,
   deleteCollection,
-  userIsAuthor,
+  currentUserIsAuthor,
   updateNameAndUrl,
   updateDescription,
   addProjectToCollection,
@@ -100,7 +100,7 @@ const CollectionPageContents = ({
             </div>
 
             <EditCollectionNameAndUrl
-              isAuthorized={userIsAuthor}
+              isAuthorized={currentUserIsAuthor}
               name={collection.name}
               url={collection.url}
               update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
@@ -111,17 +111,17 @@ const CollectionPageContents = ({
 
             <div className="collection-description">
               <AuthDescription
-                authorized={userIsAuthor}
+                authorized={currentUserIsAuthor}
                 description={collection.description}
                 update={updateDescription}
                 placeholder="Tell us about your collection"
               />
             </div>
 
-            {userIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
+            {currentUserIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
           {
-            !collectionHasProjects && userIsAuthor && (
+            !collectionHasProjects && currentUserIsAuthor && (
               <div className="empty-collection-hint">
                 <img
                   src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
@@ -132,7 +132,7 @@ const CollectionPageContents = ({
             )
           }
           {
-            !collectionHasProjects && !userIsAuthor && (
+            !collectionHasProjects && !currentUserIsAuthor && (
               <div className="empty-collection-hint">
                 No projects to see in this collection just yet.
               </div>
@@ -147,7 +147,7 @@ const CollectionPageContents = ({
                       Projects ({collection.projects.length})
                     </h3>
                     {
-                      userIsAuthor && (
+                      currentUserIsAuthor && (
                         <AddCollectionProject
                           addProjectToCollection={addProjectToCollection}
                           collection={collection}
@@ -158,7 +158,7 @@ const CollectionPageContents = ({
                     }
                   </div>
                   {
-                    userIsAuthor && (
+                    currentUserIsAuthor && (
                       <ProjectsUL
                         {...props}
                         projects={collection.projects}
@@ -175,7 +175,7 @@ const CollectionPageContents = ({
                     )
                   }
                   {
-                    !userIsAuthor && userIsLoggedIn && (
+                    !currentUserIsAuthor && userIsLoggedIn && (
                       <ProjectsUL
                         {...props}
                         projects={collection.projects}
@@ -189,7 +189,7 @@ const CollectionPageContents = ({
                     )
                   }
                   {
-                    !userIsAuthor && !userIsLoggedIn && (
+                    !currentUserIsAuthor && !userIsLoggedIn && (
                       <ProjectsUL
                         projects={collection.projects}
                         author={collection.user}
@@ -203,9 +203,9 @@ const CollectionPageContents = ({
               </>
             )}
         </article>
-        {!userIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
+        {!currentUserIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
       </main>
-      {userIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
+      {currentUserIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
     </>
   );
 };
@@ -222,7 +222,7 @@ CollectionPageContents.propTypes = {
   }).isRequired,
   currentUser: PropTypes.object.isRequired,
   deleteCollection: PropTypes.func.isRequired,
-  userIsAuthor: PropTypes.bool.isRequired,
+  currentUserIsAuthor: PropTypes.bool.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
   updateOrAddNote: PropTypes.func,
   addNoteField: PropTypes.func,
@@ -275,12 +275,12 @@ const CollectionPage = ({ api, ownerName, name, ...props }) => (
             <CurrentUserConsumer>
               {(currentUser) => (
                 <CollectionEditor api={api} initialCollection={collection}>
-                  {(collectionFromEditor, funcs, userIsAuthor) => (
+                  {(collectionFromEditor, funcs, currentUserIsAuthor) => (
                     <CollectionPageContents
                       collection={collectionFromEditor}
                       api={api}
                       currentUser={currentUser}
-                      userIsAuthor={userIsAuthor}
+                      currentUserIsAuthor={currentUserIsAuthor}
                       {...funcs}
                       {...props}
                     />
