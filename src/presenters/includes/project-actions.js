@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 import { getShowUrl, getEditorUrl, getRemixUrl } from 'Models/project';
 import Button, { SIZES } from 'Components/buttons/button';
-
-const showIcon = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg';
+import Emoji from 'Components/images/emoji';
 
 export const ShowButton = ({ name, size }) => (
   <Button href={getShowUrl(name)} size={size}>
-    <img src={showIcon} alt="" /> Show
+    <Emoji name="sunglasses" /> Show
   </Button>
 );
 ShowButton.propTypes = {

@@ -22,7 +22,7 @@ const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }
     dangerZone: type === 'dangerZone',
     unstyled: ['link', 'dropDown'].includes(type),
     link: type === 'link', // style this button to look like a link
-    hasEmoji: React.Children.count(children, (child) => child.type && (child.type.name === 'Emoji' || 'Image')) > 0,
+    hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     opaque,
     hover,
   });

@@ -33,6 +33,7 @@ const emojiMap = {
   sick: 'https://cdn.glitch.com/4f4a169a-9b63-4daa-8b6a-0e50d5c06e25%2Fface-with-thermometer_1f912.png?1545248970931',
   sparkles: 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fsparkles.png?1494859430570',
   sparklingHeart: 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fsparkling_heart.png?1496347645716',
+  sunglasses: 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg',
   thumbsDown: 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fthumbs_down.png?1503415943993',
   thumbsUp: 'https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fthumbs-up.png?1530883108902',
   wave: 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fwave.png?1502123444938',
@@ -45,7 +46,7 @@ const emojiMap = {
 const Emoji = ({ name }) => {
   const className = cx({
     emoji: true,
-    name,
+    name: true,
   });
 
   return <img className={className} src={emojiMap[name]} alt={name} />;
