@@ -29,15 +29,17 @@ import TeamAnalytics from '../includes/team-analytics';
 import { TeamMarketing, VerifiedBadge } from '../includes/team-elements';
 import ReportButton from '../pop-overs/report-abuse-pop';
 
+import Heading from '../../components/text/heading';
+
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
 }
 
 const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
   <>
-    <h1>
+    <Heading tagName="h1">
       <EditableField value={team.name} update={updateName} placeholder="What's its name?" suffix={team.isVerified ? <VerifiedBadge /> : null} />
-    </h1>
+    </Heading>
     <p className="team-url">
       <EditableField
         value={team.url}
@@ -140,7 +142,7 @@ class TeamPage extends React.Component {
           <a href="/teams/" target="_blank" className="beta">
             <img src="https://cdn.glitch.com/0c3ba0da-dac8-4904-bb5e-e1c7acc378a2%2Fbeta-flag.svg?1541448893958" alt="" />
             <div>
-              <h4>Teams are in beta</h4>
+              <Heading tagName="h4">Teams are in beta</Heading>
               <p>Learn More</p>
             </div>
           </a>
@@ -158,9 +160,9 @@ class TeamPage extends React.Component {
               <TeamNameUrlFields team={team} updateName={this.props.updateName} updateUrl={this.props.updateUrl} />
             ) : (
               <>
-                <h1>
+                <Heading tagName="h1">
                   {team.name} {team.isVerified && <VerifiedBadge />}
-                </h1>
+                </Heading>
                 <p className="team-url">@{team.url}</p>
               </>
             )}
