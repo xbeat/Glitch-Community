@@ -27,6 +27,7 @@ dependencies:
   email-addresses: 3.0.3
   eslint: 5.15.1
   eslint-config-airbnb: 17.1.0
+  eslint-import-resolver-babel-module: 5.0.1
   eslint-loader: 2.1.2
   eslint-plugin-import: 2.16.0
   eslint-plugin-jsx-a11y: 6.2.1
@@ -5342,6 +5343,18 @@ packages:
       eslint-plugin-react: ^7.11.0
     resolution:
       integrity: sha512-R9jw28hFfEQnpPau01NO5K/JWMGLi6aymiF6RsnMURjTk+MqZKllCqGK/0tOvHkPi/NWSSOU2Ced/GX++YxLnw==
+  /eslint-import-resolver-babel-module/5.0.1:
+    dependencies:
+      pkg-up: 2.0.0
+      resolve: 1.10.0
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+      babel-plugin-module-resolver: ^3.0.0
+    resolution:
+      integrity: sha512-q1IDVrpXAKz90t4x/S9RUeQgSK5wfH1AF/tR3iUAmLeCiAEVep/tNtX9EhQjut8DLgloUfUHoJWd8QCAJXhv+A==
   /eslint-import-resolver-node/0.3.2:
     dependencies:
       debug: 2.6.9
@@ -11287,6 +11300,7 @@ specifiers:
   email-addresses: ^3.0.3
   eslint: ^5.14.1
   eslint-config-airbnb: ^17.1.0
+  eslint-import-resolver-babel-module: ^5.0.1
   eslint-loader: ^2.1.2
   eslint-plugin-import: ^2.16.0
   eslint-plugin-jsx-a11y: ^6.2.1

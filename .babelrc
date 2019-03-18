@@ -14,7 +14,12 @@
   "plugins": [
     "lodash",
     "@babel/syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    ["module-resolver", {
+      "alias": {
+        "Components": "./src/components",
+      }
+    }]
   ],
   "sourceType": "unambiguous"
 }
