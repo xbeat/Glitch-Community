@@ -20,18 +20,14 @@ module.exports = {
     'object-curly-newline': OFF,
     'no-confusing-arrow': OFF,
   },
-  // settings: {
-  //   'import/resolver': {
-  //     webpack: {
-  //       config: {
-  //         resolve: {
-  //           extensions: ['.js'],
-  //           alias: {
-  //             '@src': path.resolve(__dirname, "../src"),
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@components', '../src/components'],
+        ],
+      //  extensions: ['.js']
+      }
+    }
+  }
 };
