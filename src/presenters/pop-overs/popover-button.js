@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'Components/buttons/button';
 
-const PopoverButton = ({ onClick, text, emoji, href, disabled }) => (
-  <Button type="tertiary" size="small" onClick={onClick} href={href} disabled={disabled}>
+const PopoverButton = ({ onClick, text, emoji, href, transparent, disabled }) => (
+  <Button type="tertiary" size="small" onClick={onClick} href={href} disabled={disabled} transparent={transparent}>
     <span>{text} </span>
     <span className={`emoji ${emoji}`} />
   </Button>
@@ -28,13 +28,16 @@ PopoverButton.propTypes = {
     }
     return null;
   },
+  /** whether or not the button takes on the colour of the background */
+  transparent: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
 PopoverButton.defaultProps = {
   onClick: null,
   href: null,
-  disabled: false,
+  disabled: null,
+  transparent: null,
 };
 
 export default PopoverButton;

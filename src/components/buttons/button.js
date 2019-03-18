@@ -13,7 +13,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, hover, children }) => {
+const Button = ({ onClick, href, disabled, type, size, transparent, hover, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -23,6 +23,7 @@ const Button = ({ onClick, href, disabled, type, size, hover, children }) => {
     unstyled: ['link', 'dropDown'].includes(type),
     link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
+    transparent,
     hover,
   });
 
@@ -54,6 +55,8 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
+  /** whether or not the button takes on the colour of the background */
+  transparent: PropTypes.bool,
   /** link when button clicked */
   href(props, propName) {
     if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
@@ -69,6 +72,7 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
+  transparent: false,
   href: null,
 };
 
