@@ -11,17 +11,10 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-//   collectionCoverColor, author, project, update,
-class Note extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      prevDescription = project.note
-    }
-  }
-  
-  render(){
-    if (!project.isAddingANewNote && !project.note) {
+const Note = ({
+  collectionCoverColor, author, project, update,
+}) => {
+  if (!project.isAddingANewNote && !project.note) {
     return null;
   }
 
@@ -46,7 +39,6 @@ class Note extends React.Component {
       </div>
     </div>
   );
-  }
 };
 
 
