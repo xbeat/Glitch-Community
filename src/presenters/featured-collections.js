@@ -17,6 +17,8 @@ import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
 
+import Heading from '../components/text/heading';
+
 const CollectionWide = ({ collection, api }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   return (
@@ -26,7 +28,7 @@ const CollectionWide = ({ collection, api }) => {
           <CollectionAvatar color={collection.coverColor} />
         </CollectionLink>
         <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
+          <Heading tagName="h2">{collection.name}</Heading>
         </CollectionLink>
         {!!collection.team && <TeamTile team={collection.team} />}
         {!!collection.user && <UserTile {...collection.user} />}

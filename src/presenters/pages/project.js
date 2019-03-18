@@ -11,6 +11,7 @@ import { AnalyticsContext } from '../analytics';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
+import Heading from '../../components/text/heading';
 import Markdown from '../../components/text/markdown';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
@@ -24,6 +25,7 @@ import AddProjectToCollection from '../includes/add-project-to-collection';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
+import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
 
 import { CurrentUserConsumer } from '../current-user';
@@ -105,7 +107,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
       <section id="info">
         <InfoContainer>
           <ProjectInfoContainer style={{ backgroundImage: `url('${getAvatarUrl(project.id)}')` }}>
-            <h1>
+            <Heading tagName="h1">
               {isAuthorized ? (
                 <EditableField
                   value={domain}
@@ -118,7 +120,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
                   {domain} {project.private && <PrivateBadge />}
                 </>
               )}
-            </h1>
+            </Heading>
             <div className="users-information">
               <UsersList users={users} />
               {!!teams.length && <TeamsList teams={teams} />}
@@ -157,6 +159,9 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
       </section>
       <section id="readme">
         <ReadmeLoader api={api} domain={domain} />
+      </section>
+      <section id="included-in-collections">
+        <IncludedInCollections api={api} projectId={project.id} />
       </section>
       <section id="related">
         <RelatedProjects ignoreProjectId={project.id} {...{ api, teams, users }} />

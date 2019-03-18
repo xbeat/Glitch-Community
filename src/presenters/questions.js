@@ -9,6 +9,8 @@ import { Link } from './includes/link';
 import QuestionItem from './question-item';
 import { captureException } from '../utils/sentry';
 
+import Heading from '../components/text/heading';
+
 const kaomojis = ['八(＾□＾*)', '(ノ^_^)ノ', 'ヽ(*ﾟｰﾟ*)ﾉ', '♪(┌・。・)┌', 'ヽ(๏∀๏ )ﾉ', 'ヽ(^。^)丿'];
 
 const QuestionTimer = ({ animating, callback }) => (
@@ -70,9 +72,9 @@ class Questions extends React.Component {
     const { kaomoji, loading, questions } = this.state;
     return (
       <section className="questions">
-        <h2>
+        <Heading tagName="h2">
           <Link to="/questions">Help Others, Get Thanks →</Link> <QuestionTimer animating={!loading} callback={() => this.load()} />
-        </h2>
+        </Heading>
         <article className="projects">
           {questions.length ? (
             <ErrorBoundary>

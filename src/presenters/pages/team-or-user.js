@@ -9,18 +9,6 @@ import Layout from '../layout';
 import TeamPage from './team';
 import UserPage from './user';
 
-const getOrNull = async (api, route) => {
-  try {
-    const { data } = await api.get(route);
-    return data;
-  } catch (error) {
-    if (error && error.response && error.response.status === 404) {
-      return null;
-    }
-    throw error;
-  }
-};
-
 const mergeUserData = (data) => {
   const { user, ...rest } = data;
   return { ...user, ...rest };
@@ -61,11 +49,6 @@ const parseTeam = (team) => {
   return team;
 };
 
-const getTeamById = async (api, id) => {
-  const team = await getOrNull(api, `/teams/${id}`);
-  return team && parseTeam(team);
-};
-
 const getTeam = async (api, name) => {
   const team = await getSingleItem(api, `v1/teams/by/url?url=${name}`, name);
   if (team) {
@@ -86,7 +69,7 @@ const getTeam = async (api, name) => {
 };
 
 const TeamPageLoader = ({ api, id, name, ...props }) => (
-  <DataLoader get={() => getTeamById(api, id)}>
+  <DataLoader get={() => getTeam(api, name)}>
     {(team) => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );

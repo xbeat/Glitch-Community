@@ -8,13 +8,14 @@ import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../mo
 
 // UserAvatar
 
-export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => {
+export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withinButton }) => {
   let onError = null;
   if (srcFallback) {
     onError = (event) => {
       event.target.src = srcFallback;
     };
   }
+
   const contents = (
     <img
       width="32px"
@@ -28,7 +29,16 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => 
   );
 
   if (!hideTooltip) {
-    return <TooltipContainer tooltip={name} target={contents} type="action" id={`avatar-tooltip-${name}`} align={['left']} />;
+    return (
+      <TooltipContainer
+        tooltip={name}
+        target={contents}
+        type="action"
+        id={`avatar-tooltip-${name}`}
+        align={['left']}
+        fallback={withinButton}
+      />
+    );
   }
   return contents;
 };
@@ -40,6 +50,7 @@ Avatar.propTypes = {
   type: PropTypes.string.isRequired,
   color: PropTypes.string,
   hideTooltip: PropTypes.bool,
+  withinButton: PropTypes.bool,
 };
 
 Avatar.defaultProps = {
@@ -69,7 +80,9 @@ TeamAvatar.defaultProps = {
   hideTooltip: false,
 };
 
-export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
+export const UserAvatar = ({
+  user, suffix = '', hideTooltip, withinButton,
+}) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
@@ -77,6 +90,7 @@ export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
     srcFallback={ANON_AVATAR_URL}
     type="user"
     hideTooltip={hideTooltip}
+    withinButton={withinButton}
   />
 );
 UserAvatar.propTypes = {
@@ -89,9 +103,11 @@ UserAvatar.propTypes = {
   }).isRequired,
   suffix: PropTypes.string,
   hideTooltip: PropTypes.bool,
+  withinButton: PropTypes.bool,
 };
 
 UserAvatar.defaultProps = {
   suffix: '',
   hideTooltip: false,
+  withinButton: false,
 };
