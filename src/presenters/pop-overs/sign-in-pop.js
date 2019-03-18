@@ -34,7 +34,7 @@ const SignInPopButton = (props) => {
   });
 
   return (
-    <Button size="small" link={props.href}>
+    <Button size="small" href={props.href}>
       Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
     </Button>
   );

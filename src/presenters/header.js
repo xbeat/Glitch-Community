@@ -17,7 +17,7 @@ import { CurrentUserConsumer } from './current-user';
 
 const ResumeCoding = () => (
   <TrackedExternalWrapper name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
-    <Button type="cta" size="small" link={EDITOR_URL}>
+    <Button type="cta" size="small" href={EDITOR_URL}>
       Resume Coding
     </Button>
   </TrackedExternalWrapper>

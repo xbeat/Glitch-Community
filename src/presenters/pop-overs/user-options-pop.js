@@ -128,7 +128,7 @@ Are you sure you want to sign out?`)
       <TeamList teams={user.teams} showCreateTeam={showCreateTeam} userIsAnon={!user.login} />
       <section className="pop-over-info">
         <PopoverButton text="New Stuff" emoji="dog-face" onClick={clickNewStuff} />
-        <PopoverButton text="Support" emoji="ambulance" link="https://support.glitch.com" />
+        <PopoverButton text="Support" emoji="ambulance" href="https://support.glitch.com" />
         <PopoverButton text="Sign Out" emoji="balloon" onClick={clickSignout} />
       </section>
     </dialog>

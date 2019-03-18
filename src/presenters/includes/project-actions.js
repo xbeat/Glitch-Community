@@ -7,7 +7,7 @@ import Button from '../../components/buttons/button';
 const showIcon = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg';
 
 export const ShowButton = ({ name }) => (
-  <Button link={getShowUrl(name)}>
+  <Button href={getShowUrl(name)}>
     <img src={showIcon} alt="" /> Show
   </Button>
 );
@@ -16,7 +16,7 @@ ShowButton.propTypes = {
 };
 
 export const EditButton = ({ name, isMember }) => (
-  <Button link={getEditorUrl(name)}>
+  <Button href={getEditorUrl(name)}>
     {isMember ? 'Edit Project' : 'View Source'}
   </Button>
 );
@@ -30,7 +30,7 @@ EditButton.defaultProps = {
 };
 
 export const RemixButton = ({ name, isMember }) => (
-  <Button link={getRemixUrl(name)} size="small">
+  <Button href={getRemixUrl(name)} size="small">
     {isMember ? 'Remix This' : 'Remix your own'} <span className="emoji microphone" role="presentation" />
   </Button>
 );

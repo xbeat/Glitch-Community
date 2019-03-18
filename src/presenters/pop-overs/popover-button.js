@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'Components/buttons/button';
 
-const PopoverButton = ({ onClick, text, emoji, link, disabled }) => (
-  <Button type="tertiary" size="small" onClick={onClick} link={link} disabled={disabled}>
+const PopoverButton = ({ onClick, text, emoji, href, disabled }) => (
+  <Button type="tertiary" size="small" onClick={onClick} href={href} disabled={disabled}>
     <span>{text} </span>
     <span className={`emoji ${emoji}`} />
   </Button>
@@ -16,15 +16,15 @@ PopoverButton.propTypes = {
   emoji: PropTypes.string.isRequired,
   /** onClick function activated when button is clicked */
   onClick(props, propName) {
-    if (props.link === false && (props[propName] === null || typeof props[propName] !== 'function')) {
-      return new Error('Please provide a link or an onClick function');
+    if (props.href === false && (props[propName] === null || typeof props[propName] !== 'function')) {
+      return new Error('Please provide a href or an onClick function');
     }
     return null;
   },
   /** link followed when button is clicked */
-  link(props, propName) {
+  href(props, propName) {
     if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
-      return new Error('Please provide a link or an onClick function');
+      return new Error('Please provide a href or an onClick function');
     }
     return null;
   },
@@ -33,7 +33,7 @@ PopoverButton.propTypes = {
 
 PopoverButton.defaultProps = {
   onClick: null,
-  link: null,
+  href: null,
   disabled: false,
 };
 
