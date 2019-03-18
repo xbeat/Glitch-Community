@@ -1,4 +1,6 @@
-{
+const path = require('path');
+
+module.exports = {
   "presets": [
     "@babel/preset-react",
     [
@@ -21,7 +23,7 @@
     [
       require.resolve("babel-plugin-module-resolver"),
       {
-        "root": ["./src/"],
+        "root": [path.resolve('./')],
         "alias": {
           "Components": "./src/components"
         }
