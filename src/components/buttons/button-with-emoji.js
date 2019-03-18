@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './button.styl';
-import { Link } from '../../presenters/includes/link';
+import styles from './button-with-emoji.styl';
+import Button, { SIZES, TYPES } from 'Components/buttons/button';
 
 const cx = classNames.bind(styles);
-
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link', 'dropDown'];
-export const SIZES = ['small'];
 
 /**
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, transparent, hover, children, emoji }) => {
+const ButtonWithEmoji = ({ onClick, href, disabled, type, size, transparent, hover, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -24,7 +21,6 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
     transparent,
-    hasEmoji: emoji !== null,
     hover,
   });
 
@@ -65,7 +61,6 @@ Button.propTypes = {
     }
     return null;
   },
-  emoji: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -76,7 +71,6 @@ Button.defaultProps = {
   hover: false,
   transparent: false,
   href: null,
-  emoji: null,
 };
 
 export default Button;
