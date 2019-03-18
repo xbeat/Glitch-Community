@@ -75,7 +75,9 @@ collection-avatar-size = 55px
     position: relative
     transition: 0.1s all
     overflow: visible
-    background-color: secondary-background
+    background-color: secondary-background 
+    &.authorized	
+      margin-top: 30px
     &.show-curator
       margin-top: 10px
       
@@ -271,9 +273,3 @@ article.collection-wide
     .collection-view-all
       display: block
       clear: both
-      
-.collection-item-header
-  height: 30px
-  display: flex
-  flex-direction: row
-  justify-content: flex-end
