@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
@@ -128,19 +128,21 @@ const TeamUserInfoAndRemovePop = (props) => {
     props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
   }
   
-  const [userTeamProjects, 
+  const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null })
+  useEffect(() => {
+    props.api.get(`users/${props.user.id}`).then(({ data }) => {
+      setUserTeamProjects({
+        status: 'ready',
+        data: data.projects.filter((userProj) => props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
+      })
+    })
+  }, [props.user.id])
   
-  async function getUserWithProjects() {
-    const { data } = await this.props.api.get(`users/${this.props.user.id}`);
-    this.setState({
-      userTeamProjects: data.projects.filter((userProj) => this.props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
-      gettingUser: false,
-    });
-  }
+  const propsWithUserRemoval = { ...props, removeUser, userTeamProjects }
   
   return (
-    <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} removeUser={removeUser} />}>
-      {(showRemove) => <TeamUserInfo {...props} showRemove={showRemove} removeUser={removeUser} />}
+    <NestedPopover alternateContent={() => <TeamUserRemovePop {...propsWithUserRemoval} />}>
+      {(showRemove) => <TeamUserInfo {...propsWithUserRemoval} showRemove={showRemove} />}
     </NestedPopover>
   );
 }
