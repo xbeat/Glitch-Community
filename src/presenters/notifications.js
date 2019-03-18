@@ -6,6 +6,8 @@ const { Provider } = context;
 export const NotificationConsumer = context.Consumer;
 export const useNotifications = () => React.useContext(context);
 
+import Text from '../components/text/text'
+
 const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
@@ -84,10 +86,10 @@ export class Notifications extends React.Component {
 
 export const AddProjectToCollectionMsg = ({ projectDomain, collectionName, url }) => (
   <>
-    <p>
+    <Text>
       {`Added ${projectDomain} `}
       {collectionName && `to collection ${collectionName}`}
-    </p>
+    </Text>
     {url && (
       <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">
         Take me there

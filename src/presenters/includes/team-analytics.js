@@ -13,6 +13,8 @@ import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
+import Text from '../../components/text/text'
+
 const dateFromTime = (newTime) => {
   const timeMap = {
     'Last 4 Weeks': dayjs()
@@ -211,10 +213,10 @@ class TeamAnalytics extends React.Component {
         )}
 
         <section className="explanation">
-          <p>
+          <Text>
             Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get
             uniques by adding Google Analytics to your project.
-          </p>
+          </Text>
         </section>
 
         {!this.props.projects.length && <div className="placeholder-mask" />}

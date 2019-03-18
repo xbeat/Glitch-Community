@@ -9,6 +9,8 @@ import { getShowUrl } from '../../models/project';
 import { useCurrentUser } from '../current-user';
 import NotFound from '../includes/not-found';
 
+import Text from '../../components/text/text'
+
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export const NotFoundPage = ({ api }) => (
@@ -18,7 +20,7 @@ export const NotFoundPage = ({ api }) => (
       <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
       <div className="error-msg">
         <h1>Page Not Found</h1>
-        <p>Maybe a typo, or perhaps it's moved?</p>
+        <Text>Maybe a typo, or perhaps it's moved?</Text>
         <a className="button button-link" href="/">
           Back to Glitch
         </a>
@@ -43,7 +45,7 @@ export const EmailErrorPage = ({ api, title, description }) => (
       <img className="error-image email-error-image" src={emailImageUrl} alt="" width="470px" />
       <div className="error-msg">
         <h1>{title}</h1>
-        <p>{description}</p>
+        <Text>{description}</Text>
         <a className="button button-link" href="/">
           Back to Glitch
         </a>
@@ -70,7 +72,7 @@ export const OauthErrorPage = ({ api, title, description }) => (
       <img className="error-image" src={oauthImageUrl} alt="" width="370px" />
       <div className="error-msg">
         <h1>{title}</h1>
-        <p>{description}</p>
+        <Text>{description}</Text>
         <a className="button button-link" href="/">
           Back to Glitch
         </a>
@@ -112,7 +114,7 @@ export const ProjectNotFoundPage = ({ api, name }) => {
     <Layout api={api}>
       <Helmet title="👻 Project not found" />
       <NotFound name={name} />
-      <p>Either there's no project here, or you don't have access to it. Are you logged in as the right user?</p>
+      <Text>Either there's no project here, or you don't have access to it. Are you logged in as the right user?</Text>
     </Layout>
   );
 };
