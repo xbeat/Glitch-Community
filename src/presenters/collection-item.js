@@ -56,11 +56,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
   const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
   return (
     <li>
-      {isAuthorized && (
-        <div className="collection-item-header">
-          <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />
-        </div>
-      )}
+      {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
 
       {showCurator && (
         <div className="collection-curator">

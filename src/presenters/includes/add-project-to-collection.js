@@ -6,7 +6,7 @@ import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const AddProjectToCollection = ({ project, ...props }) => (
   <PopoverWithButton
-    buttonSize="small"
+    buttonClass="button-small has-emoji add-project"
     buttonText={
       <>
         Add to Collection <span className="emoji framed-picture" role="presentation" />

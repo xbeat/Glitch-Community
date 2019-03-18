@@ -7,7 +7,6 @@ import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
 import TextInput from '../components/fields/text-input';
-import Button from '../components/buttons/button';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -17,9 +16,7 @@ import { CurrentUserConsumer } from './current-user';
 
 const ResumeCoding = () => (
   <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
-    <Button type="cta" size="small" href={EDITOR_URL}>
-      Resume Coding
-    </Button>
+    Resume Coding
   </TrackedExternalLink>
 );
 
@@ -80,11 +77,7 @@ const Header = ({ api, maybeUser, clearUser, searchQuery, showNewStuffOverlay })
       <NewProjectPop api={api} />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop api={api} />}
-      {!!maybeUser && (
-        <div className="user-options-pop-button">
-          <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />
-        </div>
-      )}
+      {!!maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
     </nav>
   </header>
 );
