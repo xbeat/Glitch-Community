@@ -144,12 +144,11 @@ class AddProjectToCollectionPop extends React.Component {
     this.loadCollections();
   }
 
-  componentWillUnmount () {
-    this.unmounted = true
+  componentWillUnmount() {
+    this.unmounted = true;
   }
-  
+
   async loadCollections() {
-    await new Promise((res) => setTimeout(res, 5000))
     try {
       const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       const deletedCollectionIds = []; // collections from deleted teams
