@@ -2,67 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getShowUrl, getEditorUrl, getRemixUrl } from '../../models/project';
-import { Link } from './link';
+import Button from '../../components/buttons/button';
 
 const showIcon = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg';
 
-const ButtonLink = ({ href, children, className, ...props }) => (
-  <Link to={href} className={`button button-link ${className}`} {...props}>
-    {children}
-  </Link>
-);
-ButtonLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-ButtonLink.defaultProps = {
-  className: '',
-};
-
-export const ShowButton = ({ name, className, ...props }) => (
-  <Button link={getShowUrl(name)} >
+export const ShowButton = ({ name }) => (
+  <Button link={getShowUrl(name)} size="small">
     <img src={showIcon} alt="" /> Show
-  </ButtonLink>
+  </Button>
 );
 ShowButton.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };
 
-ShowButton.defaultProps = {
-  className: '',
-};
-
-export const EditButton = ({ name, isMember, ...props }) => (
-  <ButtonLink href={getEditorUrl(name)} {...props}>
+export const EditButton = ({ name, isMember }) => (
+  <Button link={getEditorUrl(name)}>
     {isMember ? 'Edit Project' : 'View Source'}
-  </ButtonLink>
+  </Button>
 );
 EditButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 EditButton.defaultProps = {
   isMember: false,
-  className: '',
 };
 
-export const RemixButton = ({ name, isMember, className, ...props }) => (
-  <ButtonLink href={getRemixUrl(name)} className={`has-emoji ${className}`} {...props}>
+export const RemixButton = ({ name, isMember }) => (
+  <Button link={getRemixUrl(name)} size="small">
     {isMember ? 'Remix This' : 'Remix your own'} <span className="emoji microphone" role="presentation" />
-  </ButtonLink>
+  </Button>
 );
 RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 RemixButton.defaultProps = {
   isMember: false,
-  className: '',
 };

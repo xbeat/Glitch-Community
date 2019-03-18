@@ -26,7 +26,6 @@ import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
 import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
-import Button from '../../components/buttons/button';
 
 import { CurrentUserConsumer } from '../current-user';
 

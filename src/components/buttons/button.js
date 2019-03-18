@@ -21,7 +21,7 @@ const Button = ({ onClick, link, disabled, type, size, hover, children }) => {
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: ['link', 'dropDown'].includes(type),
-    link: type === 'link',
+    link: type === 'link', // style this button to look like a link
     dropDown: type === 'dropDown',
     hover,
   });

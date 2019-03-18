@@ -20,7 +20,7 @@ import EditCollectionColor from '../includes/edit-collection-color';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url';
 import AddCollectionProject from '../includes/add-collection-project';
 import ReportButton from '../pop-overs/report-abuse-pop';
-import Button from '../../components/buttons/button'
+import Button from '../../components/buttons/button';
 
 import CollectionAvatar from '../includes/collection-avatar';
 import { TeamTile } from '../teams-list';
