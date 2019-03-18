@@ -7,7 +7,7 @@ import Button from '../../components/buttons/button';
 const showIcon = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg';
 
 export const ShowButton = ({ name }) => (
-  <Button link={getShowUrl(name)} size="small">
+  <Button link={getShowUrl(name)}>
     <img src={showIcon} alt="" /> Show
   </Button>
 );

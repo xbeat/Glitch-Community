@@ -141,10 +141,9 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
         <Embed domain={domain} />
         <div className="buttons space-between">
           <ReportButton reportedType="project" reportedModel={project} />
-          <div>
+          <div className="margin">
             {currentUser.login && (
               <AddProjectToCollection
-                className="button-small margin"
                 api={api}
                 currentUser={currentUser}
                 project={project}
