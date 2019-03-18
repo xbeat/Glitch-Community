@@ -20,14 +20,14 @@ module.exports = {
     'object-curly-newline': OFF,
     'no-confusing-arrow': OFF,
   },
-  settings: {
-    'import/resolver': {
-      'babel-module': {}
-    },
-  },
-   parserOptions: {
-    babelOptions: {
-      configFile: path.resolve('../.babelrc.js'),
-    },
-  },
+  // // settings: {
+  // //   'import/resolver': {
+  // //     'babel-module': {}
+  // //   },
+  // // },
+  //  parserOptions: {
+  //   babelOptions: {
+  //     configFile: path.resolve('../.babelrc.js'),
+  //   },
+  // },
 };
