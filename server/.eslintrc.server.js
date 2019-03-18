@@ -22,10 +22,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      alias: {
-        map: [['Components', "src/components"]],
-        extensions: ['.js'],
-      },
+      'babel-module': {}
     },
   },
 };
