@@ -69,13 +69,22 @@ const ThanksCount = ({ count }) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...props }) => {
+const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, userTeamProjects, removeUser, ...props }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
 
   const currentUserHasRemovePriveleges = currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   const canRemoveUser = !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin);
   const canCurrentUserRemoveUser = canRemoveUser && currentUserHasRemovePriveleges;
-  
+
+  // if user is a member of no projects, skip the confirm step
+  function onRemove() {
+    if (userTeamProjects.status === 'ready' && userTeamProjects.data.length === 0) {
+      removeUser();
+    } else {
+      showRemove();
+    }
+  }
+
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
@@ -112,7 +121,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
           canChangeUserAdminStatus={!props.userIsTheOnlyAdmin}
         />
       )}
-      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={showRemove} />}
+      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={onRemove} />}
     </dialog>
   );
 };
@@ -127,25 +136,25 @@ const TeamUserInfoAndRemovePop = (props) => {
     props.createNotification(`${getDisplayName(props.user)} removed from Team`);
     props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
   }
-  
-  const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null })
+
+  const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null });
   useEffect(() => {
     props.api.get(`users/${props.user.id}`).then(({ data }) => {
       setUserTeamProjects({
         status: 'ready',
         data: data.projects.filter((userProj) => props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
-      })
-    })
-  }, [props.user.id])
-  
-  const propsWithUserRemoval = { ...props, removeUser, userTeamProjects }
-  
+      });
+    });
+  }, [props.user.id]);
+
+  const propsWithUserRemoval = { ...props, removeUser, userTeamProjects };
+
   return (
     <NestedPopover alternateContent={() => <TeamUserRemovePop {...propsWithUserRemoval} />}>
       {(showRemove) => <TeamUserInfo {...propsWithUserRemoval} showRemove={showRemove} />}
     </NestedPopover>
   );
-}
+};
 
 TeamUserInfoAndRemovePop.propTypes = {
   user: PropTypes.shape({

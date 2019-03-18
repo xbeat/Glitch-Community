@@ -24,11 +24,11 @@ class TeamUserRemovePopBase extends React.Component {
 
   removeUser() {
     this.props.togglePopover();
-    this.props.removeUser(this.props.user.id, Array.from(this.state.selectedProjects));
+    this.props.removeUser(Array.from(this.state.selectedProjects));
   }
 
   selectAllProjects() {
-    const userTeamProjects = this.props.userTeamProjects.data || []
+    const userTeamProjects = this.props.userTeamProjects.data || [];
     this.setState({
       selectedProjects: new Set(userTeamProjects.map((p) => p.id)),
     });
@@ -54,14 +54,14 @@ class TeamUserRemovePopBase extends React.Component {
   }
 
   render() {
-    const userTeamProjects = this.props.userTeamProjects.data || []
+    const userTeamProjects = this.props.userTeamProjects.data || [];
     const allProjectsSelected = userTeamProjects.every((p) => this.state.selectedProjects.has(p.id));
     const userAvatarStyle = { backgroundColor: this.props.user.color };
 
     let projects = null;
     if (this.props.userTeamProjects.status === 'loading') {
       projects = <Loader />;
-    } else  {
+    } else if (userTeamProjects.length > 0) {
       projects = (
         <>
           <p className="action-description">Also remove them from these projects</p>
@@ -94,9 +94,9 @@ class TeamUserRemovePopBase extends React.Component {
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <NestedPopoverTitle>Remove {getDisplayName(this.props.user)}</NestedPopoverTitle>
 
-        <section className="pop-over-actions" id="user-team-projects">
+        {projects && <section className="pop-over-actions" id="user-team-projects">
           {projects}
-        </section>
+        </section>}
 
         <section className="pop-over-actions danger-zone">
           <TrackClick name="Remove from Team submitted">
@@ -110,7 +110,6 @@ class TeamUserRemovePopBase extends React.Component {
   }
 }
 TeamUserRemovePopBase.propTypes = {
-  api: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
