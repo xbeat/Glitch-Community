@@ -20,15 +20,6 @@ module.exports = {
     "lodash",
     "@babel/syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties",
-    [
-      require.resolve("babel-plugin-module-resolver"),
-      {
-        "root": [path.resolve('./')],
-        "alias": {
-          "Components": "./src/components"
-        }
-      }
-    ]
   ],
   "sourceType": "unambiguous"
 }

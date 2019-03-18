@@ -76,8 +76,7 @@
     "webpack-cli": "^3.2.2",
     "webpack-dev-middleware": "^3.5.2",
     "winston": "^3.2.1",
-    "babel-plugin-module-resolver": "^3.2.0",
-    "eslint-import-resolver-babel-module": "^5.0.1"
+    "eslint-import-resolver-alias": "^1.1.2"
   },
   "engines": {
     "node": "10.x"
