@@ -42,18 +42,18 @@ const emojiMap = {
  * Emoji Component
  */
 
-const Emoji = ({ emojiName }) => {
+const Emoji = ({ name }) => {
   const className = cx({
     emoji: true,
-    emojiName,
+    name,
   });
 
-  return <img className={className} src={emojiMap[emojiName]} />;
+  return <img className={className} src={emojiMap[name]} alt={name} />;
 };
 
 Emoji.propTypes = {
   /** element(s) to display in the button */
-  emojiName: PropTypes.oneOf(Object.keys(emojiMap)).required,
+  name: PropTypes.oneOf(Object.keys(emojiMap)).isRequired,
 };
 
 export default Emoji;
