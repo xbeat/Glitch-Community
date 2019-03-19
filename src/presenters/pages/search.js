@@ -65,7 +65,6 @@ FilterContainer.propTypes = {
   loaded: PropTypes.bool.isRequired,
 };
 
-
 const TeamResults = ({ teams }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
