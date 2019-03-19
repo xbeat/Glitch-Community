@@ -1,20 +1,22 @@
+/* global EXTERNAL_ROUTES */
 import React from 'react';
 import MemoryRouter from 'react-router';
 import { storiesOf } from '@storybook/react';
-import Button from '../src/components/buttons/button';
+// import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
-const external = global.EXTERNAL_ROUTES ? Array.from(global.EXTERNAL_ROUTES) : [];
+// const external = EXTERNAL_ROUTES ? Array.from(EXTERNAL_ROUTES) : [];
+// console.log(external)
 
-storiesOf('Button', module)
-  .addDecorator(story => (
-      <MemoryRouter initialEntries={['./']}>{story()}</MemoryRouter>
-  ))
-  .add('regular', () => <Button>Hello Button</Button>)
+// storiesOf('Button', module)
+//   .addDecorator(story => (
+//       <MemoryRouter initialEntries={['./']}>{story()}</MemoryRouter>
+//   ))
+//   .add('regular', () => <Button>Hello Button</Button>)
 //   .add('cta', () => <Button type="cta">CTA Button</Button>)
 //   .add('small', () => <Button size="small">Small Button</Button>)
 //   .add('tertiary', () => (
