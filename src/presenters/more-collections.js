@@ -4,7 +4,7 @@ import { loadAllCollections } from './featured-collections';
 import { DataLoader } from './includes/loader';
 
 class MoreCollections extends React.Component {
-  constructor(props) {
+  constructor(props) {lo
     super(props);
     this.state = {};
   }
@@ -15,7 +15,9 @@ class MoreCollections extends React.Component {
     
     return (
       <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
-        <div>More collections coming soon</div>
+        {(collections) => collections.filter((c) => !!c).map((collection) => {
+          return <div>{JSON.stringify(collection)}</div>
+        })}
       </DataLoader>
     );
   }
