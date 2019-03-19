@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loadAllCollections } from './featured-collections';
 import { DataLoader } from './includes/loader';
-import { CoverContainer } from './profile';
+import { CoverContainer } from './includes/profile';
+import { getProfileStyle } from '../models/user';
 
 class MoreCollections extends React.Component {
   constructor(props) {
@@ -13,16 +14,22 @@ class MoreCollections extends React.Component {
   render() {
     const { api, currentUser } = this.props;
     const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
-    
+    const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover })
     return (
       <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
         {(collections) => {
           return (
             <CoverContainer style={coverStyle} className="collections">
-              {collections.map(c => <div>{c.name}</div>}
+              <>
+                {
+                  collections.map(c => {
+                    return <div>{c.name}</div>
+                  })
+                }
+              </>
             </CoverContainer>
           )
-        }
+        }}
       </DataLoader>
     );
   }
