@@ -45,11 +45,14 @@ Here's a nice guide to [What's New in ES6](http://es6-features.org/#Constants)
 
 ### Love your Linter
 
-ESLint is running and outputting to 'logs'.  ~~We also have an experimental feature in place that allows ESLint to autoformat the code.  The linter is configured by src/.eslintrc.js~~
+ESLint is running and outputting to 'logs'.  The linter is configured by `src/.eslintrc.js` and `server/.eslintrc.server.js`.
 
-We're also using Prettier in additon to ESLint now. Some work has been done to make our Prettier and ESLint rules match. You can use the [Glitch Prettier Extension for Chrome](https://glitch-prettier-extension.glitch.me/) or the [Glitch Prettier Plugin for Firefox](https://github.com/potch/glitch-prettier) to clean up your files in the editor automatically.
+We're also using Prettier in additon to ESLint now. Some work has been done to make our Prettier and ESLint rules match. Running `./sh/prettify` will format the files in `/src` and `/server` for you.
 
+To format the active file in the Glitch editor you can also use Glitch Prettier for your browser.
 
+- [Glitch Prettier Extension for Chrome](https://glitch-prettier-extension.glitch.me/)
+- [Glitch Prettier Plugin for Firefox](https://github.com/potch/glitch-prettier)
 
 ### Write A11Y-Compliant Html
 
