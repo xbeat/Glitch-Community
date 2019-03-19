@@ -107,6 +107,7 @@ module.exports = function(external) {
   });
 
   app.get('*', async (req, res) => {
+    if (req.status)
     await render(res, 'Glitch', 'The friendly community where everyone can discover & create the best stuff on the web');
   });
 
