@@ -1,6 +1,5 @@
 /* globals EDITOR_URL */
 
-// Import Sentry early to help it initialize.
 import './polyfills';
 
 // Init our dayjs plugins
