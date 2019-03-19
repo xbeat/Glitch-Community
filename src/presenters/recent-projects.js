@@ -23,11 +23,11 @@ const SignInNotice = ({ api }) => (
 );
 
 const ClearSession = ({ clearUser }) => {
-  function clickClearSt() {
+  function clickClearSession() {
     if (
       // eslint-disable-next-line
-      !window.confirm(`You won't be able to sign back in under this same anonymous account.
-Are you sure you want to sign out?`)
+      !window.confirm(`All projects created under this anonymous account will be cleared.
+Are you sure you want to continue?`)
     ) {
       return;
     }
