@@ -17,7 +17,7 @@ const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }
   const className = cx({
     btn: true,
     cta: type === 'cta',
-    small: size === 'small',
+    small: size === 'small' || type === 'dangerZone', // we want to demphasize dangerous actions, so we make them small
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: ['link', 'dropDown'].includes(type),
