@@ -1,6 +1,6 @@
 const path = require('path');
 
-const appConfig = require('../webpack.config.js');
+//const appConfig = require('../webpack.config.js');
 
 module.exports = {
   module: {
@@ -26,7 +26,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.resolve('./')],
-    alias: appConfig.resolve.alias,
+    modules: [path.resolve('../')],
+    //alias: appConfig.resolve.alias,
   },
 };
