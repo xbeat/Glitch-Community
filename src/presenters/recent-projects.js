@@ -75,8 +75,8 @@ RecentProjectsContainer.propTypes = {
 
 const RecentProjects = ({ api }) => (
   <CurrentUserConsumer>
-    {(user, fetched) => (
-      <RecentProjectsContainer user={user} api={api}>
+    {(user, fetched, { clear }) => (
+      <RecentProjectsContainer user={user} api={api} clearUser={clear}>
         {fetched ? (
           <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
             {(projects) => <ProjectsUL projects={projects} />}
