@@ -85,98 +85,99 @@ const CollectionPageContents = ({
   ...props
 }) => {
   console.log({ currentUser });
-  return(
-  <>
-    <Helmet>
-      <title>{collection.name}</title>
-    </Helmet>
-    <main className="collection-page">
-      <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
-        <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
-          <div className="collection-image-container">
-            <CollectionAvatar color={collection.coverColor} />
-          </div>
+  return (
+    <>
+      <Helmet>
+        <title>{collection.name}</title>
+      </Helmet>
+      <main className="collection-page">
+        <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
+          <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
+            <div className="collection-image-container">
+              <CollectionAvatar color={collection.coverColor} />
+            </div>
 
-          <EditCollectionNameAndUrl
-            isAuthorized={isAuthorized}
-            name={collection.name}
-            url={collection.url}
-            update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
-          />
-
-          {collection.team && <TeamTile team={collection.team} />}
-          {collection.user && <UserTile user={collection.user} />}
-
-          <div className="collection-description">
-            <AuthDescription
-              authorized={isAuthorized}
-              description={collection.description}
-              update={updateDescription}
-              placeholder="Tell us about your collection"
+            <EditCollectionNameAndUrl
+              isAuthorized={isAuthorized}
+              name={collection.name}
+              url={collection.url}
+              update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
             />
-          </div>
 
-          {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
-        </header>
-        {/* eslint-disable no-nested-ternary */}
-        {!!collection && (
-          <ProjectsLoader api={api} projects={collection.projects}>
-            {(projects) => (
-              <>
-                <div className="collection-contents">
-                  <div className="collection-project-container-header">
-                    <Heading tagName="h3">Projects ({collection.projects.length})</Heading>
+            {collection.team && <TeamTile team={collection.team} />}
+            {collection.user && <UserTile user={collection.user} />}
 
-                    {!!isAuthorized && (
-                      <AddCollectionProject
-                        addProjectToCollection={addProjectToCollection}
-                        collection={collection}
-                        api={api}
-                        currentUser={currentUser}
-                      />
+            <div className="collection-description">
+              <AuthDescription
+                authorized={isAuthorized}
+                description={collection.description}
+                update={updateDescription}
+                placeholder="Tell us about your collection"
+              />
+            </div>
+
+            {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
+          </header>
+          {/* eslint-disable no-nested-ternary */}
+          {!!collection && (
+            <ProjectsLoader api={api} projects={collection.projects}>
+              {(projects) => (
+                <>
+                  <div className="collection-contents">
+                    <div className="collection-project-container-header">
+                      <Heading tagName="h3">Projects ({collection.projects.length})</Heading>
+
+                      {!!isAuthorized && (
+                        <AddCollectionProject
+                          addProjectToCollection={addProjectToCollection}
+                          collection={collection}
+                          api={api}
+                          currentUser={currentUser}
+                        />
+                      )}
+                    </div>
+                    {collection.projects.length > 0 ? (
+                      isAuthorized ? (
+                        <ProjectsUL
+                          {...{ projects, currentUser, api }}
+                          projectOptions={{
+                            removeProjectFromCollection,
+                            addProjectToCollection,
+                          }}
+                          {...props}
+                        />
+                      ) : currentUser && currentUser.login ? (
+                        <ProjectsUL
+                          {...{ projects, currentUser, api }}
+                          projectOptions={{
+                            addProjectToCollection,
+                          }}
+                          {...props}
+                        />
+                      ) : (
+                        <ProjectsUL {...{ projects, currentUser, api }} projectOptions={{}} {...props} />
+                      )
+                    ) : isAuthorized ? (
+                      <div className="empty-collection-hint">
+                        <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
+                        <p>You can add any project, created by any user</p>
+                      </div>
+                    ) : (
+                      <div className="empty-collection-hint">No projects to see in this collection just yet.</div>
                     )}
                   </div>
-                  {collection.projects.length > 0 ? (
-                    isAuthorized ? (
-                      <ProjectsUL
-                        {...{ projects, currentUser, api }}
-                        projectOptions={{
-                          removeProjectFromCollection,
-                          addProjectToCollection,
-                        }}
-                        {...props}
-                      />
-                    ) : currentUser && currentUser.login ? (
-                      <ProjectsUL
-                        {...{ projects, currentUser, api }}
-                        projectOptions={{
-                          addProjectToCollection,
-                        }}
-                        {...props}
-                      />
-                    ) : (
-                      <ProjectsUL {...{ projects, currentUser, api }} projectOptions={{}} {...props} />
-                    )
-                  ) : isAuthorized ? (
-                    <div className="empty-collection-hint">
-                      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
-                      <p>You can add any project, created by any user</p>
-                    </div>
-                  ) : (
-                    <div className="empty-collection-hint">No projects to see in this collection just yet.</div>
-                  )}
-                </div>
-              </>
-            )}
-            {/* eslint-enable no-nested-ternary */}
-          </ProjectsLoader>
-        )}
-      </article>
-      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
-    </main>
-    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
-  </>
-)};
+                </>
+              )}
+              {/* eslint-enable no-nested-ternary */}
+            </ProjectsLoader>
+          )}
+        </article>
+        {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
+      </main>
+      {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
+    </>
+  );
+};
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
@@ -198,12 +199,15 @@ CollectionPageContents.defaultProps = {
   api: null,
 };
 
-async function loadCollection(api, ownerName, collectionName) {
+async function loadData(api, ownerName, collectionName, currentUser) {
   try {
+    console.log(currentUser)
     const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);
-    console.log({ collection });
-    return collection;
+
+    const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
+    console.log('allllll', allCollections);
+    return { collection };
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
       return null;
@@ -212,10 +216,10 @@ async function loadCollection(api, ownerName, collectionName) {
   }
 }
 
-const CollectionPage = ({ api, ownerName, name, ...props }) => (
+const CollectionPage = ({ api, ownerName, name, currentUser, ...props }) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, ownerName, name)}>
-      {(collection) =>
+    <DataLoader get={() => loadData(api, ownerName, name, currentUser)}>
+      {({ collection }) =>
         collection ? (
           <AnalyticsContext
             properties={{ origin: 'collection' }}
