@@ -108,9 +108,10 @@ module.exports = function(external) {
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
-        defaultSrc: ["'none'"],
+        defaultSrc: ["'self'"],
         scriptSrc: [
           "'self'",
+          "'unsafe-inline'",
           ...sources.scripts,
           (req, res) => res.locals.nonces.map((n) => `'nonce-${n}'`).join(' '),
         ],
