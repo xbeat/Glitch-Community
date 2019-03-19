@@ -22,8 +22,8 @@ const SignInNotice = ({ api }) => (
   </div>
 );
 
-const SignOut = ({ clearUser }) => {
-  function clickSignout() {
+const ClearSession = ({ clearUser }) => {
+  function clickClearSt() {
     if (
       // eslint-disable-next-line
       !window.confirm(`You won't be able to sign back in under this same anonymous account.
@@ -36,7 +36,7 @@ Are you sure you want to sign out?`)
 
   return (
     <div className="clear-session">
-      <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
+      <button type="button" onClick={clickClearSession} className="button-small has-emoji button-tertiary button-on-secondary-background">
         Clear Session <span className="emoji balloon" />
       </button>
     </div>
@@ -58,7 +58,7 @@ const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
         </div>
       </div>
       <article className="projects">{children}</article>
-      <SignOut clearUser={clearUser} />
+      {!user.login && <ClearSession clearUser={clearUser} />}
     </CoverContainer>
   </section>
 );
