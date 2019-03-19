@@ -28,7 +28,8 @@ const useAsync = (asyncFunction, ...args) => {
 };
 
 const IncludedInCollections = ({ api, projectId }) => {
-  const collections = useAsync(getIncludedCollections, api, projectId);
+  const rawCollections = useAsync(getIncludedCollections, api, projectId);
+  const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
   if (!collections || !collections.length) {
     return null;
   }

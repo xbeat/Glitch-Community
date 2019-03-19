@@ -16,6 +16,8 @@ import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
 import Text from '../../components/text/text';
 
+import Heading from '../../components/text/heading';
+
 function loadScript(src) {
   const script = document.createElement('script');
   script.src = src;
@@ -64,10 +66,10 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <h1>
+            <Heading tagName="h1">
               <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
               <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
-            </h1>
+            </Heading>
 
             <OverlayVideo>
               <div className="button video">
