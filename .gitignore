@@ -5,6 +5,7 @@ styles/style.css.map
 src/cache/*
 src/templates/**/*.js
 node_modules/*
+.cache-loader
 *.md5
 .config/configstore/update-notifier-nodemon.json
 .config/configstore/update-notifier-pnpm.json

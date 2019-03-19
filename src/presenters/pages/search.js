@@ -9,6 +9,7 @@ import Layout from '../layout';
 import { useCurrentUser } from '../current-user';
 
 import Button from '../../components/buttons/button';
+import Heading from '../../components/text/heading';
 
 import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
@@ -64,9 +65,10 @@ FilterContainer.propTypes = {
   loaded: PropTypes.bool.isRequired,
 };
 
+
 const TeamResults = ({ teams }) => (
   <article>
-    <h2>Teams</h2>
+    <Heading tagName="h2">Teams</Heading>
     <ul className="teams-container">
       {teams ? (
         teams.map((team) => (
@@ -83,7 +85,7 @@ const TeamResults = ({ teams }) => (
 
 const UserResults = ({ users }) => (
   <article>
-    <h2>Users</h2>
+    <Heading tagName="h2">Users</Heading>
     <ul className="users-container">
       {users ? (
         users.map((user) => (
@@ -102,7 +104,7 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   if (!projects) {
     return (
       <article>
-        <h2>Projects</h2>
+        <Heading tagName="h2">Projects</Heading>
         <Loader />
       </article>
     );

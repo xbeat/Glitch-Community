@@ -27,6 +27,8 @@ import { UserTile } from '../users-list';
 
 import { CurrentUserConsumer } from '../current-user';
 
+import Heading from '../../components/text/heading';
+
 function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
 }
@@ -121,7 +123,7 @@ const CollectionPageContents = ({
               <>
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
-                    <h3>Projects ({collection.projects.length})</h3>
+                    <Heading tagName="h3">Projects ({collection.projects.length})</Heading>
 
                     {!!isAuthorized && (
                       <AddCollectionProject
