@@ -76,6 +76,17 @@ class CollectionEditor extends React.Component {
       }),
     }));
   }
+  
+  hideNote(projectId) {
+    this.setState(({ projects }) => ({
+      projects: projects.map((project) => {
+        if (project.id === projectId) {
+          project.isAddingANewNote = false;
+        }
+        return { ...project };
+      }),
+    }));
+  }
 
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
@@ -85,7 +96,8 @@ class CollectionEditor extends React.Component {
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       updateOrAddNote: ({ note, projectId }) => this.updateOrAddNote({ note, projectId }),
-      addNoteField: (project) => this.addNoteField(project),
+      addNoteField: (projectId) => this.addNoteField(projectId),
+      hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
     };

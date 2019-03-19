@@ -84,6 +84,7 @@ const CollectionPageContents = ({
   updateColor,
   updateOrAddNote,
   addNoteField,
+  hideNote,
   ...props
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
@@ -228,12 +229,14 @@ CollectionPageContents.propTypes = {
   removeProjectFromCollection: PropTypes.func.isRequired,
   updateOrAddNote: PropTypes.func,
   addNoteField: PropTypes.func,
+  hideNote: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
   api: null,
   updateOrAddNote: null,
   addNoteField: null,
+  hideNote: null,
 };
 
 async function loadCollection(api, ownerName, collectionName) {

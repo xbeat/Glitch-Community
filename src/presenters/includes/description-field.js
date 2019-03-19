@@ -24,6 +24,7 @@ class EditableDescriptionImpl extends React.Component {
 
   onBlur() {
     this.setState({ focused: false });
+    this.props.onBlur(event.target.value);
   }
 
   render() {
@@ -60,22 +61,25 @@ EditableDescriptionImpl.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   maxLength: PropTypes.number,
 };
 
 EditableDescriptionImpl.defaultProps = {
   placeholder: '',
+  onBlur: null,
   maxLength: 524288, // this is the built in default
 };
 
 const EditableDescription = ({
-  description, placeholder, update, maxLength,
+  description, placeholder, update, onBlur, maxLength,
 }) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
       <EditableDescriptionImpl
         description={optimisticValue}
         update={optimisticUpdate}
+        onBlur={onBlur}
         placeholder={placeholder}
         maxLength={maxLength}
       />
@@ -86,11 +90,13 @@ EditableDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   maxLength: PropTypes.number,
 };
 
 EditableDescription.defaultProps = {
   placeholder: '',
+  onBlur: null,
   maxLength: null,
 };
 
@@ -104,9 +110,9 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({ authorized, description, placeholder, update, maxLength }) =>
+export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength }) =>
   authorized ? (
-    <EditableDescription description={description} update={update} placeholder={placeholder} maxLength={maxLength} />
+    <EditableDescription description={description} update={update} onBlur={onBlur} placeholder={placeholder} maxLength={maxLength} />
   ) : (
     <StaticDescription description={description} />
   );

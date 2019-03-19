@@ -18,6 +18,7 @@ const ProjectItem = ({
       author={author}
       project={project}
       update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
+      hideNote={props.hideNote}
     />
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop {...{ project, api }} {...props} />

@@ -12,8 +12,14 @@ import { isDarkColor } from '../models/collection';
  * Note Component
  */
 const Note = ({
-  collectionCoverColor, author, project, update,
+  collectionCoverColor, author, project, update, hideNote
 }) => {
+  function updateNoteVisibility(description) {
+    if (!description) {
+      setTimeout(() => hideNote(project.id), 500);
+    }
+  }
+  
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
@@ -31,6 +37,7 @@ const Note = ({
           description={project.note || ''}
           placeholder="Share why you love this app."
           update={update}
+          onBlur={updateNoteVisibility}
           maxLength={75}
         />
       </div>
@@ -51,6 +58,7 @@ Note.propTypes = {
     collectionCoverColor: PropTypes.string,
   }).isRequired,
   update: PropTypes.any,
+  hideNote: PropTypes.func.isRequired,
 };
 
 Note.defaultProps = {
