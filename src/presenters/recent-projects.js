@@ -5,6 +5,8 @@ import { getAvatarStyle, getProfileStyle } from '../models/user';
 import { CurrentUserConsumer } from './current-user';
 import { UserLink } from './includes/link';
 
+import Heading from '../components/text/heading';
+
 import { CoverContainer } from './includes/profile';
 import { Loader } from './includes/loader';
 import ProjectsLoader from './projects-loader';
@@ -43,9 +45,9 @@ Are you sure you want to sign out?`)
 
 const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
   <section className="profile recent-projects">
-    <h2>
+    <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
-    </h2>
+    </Heading>
     {!user.login && <SignInNotice api={api} />}
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">

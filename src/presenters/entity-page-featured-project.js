@@ -8,6 +8,8 @@ import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
 import { TrackClick } from './analytics';
 
+import Heading from '../components/text/heading';
+
 const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
@@ -25,7 +27,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
   return (
     <>
       <section id="featured-project-embed">
-        <h2>{featuredTitle}</h2>
+        <Heading tagName="h2">{featuredTitle}</Heading>
 
         {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
         <Embed domain={featuredProject.domain} />
