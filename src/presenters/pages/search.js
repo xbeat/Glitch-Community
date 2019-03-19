@@ -45,7 +45,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
         {filters.map(
           (filter) =>
             (filter.hits === null || filter.hits > 0) && (
-              <Button key={filter.name} size="small" type="tertiary" state={activeFilter == filter.name ? "active" : null } onClick={(evt) => setFilter(filter.name, evt)}>
+              <Button key={filter.name} size="small" type="tertiary" active={(activeFilter == filter.name) ? "active" : false } onClick={(evt) => setFilter(filter.name, evt)}>
                 {capitalize(filter.name)}
                 {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
               </Button>

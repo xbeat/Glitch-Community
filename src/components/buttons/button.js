@@ -18,7 +18,7 @@ const Button = ({ onClick, disabled, type, size, hover, children, active }) => {
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-    active: active,
+    active,
     hover,
   });
 
@@ -42,6 +42,8 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
+  /** whether the button is active or not */
+  state: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -50,6 +52,7 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
+  active: false
 };
 
 export default Button;
