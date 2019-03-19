@@ -3,7 +3,7 @@ const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
 
-const { getProject, getTeam, getUser, getZine } = require('./api');
+const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
 
@@ -95,6 +95,26 @@ module.exports = function(external) {
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
+  });
+
+  app.get('/@:name/:collection', async (req, res) => {
+    const { name, collection } = req.params;
+    const collectionObj = await getCollection(`${name}/${collection}`);
+
+    // TODO metada for teams as well
+    // @ + user.login
+    if (collectionObj) {
+      let { name, description, team, user } = collectionObj;
+      const author = team || `@${user.login}`;
+
+      description = description.trimEnd(); // trim trailing whitespace from description
+      description += ` 🎏 A collection of apps by ${author}`;
+      description = description.trimStart(); // if there was no description, trim space before the fish
+
+      await render(res, name, description);
+      return;
+    }
+    await render(res, `${collection}`, `We couldn't find @${name}/${collection}`);
   });
 
   app.get('/auth/:domain', async (req, res) => {

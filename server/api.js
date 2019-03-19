@@ -13,6 +13,7 @@ const generalCache = new Cache();
 const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
+const collectionCache = new Cache();
 
 async function getFromCacheOrApi(id, cache, api) {
   let promise = cache.get(id);
@@ -67,6 +68,17 @@ async function getUserFromApi(login) {
   }
 }
 
+async function getCollectionFromApi(url) {
+  try {
+    return await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${url}`, url);
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+}
+
 async function getCultureZinePosts() {
   console.log('Fetching culture zine posts');
   const client = 'client_id=ghost-frontend&client_secret=c9a97f14ced8';
@@ -83,5 +95,6 @@ module.exports = {
   getProject: (domain) => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
   getTeam: (url) => getFromCacheOrApi(url, teamCache, getTeamFromApi),
   getUser: (login) => getFromCacheOrApi(login, userCache, getUserFromApi),
+  getCollection: url => getFromCacheOrApi(url, collectionCache, getCollectionFromApi),
   getZine: () => getFromCacheOrApi('culture', generalCache, getCultureZinePosts),
 };
