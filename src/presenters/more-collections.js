@@ -8,9 +8,12 @@ class MoreCollections extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { api, collection, currentUser } = this.props;
     console.log({ api, collection, currentUser });
+
+    const collections = await api.get(`users/${currentUser.id}/collections`);
+    console.log("collections", collections);
   }
 
   render() {
