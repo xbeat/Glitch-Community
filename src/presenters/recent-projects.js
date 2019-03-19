@@ -20,7 +20,7 @@ const SignInNotice = ({ api }) => (
   </div>
 );
 
-const SignOut = () => {
+const SignOut = ({user}) => {
   function clickSignout() {
     if (
       // eslint-disable-next-line
@@ -29,7 +29,7 @@ Are you sure you want to sign out?`)
     ) {
       return;
     }
-    // logout here
+    user.clear();
   }
 
   return (
@@ -41,7 +41,7 @@ Are you sure you want to sign out?`)
   );
 };
 
-const RecentProjectsContainer = ({ children, user, api }) => (
+const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
   <section className="profile recent-projects">
     <h2>
       <UserLink user={user}>Your Projects →</UserLink>
@@ -56,7 +56,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
         </div>
       </div>
       <article className="projects">{children}</article>
-      <SignOut />
+      <SignOut clearUser={clear}/>
     </CoverContainer>
   </section>
 );
@@ -70,6 +70,7 @@ RecentProjectsContainer.propTypes = {
     id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
+  clearUser: PropTypes.func.isRequired,
 };
 
 const RecentProjects = ({ api }) => (
