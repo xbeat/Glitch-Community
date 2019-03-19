@@ -86,6 +86,7 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
+      const avatar = `${CDN_URL}/team-avatar/${team.id}`;
       await render(res, team.name, team.description);
       return;
     }
