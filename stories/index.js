@@ -12,7 +12,7 @@ const external = global.EXTERNAL_ROUTES ? Array.from(global.EXTERNAL_ROUTES) : [
 
 storiesOf('Button', module)
   .addDecorator(story => (
-      <MemoryRouter>{story()}</MemoryRouter>
+      <MemoryRouter initialEntries={['./']}>{story()}</MemoryRouter>
   ))
   .add('regular', () => <Button>Hello Button</Button>)
 //   .add('cta', () => <Button type="cta">CTA Button</Button>)
@@ -77,9 +77,9 @@ storiesOf('Heading', module)
   .add('h3', () => <Heading tagName="h3">H3, 16px</Heading>)
   .add('h4', () => <Heading tagName="h4">H4, 14px</Heading>);
 
-storiesOf('Markdown', module)
-  .addDecorator(story => (
-      <MemoryRouter initialEntries={['../']}>{story()}</MemoryRouter>
-  ))
-  .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
-  .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
+// storiesOf('Markdown', module)
+//   .addDecorator(story => (
+//       <MemoryRouter initialEntries={['../']}>{story()}</MemoryRouter>
+//   ))
+//   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
+//   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
