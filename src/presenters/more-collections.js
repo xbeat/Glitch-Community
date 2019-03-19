@@ -6,7 +6,11 @@ import { CoverContainer } from './includes/profile';
 import { getProfileStyle } from '../models/user';
 
 //I wonder if this needs a new name or should be combined with the existing collectionItem in some way
-const CollectionItem = (collection) => {
+const CollectionItem = ({ title, description, projectCount }) => {
+  // note: should this whole thing be a button, an anchor tag, or a div? end result is to make it all clickable
+  return (
+    <div></div>
+  );
 }
 
 
