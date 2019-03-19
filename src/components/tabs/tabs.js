@@ -6,13 +6,26 @@ import { Tabs, TabList, Tab, } from "@reach/tabs"
 
 const cx = classNames.bind(styles);
 
-const Tabs = ({ data, onClick }) => {
+const TabSet = ({ data, onClick }) => {
+  const classNames = cx({
+  });
+  
   return(
     <Tabs>
-      { data.map((tab, index)) => (
-        <Tab key={index}>tab.label</Tab>
-        ))};
+      { data.map((tab, index) => (
+        <Tab key={index}>{tab.label} onClick={onClick}</Tab>
+      ))};
     </Tabs>
     );
 }
 
+TabSet.propTypes = {
+  data: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+}
+
+TabSet.defaultProps = {
+  onClick: () => {},
+}
+
+export default TabSet;

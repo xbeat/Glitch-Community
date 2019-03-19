@@ -9,6 +9,7 @@ import Layout from '../layout';
 import { useCurrentUser } from '../current-user';
 
 import Button from '../../components/buttons/button';
+import { TabSet as Tabs } from '../../components/buttons/tabs';
 
 import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
@@ -18,9 +19,23 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+const formatTabsData = ({ filters }) =>  {
+  const tabsData = {};
+  const tab = [];
+  
+  
+  filters.map((filter) => 
+              tab.label = `${filter.name} ${filter.count}`;
+              tab.content = 
+              );
+};
+
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-
+  
+  
+  
+  
   if (!loaded) {
     return (
       <>
@@ -35,6 +50,8 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
+      
+      {/*
       <div className="search-filters segmented-buttons">
         {filters.map(
           (filter) =>
@@ -46,6 +63,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
             ),
         )}
       </div>
+      */}
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
