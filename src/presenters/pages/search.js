@@ -27,9 +27,6 @@ const formatTabsData = ({ filters }) =>  {
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
   
-  
-  
-  
   if (!loaded) {
     return (
       <>
@@ -44,20 +41,17 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      
-      {/*
       <div className="search-filters segmented-buttons">
         {filters.map(
           (filter) =>
             (filter.hits === null || filter.hits > 0) && (
-              <Button key={filter.name} size="small" type="tertiary" onClick={(evt) => setFilter(filter.name, evt)}>
+              <Button key={filter.name} size="small" type="tertiary" state={activeFilter == filter.name ? "active" : null } onClick={(evt) => setFilter(filter.name, evt)}>
                 {capitalize(filter.name)}
                 {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
               </Button>
             ),
         )}
       </div>
-      */}
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );

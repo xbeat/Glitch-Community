@@ -6,6 +6,7 @@ import styles from './button.styl';
 const cx = classNames.bind(styles);
 
 export const TYPES = ['tertiary', 'cta', 'dangerZone'];
+export const STATE = ['active'];
 export const SIZES = ['small'];
 
 /**
@@ -18,6 +19,7 @@ const Button = ({ onClick, disabled, type, size, hover, children }) => {
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
+    active: ,
     hover,
   });
 
