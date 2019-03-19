@@ -9,6 +9,7 @@ import Layout from '../layout';
 import { useCurrentUser } from '../current-user';
 
 import Button from '../../components/buttons/button';
+import { TabSet as Tabs } from '../../components/buttons/tabs';
 
 import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
@@ -18,9 +19,14 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+const formatTabsData = ({ filters }) =>  {
+  const tabsData = {};
+  const tab = [];
+};
+
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-
+  
   if (!loaded) {
     return (
       <>
@@ -39,7 +45,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
         {filters.map(
           (filter) =>
             (filter.hits === null || filter.hits > 0) && (
-              <Button key={filter.name} size="small" type="tertiary" onClick={(evt) => setFilter(filter.name, evt)}>
+              <Button key={filter.name} size="small" type="tertiary" active={(activeFilter == filter.name) ? "active" : false } onClick={(evt) => setFilter(filter.name, evt)}>
                 {capitalize(filter.name)}
                 {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
               </Button>
