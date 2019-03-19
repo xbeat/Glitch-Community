@@ -21,16 +21,25 @@ const SignInNotice = ({ api }) => (
 );
 
 const SignOut = () => {
-  function clickSignout(){
-    !  
+  function clickSignout() {
+    if (
+      // eslint-disable-next-line
+      !window.confirm(`You won't be able to sign back in under this same anonymous account.
+Are you sure you want to sign out?`)
+    ) {
+      return;
+    }
+    // logout here
   }
-  
+
   return (
-    <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
-      Sign Out <span className="emoji balloon" />
-    </button>
+    <div className="clear-session">
+      <button type="button" onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
+        Clear Session <span className="emoji balloon" />
+      </button>
+    </div>
   );
-}
+};
 
 const RecentProjectsContainer = ({ children, user, api }) => (
   <section className="profile recent-projects">
@@ -47,6 +56,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
         </div>
       </div>
       <article className="projects">{children}</article>
+      <SignOut />
     </CoverContainer>
   </section>
 );
