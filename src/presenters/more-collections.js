@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadAllCollections } from './presenters/featured-collections';
+import { loadAllCollections } from './featured-collections';
 
 class MoreCollections extends React.Component {
   constructor(props) {
@@ -11,8 +11,9 @@ class MoreCollections extends React.Component {
   async componentDidMount() {
     const { api, collection, currentUser } = this.props;
     console.log({ api, collection, currentUser });
-    currentUser.collections.map(c => 
-    loadAllCollections(api, { })
+    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
+    const loadedCollections = await loadAllCollections(api, collectionsToLoad);
+    console.log('wat', loadedCollections);
   }
 
   render() {
