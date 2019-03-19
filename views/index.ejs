@@ -38,6 +38,7 @@
   </head>
   <body>
     <script>
+      var RUNNING_ON = '<%= RUNNING_ON %>';
       var CONSTANTS = <%- JSON.stringify(CONSTANTS) %>;
       var _env;
       if (document.location.hostname.indexOf('glitch.development') >= 0) {
