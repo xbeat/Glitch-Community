@@ -7,7 +7,6 @@ module.exports = {
       {
         test: /\.styl$/,
         use: [
-          'style-loader',
           {
             loader: 'css-loader?modules',
             options: {
