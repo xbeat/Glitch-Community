@@ -79,7 +79,8 @@ const loadCollection = async (api, { owner, name }) => {
   return null;
 };
 
-const loadAllCollections = async (api, infos) => {
+// maybe this can go in a model folder or something
+export const loadAllCollections = async (api, infos) => {
   // don't await until every request is sent so they can all run at once
   const promises = infos.map((info) => loadCollection(api, info));
   return Promise.all(promises);

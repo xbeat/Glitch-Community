@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { loadAllCollections } from './presenters/featured-collections';
 
 class MoreCollections extends React.Component {
   constructor(props) {
@@ -11,9 +11,8 @@ class MoreCollections extends React.Component {
   async componentDidMount() {
     const { api, collection, currentUser } = this.props;
     console.log({ api, collection, currentUser });
-
-    const collections = await api.get(`users/${currentUser.id}/collections`);
-    console.log("collections", collections);
+    currentUser.collections.map(c => 
+    loadAllCollections(api, { })
   }
 
   render() {
