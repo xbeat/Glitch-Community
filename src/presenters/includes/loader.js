@@ -22,6 +22,7 @@ export class DataLoader extends React.Component {
   componentDidMount() {
     this.props.get().then(
       (data) => {
+        console.log("ye old data", data)
         this.setState({
           maybeData: data,
           loaded: true,

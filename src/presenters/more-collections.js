@@ -4,7 +4,7 @@ import { loadAllCollections } from './featured-collections';
 import { DataLoader } from './includes/loader';
 
 class MoreCollections extends React.Component {
-  constructor(props) {lo
+  constructor(props) {
     super(props);
     this.state = {};
   }
