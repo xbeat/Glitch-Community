@@ -4,7 +4,7 @@ import MemoryRouter from 'react-router';
 import { storiesOf } from '@storybook/react';
 // import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
-import TextInput from '../src/components/fields/text-input';
+import TextInput from 'Components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
 import Heading from 'Components/text/heading';
 import Markdown from '../src/components/text/markdown';
