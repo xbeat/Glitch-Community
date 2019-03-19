@@ -12,7 +12,6 @@ import { DataLoader } from '../includes/loader';
 import { ProjectsUL } from '../projects-list';
 import ProjectsLoader from '../projects-loader';
 import NotFound from '../includes/not-found';
-
 import { AuthDescription } from '../includes/description-field';
 import CollectionEditor from '../collection-editor';
 
@@ -26,6 +25,7 @@ import { TeamTile } from '../teams-list';
 import { UserTile } from '../users-list';
 
 import { CurrentUserConsumer } from '../current-user';
+import MoreCollections from '../more-collections';
 
 import Heading from '../../components/text/heading';
 
@@ -173,6 +173,7 @@ const CollectionPageContents = ({
       {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
     </main>
     {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
+    <MoreCollections api={api} currentUser={currentUser} collection={collection} />
   </>
 );
 
