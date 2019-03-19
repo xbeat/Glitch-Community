@@ -1,6 +1,5 @@
 const path = require('path');
-
-//const appConfig = require('../webpack.config.js');
+const appConfig = require('../webpack.config.js');
 
 module.exports = {
   module: {
@@ -21,12 +20,9 @@ module.exports = {
             loader: 'stylus-loader',
           },
         ],
-        include: path.resolve(__dirname, '../src/components'),
+        include: path.resolve(__dirname, '../'),
       },
     ],
   },
-  resolve: {
-    modules: [path.resolve('../')],
-    //alias: appConfig.resolve.alias,
-  },
+  alias: appConfig.resolve.alias,
 };
