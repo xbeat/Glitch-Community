@@ -49,6 +49,8 @@ ESLint is running and outputting to 'logs'.  ~~We also have an experimental feat
 
 We're also using Prettier in additon to ESLint now. Some work has been done to make our Prettier and ESLint rules match. You can use the [Glitch Prettier Extension for Chrome](https://glitch-prettier-extension.glitch.me/) or the [Glitch Prettier Plugin for Firefox](https://github.com/potch/glitch-prettier) to clean up your files in the editor automatically.
 
+
+
 ### Write A11Y-Compliant Html
 
 Our linter runs a lovely jsx-a11y plugin which does a lot of the hard work for us.  It's still on us however to respect the spirit of the linter;  it's not enough to just pass, but we also want to be conscientious about using [quality alt-tags](https://a11yproject.com/posts/alt-text/), making sure you can accomplish all UI interactions via the keyboard (which often comes down to picking the right DOM elements), etc. 
