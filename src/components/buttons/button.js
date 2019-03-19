@@ -6,20 +6,19 @@ import styles from './button.styl';
 const cx = classNames.bind(styles);
 
 export const TYPES = ['tertiary', 'cta', 'dangerZone'];
-export const STATE = ['active'];
 export const SIZES = ['small'];
 
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, hover, children }) => {
+const Button = ({ onClick, disabled, type, size, hover, children, active }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-    active: ,
+    active: active,
     hover,
   });
 
