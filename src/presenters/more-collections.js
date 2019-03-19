@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { loadAllCollections } from './featured-collections';
+import { DataLoader } from './includes/loader';
 
 class MoreCollections extends React.Component {
   constructor(props) {
@@ -8,17 +9,14 @@ class MoreCollections extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {
-    const { api, collection, currentUser } = this.props;
-    console.log({ api, collection, currentUser });
-    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
-    const loadedCollections = await loadAllCollections(api, collectionsToLoad);
-    console.log('wat', loadedCollections);
-  }
-
   render() {
+    const { api, currentUser } = this.props;
+    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
+    
     return (
-      <div>More collections coming soon</div>
+      <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
+        <div>More collections coming soon</div>
+      </DataLoader>
     );
   }
 }
