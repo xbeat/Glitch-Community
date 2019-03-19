@@ -88,10 +88,10 @@ module.exports = function(external) {
     if (team) {
       const args = [res, team.name, team.description];
       if (team.hasAvatarImage) {
-        args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
+        args.push(`${CDN_URL}/team-avatar/${team.id}/large?2222`);
       }
       //await render(res, team.name, team.description, teamAvatar);
-      await render.apply(args);
+      await render(...args);
       return;
     }
     const user = await getUser(name);
