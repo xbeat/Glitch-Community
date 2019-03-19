@@ -4,13 +4,13 @@ Discover new reasons to code, remix cool and helpful projects made with Glitch.
 
 Philosophically, a little bit `Youtube`, some `Spotify`, with a sprinkle of `app store`.
 
-Contributing
-------------
+## Contributing
 
 Please read [CONTRIBUTING.md](https://glitch.com/edit/#!/community?path=CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
 
-Getting Started
------------------
+Glitch employees should check out [DEPLOYING.md](https://glitch.com/edit/#!/community?path=DEPLOYING.md) for details on our deploy process.
+
+## Getting Started
 
 File structure
 
@@ -24,8 +24,7 @@ File structure
 
 application models -> presenter -> DOM
 
-Built with
-----------
+## Built with
 
 - [ES6](http://es6-features.org/)
 - [React.js](https://reactjs.org/)

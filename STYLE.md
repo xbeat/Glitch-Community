@@ -1,5 +1,4 @@
-Style Guide (Draft)
--------------------
+# Style Guide (Draft)
 
 This is our coding style guide.  It's a draft.  It will _always be a draft_, because style guides on live codebases are never done.  For the moment, this is our best set of captured guidance on coding styles for this site. If ever that doesn't seem true, it's time to edit more!
 

@@ -1,5 +1,4 @@
-Deploying
----------
+# Deploying
 
 Only employees of Glitch will be able to do this step, and here it is! 
 

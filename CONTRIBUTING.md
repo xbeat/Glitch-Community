@@ -1,19 +1,17 @@
-Contributing
-------------
+# Contributing
 
-🎏 - **Hey, welcome!**  This document should give you all the steps you need to make contributions to the Glitch community site. This guide applies to full time makers of Glitch as well as all members of our Glitch community.
+🎏 **Hey, welcome!**  This document should give you all the steps you need to make contributions to the Glitch community site. This guide applies to full time makers of Glitch as well as all members of our Glitch community.
 
-📜 - **Please note** we have a [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md). Follow it in all your interactions with the project and the denizens thereof.
+📜 **Please note** we have a [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md). Follow it in all your interactions with the project and the denizens thereof.
 
-🎨 - **Check out** our [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
+🎨 **Check out** our [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
 
-Mission
--------
+## Mission
+
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
 
 
-Philosophy
-----------
+## Philosophy
 
 Our contribution flow is built around a hunger for creative expression. Build things fast, with Glitch, and share them.  Here's how:
 
@@ -29,8 +27,7 @@ Accessible technologies are important to allowing people to contribute.  As we i
 
 Behind the scenes, we'll make use of GitHub's Pull Request workflow to incorporate changes into the site. If you're a part of the GitHub community, then feel free to submit pull requests directly-- if you're not,  don't worry about it and just focus on building cool stuff and sharing your ideas.
 
-Contribution Workflow
----------------------
+## Contribution Workflow
 
 First, remix from [https://glitch.com/~community](https://glitch.com/~community) into, e.g., `my-remix`
 
