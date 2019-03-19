@@ -83,7 +83,9 @@ const CollectionPageContents = ({
   removeProjectFromCollection,
   updateColor,
   ...props
-}) => (
+}) => {
+  console.log({ currentUser });
+  return(
   <>
     <Helmet>
       <title>{collection.name}</title>
@@ -174,7 +176,7 @@ const CollectionPageContents = ({
     </main>
     {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
-);
+)};
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
