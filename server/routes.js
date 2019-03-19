@@ -86,8 +86,8 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const avatar = `${CDN_URL}/team-avatar/${team.id}`;
-      await render(res, team.name, team.description);
+      const teamAvatar = team.hasAvatarImage ? `${CDN_URL}/team-avatar/${team.id}/large` : null;
+      await render(res, team.name, team.description, teamAvatar);
       return;
     }
     const user = await getUser(name);
@@ -102,8 +102,6 @@ module.exports = function(external) {
     const { name, collection } = req.params;
     const collectionObj = await getCollection(`${name}/${collection}`);
 
-    // TODO metada for teams as well
-    // @ + user.login
     if (collectionObj) {
       let { name, description, team, user } = collectionObj;
       const author = team || `@${user.login}`;
