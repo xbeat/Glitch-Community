@@ -5,7 +5,6 @@ dependencies:
   '@babel/polyfill': 7.2.5
   '@babel/preset-env': 7.3.4
   '@babel/preset-react': 7.0.0
-  '@reach/tabs': 0.1.1
   '@sentry/browser': 4.6.4
   '@sentry/node': 4.6.4
   '@storybook/react': 4.1.14
@@ -2233,32 +2232,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
-  /@reach/auto-id/0.1.0:
-    dev: false
-    peerDependencies:
-      react: ^16.8.0
-      react-dom: ^16.8.0
-    resolution:
-      integrity: sha512-DqJry5GFTZpehbrivWiA1ZqZykGWJbBDmjasI9xtRDKcfZ7EYcRdrO0y1aKJDGTDNKCQSm39ES2KkHLKDgJlfw==
-  /@reach/tabs/0.1.1:
-    dependencies:
-      '@reach/auto-id': 0.1.0
-      '@reach/utils': 0.2.0
-      warning: 4.0.3
-    dev: false
-    peerDependencies:
-      prop-types: ^15.7.2
-      react: ^16.8.0
-      react-dom: ^16.8.0
-    resolution:
-      integrity: sha512-p13d7DOR3xvJS0YN4LSsxqeo7NJBfqXCjz6IKQavBY15gaCiiDFYA383Gu5ZCJ45TBAEDdagGD8aISD294S1RQ==
-  /@reach/utils/0.2.0:
-    dev: false
-    peerDependencies:
-      react: ^16.4.0
-      react-dom: ^16.4.0
-    resolution:
-      integrity: sha512-AIfX18Ska78d4SjLt4awYHsgXEIVHhOUxLtxze2XT0D5aPOPx1XJl0seRZfQI0EVod4K1KVvHJnskEYSXqKQQg==
   /@sentry/browser/4.6.4:
     dependencies:
       '@sentry/core': 4.6.4
@@ -11090,7 +11063,6 @@ specifiers:
   '@babel/polyfill': ^7.2.5
   '@babel/preset-env': ^7.2.3
   '@babel/preset-react': ^7.0.0
-  '@reach/tabs': ^0.1.1
   '@sentry/browser': ^4.5.3
   '@sentry/node': ^4.4.1
   '@storybook/react': ^4.1.1
