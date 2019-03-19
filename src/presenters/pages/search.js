@@ -22,12 +22,6 @@ import UserItem from '../user-item';
 const formatTabsData = ({ filters }) =>  {
   const tabsData = {};
   const tab = [];
-  
-  
-  filters.map((filter) => 
-              tab.label = `${filter.name} ${filter.count}`;
-              tab.content = 
-              );
 };
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
