@@ -86,8 +86,12 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const teamAvatar = team.hasAvatarImage ? `${CDN_URL}/team-avatar/${team.id}/large` : null;
-      await render(res, team.name, team.description, teamAvatar);
+      const args = [res, team.name, team.description];
+      if (team.hasAvatarImage) {
+        args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
+      }
+      //await render(res, team.name, team.description, teamAvatar);
+      await render.apply(args);
       return;
     }
     const user = await getUser(name);
