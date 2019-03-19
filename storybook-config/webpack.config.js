@@ -24,5 +24,5 @@ module.exports = {
       },
     ],
   },
-  alias: appConfig.resolve.alias,
+  resolve: { alias: appConfig.resolve.alias },
 };
