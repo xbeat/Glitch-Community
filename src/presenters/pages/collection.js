@@ -168,6 +168,7 @@ const CollectionPageContents = ({
                         author={collection.user}
                         api={api}
                         collectionCoverColor={collection.coverColor}
+                        hideNote={hideNote}
                         projectOptions={{
                           removeProjectFromCollection,
                           addProjectToCollection,
