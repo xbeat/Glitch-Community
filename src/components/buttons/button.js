@@ -43,7 +43,7 @@ Button.propTypes = {
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
   /** whether the button is active or not */
-  state: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -52,7 +52,7 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
-  active: false
+  active: false,
 };
 
 export default Button;
