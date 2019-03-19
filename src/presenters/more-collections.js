@@ -5,6 +5,11 @@ import { DataLoader } from './includes/loader';
 import { CoverContainer } from './includes/profile';
 import { getProfileStyle } from '../models/user';
 
+//I wonder if this needs a new name or should be combined with the existing collectionItem in some way
+const CollectionItem = (collection) => {
+}
+
+
 class MoreCollections extends React.Component {
   constructor(props) {
     super(props);
