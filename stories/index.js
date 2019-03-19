@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
-import Heading from '../src/components/text/heading';
+import Heading from 'Components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
 // const external = EXTERNAL_ROUTES ? Array.from(EXTERNAL_ROUTES) : [];
