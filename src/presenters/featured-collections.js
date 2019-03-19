@@ -62,10 +62,10 @@ CollectionWide.propTypes = {
 const loadCollection = async (api, { owner, name }) => {
   try {
     const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
-    console.log("got a collection", collection)
     collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
-    console.log("got the projects", collection.projects)
-    collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    if (collection.team) {
+      collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    }
     collection.projectCount = collection.projects.length;
     collection.projects = sampleSize(collection.projects, 3).map((p) => ({
       ...p,

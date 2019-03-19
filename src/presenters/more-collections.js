@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loadAllCollections } from './featured-collections';
 import { DataLoader } from './includes/loader';
+import { CoverContainer } from './profile';
 
 class MoreCollections extends React.Component {
   constructor(props) {
@@ -15,9 +16,13 @@ class MoreCollections extends React.Component {
     
     return (
       <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
-        {(collections) => collections.filter((c) => !!c).map((collection) => {
-          return <div>{JSON.stringify(collection)}</div>
-        })}
+        {(collections) => {
+          return (
+            <CoverContainer style={coverStyle} className="collections">
+              {collections.map(c => <div>{c.name}</div>}
+            </CoverContainer>
+          )
+        }
       </DataLoader>
     );
   }
