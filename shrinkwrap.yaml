@@ -55,6 +55,7 @@ dependencies:
   react-konami: 0.5.0
   react-onclickoutside: 6.8.0
   react-pluralize: 1.5.0
+  react-router: 5.0.0
   react-router-dom: 4.3.1
   react-select: 2.4.1
   react-textarea-autosize: 7.1.0
@@ -2059,6 +2060,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7jGW8ppV0ant637pIqAcFfQDDH1orEPGJb8aXfUozuCU3QqX7rX4DA8iwrbPrR1hcH0FTTHz47yQnk+bl5xHQA==
+  /@babel/runtime/7.4.0:
+    dependencies:
+      regenerator-runtime: 0.13.2
+    dev: false
+    resolution:
+      integrity: sha512-/eftZ45kD0OfOFHAmN02WP6N1NVphY+lBf8c2Q/P9VW3tj+N5NlBBAWfqOLOl96YDGMqpIBO5O/hQNx4A/lAng==
   /@babel/template/7.2.2:
     dependencies:
       '@babel/code-frame': 7.0.0
@@ -4443,6 +4450,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
+  /create-react-context/0.2.3/prop-types@15.7.2:
+    dependencies:
+      fbjs: 0.8.17
+      gud: 1.0.0
+      prop-types: 15.7.2
+    dev: false
+    id: registry.npmjs.org/create-react-context/0.2.3
+    peerDependencies:
+      prop-types: ^15.0.0
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0
+    resolution:
+      integrity: sha512-CQBmD0+QGgTaxDL3OX1IDXYqjkp2It4RIbcb99jS6AEg27Ga+a9G3JtK6SIu0HBwPLZlmwt9F7UwWA4Bn92Rag==
   /cross-spawn/4.0.2:
     dependencies:
       lru-cache: 4.1.5
@@ -6249,6 +6268,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-sIX0bgAugM8eSFjEx8XSvNfLqKk=
+  /gud/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-zGEOVKFM5sVPPrYs7J5/hYEw2Pof8KCyOwyhG8sAF26mCAeUFAcYPu1mwB7hhpIP29zOIBaDqwuHdLp0jvZXjw==
   /gzip-size/5.0.0:
     dependencies:
       duplexer: 0.1.1
@@ -6385,6 +6408,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1zkBRWW6XweO0NBcjiphtVJVsIQ+SXF29z9DVkceeaSLVMFXHool+fdCZD4spDCfZJCILPILc3bm7Bc+HRi0nA==
+  /history/4.9.0:
+    dependencies:
+      '@babel/runtime': 7.4.0
+      loose-envify: 1.4.0
+      resolve-pathname: 2.2.0
+      tiny-invariant: 1.0.3
+      tiny-warning: 1.0.2
+      value-equal: 0.4.0
+    dev: false
+    resolution:
+      integrity: sha512-H2DkjCjXf0Op9OAr6nJ56fcRkTSNrUiv41vNJ6IswJjif6wlpZK0BTfFbi7qK9dXLSYZxkq5lBsj3vUjlYBYZA==
   /hmac-drbg/1.0.1:
     dependencies:
       hash.js: 1.1.7
@@ -6401,6 +6435,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
+  /hoist-non-react-statics/3.3.0:
+    dependencies:
+      react-is: 16.8.4
+    dev: false
+    resolution:
+      integrity: sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
   /homedir-polyfill/1.0.1:
     dependencies:
       parse-passwd: 1.0.0
@@ -9126,6 +9166,23 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
+  /react-router/5.0.0:
+    dependencies:
+      '@babel/runtime': 7.4.0
+      create-react-context: /create-react-context/0.2.3/prop-types@15.7.2
+      history: 4.9.0
+      hoist-non-react-statics: 3.3.0
+      loose-envify: 1.4.0
+      path-to-regexp: 1.7.0
+      prop-types: 15.7.2
+      react-is: 16.8.4
+      tiny-invariant: 1.0.3
+      tiny-warning: 1.0.2
+    dev: false
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha512-6EQDakGdLG/it2x9EaCt9ZpEEPxnd0OCLBHQ1AcITAAx7nCnyvnzf76jKWG1s2/oJ7SSviUgfWHofdYljFexsA==
   /react-select/2.4.1:
     dependencies:
       classnames: 2.2.6
@@ -9390,6 +9447,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
+  /regenerator-runtime/0.13.2:
+    dev: false
+    resolution:
+      integrity: sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
   /regenerator-transform/0.13.3:
     dependencies:
       private: 0.1.8
@@ -10481,6 +10542,14 @@ packages:
       node: '>=0.6.0'
     resolution:
       integrity: sha512-YvC1SV1XdOUaL6gx5CoGroT3Gu49pK9+TZ38ErPldOWW4j49GI1HKs9DV+KGq/w6y+LZ72W1c8cKz2vzY+qpzg==
+  /tiny-invariant/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-ytQx8T4DL8PjlX53yYzcIC0WhIZbpR0p1qcYjw2pHu3w6UtgWwFJQ/02cnhOnBBhlFx/edUIfcagCaQSe3KMWg==
+  /tiny-warning/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-rru86D9CpQRLvsFG5XFdy0KdLAvjdQDyZCsRcuu60WtzFylDM3eAWSxEVz5kzL2Gp544XiUvPbVKtOA/txLi9Q==
   /tmp/0.0.33:
     dependencies:
       os-tmpdir: 1.0.2
@@ -11289,6 +11358,7 @@ specifiers:
   react-konami: ^0.5.0
   react-onclickoutside: ^6.8.0
   react-pluralize: ^1.5.0
+  react-router: ^5.0.0
   react-router-dom: ^4.3.1
   react-select: ^2.4.0
   react-textarea-autosize: ^7.1.0
