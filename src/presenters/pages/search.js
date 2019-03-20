@@ -6,6 +6,7 @@ import { capitalize, sum } from 'lodash';
 
 import Layout from '../layout';
 
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Button from '../../components/buttons/button';
@@ -225,7 +226,8 @@ SearchResults.defaultProps = {
   api: null,
 };
 
-const SearchPage = ({ api, query }) => {
+const SearchPage = ({ query }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   const errorFuncs = useErrorHandlers();
   return (
@@ -237,7 +239,6 @@ const SearchPage = ({ api, query }) => {
   );
 };
 SearchPage.propTypes = {
-  api: PropTypes.any.isRequired,
   query: PropTypes.string,
 };
 SearchPage.defaultProps = {

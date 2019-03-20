@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { partition } from 'lodash';
 import { AnalyticsContext } from '../analytics';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
 import TeamEditor from '../team-editor';
@@ -219,7 +220,6 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
           projectOptions={this.getProjectOptions()}
-          api={this.props.api}
         />
 
         {/* Recent Projects */}
@@ -228,7 +228,6 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           projectOptions={this.getProjectOptions()}
-          api={this.props.api}
         />
 
         {team.projects.length === 0 && this.props.currentUserIsOnTeam && (
@@ -377,8 +376,9 @@ const TeamPageEditor = ({ api, initialTeam, children }) => (
     )}
   </TeamEditor>
 );
-const TeamPageContainer = ({ api, team, ...props }) => {
+const TeamPageContainer = ({ team, ...props }) => {
   const { currentUser } = useCurrentUser();
+  const api = useAPI();
   return (
     <AnalyticsContext properties={{ origin: 'team' }} context={{ groupId: team.id.toString() }}>
       <TeamPageEditor api={api} initialTeam={team}>
