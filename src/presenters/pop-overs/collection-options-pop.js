@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverWithButton from './popover-with-button';
 import PopoverButton from './popover-button';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 
 // Collection Options Pop
 const CollectionOptionsPop = (props) => {
