@@ -4,7 +4,6 @@ const enforce = require('express-sslify');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
-const uuidv4 = require('uuid/v4');
 
 const { getProject, getTeam, getUser, getZine } = require('./api');
 const initWebpack = require('./webpack');
@@ -40,17 +39,6 @@ module.exports = function(external) {
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
     console.log(request.method, request.originalUrl, request.body);
-    return next();
-  });
-
-  // generate new nonces for CSP on each request
-  app.use((req, res, next) => {
-    let nonces = [];
-    const inlineScriptsCount = 3;
-    while (nonces.length < inlineScriptsCount) {
-      nonces.push(uuidv4());
-    }
-    res.locals.nonces = nonces;
     return next();
   });
 
@@ -113,7 +101,6 @@ module.exports = function(external) {
           "'self'",
           "'unsafe-inline'",
           ...sources.scripts,
-          (req, res) => res.locals.nonces.map((n) => `'nonce-${n}'`).join(' '),
         ],
         // style-src unsafe-inline is required for our SVGs
         // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
