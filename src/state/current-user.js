@@ -1,8 +1,5 @@
-/* globals API_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import useLocalStorage from './local-storage';
