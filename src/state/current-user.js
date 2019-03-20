@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import useLocalStorage from './local-storage';
-import getAPIForToken from './api';
+import { getAPIForToken } from './api';
 
 const Context = React.createContext();
 
