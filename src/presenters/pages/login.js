@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import useLocalStorage from '../../state/local-storage';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { EmailErrorPage, OauthErrorPage } from './error';
 
@@ -118,9 +119,10 @@ LoginPage.defaultProps = {
 };
 
 const LoginPageContainer = (props) => {
+  const api = useAPI();
   const { login } = useCurrentUser();
   const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
-  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props} />;
+  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} api={api} {...props} />;
 };
 
 export const FacebookLoginPage = ({ code, ...props }) => {

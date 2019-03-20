@@ -104,14 +104,14 @@ const MadeInGlitch = () => (
   </section>
 );
 
-const IndexPage = ({ api, user }) => (
+const IndexPage = ({ user }) => (
   <main>
     {!user.login && <WhatIsGlitch />}
 
-    {!!user.projects.length && <RecentProjects api={api} />}
-    {!!user.login && <Questions api={api} />}
-    <Featured isAuthorized={!!user.login} api={api} />
-    <MoreIdeas api={api} />
+    {!!user.projects.length && <RecentProjects />}
+    {!!user.login && <Questions />}
+    <Featured isAuthorized={!!user.login} />
+    <MoreIdeas />
     <MadeInGlitch />
     <ReportButton reportedType="home" />
   </main>
@@ -121,25 +121,17 @@ IndexPage.propTypes = {
     id: PropTypes.number,
     login: PropTypes.string,
   }).isRequired,
-  api: PropTypes.any,
 };
 
-IndexPage.defaultProps = {
-  api: null,
-};
 
-const IndexPageContainer = ({ api }) => {
+const IndexPageContainer = () => {
   const { currentUser } = useCurrentUser();
   return (
-    <Layout api={api}>
+    <Layout>
       <AnalyticsContext properties={{ origin: 'index' }}>
-        <IndexPage api={api} user={currentUser} />
+        <IndexPage  user={currentUser} />
       </AnalyticsContext>
     </Layout>
   );
 };
 export default IndexPageContainer;
-
-IndexPageContainer.defaultProps = {
-  api: PropTypes.any,
-};

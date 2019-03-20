@@ -28,6 +28,7 @@ import RelatedProjects from '../includes/related-projects';
 import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
 
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Layout from '../layout';
@@ -223,19 +224,16 @@ const ProjectPageLoader = ({ domain, api, currentUser, ...props }) => (
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,
 };
 
-ProjectPageLoader.defaultProps = {
-  api: null,
-};
-
-const ProjectPageContainer = ({ api, name }) => {
+const ProjectPageContainer = ({ name }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   return (
-    <Layout api={api}>
+    <Layout>
       <AnalyticsContext properties={{ origin: 'project' }}>
         <ProjectPageLoader api={api} domain={name} currentUser={currentUser} />
       </AnalyticsContext>

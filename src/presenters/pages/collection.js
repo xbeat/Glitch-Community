@@ -25,6 +25,7 @@ import CollectionAvatar from '../includes/collection-avatar';
 import { TeamTile } from '../teams-list';
 import { UserTile } from '../users-list';
 
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Text from '../../components/text/text';
@@ -240,7 +241,8 @@ async function loadCollection(api, ownerName, collectionName) {
   }
 }
 
-const CollectionPage = ({ api, ownerName, name, ...props }) => {
+const CollectionPage = ({ ownerName, name, ...props }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   return (
     <Layout api={api}>

@@ -92,7 +92,8 @@ async function loadCategory(api, id) {
   return data;
 }
 
-const CategoryPage = ({ api, category, ...props }) => {
+const CategoryPage = ({ category, ...props }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   return (
     <Layout api={api}>
@@ -111,7 +112,6 @@ const CategoryPage = ({ api, category, ...props }) => {
   );
 };
 CategoryPage.propTypes = {
-  api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
 };
 

@@ -5,7 +5,6 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
-import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import IndexPage from './index';
@@ -72,9 +71,7 @@ const PageChangeHandler = withRouter(({ location }) => {
   return <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />;
 });
 
-const Router = () => {
-  const api = useAPI();
-  return (
+const Router = () => (
     <>
       <PageChangeHandler />
       <Switch>
