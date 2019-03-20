@@ -19,10 +19,10 @@ const getIncludedCollections = async (api, projectId) => {
   );
 };
 
-const useAsync = (asyncFunction, ...args) => {
+const useAsync = (asyncFunction, api, ...args) => {
   const [result, setResult] = useState(null);
   useEffect(() => {
-    asyncFunction(...args).then(setResult);
+    asyncFunction(api, ...args).then(setResult);
   }, args);
   return result;
 };
