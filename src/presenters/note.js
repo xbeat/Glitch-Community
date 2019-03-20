@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import _ from 'lodash';
 
 // TODO: let's move these into components
 import { AuthDescription } from './includes/description-field';
@@ -15,7 +16,8 @@ const Note = ({
   collectionCoverColor, author, project, update, hideNote,
 }) => {
   function updateNoteVisibility(description) {
-    if (!description) {
+    description = _.trim(description);
+    if (!description || description.length === 0) {
       setTimeout(() => hideNote(project.id), 500);
     }
   }

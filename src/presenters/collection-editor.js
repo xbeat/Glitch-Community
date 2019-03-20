@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { useCurrentUser } from './current-user';
 import useErrorHandlers from './error-handlers';
@@ -52,6 +53,7 @@ class CollectionEditor extends React.Component {
   }
 
   async updateOrAddNote({ note, projectId }) {
+    note = _.trim(note);
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
         if (project.id === projectId) {
