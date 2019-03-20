@@ -1,5 +1,7 @@
 const express = require('express');
 const fs = require('fs');
+const MarkdownIt = require('markdown-it');
+const md = new MarkdownIt();
 const cheerio = require('cheerio');
 const util = require('util');
 const dayjs = require('dayjs');
@@ -55,8 +57,8 @@ module.exports = function(external) {
     }
     
     // convert raw markdown to text (for social cards)
-    title = cheerio.load(title).text();
-    description = cheerio.load(description).text();
+    title = cheerio.load(md.render(title)).text();
+    description = cheerio.load(md.render(description)).text();
     console.log(title);
     console.log(description);
 
