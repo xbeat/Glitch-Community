@@ -69,7 +69,7 @@ EditableDescriptionImpl.propTypes = {
 EditableDescriptionImpl.defaultProps = {
   allowImages: true,
   placeholder: '',
-  onBlur: null,
+  onBlur: () => {},
   maxLength: 524288, // this is the built in default
 };
 
@@ -101,7 +101,7 @@ EditableDescription.propTypes = {
 EditableDescription.defaultProps = {
   allowImages: true,
   placeholder: '',
-  onBlur: null,
+  onBlur: () => {},
   maxLength: null,
 };
 
