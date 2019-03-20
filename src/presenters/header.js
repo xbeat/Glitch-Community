@@ -13,6 +13,7 @@ import SignInPop from './pop-overs/sign-in-pop';
 import NewProjectPop from './pop-overs/new-project-pop';
 import NewStuffContainer from './overlays/new-stuff';
 import { CurrentUserConsumer } from './current-user';
+import Button from '../components/buttons/button';
 
 const ResumeCoding = () => (
   <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
@@ -73,6 +74,7 @@ const Header = ({ api, maybeUser, clearUser, searchQuery, showNewStuffOverlay })
     </div>
 
     <nav>
+      <Button>Hello</Button>
       <SearchForm defaultValue={searchQuery} />
       <NewProjectPop api={api} />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
