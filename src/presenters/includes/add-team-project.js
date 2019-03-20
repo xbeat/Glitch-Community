@@ -19,9 +19,8 @@ const AddTeamProject = ({ currentUserIsOnTeam, ...props }) => {
             Add Project <span className="emoji bento-box" role="img" aria-label="" />
           </>
         }
-        passToggleToPop
       >
-        <AddTeamProjectPop {...props} />
+        {({ togglePopover }) => <AddTeamProjectPop {...props} togglePopover={togglePopover} />}
       </PopoverWithButton>
     </section>
   );
