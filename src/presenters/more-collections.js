@@ -10,12 +10,12 @@ import Text from '../components/text/text';
 // I wonder if this needs a new name or should be combined with the existing collectionItem in some way
 const CollectionItem = ({ name, description, projects, coverColor }) => {
   // should this whole thing be a button, an anchor tag, or a div? end result is to make it all clickable
-  console.log('yo');
+  const projectsCount = `${projects.length} project${projects.length > 1 ? 's' : ''}`;
   return (
     <div className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
-      <div>projectslength:{projects.length}</div>
+      {projects.length && <div>{projectsCount}</div>}
     </div>
   );
 };
