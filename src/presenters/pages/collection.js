@@ -165,7 +165,6 @@ const CollectionPageContents = ({
                       <ProjectsUL
                         {...props}
                         projects={collection.projects}
-                        author={collection.user}
                         api={api}
                         collectionCoverColor={collection.coverColor}
                         hideNote={hideNote}
