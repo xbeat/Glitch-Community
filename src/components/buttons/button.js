@@ -27,17 +27,17 @@ const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }
   });
 
   const linkOrButton = () => {
-    if (onClick) {
+    if (href) {
       return (
-        <button onClick={onClick} className={className} disabled={disabled}>
+        <Link to={href} className={className}>
           {children}
-        </button>
+        </Link>
       );
     }
     return (
-      <Link to={href} className={className}>
+      <button onClick={onClick} className={className} disabled={disabled}>
         {children}
-      </Link>
+      </button>
     );
   };
 
