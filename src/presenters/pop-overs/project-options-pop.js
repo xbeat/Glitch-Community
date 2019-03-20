@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TrackClick } from '../analytics';
 import PopoverWithButton from './popover-with-button';
 import { NestedPopover } from './popover-nested';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 
 import AddProjectToCollectionPop from './add-project-to-collection-pop';
 

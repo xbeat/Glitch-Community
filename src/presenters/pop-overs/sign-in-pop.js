@@ -7,7 +7,7 @@ import { Link } from '../includes/link';
 import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */

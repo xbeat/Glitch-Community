@@ -25,7 +25,7 @@ import CollectionAvatar from '../includes/collection-avatar';
 import { TeamTile } from '../teams-list';
 import { UserTile } from '../users-list';
 
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 
 import Heading from '../../components/text/heading';
 
