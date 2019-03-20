@@ -95,6 +95,6 @@ module.exports = {
   getProject: (domain) => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
   getTeam: (url) => getFromCacheOrApi(url, teamCache, getTeamFromApi),
   getUser: (login) => getFromCacheOrApi(login, userCache, getUserFromApi),
-  getCollection: url => getFromCacheOrApi(url, collectionCache, getCollectionFromApi),
+  getCollection: (url) => getFromCacheOrApi(url, collectionCache, getCollectionFromApi),
   getZine: () => getFromCacheOrApi('culture', generalCache, getCultureZinePosts),
 };
