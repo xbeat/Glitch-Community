@@ -6,6 +6,8 @@ import { captureException } from '../../utils/sentry';
 
 import { TrackClick } from '../analytics';
 import { getAvatarUrl } from '../../models/project';
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 
 import { Loader } from '../includes/loader';
 
@@ -216,4 +218,10 @@ AddProjectToCollectionPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-export default AddProjectToCollectionPop;
+const AddProjectToCollectionPopWrap = (props) => {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return <AddProjectToCollectionPop {...props} currentUser={currentUser} api={api} />;
+};
+
+export default AddProjectToCollectionPopWrap;

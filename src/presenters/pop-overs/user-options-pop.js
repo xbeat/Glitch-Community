@@ -181,7 +181,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
 
             return (
               <TooltipContainer
-                className="button user-options-pop-button"
+              className="button user-options-pop-button"
                 target={userOptionsButton}
                 tooltip="User options"
                 id="user-options-tooltip"
@@ -210,5 +210,4 @@ UserOptionsAndCreateTeamPopContainer.propTypes = {
     login: PropTypes.string,
     teams: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.func.isRequired,
 };
