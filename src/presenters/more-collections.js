@@ -30,32 +30,29 @@ class MoreCollections extends React.Component {
   render() {
     const { api, currentUser, collection } = this.props;
     const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
-    const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); 
+    const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
     const isUserCollection = collection.teamId === -1;
     return (
       <section>
         <h2>
-          {  
-            isUserCollection ? 
-              (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>) :
-              (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
+          {
+            isUserCollection
+              ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
+              : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
           }
         </h2>
         <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
-          {(collections) => {
-            return (
+          {
+            (collections) => (
               <CoverContainer style={coverStyle} className="collections">
                 <div className="more-collections">
-                  {
-                    collections.filter(c => c.id !== collection.id).map(c => <CollectionItem key={c.id} { ...c } />)
-                  }
+                  {collections.filter((c) => c.id !== collection.id).map((c) => <CollectionItem key={c.id} {...c} />)}
                 </div>
               </CoverContainer>
             )
-          }}
+          }
         </DataLoader>
       </section>
-      
     );
   }
 }
