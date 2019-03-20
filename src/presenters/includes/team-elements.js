@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 import { Link } from './link';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
+import Text from '../../components/text/text';
 
 export const TeamMarketing = () => {
   const forPlatformsIcon = 'https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188';
   return (
     <section className="team-marketing">
-      <p>
+      <Text>
         <img className="for-platforms-icon" src={forPlatformsIcon} alt="fishing emoji" />
         Want your own team page, complete with detailed app analytics?
-      </p>
+      </Text>
       <Link to="/teams" className="button button-link has-emoji">
         About Teams <span className="emoji fishing_pole" role="img" aria-label="emoji" />
       </Link>

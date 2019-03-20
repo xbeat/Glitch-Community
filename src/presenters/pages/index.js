@@ -5,7 +5,7 @@ import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -14,6 +14,9 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Text from '../../components/text/text';
+
+import Heading from '../../components/text/heading';
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -63,10 +66,10 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <h1>
+            <Heading tagName="h1">
               <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
               <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
-            </h1>
+            </Heading>
 
             <OverlayVideo>
               <div className="button video">
@@ -94,7 +97,7 @@ class WhatIsGlitch extends React.Component {
 
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
-    <p>Of course, this site was made on Glitch too</p>
+    <Text>Of course, this site was made on Glitch too</Text>
     <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer" />
     </Link>

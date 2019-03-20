@@ -6,7 +6,7 @@ import { orderBy, partition } from 'lodash';
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import { AuthDescription } from '../includes/description-field';
 import EditableField from '../includes/editable-field';
 import UserEditor from '../user-editor';

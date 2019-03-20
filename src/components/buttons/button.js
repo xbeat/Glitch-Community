@@ -9,11 +9,11 @@ const cx = classNames.bind(styles);
 export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
 export const SIZES = ['small'];
 
+
 /**
  * Button Component
  */
-
-const Button = ({ onClick, href, disabled, type, size, transparent, hover, children }) => {
+const Button = ({ onClick, href, disabled, type, size, transparent, hover, active, children }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -23,6 +23,7 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
     unstyled: type === 'dropDown',
     hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     transparent,
+    active,
     hover,
   });
 
@@ -43,6 +44,7 @@ const Button = ({ onClick, href, disabled, type, size, transparent, hover, child
 
   return linkOrButton();
 };
+
 
 Button.propTypes = {
   /** element(s) to display in the button */
@@ -69,8 +71,10 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
-  /** buttons usually take on the background colour - if this is true, that property is overriden */
+  /** make the button take on the background color */
   transparent: PropTypes.bool,
+  /** whether the button is active or not */
+  active: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -81,6 +85,7 @@ Button.defaultProps = {
   size: null,
   hover: false,
   transparent: false,
+  active: false,
 };
 
 export default Button;
