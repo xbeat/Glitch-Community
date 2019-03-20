@@ -1,10 +1,11 @@
 const express = require('express');
 const fs = require('fs');
+const util = require('util');
+const dayjs = require('dayjs');
+
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
 const cheerio = require('cheerio');
-const util = require('util');
-const dayjs = require('dayjs');
 
 const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
@@ -57,10 +58,7 @@ module.exports = function(external) {
     }
     
     // convert raw markdown to text (for social cards)
-    title = cheerio.load(md.render(title)).text();
     description = cheerio.load(md.render(description)).text();
-    console.log(title);
-    console.log(description);
 
     res.render('index.ejs', {
       title,
