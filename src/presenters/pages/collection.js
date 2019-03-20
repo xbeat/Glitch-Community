@@ -120,6 +120,8 @@ const CollectionPageContents = ({
                 placeholder="Tell us about your collection"
               />
             </div>
+            
+            <div className="
 
             {currentUserIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
@@ -146,9 +148,6 @@ const CollectionPageContents = ({
               <>
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
-                    <Heading tagName="h3">
-                      Projects ({collection.projects.length})
-                    </Heading>
                     {
                       currentUserIsAuthor && (
                         <AddCollectionProject
