@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
-import useLocalStorage from './includes/local-storage';
+import useLocalStorage from './local-storage';
 
 const Context = React.createContext();
 
