@@ -8,10 +8,10 @@ import { getProfileStyle, getDisplayName } from '../models/user';
 
 // move to components
 //I wonder if this needs a new name or should be combined with the existing collectionItem in some way
-const CollectionItem = ({ name, description, projects }) => {
+const CollectionItem = ({ name, description, projects, coverColor }) => {
   // should this whole thing be a button, an anchor tag, or a div? end result is to make it all clickable
   return (
-    <div>
+    <div style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <div>{description}</div>
       <div>projectslength:{projects.length}</div>
@@ -32,7 +32,7 @@ class MoreCollections extends React.Component {
     const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover })
     const isUserCollection = collection.teamId === -1;
     return (
-      <div>
+      <section className="more-collections">
         <h2>
           {  
             isUserCollection ? 
@@ -41,19 +41,19 @@ class MoreCollections extends React.Component {
           }
         </h2>
         <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
-        {(collections) => {
-          return (
-            <CoverContainer style={coverStyle} className="collections">
-              <>
-                {
-                  collections.map(c => <CollectionItem key={c.id} { ...c } />)
-                }
-              </>
-            </CoverContainer>
-          )
-        }}
-      </DataLoader>
-      </div>
+          {(collections) => {
+            return (
+              <CoverContainer style={coverStyle} className="collections">
+                <>
+                  {
+                    collections.filter(c => c.id !== collection.id).map(c => <CollectionItem key={c.id} { ...c } />)
+                  }
+                </>
+              </CoverContainer>
+            )
+          }}
+        </DataLoader>
+      </section>
       
     );
   }
