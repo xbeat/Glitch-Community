@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useCurrentUser } from './current-user';
+import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 
 class CollectionEditor extends React.Component {
