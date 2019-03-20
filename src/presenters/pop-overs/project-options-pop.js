@@ -196,7 +196,7 @@ ProjectOptionsPop.defaultProps = {
 // Project Options Container
 // create as stateful react component
 export default function ProjectOptions({ projectOptions, project, api }, { ...props }) {
-  const { currentUser: user } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   if (Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -221,8 +221,8 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
           {...projectOptions}
           project={project}
           api={api}
-          currentUser={user}
-          currentUserIsOnProject={currentUserIsOnProject(user)}
+          currentUser={currentUser}
+          currentUserIsOnProject={currentUserIsOnProject(currentUser)}
           togglePopover={togglePopover}
         />
       )}

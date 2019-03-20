@@ -128,7 +128,7 @@ IndexPage.defaultProps = {
 };
 
 const IndexPageContainer = ({ api }) => {
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   return (
     <Layout api={api}>
       <AnalyticsContext properties={{ origin: 'index' }}>

@@ -70,7 +70,11 @@ class ProjectsLoader extends React.Component {
   render() {
     const { children, projects, currentUser } = this.props;
     const loadedProjects = projects.map((project) => this.state[project.id] || project);
-    return children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this));
+    return (
+      <CurrentUserConsumer>
+        {(currentUser) => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
+      </CurrentUserConsumer>
+    );
   }
 }
 
@@ -81,8 +85,8 @@ ProjectsLoader.propTypes = {
 };
 
 const ProjectsLoaderWrap = (props) => {
-  const { currentUser } = useCurrentUser();
-  return <ProjectsLoader {...props} currentUser={currentUser} />;
-};
+  const { currentUser } = useCurrentUser()
+  return <ProjectsLoader {...props} currentUser={currentUser} />
+}
 
 export default ProjectsLoaderWrap;
