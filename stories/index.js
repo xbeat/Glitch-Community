@@ -8,31 +8,27 @@ import TextArea from '../src/components/fields/text-area';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
+const helloAlert = () => {
+  alert('hello');
+};
+
 storiesOf('Button', module)
-  .add('regular', () => (
-    <Button
-      onClick={() => {
-        alert('hello');
-      }}
-    >
-      Hello Button
-    </Button>
-  ))
-  .add('cta', () => <Button type="cta">CTA Button</Button>)
-  .add('small', () => <Button size="small">Small Button</Button>)
+  .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
+  .add('cta', () => <Button type="cta" onClick={helloAlert}>CTA Button</Button>)
+  .add('small', () => <Button size="small" onClick={helloAlert}>Small Button</Button>)
   .add('tertiary', () => (
-    <Button type="tertiary" size="small">
+    <Button type="tertiary" size="small" onClick={helloAlert}>
       Tertiary (Small) Button
     </Button>
   ))
-  .add('danger zone', () => (
-    <Button type="dangerZone" size="small">
+  .add('danger zone (red on hover)', () => (
+    <Button type="dangerZone" size="small" onClick={helloAlert}>
       Destructive Action
     </Button>
   ))
-  .add('link', () => <Button href="https://support.glitch.com">Support</Button>)
+  .add('link (click to a different page)', () => <Button href="https://support.glitch.com">Support</Button>)
   .add('with emoji', () => (
-    <Button>
+    <Button onClick={helloAlert}>
       <Emoji name="sunglasses" /> Show
     </Button>
   ));
