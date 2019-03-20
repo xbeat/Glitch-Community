@@ -58,7 +58,7 @@ class EditableDescriptionImpl extends React.Component {
 }
 
 EditableDescriptionImpl.propTypes = {
-  allowImages: Proptypes.bool,
+  allowImages: PropTypes.bool,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
@@ -67,7 +67,7 @@ EditableDescriptionImpl.propTypes = {
 };
 
 EditableDescriptionImpl.defaultProps = {
-  allowIamges: true,
+  allowImages: true,
   placeholder: '',
   onBlur: null,
   maxLength: 524288, // this is the built in default
@@ -117,7 +117,14 @@ StaticDescription.propTypes = {
 
 export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength, allowImages }) =>
   authorized ? (
-    <EditableDescription description={description} update={update} onBlur={onBlur} placeholder={placeholder} maxLength={maxLength} allowImages={allowImages} />
+    <EditableDescription
+      description={description}
+      update={update}
+      onBlur={onBlur}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      allowImages={allowImages}
+    />
   ) : (
     <StaticDescription description={description} />
   );
