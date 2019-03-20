@@ -151,7 +151,7 @@ const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuth
                 addProjectToCollection={addProjectToCollection}
               />
             )}
-            <RemixButton className="button-small margin" name={domain} isMember={isAuthorized} onClick={() => trackRemix(project.id, domain)} />
+            <RemixButton name={domain} isMember={isAuthorized} onClick={() => trackRemix(project.id, domain)} />
           </div>
         </div>
       </section>
