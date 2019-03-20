@@ -68,10 +68,9 @@ class PageChangeHandlerBase extends React.Component {
 }
 
 const PageChangeHandler = withRouter(({ location }) => {
-  const { currentUser: user, fetched, reload } = useCurrentUser()
-  return (
-  <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />
-));
+  const { reload } = useCurrentUser();
+  return <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />;
+});
 
 const Router = ({ api }) => (
   <>

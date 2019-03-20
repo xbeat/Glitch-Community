@@ -248,7 +248,7 @@ async function loadCollection(api, ownerName, collectionName) {
 }
 
 const CollectionPage = ({ api, ownerName, name, ...props }) => {
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   return (
     <Layout api={api}>
       <DataLoader get={() => loadCollection(api, ownerName, name)}>
