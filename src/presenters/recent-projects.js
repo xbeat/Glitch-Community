@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getAvatarStyle, getProfileStyle } from '../models/user';
-import { CurrentUserConsumer } from './current-user';
+import { CurrentUserConsumer } from '../state/current-user';
 import { UserLink } from './includes/link';
 
 import { CoverContainer } from './includes/profile';
@@ -11,11 +11,13 @@ import ProjectsLoader from './projects-loader';
 import { ProjectsUL } from './projects-list';
 import SignInPop from './pop-overs/sign-in-pop';
 
+import Heading from '../components/text/heading';
+
 const RecentProjectsContainer = ({ children, user, api }) => (
   <section className="profile recent-projects">
-    <h2>
+    <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
-    </h2>
+    </Heading>
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">

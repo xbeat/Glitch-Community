@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
-import { useCurrentUser } from './current-user';
+import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 
 class CollectionEditor extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       ...props.initialCollection,
     };
   }
 
-  userIsAuthor() {
+  currentUserIsAuthor() {
     if (!this.props.currentUser) return false;
     if (this.state.teamId > 0) {
       return this.props.currentUser.teams.some((team) => team.id === this.state.teamId);
@@ -25,8 +25,10 @@ class CollectionEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    const { data } = await this.props.api.patch(`collections/${this.state.id}`, changes);
-    this.setState(data);
+    // A note here: we don't want to setState with the data from the server from this call, as it doesn't return back the projects in depth with users and notes and things
+    // maybe a sign we want to think of something a little more powerful for state management, as we're getting a little hairy here.
+    this.setState(changes);
+    await this.props.api.patch(`collections/${this.state.id}`, changes);
   }
 
   async addProjectToCollection(project, collection) {
@@ -50,6 +52,44 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
+  async updateOrAddNote({ note, projectId }) {
+    note = _.trim(note);
+    this.setState(({ projects }) => ({
+      projects: projects.map((project) => {
+        if (project.id === projectId) {
+          project.note = note;
+        }
+        return { ...project };
+      }),
+    }));
+    await this.props.api.patch(
+      `collections/${this.state.id}/project/${projectId}`,
+      { annotation: note },
+    );
+  }
+
+  addNoteField(projectId) {
+    this.setState(({ projects }) => ({
+      projects: projects.map((project) => {
+        if (project.id === projectId) {
+          project.isAddingANewNote = true;
+        }
+        return { ...project };
+      }),
+    }));
+  }
+
+  hideNote(projectId) {
+    this.setState(({ projects }) => ({
+      projects: projects.map((project) => {
+        if (project.id === projectId) {
+          project.isAddingANewNote = false;
+        }
+        return { ...project };
+      }),
+    }));
+  }
+
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
@@ -57,10 +97,13 @@ class CollectionEditor extends React.Component {
       removeProjectFromCollection: (project) => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
+      updateOrAddNote: ({ note, projectId }) => this.updateOrAddNote({ note, projectId }),
+      addNoteField: (projectId) => this.addNoteField(projectId),
+      hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
     };
-    return this.props.children(this.state, funcs, this.userIsAuthor());
+    return this.props.children(this.state, funcs, this.currentUserIsAuthor());
   }
 }
 CollectionEditor.propTypes = {

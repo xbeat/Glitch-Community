@@ -11,7 +11,9 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
+
+import Heading from '../../components/text/heading';
 
 const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, ...props }) => (
   <>
@@ -21,7 +23,7 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
     <main className="collection-page">
       <article className="projects collection-full" style={{ backgroundColor: category.backgroundColor }}>
         <header className="collection">
-          <h1 className="collection-name">{category.name}</h1>
+          <Heading tagName="h1">{category.name}</Heading>
           <div className="collection-image-container">
             <img src={category.avatarUrl} alt="" />
           </div>
@@ -33,7 +35,7 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
           {(projects) => (
             <div className="collection-contents">
               <div className="collection-project-container-header">
-                <h3>Projects ({category.projects.length})</h3>
+                <Heading tagName="h3">Projects ({category.projects.length})</Heading>
               </div>
 
               {currentUser.login ? (

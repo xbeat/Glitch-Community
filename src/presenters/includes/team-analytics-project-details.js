@@ -6,6 +6,7 @@ import { ProjectLink } from './link';
 import { Loader } from './loader';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
+import Text from '../../components/text/text';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -150,7 +151,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
         <ProjectDetails projectDetails={this.state.projectDetails} />
         <article className="project-remixes">
           <h4>Latest Remixes</h4>
-          {this.state.projectRemixes.length === 0 && <p>No remixes yet (／_^)／ ●</p>}
+          {this.state.projectRemixes.length === 0 && <Text>No remixes yet (／_^)／ ●</Text>}
           {this.state.projectRemixes.map((remix) => (
             <ProjectRemixItem key={remix.id} remix={remix} />
           ))}

@@ -8,6 +8,8 @@ import { getAvatarUrl } from '../models/project';
 import { TrackClick } from './analytics';
 import { Loader } from './includes/loader';
 
+import Heading from '../components/text/heading';
+
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');
   node.addEventListener('animationend', callback, { once: true });
@@ -101,9 +103,9 @@ export default class DeletedProjects extends React.Component {
   render() {
     return (
       <article className="deleted-projects">
-        <h2>
+        <Heading tagName="h2">
           Deleted Projects <span className="emoji bomb emoji-in-title" />
-        </h2>
+        </Heading>
         {this.renderContents()}
       </article>
     );
