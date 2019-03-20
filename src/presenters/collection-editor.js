@@ -76,7 +76,7 @@ class CollectionEditor extends React.Component {
       }),
     }));
   }
-  
+
   hideNote(projectId) {
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
