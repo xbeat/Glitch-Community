@@ -179,35 +179,6 @@ const CollectionPageContents = ({
                   <ProjectsUL projects={collection.projects} collection={collection} api={api} projectOptions={{}} />
                 )}
               </div>
-              {currentUserIsAuthor && (
-                <ProjectsUL
-                  {...props}
-                  projects={collection.projects}
-                  collection={collection}
-                  api={api}
-                  hideNote={hideNote}
-                  projectOptions={{
-                    removeProjectFromCollection,
-                    addProjectToCollection,
-                    updateOrAddNote,
-                    addNoteField,
-                  }}
-                />
-              )}
-              {!currentUserIsAuthor && userIsLoggedIn && (
-                <ProjectsUL
-                  {...props}
-                  projects={collection.projects}
-                  collection={collection}
-                  api={api}
-                  projectOptions={{
-                    addProjectToCollection,
-                  }}
-                />
-              )}
-              {!currentUserIsAuthor && !userIsLoggedIn && (
-                <ProjectsUL projects={collection.projects} collection={collection} api={api} projectOptions={{}} />
-              )}
             </>
           )}
         </article>
