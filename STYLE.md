@@ -26,7 +26,7 @@ To add a new component, or convert an existing piece of our code into a CSS Modu
 ### Storybook
 
 We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react) integrated with our site, as we're gradually moving it towards a more component-based design. It's not hooked into the build process, so to see your changes reflected in it, you can do the following:
-1. Run ```npm run storybook``` from the terminal console to build the static storybook files.
+1. Run `npm run storybook` from the terminal console to build the static storybook files.
 1. Go to `https://<remix-name>/storybook`. All the files are served there (from the build folder in the app).
 
 ### Prefer Dependency Injection
@@ -47,7 +47,7 @@ Here's a nice guide to [What's New in ES6](http://es6-features.org/#Constants)
 
 ESLint is running and outputting to 'logs'.  The linter is configured by `src/.eslintrc.js` and `server/.eslintrc.server.js`.
 
-We're also using Prettier in additon to ESLint now. Some work has been done to make our Prettier and ESLint rules match. Running `./sh/prettify` will format the files in `/src` and `/server` for you.
+We're also using Prettier in addition to ESLint now. Some work has been done to make our Prettier and ESLint rules match. Running `./sh/prettify` will format the files in `/src` and `/server` for you.
 
 To format the active file in the Glitch editor you can also use Glitch Prettier for your browser.
 

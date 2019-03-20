@@ -2,7 +2,7 @@
 
 🎏 **Hey, welcome!**  This document should give you all the steps you need to make contributions to the Glitch community site. This guide applies to full time makers of Glitch as well as all members of our Glitch community.
 
-📜 **Please note** we have a [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md). Follow it in all your interactions with the project and the denizens thereof.
+📜 **Please read** our [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md) and follow it in all your interactions with the project and the denizens thereof.
 
 🎨 **Check out** our [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
 

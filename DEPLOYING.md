@@ -6,7 +6,7 @@ You should perform these steps immediately after clicking the "Merge pull reques
 
 ### Announce the Deployment
 
-Be present in our `#community` chat room and say that you're starting a deploy and what you're deploying.
+Be present in our `#community-deploy` chat room and say that you're starting a deploy and what you're deploying.
 
 Keep a passive eye on the chat room while you work, in case anyone needs to talk to you about it while you've got it in flight.
 
@@ -85,13 +85,13 @@ Run `./sh/teardown.sh` on your local machine to remove the branch and remote for
 
 ### Announce Completion
 
-Good job :-) Pop back over to `#community` and tell the room that you're all done.
+Good job :-) Pop back over to `#community-deploy` and tell the room that you're all done.
 
 ### Deploy Checklist
 
 Here's a short and sweet version of the steps above that you can use once you're comfortable with the deploy process:
 
-1. Tell #community that you're about to merge + deploy
+1. Tell `#community-deploy` that you're about to merge + deploy
 2. Run `.sh/merge.sh`
 3. Go to [~community-staging](https://glitch.com/~community-staging) and open up the console
     - `git pull` to update to master
@@ -100,7 +100,7 @@ Here's a short and sweet version of the steps above that you can use once you're
 4. Open the `~community-staging` logs, wait for the build to finish (~7-9 minutes)
 5. Test/QA your changes, check for console errors, etc.
 6. Deploy it with the swap script!
-7. Tell #community that you've finished the swap
+7. Tell `#community-deploy` that you've finished the swap
 
 --------------------
 
