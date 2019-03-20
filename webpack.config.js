@@ -96,7 +96,8 @@ module.exports = smp.wrap({
           {
             test: /\.styl/,
             include: CSS_MODULES,
-            use: [MiniCssExtractPlugin.loader,
+            use: [ 
+              MiniCssExtractPlugin.loader,
               {
                 loader: "css-loader?modules",
                 options: {
@@ -117,7 +118,8 @@ module.exports = smp.wrap({
           {
             test: /\.styl$/,
             include: STYLES,
-            use: [MiniCssExtractPlugin.loader,
+            use: [ 
+              MiniCssExtractPlugin.loader,
               {
                 loader: "css-loader",
                 options: {
