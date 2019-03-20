@@ -2,7 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container';
 
-const PopoverWithButton = (props) => (
+const PopoverWithButton = ({ passToggleToPop, containerClass, children: renderChildren }) => (
+  <PopoverContainer>
+    {({ visible, togglePopover }) => {
+      const childProps = passToggleToPop ? {} : { togglePopover }
+      
+      if (props.passToggleToPop) {
+        childrenToShow = React.Children.map(props.children, (child) => React.cloneElement(child, { togglePopover }));
+      }
+      return (
+        <div className={`button-wrap ${props.containerClass}`}>
+          <button className={props.buttonClass} data-track={props.dataTrack} onClick={togglePopover} type="button">
+            {props.buttonText}
+          </button>
+          {visible && renderChildren({ togglePopover })}
+        </div>
+      );
+    }}
+  </PopoverContainer>
+)
+
+const OldPopoverWithButton = (props) => (
   <PopoverContainer>
     {({ visible, togglePopover }) => {
       let childrenToShow = props.children;
@@ -21,7 +41,7 @@ const PopoverWithButton = (props) => (
   </PopoverContainer>
 );
 
-PopoverWithButton.propTypes = {
+OldPopoverWithButton.propTypes = {
   buttonClass: PropTypes.string,
   containerClass: PropTypes.string,
   dataTrack: PropTypes.string,
@@ -30,11 +50,11 @@ PopoverWithButton.propTypes = {
   passToggleToPop: PropTypes.bool,
 };
 
-PopoverWithButton.defaultProps = {
+OldPopoverWithButton.defaultProps = {
   buttonClass: '',
   containerClass: '',
   dataTrack: '',
   passToggleToPop: false,
 };
 
-export default PopoverWithButton;
+export default OldPopoverWithButton;
