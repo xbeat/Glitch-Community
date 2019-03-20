@@ -15,7 +15,6 @@ const PopoverButton = ({ onClick, text, emoji }) => (
   </button>
 );
 
-// Project Options Content
 const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
@@ -71,7 +70,14 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function featureProject(event) {
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
+
+  function toggleAndAddNote() {
+    props.togglePopover();
+    props.addNoteField(props.project.id);
+  }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
+  const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.addNoteField;
+
   return (
     <dialog className="pop-over project-options-pop">
       {!!props.addPin && (
@@ -88,6 +94,17 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
           <TrackClick name="Project Un-Pinned">
             <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin" />
           </TrackClick>
+        </section>
+      )}
+
+      {showAddNote && (
+        <section className="pop-over-actions">
+          <PopoverButton
+            onClick={toggleAndAddNote}
+            {...props}
+            text="Add Note"
+            emoji="spiral_note_pad"
+          />
         </section>
       )}
 
@@ -166,6 +183,7 @@ ProjectOptionsPop.propTypes = {
   leaveTeamProject: PropTypes.func,
   featureProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool,
+  addNoteField: PropTypes.func,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false,
@@ -177,6 +195,7 @@ ProjectOptionsPop.defaultProps = {
   joinTeamProject: null,
   leaveTeamProject: null,
   featureProject: null,
+  addNoteField: null,
 };
 
 // Project Options Container
