@@ -1,5 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
@@ -9,7 +8,6 @@ import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
 storiesOf('Button', module)
-  .addDecorator((story) => <MemoryRouter>{story()}</MemoryRouter>)
   .add('regular', () => (
     <Button
       onClick={() => {
