@@ -202,7 +202,7 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
     >
       {({ togglePopover }) => (
         <CurrentUserConsumer>
-          {(user, fetched, funcs) => (
+          {(user) => (
             <ProjectOptionsPop
               {...props}
               {...projectOptions}
