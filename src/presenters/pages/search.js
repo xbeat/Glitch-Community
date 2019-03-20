@@ -100,7 +100,7 @@ const UserResults = ({ users }) => (
   </article>
 );
 
-const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) => {
+const ProjectResults = ({ addProjectToCollection, projects, currentUser }) => {
   if (!projects) {
     return (
       <article>
@@ -111,9 +111,9 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   }
   const loggedInUserWithProjects = projects && currentUser.login;
   return loggedInUserWithProjects ? (
-    <ProjectsList title="Projects" projects={projects} api={api} projectOptions={{ addProjectToCollection }} />
+    <ProjectsList title="Projects" projects={projects} projectOptions={{ addProjectToCollection }} />
   ) : (
-    <ProjectsList title="Projects" projects={projects} api={api} />
+    <ProjectsList title="Projects" projects={projects} />
   );
 };
 
@@ -207,7 +207,6 @@ class SearchResults extends React.Component {
           <ProjectResults
             projects={projects}
             currentUser={this.props.currentUser}
-            api={this.props.api}
             addProjectToCollection={this.addProjectToCollection}
           />
         )}
@@ -231,10 +230,10 @@ const SearchPage = ({ query }) => {
   const { currentUser } = useCurrentUser();
   const errorFuncs = useErrorHandlers();
   return (
-    <Layout api={api} searchQuery={query}>
+    <Layout searchQuery={query}>
       <Helmet>{!!query && <title>Search for {query}</title>}</Helmet>
       {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
-      <MoreIdeas api={api} />
+      <MoreIdeas />
     </Layout>
   );
 };
