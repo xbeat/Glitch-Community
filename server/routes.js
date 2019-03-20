@@ -104,13 +104,13 @@ module.exports = function(external) {
   app.get('/@:name/:collection', async (req, res) => {
     const { name, collection } = req.params;
     const collectionObj = await getCollection(`${name}/${collection}`);
+    const author = name;
 
     if (collectionObj) {
-      let { name, description, team, user } = collectionObj;
-      const author = team || `@${user.login}`;
+      let { name, description } = collectionObj;
 
       description = description.trimEnd(); // trim trailing whitespace from description
-      description += ` 🎏 A collection of apps by ${author}`;
+      description += ` 🎏 A collection of apps by @${author}`;
       description = description.trimStart(); // if there was no description, trim space before the fish
 
       await render(res, name, description);
