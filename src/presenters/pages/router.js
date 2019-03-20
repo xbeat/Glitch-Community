@@ -6,7 +6,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, EmailTokenLoginPage } from './login';
@@ -67,8 +67,10 @@ class PageChangeHandlerBase extends React.Component {
   }
 }
 
-const PageChangeHandler = withRouter(({ location }) => (
-  <CurrentUserConsumer>{(user, fetched, { reload }) => <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />}</CurrentUserConsumer>
+const PageChangeHandler = withRouter(({ location }) => {
+  const { currentUser: user, fetched, reload } = useCurrentUser()
+  return (
+  <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />
 ));
 
 const Router = ({ api }) => (

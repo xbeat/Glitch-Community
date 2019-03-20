@@ -5,7 +5,7 @@ import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -127,14 +127,16 @@ IndexPage.defaultProps = {
   api: null,
 };
 
-const IndexPageContainer = ({ api }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'index' }}>
-      <CurrentUserConsumer>{(user) => <IndexPage api={api} user={user} />}</CurrentUserConsumer>
-    </AnalyticsContext>
-  </Layout>
-);
-
+const IndexPageContainer = ({ api }) => {
+  const currentUser = useCurrentUser();
+  return (
+    <Layout api={api}>
+      <AnalyticsContext properties={{ origin: 'index' }}>
+        <IndexPage api={api} user={currentUser} />
+      </AnalyticsContext>
+    </Layout>
+  );
+};
 export default IndexPageContainer;
 
 IndexPageContainer.defaultProps = {
