@@ -23,7 +23,22 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     props.togglePopover();
   }
 
+  function isTeamProject() {
+    const { currentUser, project } = props;
+    for (const team of currentUser.teams) {
+      if (project.teamIds.includes(team.id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function leaveProject(event) {
+    if (isTeamProject()) {
+      props.leaveProject(props.project.id, event);
+      return;
+    }
+
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${
       props.project.domain
     }?`;

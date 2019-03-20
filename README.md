@@ -4,28 +4,28 @@ Discover new reasons to code, remix cool and helpful projects made with Glitch.
 
 Philosophically, a little bit `Youtube`, some `Spotify`, with a sprinkle of `app store`.
 
-Contributing
-------------
+## Contributing
 
 Please read [CONTRIBUTING.md](https://glitch.com/edit/#!/community?path=CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
 
-Getting Started
------------------
+Glitch employees should check out [DEPLOYING.md](https://glitch.com/edit/#!/community?path=DEPLOYING.md) for details on our deploy process.
+
+## Getting Started
 
 File structure
 
 
 - the backend app starts at `server.js`
 - `src/client.js` is compiled and served as /client-bundle.js
-- view templates are powered by the .jsx files in `src/presenters/` :-)
+- components and their styles are in `src/components/` :-)
+- view templates are powered by the .jsx files in `src/presenters/`
 - stylus files like `styles/style.styl` are compiled and served directly as `build/style.css`
 - Files in `public/` and `build/` are served directly
 - drag in `assets`, like images or music, to add them to your project
 
 application models -> presenter -> DOM
 
-Built with
-----------
+## Built with
 
 - [ES6](http://es6-features.org/)
 - [React.js](https://reactjs.org/)
