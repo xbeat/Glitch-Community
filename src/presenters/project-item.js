@@ -9,12 +9,11 @@ import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
 const ProjectItem = ({
-  api, project, author, collectionCoverColor, ...props
+  api, project, collection, ...props
 }) => (
   <li>
     <Note
-      collectionCoverColor={collectionCoverColor}
-      author={author}
+      collection={collection}
       project={project}
       update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
       hideNote={props.hideNote}
@@ -41,8 +40,8 @@ const ProjectItem = ({
 
 ProjectItem.propTypes = {
   api: PropTypes.func,
-  collectionCoverColor: PropTypes.string,
   author: PropTypes.object,
+  hideNote: PropTypes.func,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
@@ -59,8 +58,8 @@ ProjectItem.propTypes = {
 ProjectItem.defaultProps = {
   api: null,
   author: null,
-  collectionCoverColor: null,
   projectOptions: {},
+  hideNote: () => {},
 };
 
 export default ProjectItem;
