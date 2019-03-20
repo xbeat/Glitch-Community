@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import useLocalStorage from '../includes/local-storage';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { EmailErrorPage, OauthErrorPage } from './error';
 
 // The Editor may embed /login/* endpoints in an iframe in order to share code.

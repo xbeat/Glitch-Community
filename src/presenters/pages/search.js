@@ -6,7 +6,7 @@ import { capitalize, sum } from 'lodash';
 
 import Layout from '../layout';
 
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 
 import Button from '../../components/buttons/button';
 import Heading from '../../components/text/heading';

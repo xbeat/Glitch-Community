@@ -6,7 +6,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, EmailTokenLoginPage } from './login';
