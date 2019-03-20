@@ -1,4 +1,5 @@
 import React from 'react';
+import MemoryRouter from 'react-router';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
@@ -7,9 +8,8 @@ import TextArea from '../src/components/fields/text-area';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
-const EXTERNAL_ROUTES = [];
-
 storiesOf('Button', module)
+  .addDecorator((story) => <MemoryRouter>{story()}</MemoryRouter>)
   .add('regular', () => <Button>Hello Button</Button>)
   .add('cta', () => <Button type="cta">CTA Button</Button>)
   .add('small', () => <Button size="small">Small Button</Button>)
@@ -23,9 +23,7 @@ storiesOf('Button', module)
       Destructive Action
     </Button>
   ))
-  .add('link', () => (
-    <Button href="https://support.glitch.com">Support</Button>
-  ));
+  .add('link', () => <Button href="https://support.glitch.com">Support</Button>);
 
 storiesOf('TooltipContainer', module)
   .add('action', () => (
