@@ -59,7 +59,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
               baseDomain: featuredProject.domain,
             }}
           >
-            <RemixButton className="button-small" name={featuredProject.domain} isMember={isAuthorized} />
+            <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
           </TrackClick>
         </div>
       </section>

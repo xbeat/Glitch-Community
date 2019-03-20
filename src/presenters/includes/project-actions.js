@@ -12,11 +12,6 @@ export const ShowButton = ({ name, size }) => (
 );
 ShowButton.propTypes = {
   name: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(SIZES),
-};
-
-ShowButton.defaultProps = {
-  size: null,
 };
 
 export const EditButton = ({ name, isMember, size }) => (
