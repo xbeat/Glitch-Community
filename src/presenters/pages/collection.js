@@ -27,6 +27,8 @@ import { UserTile } from '../users-list';
 
 import { CurrentUserConsumer } from '../current-user';
 
+import Text from '../../components/text/text';
+
 function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
 }
@@ -119,31 +121,85 @@ const CollectionPageContents = ({
               />
             </div>
 
-            <div className="collection-project-count">{collection.projects.length} Projects</div>
+            <div className="collection-project-count"><Text>{collection.projects.length} Projects</Text></div>
 
             {currentUserIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
-          {!collectionHasProjects && currentUserIsAuthor && (
-            <div className="empty-collection-hint">
-              <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
-              <p>You can add any project, created by any user</p>
-            </div>
-          )}
-          {!collectionHasProjects && !currentUserIsAuthor && (
-            <div className="empty-collection-hint">No projects to see in this collection just yet.</div>
-          )}
-          {collectionHasProjects && (
-            <>
-              <div className="collection-contents">
-                <div className="collection-project-container-header">
-                  {currentUserIsAuthor && (
-                    <AddCollectionProject
-                      addProjectToCollection={addProjectToCollection}
-                      collection={collection}
-                      api={api}
-                      currentUser={currentUser}
-                    />
-                  )}
+          {
+            !collectionHasProjects && currentUserIsAuthor && (
+              <div className="empty-collection-hint">
+                <img
+                  src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
+                  alt=""
+                />
+                <Text>You can add any project, created by any user</Text>
+              </div>
+            )
+          }
+          {
+            !collectionHasProjects && !currentUserIsAuthor && (
+              <div className="empty-collection-hint">
+                No projects to see in this collection just yet.
+              </div>
+            )
+          }
+          {
+            collectionHasProjects && (
+              <>
+                <div className="collection-contents">
+                  <div className="collection-project-container-header">
+                    {
+                      currentUserIsAuthor && (
+                        <AddCollectionProject
+                          addProjectToCollection={addProjectToCollection}
+                          collection={collection}
+                          api={api}
+                          currentUser={currentUser}
+                        />
+                      )
+                    }
+                  </div>
+                  {
+                    currentUserIsAuthor && (
+                      <ProjectsUL
+                        {...props}
+                        projects={collection.projects}
+                        collection={collection}
+                        api={api}
+                        hideNote={hideNote}
+                        projectOptions={{
+                          removeProjectFromCollection,
+                          addProjectToCollection,
+                          updateOrAddNote,
+                          addNoteField,
+                        }}
+                      />
+                    )
+                  }
+                  {
+                    !currentUserIsAuthor && userIsLoggedIn && (
+                      <ProjectsUL
+                        {...props}
+                        projects={collection.projects}
+                        collection={collection}
+                        api={api}
+                        projectOptions={{
+                          addProjectToCollection,
+                        }}
+                      />
+                    )
+
+                  }
+                  {
+                    !currentUserIsAuthor && !userIsLoggedIn && (
+                      <ProjectsUL
+                        projects={collection.projects}
+                        collection={collection}
+                        api={api}
+                        projectOptions={{}}
+                      />
+                    )
+                  }
                 </div>
                 {currentUserIsAuthor && (
                   <ProjectsUL

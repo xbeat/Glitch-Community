@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { CurrentUserConsumer } from '../current-user';
 import { Link } from './link';
 import { NotificationConsumer } from '../notifications';
+import Text from '../../components/text/text';
 
 const NameConflictWarning = ({ id }) => (
   <>
-    <p>This team has your name. You should update your info to remain unique ❄</p>
+    <Text>This team has your name. You should update your info to remain unique ❄</Text>
     <Link className="button button-small button-tertiary button-in-notification-container" to={`/user/${id}`}>
       Your Profile
     </Link>
