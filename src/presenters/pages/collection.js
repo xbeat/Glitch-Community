@@ -121,7 +121,9 @@ const CollectionPageContents = ({
               />
             </div>
             
-            <div className="
+            <div className="collection-project-count">
+              {collection.projects.length} Projects
+            </div>
 
             {currentUserIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
