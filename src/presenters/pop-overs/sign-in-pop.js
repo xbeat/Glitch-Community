@@ -31,9 +31,9 @@ function facebookAuthLink() {
 function googleAuthLink() {
   const params = new URLSearchParams();
   const callbackURL = `${APP_URL}/login/google`;
-+  params.append('callbackURL', callbackURL);
-+  return `${API_URL}/auth/google?${params}`;
-+}
+  params.append('callbackURL', callbackURL);
+  return `${API_URL}/auth/google?${params}`;
+}
 
 const SignInPopButton = (props) => (
   <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
