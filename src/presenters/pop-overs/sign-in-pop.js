@@ -10,7 +10,7 @@ import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
-/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
+/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL, API_URL */
 
 function githubAuthLink() {
   const params = new URLSearchParams();
@@ -27,6 +27,13 @@ function facebookAuthLink() {
   params.append('redirect_uri', `${APP_URL}/login/facebook`);
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
+
+function googleAuthLink() {
+  const params = new URLSearchParams();
+  const callbackURL = `${APP_URL}/login/google`;
++  params.append('callbackURL', callbackURL);
++  return `${API_URL}/auth/google?${params}`;
++}
 
 const SignInPopButton = (props) => (
   <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
