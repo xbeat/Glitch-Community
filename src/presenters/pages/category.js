@@ -11,6 +11,7 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Heading from '../../components/text/heading';
