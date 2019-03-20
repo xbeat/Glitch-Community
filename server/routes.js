@@ -53,6 +53,12 @@ module.exports = function(external) {
       console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
       built = false;
     }
+    
+    // convert raw markdown to text (for social cards)
+    title = cheerio.load(title).text();
+    description = cheerio.load(description).text();
+    console.log(title);
+    console.log(description);
 
     res.render('index.ejs', {
       title,

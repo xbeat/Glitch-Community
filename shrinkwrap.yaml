@@ -17,6 +17,7 @@ dependencies:
   body-parser: 1.18.3
   c3: 0.6.13
   cache-loader: 2.0.1
+  cheerio: 0.22.0
   classnames: 2.2.6
   compression: 1.7.4
   css-loader: 2.1.1
@@ -3996,6 +3997,29 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+  /cheerio/0.22.0:
+    dependencies:
+      css-select: 1.2.0
+      dom-serializer: 0.1.1
+      entities: 1.1.2
+      htmlparser2: 3.10.1
+      lodash.assignin: 4.2.0
+      lodash.bind: 4.2.1
+      lodash.defaults: 4.2.0
+      lodash.filter: 4.6.0
+      lodash.flatten: 4.4.0
+      lodash.foreach: 4.5.0
+      lodash.map: 4.6.0
+      lodash.merge: 4.6.1
+      lodash.pick: 4.4.0
+      lodash.reduce: 4.6.0
+      lodash.reject: 4.6.0
+      lodash.some: 4.6.0
+    dev: false
+    engines:
+      node: '>= 0.6'
+    resolution:
+      integrity: sha1-qbqoYKP5tZWmuBsahocxIe06Jp4=
   /child-process-promise/2.2.1:
     dependencies:
       cross-spawn: 4.0.2
@@ -7365,6 +7389,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-dFz0GlNZexj2iImFREBe+isG2Q8=
+  /lodash.assignin/4.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-uo31+4QesKPoBEIysOJjqNxqKKI=
   /lodash.bind/2.4.1:
     dependencies:
       lodash._createwrapper: 2.4.1
@@ -7372,6 +7400,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-XRn6AFyMTSNvr0dCx7eh/Kvikmc=
+  /lodash.bind/4.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-euMBfpOWIqwxt9fX3LGzTbFpDTU=
   /lodash.clonedeep/4.5.0:
     dev: false
     resolution:
@@ -7387,6 +7419,22 @@ packages:
     dev: false
     resolution:
       integrity: sha1-SkUwhJsBZVAD/L31Y1JO/zzrAsQ=
+  /lodash.defaults/4.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
+  /lodash.filter/4.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-ZosdSYFgOuHMWm+nYBQ+SAtMSs4=
+  /lodash.flatten/4.4.0:
+    dev: false
+    resolution:
+      integrity: sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
+  /lodash.foreach/4.5.0:
+    dev: false
+    resolution:
+      integrity: sha1-Gmo16s5AEoDH8G3d7DUWWrJ+PlM=
   /lodash.forin/2.4.1:
     dependencies:
       lodash._basecreatecallback: 2.4.1
@@ -7444,14 +7492,34 @@ packages:
     dev: false
     resolution:
       integrity: sha1-SN6kbfj/djKxDXBrissmWR4rNyc=
+  /lodash.map/4.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-dx7Hg540c9nEzeKLGTlMNWL09tM=
+  /lodash.merge/4.6.1:
+    dev: false
+    resolution:
+      integrity: sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ==
   /lodash.noop/2.4.1:
     dev: false
     resolution:
       integrity: sha1-T7VPgWZS5a4Q6PcvcXo4jHMmU4o=
+  /lodash.pick/4.4.0:
+    dev: false
+    resolution:
+      integrity: sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
   /lodash.property/2.4.1:
     dev: false
     resolution:
       integrity: sha1-QEnAVJ2vWnECvF6T7q67N53rEy8=
+  /lodash.reduce/4.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
+  /lodash.reject/4.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-gNZJLcFHCGS79YNTO2UfQqn1JBU=
   /lodash.some/4.6.0:
     dev: false
     resolution:
@@ -11219,6 +11287,7 @@ specifiers:
   body-parser: ^1.18.3
   c3: ^0.6.12
   cache-loader: ^2.0.1
+  cheerio: ^0.22.0
   classnames: ^2.2.6
   compression: ^1.7.3
   css-loader: ^2.1.1
