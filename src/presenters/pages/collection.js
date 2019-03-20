@@ -27,6 +27,7 @@ import { UserTile } from '../users-list';
 
 import { CurrentUserConsumer } from '../current-user';
 
+import Text from '../../components/text/text';
 import Heading from '../../components/text/heading';
 
 function syncPageToUrl(collection, url) {
@@ -130,7 +131,7 @@ const CollectionPageContents = ({
                   src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
                   alt=""
                 />
-                <p>You can add any project, created by any user</p>
+                <Text>You can add any project, created by any user</Text>
               </div>
             )
           }
@@ -189,6 +190,7 @@ const CollectionPageContents = ({
                         }}
                       />
                     )
+
                   }
                   {
                     !currentUserIsAuthor && !userIsLoggedIn && (
