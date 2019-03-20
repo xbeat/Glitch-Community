@@ -15,7 +15,7 @@ const CollectionItem = ({ name, description, projects, coverColor }) => {
     <div className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
-      {projects.length && <div>{projectsCount}</div>}
+      {projects.length > 0 && <div>{projectsCount}</div>}
     </div>
   );
 };
