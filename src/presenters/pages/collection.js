@@ -165,9 +165,8 @@ const CollectionPageContents = ({
                       <ProjectsUL
                         {...props}
                         projects={collection.projects}
-                        author={collection.user}
+                        collection={collection}
                         api={api}
-                        collectionCoverColor={collection.coverColor}
                         hideNote={hideNote}
                         projectOptions={{
                           removeProjectFromCollection,
@@ -183,9 +182,8 @@ const CollectionPageContents = ({
                       <ProjectsUL
                         {...props}
                         projects={collection.projects}
-                        author={collection.user}
+                        collection={collection}
                         api={api}
-                        collectionCoverColor={collection.coverColor}
                         projectOptions={{
                           addProjectToCollection,
                         }}
@@ -196,9 +194,8 @@ const CollectionPageContents = ({
                     !currentUserIsAuthor && !userIsLoggedIn && (
                       <ProjectsUL
                         projects={collection.projects}
-                        author={collection.user}
+                        collection={collection}
                         api={api}
-                        collectionCoverColor={collection.coverColor}
                         projectOptions={{}}
                       />
                     )
