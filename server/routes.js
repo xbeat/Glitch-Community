@@ -96,20 +96,11 @@ module.exports = function(external) {
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          ...sources.scripts,
-        ],
         // style-src unsafe-inline is required for our SVGs
         // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
         styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
         imgSrc: ["'self'", ...sources.images],
         fontSrc: ["'self'", ...sources.fonts],
-        connectSrc: ["'self'", ...sources.connect],
-        frameSrc: ["'self'", ...sources.frames],
-        mediaSrc: ["'self'", ...sources.media],
         baseUri: ["'self'"],
         reportUri: 'https://csp-reporting-server.glitch.me/report',
       },
