@@ -107,7 +107,8 @@ module.exports = function(external) {
 
     if (collectionObj) {
       let { name, description, team, user } = collectionObj;
-      const author = team ? `@{team.url}` : `@${user.login}`
+      // const author = team ? `@{team.url}` : `@${user.login}`
+      const author = 'test';
       console.log('AUTHOR', author);
 
       description = description.trimEnd(); // trim trailing whitespace from description
