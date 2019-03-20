@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import { getLink } from '../../models/team';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { useNotifications } from '../notifications';
 
 class JoinTeamPageBase extends React.Component {

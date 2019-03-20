@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { TrackClick } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';

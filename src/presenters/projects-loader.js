@@ -4,7 +4,7 @@ import { chunk, keyBy, flatMap, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
-import { CurrentUserConsumer, normalizeProjects } from './current-user';
+import { CurrentUserConsumer, normalizeProjects } from '../state/current-user';
 
 function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});

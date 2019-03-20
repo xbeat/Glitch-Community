@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import { useCurrentUser } from './current-user';
+import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 import useUploader from './includes/uploader';
 

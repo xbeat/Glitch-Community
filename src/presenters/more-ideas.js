@@ -8,9 +8,11 @@ import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink, Link } from './includes/link';
 import { DataLoader } from './includes/loader';
 
+import Heading from '../components/text/heading';
+
 const MoreIdeasCollectionsDisplay = ({ collections }) => (
   <section className="more-ideas">
-    <h2>More Ideas</h2>
+    <Heading tagName="h2">More Ideas</Heading>
     <ul>
       {collections.map((collection) => (
         <li key={collection.id}>
@@ -47,7 +49,7 @@ export const MoreIdeasCollections = ({ api }) => (
 
 export const MoreIdeasCategories = () => (
   <section className="more-ideas">
-    <h2>More Ideas</h2>
+    <Heading tagName="h2">More Ideas</Heading>
     <ul>
       {categories.map((category) => (
         <li key={category.id}>

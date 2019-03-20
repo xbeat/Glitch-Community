@@ -12,7 +12,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { captureException } from '../../utils/sentry';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
 
 class SignIn extends React.Component {

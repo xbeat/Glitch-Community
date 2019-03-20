@@ -88,11 +88,19 @@
   .projects-container
     margin: 30px 30px 30px 16px
     overflow: visible
+    
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    grid-template-rows: auto
+    @media (max-width: mediumViewport)
+      grid-template-columns: 1fr
+
+
   .projects-container > li
-    @media(max-width: largeViewport)
-      width: 31%
-    @media(max-width: mediumViewport)
-      width: 100%
+    display: grid
+    align-content: end
+    min-width: 95%;
+    
     .project-options-pop
       width: 200px
   .empty-collection-hint
@@ -116,3 +124,4 @@ a.collection-view-all
   font-size: 13px
 a.collection-view-all:hover
   text-decoration: underline !important
+
