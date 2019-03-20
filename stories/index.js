@@ -21,6 +21,9 @@ storiesOf('Button', module)
       Destructive Action
     </Button>
   ));
+  // .add('link', () => (
+  //   <Button href="https://support.glitch.com">Support</Button>
+  // ));
 
 storiesOf('TooltipContainer', module)
   .add('action', () => (
