@@ -21,7 +21,6 @@ const Button = ({ onClick, href, disabled, type, size, hover, transparent, child
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: ['link', 'dropDown'].includes(type),
-    link: type === 'link', // style this button to look like a link
     hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     transparent,
     hover,

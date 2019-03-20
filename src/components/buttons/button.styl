@@ -1,20 +1,21 @@
 @require '../constants'
 
 .btn
-  text-align: left
-  font-size: 14px
-  line-height: 14px
-  font-weight: 600
-  font-family: sansserif
-  color: primary
   background-color: inherit
   border: solid primary 2px
-  display: inline-block
   border-radius: 5px
+  color: primary
+  cursor: pointer
+  display: inline-block
+  font-family: sansserif
+  font-size: 14px
+  font-weight: 600
+  line-height: 14px
   padding: 6px 12px
   padding-bottom: 5px
-  cursor: pointer
   position: relative
+  text-align: left
+  text-decoration: none
   &.hasEmoji
     padding-top: 5px;
     padding-bottom: 5px;
@@ -77,12 +78,6 @@
       background-color: #eaeaea;
       border-radius: 5px;
       border: none;
-
-  &.link
-    margin: 0 !important
-    vertical-align: unset
-    color: link;
-    text-decoration: none
     
   &.opaque
     background-color: white
