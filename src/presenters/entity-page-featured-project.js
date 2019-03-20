@@ -32,7 +32,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
 
         {isAuthorized ? (
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized} />
+            <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
           </div>
         ) : (
           reportBtn
