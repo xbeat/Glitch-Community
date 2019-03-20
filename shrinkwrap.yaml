@@ -56,7 +56,7 @@ dependencies:
   react-onclickoutside: 6.8.0
   react-pluralize: 1.5.0
   react-router: 5.0.0
-  react-router-dom: 4.3.1
+  react-router-dom: 5.0.0
   react-select: 2.4.1
   react-textarea-autosize: 7.1.0
   stats-webpack-plugin: 0.7.0
@@ -6398,16 +6398,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
-  /history/4.7.2:
-    dependencies:
-      invariant: 2.2.4
-      loose-envify: 1.4.0
-      resolve-pathname: 2.2.0
-      value-equal: 0.4.0
-      warning: 3.0.0
-    dev: false
-    resolution:
-      integrity: sha512-1zkBRWW6XweO0NBcjiphtVJVsIQ+SXF29z9DVkceeaSLVMFXHool+fdCZD4spDCfZJCILPILc3bm7Bc+HRi0nA==
   /history/4.9.0:
     dependencies:
       '@babel/runtime': 7.4.0
@@ -6431,10 +6421,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-qkSM8JhtVcxAdzsXF0t90GbLfPs=
-  /hoist-non-react-statics/2.5.5:
-    dev: false
-    resolution:
-      integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
   /hoist-non-react-statics/3.3.0:
     dependencies:
       react-is: 16.8.4
@@ -9139,33 +9125,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dD6Tv05meo+436HZmSzf70gwJkx3HUncpFPggaE02vSzUr8vh+l/2kGfJsxWrFezqVaEq9l0jPeMcWe7dZPatw==
-  /react-router-dom/4.3.1:
+  /react-router-dom/5.0.0:
     dependencies:
-      history: 4.7.2
-      invariant: 2.2.4
+      '@babel/runtime': 7.4.0
+      history: 4.9.0
       loose-envify: 1.4.0
-      prop-types: 15.7.1
-      react-router: 4.3.1
-      warning: 4.0.3
+      prop-types: 15.7.2
+      react-router: 5.0.0
+      tiny-invariant: 1.0.3
+      tiny-warning: 1.0.2
     dev: false
     peerDependencies:
       react: '>=15'
     resolution:
-      integrity: sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
-  /react-router/4.3.1:
-    dependencies:
-      history: 4.7.2
-      hoist-non-react-statics: 2.5.5
-      invariant: 2.2.4
-      loose-envify: 1.4.0
-      path-to-regexp: 1.7.0
-      prop-types: 15.7.1
-      warning: 4.0.3
-    dev: false
-    peerDependencies:
-      react: '>=15'
-    resolution:
-      integrity: sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
+      integrity: sha512-wSpja5g9kh5dIteZT3tUoggjnsa+TPFHSMrpHXMpFsaHhQkm/JNVGh2jiF9Dkh4+duj4MKCkwO6H08u6inZYgQ==
   /react-router/5.0.0:
     dependencies:
       '@babel/runtime': 7.4.0
@@ -10977,12 +10950,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-MuU3fLVy3kqwR1O9+IIcAe1gW3w=
-  /warning/4.0.3:
-    dependencies:
-      loose-envify: 1.4.0
-    dev: false
-    resolution:
-      integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   /watchpack/1.6.0:
     dependencies:
       chokidar: 2.1.1
@@ -11359,7 +11326,7 @@ specifiers:
   react-onclickoutside: ^6.8.0
   react-pluralize: ^1.5.0
   react-router: ^5.0.0
-  react-router-dom: ^4.3.1
+  react-router-dom: ^5.0.0
   react-select: ^2.4.0
   react-textarea-autosize: ^7.1.0
   stats-webpack-plugin: ^0.7.0
