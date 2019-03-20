@@ -44,8 +44,8 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
                 key={filter.name}
                 size="small"
                 type="tertiary"
-                active={activeFilter === filter.name.toLowerCase() ? 'active' : false}
-                onClick={(evt) => setFilter(filter.name, evt)}
+                active={activeFilter === filter.name.toLowerCase()}
+                onClick={() => setFilter(filter.name)}
               >
                 {capitalize(filter.name)}
                 {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
