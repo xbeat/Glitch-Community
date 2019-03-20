@@ -7,6 +7,7 @@ dependencies:
   '@babel/preset-react': 7.0.0
   '@sentry/browser': 4.5.4
   '@sentry/node': 4.5.4
+  '@storybook/addon-info': 4.1.14
   '@storybook/react': 4.1.11
   autoprefixer-stylus: 0.14.0
   axios: 0.18.0
@@ -2324,6 +2325,24 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-LhWnCuTEzmbQKyc0qyahs5PYPpj9qkY3BpMOyEIoYz79RU5lMD1iPR62wG8cqO09JmrCHuqfWeQIQIwUFQTaBQ==
+  /@storybook/addon-info/4.1.14:
+    dependencies:
+      '@storybook/addons': 4.1.14
+      '@storybook/client-logger': 4.1.14
+      '@storybook/components': 4.1.14
+      core-js: 2.6.5
+      global: 4.3.2
+      marksy: 6.1.0
+      nested-object-assign: 1.0.3
+      prop-types: 15.7.2
+      react-addons-create-fragment: 15.6.2
+      react-lifecycles-compat: 3.0.4
+      util-deprecate: 1.0.2
+    dev: false
+    peerDependencies:
+      react: '*'
+    resolution:
+      integrity: sha512-PcJfcZ0WnC+mr+AIn1LfacjruG6cLnCC98BdxpdTOMK+nncR/JffJ7ySqykFEnwRfLuSHGglIg+LwjUViQ4mwA==
   /@storybook/addons/4.1.11:
     dependencies:
       '@storybook/channels': 4.1.11
@@ -2333,6 +2352,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-n9oDs7GgJbiN5NYPkR3B3e5W0Tr6bIZvFfcJzgyP4dn50AUvS1IE1CEthezfn1L/nc2suw/8Oe30bOXOyTl/SQ==
+  /@storybook/addons/4.1.14:
+    dependencies:
+      '@storybook/channels': 4.1.14
+      '@storybook/components': 4.1.14
+      global: 4.3.2
+      util-deprecate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-nAieZLLeXzuUY8TIHshzVX8VUtUowsyohIKilZSzLIBFMpCEYlyPBilrE9ULqUEtVQWi5peAiKRZ1xJQxx/TIA==
   /@storybook/channel-postmessage/4.1.11:
     dependencies:
       '@storybook/channels': 4.1.11
@@ -2345,10 +2373,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-zYusY8cno4keMozn2lDpBgyNSOueFh+hrPETioSB5Z8Kd3F5OjM7681vJC8QA67yOBEie2hHk0CVxRpuxziMwA==
+  /@storybook/channels/4.1.14:
+    dev: false
+    resolution:
+      integrity: sha512-2BpKF7MXWfJeY9lRHrUseJ6JoZXshmo9B4np7TAex3NXOeRLsptQMCfQXgMgUMDQhABc0o9XBAruQOb9zMyd7w==
   /@storybook/client-logger/4.1.11:
     dev: false
     resolution:
       integrity: sha512-Xxy6sY7Zd405o28wUAhlpqY2FbSZsTrsN3g/uo4Mqo4XD2f0Z4wIv1GOuM5DI2KlHpHGI+36YPO2VFx5Bq+yiQ==
+  /@storybook/client-logger/4.1.14:
+    dev: false
+    resolution:
+      integrity: sha512-8Vb4DaGvUsc/voPxOW2LAJZBK5ac8btvesGZZJO43HVWpmROLPrCcoKIUFLWgPmmXyHTkLuheTn9tcbok1BowQ==
   /@storybook/components/4.1.11:
     dependencies:
       '@emotion/core': 0.13.1
@@ -2388,6 +2424,24 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-KJA8Nr8MbXiibDLcndx1GRVmVDyBBL2Tbb1kfQfr58vDwz6qhYxempejY6W+voaEqohnFxrOtnnbqlCyf8peUQ==
+  /@storybook/components/4.1.14:
+    dependencies:
+      '@emotion/core': 0.13.1
+      '@emotion/provider': /@emotion/provider/0.11.2/@emotion!core@0.13.1
+      '@emotion/styled': 0.10.6
+      global: 4.3.2
+      lodash: 4.17.11
+      prop-types: 15.7.2
+      react-inspector: 2.3.1
+      react-split-pane: 0.1.85
+      react-textarea-autosize: 7.1.0
+      render-fragment: /render-fragment/0.1.1/prop-types@15.7.2
+    dev: false
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    resolution:
+      integrity: sha512-UdSwxZutRUW8umaaPnris5M9pGz2220KXs/5g2URaw3rEL8eUaKLKJXSpFSOeXPhlCnV7B9R/qanG9GXGQKXmg==
   /@storybook/core-events/4.1.11:
     dev: false
     resolution:
@@ -3629,11 +3683,15 @@ packages:
       integrity: sha512-8PJ4N+acfYsjhDK4gMWkqJMVRMjDKb93D+nz7lWlNe73Jcv38FNu37i5K/dVQnFDdRYHbe1SjII+Y0mCgink9A==
   /babel-runtime/6.26.0:
     dependencies:
-      core-js: 2.6.4
+      core-js: 2.6.5
       regenerator-runtime: 0.11.1
     dev: false
     resolution:
       integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
+  /babel-standalone/6.26.0:
+    dev: false
+    resolution:
+      integrity: sha1-Ffs9NfLEVmlYFevx7Zb+fwFbaIY=
   /bail/1.0.3:
     dev: false
     resolution:
@@ -4368,6 +4426,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-05qQ5hXShcqGkPZpXEFLIpxayZscVD2kuMBZewxiIPPEagukO4mqgPA9CWhUvFBJfy3ODdK2p9xyHh7FTU9/7A==
+  /core-js/2.6.5:
+    dev: false
+    resolution:
+      integrity: sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
   /core-util-is/1.0.2:
     dev: false
     resolution:
@@ -7616,6 +7678,21 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-GcRz3AWTqSUphY3vsUqQSFMbgR38a4Lh3GWlHRh/7MRwz8mcu9n2IO7HOh+bXHrR9kOPDl5RNCaEsrneb+xhHQ==
+  /marked/0.3.19:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
+  /marksy/6.1.0:
+    dependencies:
+      babel-standalone: 6.26.0
+      he: 1.2.0
+      marked: 0.3.19
+    dev: false
+    resolution:
+      integrity: sha512-xVAuJQxwdAljvFVqlY7CIRewn5YHGvCqeJkY1bbcTBfZV4dNDSZpHWTREb1MNu/oXYzKgg5pmTfE1DIW6M1zrA==
   /md5.js/1.3.5:
     dependencies:
       hash-base: 3.0.4
@@ -7917,6 +7994,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
+  /nested-object-assign/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-kgq1CuvLyUcbcIuTiCA93cQ2IJFSlRwXcN+hLcb2qLJwC2qrePHGZZa7IipyWqaWF6tQjdax2pQnVxdq19Zzwg==
   /nice-try/1.0.5:
     dev: false
     resolution:
@@ -8946,6 +9027,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
+  /react-addons-create-fragment/15.6.2:
+    dependencies:
+      fbjs: 0.8.17
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha1-o5TefCx77Na1R1uhuXrEcs58dPg=
   /react-dev-utils/6.1.1:
     dependencies:
       '@babel/code-frame': 7.0.0
@@ -9016,6 +9105,19 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-Ob2wK7XG2tUDt7ps7LtLzGYYB6DXMCLj0G5fO6WeEICtT4/HdpOi7W/xLzZnR6RCG1tYza60nMdqtxzA8FaPJQ==
+  /react-dom/16.8.4/react@16.8.4:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      react: 16.8.4
+      scheduler: 0.13.4
+    dev: false
+    id: registry.npmjs.org/react-dom/16.8.4
+    peerDependencies:
+      react: ^16.0.0
+    resolution:
+      integrity: sha512-Ob2wK7XG2tUDt7ps7LtLzGYYB6DXMCLj0G5fO6WeEICtT4/HdpOi7W/xLzZnR6RCG1tYza60nMdqtxzA8FaPJQ==
   /react-error-overlay/5.1.3:
     dev: false
     resolution:
@@ -9056,7 +9158,7 @@ packages:
     dependencies:
       babel-runtime: 6.26.0
       is-dom: 1.0.9
-      prop-types: 15.7.1
+      prop-types: 15.7.2
     dev: false
     peerDependencies:
       react: ^0.14.0 || ^15.0.0 || ^16.0.0
@@ -9066,7 +9168,7 @@ packages:
     dependencies:
       babel-runtime: 6.26.0
       is-dom: 1.0.9
-      prop-types: 15.7.1
+      prop-types: 15.7.2
       react: 16.8.1
     dev: false
     id: registry.npmjs.org/react-inspector/2.3.1
@@ -9182,9 +9284,9 @@ packages:
       integrity: sha512-Z2ZJE4p/jIfvUpiUMRydEVpQRf2f8GMHczT6qLcARmX7QRb28JDBTpnM2g/i5y/p7ZDEXYGHWg0RbhikE+hJRw==
   /react-split-pane/0.1.85:
     dependencies:
-      prop-types: 15.7.1
-      react: 16.8.1
-      react-dom: /react-dom/16.8.1/react@16.8.1
+      prop-types: 15.7.2
+      react: 16.8.4
+      react-dom: /react-dom/16.8.4/react@16.8.4
       react-lifecycles-compat: 3.0.4
       react-style-proptype: 3.2.2
     dev: false
@@ -9192,7 +9294,7 @@ packages:
       integrity: sha512-3GhaYs6+eVNrewgN4eQKJoNMQ4pcegNMTMhR5bO/NFO91K6/98qdD1sCuWPpsefCjzxNTjkvVYWQC0bMaC45mA==
   /react-style-proptype/3.2.2:
     dependencies:
-      prop-types: 15.7.1
+      prop-types: 15.7.2
     dev: false
     resolution:
       integrity: sha512-ywYLSjNkxKHiZOqNlso9PZByNEY+FTyh3C+7uuziK0xFXu9xzdyfHwg4S9iyiRRoPCR4k2LqaBBsWVmSBwCWYQ==
@@ -9552,6 +9654,16 @@ packages:
     dependencies:
       prop-types: 15.7.1
       react: 16.8.1
+    dev: false
+    id: registry.npmjs.org/render-fragment/0.1.1
+    peerDependencies:
+      prop-types: ^15.0.0 || ^16.0.0
+      react: ^15.0.0 || ^16.0.0
+    resolution:
+      integrity: sha512-+DnAcalJYR8GE5VRuQGGu78Q0GDe8EXnkuk4DF8gbAhIeS6LRt4j+aaggLLj4PtQVfXNC61McXvXI58WqmRleQ==
+  /render-fragment/0.1.1/prop-types@15.7.2:
+    dependencies:
+      prop-types: 15.7.2
     dev: false
     id: registry.npmjs.org/render-fragment/0.1.1
     peerDependencies:
@@ -11277,6 +11389,7 @@ specifiers:
   '@babel/preset-react': ^7.0.0
   '@sentry/browser': ^4.5.3
   '@sentry/node': ^4.4.1
+  '@storybook/addon-info': ^4.0.12
   '@storybook/react': ^4.1.1
   autoprefixer-stylus: ^0.14.0
   axios: ^0.18.0
