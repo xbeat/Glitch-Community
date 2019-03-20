@@ -32,7 +32,7 @@ EditButton.defaultProps = {
 
 export const RemixButton = ({ name, isMember }) => (
   <Button href={getRemixUrl(name)} size="small">
-    {isMember ? 'Remix This' : 'Remix your own'} <span className="emoji microphone" role="presentation" />
+    {isMember ? 'Remix This' : 'Remix your own'} <Emoji name="microphone" />
   </Button>
 );
 RemixButton.propTypes = {
