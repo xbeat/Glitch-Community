@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import { capitalize, sum } from 'lodash';
+
 import Layout from '../layout';
 
 import { useCurrentUser } from '../current-user';
+
+import Button from '../../components/buttons/button';
+import Heading from '../../components/text/heading';
 
 import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
@@ -14,7 +19,51 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-import Heading from '../../components/text/heading';
+const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
+  const totalHits = sum(filters.map((filter) => filter.hits));
+
+  if (!loaded) {
+    return (
+      <>
+        <Loader />
+        <h1>All results for {query}</h1>
+      </>
+    );
+  }
+  if (loaded && totalHits === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      <div className="search-filters segmented-buttons">
+        {filters.map(
+          (filter) =>
+            (filter.hits === null || filter.hits > 0) && (
+              <Button
+                key={filter.name}
+                size="small"
+                type="tertiary"
+                active={activeFilter === filter.name.toLowerCase()}
+                onClick={() => setFilter(filter.name)}
+              >
+                {capitalize(filter.name)}
+                {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
+              </Button>
+            ),
+        )}
+      </div>
+      {activeFilter === 'all' && <h1>All results for {query}</h1>}
+    </>
+  );
+};
+
+FilterContainer.propTypes = {
+  filters: PropTypes.array.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  activeFilter: PropTypes.string.isRequired,
+  loaded: PropTypes.bool.isRequired,
+};
 
 const TeamResults = ({ teams }) => (
   <article>
@@ -67,7 +116,9 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   );
 };
 
-const MAX_RESULTS = 20;
+const MAX_PROJECT_RESULTS = 20;
+const MAX_USER_TEAM_RESULTS = 8;
+
 const showResults = (results) => !results || !!results.length;
 
 class SearchResults extends React.Component {
@@ -77,8 +128,11 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
+      activeFilter: 'all',
+      loadedResults: 0,
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
+    this.setFilter = this.setFilter.bind(this);
   }
 
   componentDidMount() {
@@ -88,28 +142,35 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
+  setFilter(filter) {
+    this.setState({ activeFilter: filter });
+  }
+
   async searchTeams() {
     const { api, query } = this.props;
     const { data } = await api.get(`teams/search?q=${query}`);
-    this.setState({
-      teams: data.slice(0, MAX_RESULTS),
-    });
+    this.setState((prevState) => ({
+      teams: data.slice(0, MAX_USER_TEAM_RESULTS),
+      loadedResults: prevState.loadedResults + 1,
+    }));
   }
 
   async searchUsers() {
     const { api, query } = this.props;
     const { data } = await api.get(`users/search?q=${query}`);
-    this.setState({
-      users: data.slice(0, MAX_RESULTS),
-    });
+    this.setState((prevState) => ({
+      users: data.slice(0, MAX_USER_TEAM_RESULTS),
+      loadedResults: prevState.loadedResults + 1,
+    }));
   }
 
   async searchProjects() {
     const { api, query } = this.props;
     const { data } = await api.get(`projects/search?q=${query}`);
-    this.setState({
-      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
-    });
+    this.setState((prevState) => ({
+      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_PROJECT_RESULTS),
+      loadedResults: prevState.loadedResults + 1,
+    }));
   }
 
   async addProjectToCollection(project, collection) {
@@ -117,13 +178,31 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects } = this.state;
+    const { teams, users, projects, activeFilter } = this.state;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
+    // I'm sure there's a better way to do this
+    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
+
+    const teamHits = teams ? teams.length : 0;
+    const userHits = users ? users.length : 0;
+    const projectHits = projects ? projects.length : 0;
+    const filters = [
+      { name: 'all', hits: null },
+      { name: 'teams', hits: teamHits },
+      { name: 'users', hits: userHits },
+      { name: 'projects', hits: projectHits },
+    ];
+
+    const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
+
     return (
       <main className="search-results">
-        {showResults(teams) && <TeamResults teams={teams} />}
-        {showResults(users) && <UserResults users={users} />}
-        {showResults(projects) && (
+        <FilterContainer filters={filters} setFilter={this.setFilter} activeFilter={activeFilter} query={this.props.query} loaded={loaded} />
+        {showTeams && <TeamResults teams={teams} />}
+        {showUsers && <UserResults users={users} />}
+        {showProjects && (
           <ProjectResults
             projects={projects}
             currentUser={this.props.currentUser}
