@@ -24,12 +24,9 @@ import CollectionAvatar from '../includes/collection-avatar';
 import { TeamTile } from '../teams-list';
 import { UserTile } from '../users-list';
 
-<<<<<<< HEAD
 import { CurrentUserConsumer } from '../../state/current-user';
 import MoreCollections from '../more-collections';
-=======
-import { CurrentUserConsumer } from '../../state/current-user';
->>>>>>> d8e6c8d1e2d5ba3c65a87afd664a7b87b68e8843
+
 
 import Text from '../../components/text/text';
 import Heading from '../../components/text/heading';
@@ -209,26 +206,14 @@ const CollectionPageContents = ({
                 </div>
               </>
             )}
-<<<<<<< HEAD
-            {/* eslint-enable no-nested-ternary */}
-          </ProjectsLoader>
-        )}
-      </article>
-      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
-    </main>
-    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
-    <MoreCollections api={api} currentUser={currentUser} collection={collection} />
-  </>
-);
-=======
         </article>
         {!currentUserIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
       </main>
       {currentUserIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
+      <MoreCollections api={api} currentUser={currentUser} collection={collection} />
     </>
   );
 };
->>>>>>> d8e6c8d1e2d5ba3c65a87afd664a7b87b68e8843
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
