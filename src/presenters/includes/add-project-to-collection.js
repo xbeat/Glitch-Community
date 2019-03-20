@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 
-const AddProjectButtonText = () => (
-  <>
-    Add to Collection <span className="emoji framed-picture" role="presentation" />
-  </>
-);
-
 const AddProjectToCollection = ({ project, ...props }) => (
-  <PopoverWithButton buttonClass="button-small has-emoji add-project" buttonText={<AddProjectButtonText />}>
+  <PopoverWithButton
+    buttonClass="button-small has-emoji add-project"
+    buttonText={
+      <>
+        Add to Collection <span className="emoji framed-picture" role="presentation" />
+      </>
+    }
+  >
     {({ togglePopover }) => <AddProjectToCollectionPop {...props} project={project} togglePopover={togglePopover} />}
   </PopoverWithButton>
 );

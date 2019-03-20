@@ -15,9 +15,8 @@ const DeleteTeam = ({ ...props }) => (
           <span className="emoji bomb" role="img" aria-label="" />
         </>
       }
-      passToggleToPop
     >
-      <DeleteTeamPop {...props} />
+      {({ togglePopover }) => <DeleteTeamPop {...props} togglePopover={togglePopover} />}
     </PopoverWithButton>
   </section>
 );
