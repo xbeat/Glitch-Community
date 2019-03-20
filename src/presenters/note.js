@@ -39,6 +39,7 @@ const Note = ({
           update={update}
           onBlur={updateNoteVisibility}
           maxLength={75}
+          allowImages={false}
         />
       </div>
       <div className="user">

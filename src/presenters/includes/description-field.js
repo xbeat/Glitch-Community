@@ -28,7 +28,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   render() {
-    const { description, placeholder, maxLength } = this.props;
+    const { description, placeholder, maxLength, allowImages } = this.props;
     return this.state.focused ? (
       <TextArea
         className="description content-editable"
@@ -51,13 +51,14 @@ class EditableDescriptionImpl extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        {description && <Markdown>{description}</Markdown>}
+        {description && <Markdown allowImages={allowImages}>{description}</Markdown>}
       </p>
     );
   }
 }
 
 EditableDescriptionImpl.propTypes = {
+  allowImages: Proptypes.bool,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
@@ -66,13 +67,14 @@ EditableDescriptionImpl.propTypes = {
 };
 
 EditableDescriptionImpl.defaultProps = {
+  allowIamges: true,
   placeholder: '',
   onBlur: null,
   maxLength: 524288, // this is the built in default
 };
 
 const EditableDescription = ({
-  description, placeholder, update, onBlur, maxLength,
+  description, placeholder, update, onBlur, maxLength, allowImages,
 }) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
@@ -82,11 +84,13 @@ const EditableDescription = ({
         onBlur={onBlur}
         placeholder={placeholder}
         maxLength={maxLength}
+        allowImages={allowImages}
       />
     )}
   </OptimisticValue>
 );
 EditableDescription.propTypes = {
+  allowImages: PropTypes.bool,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
@@ -95,6 +99,7 @@ EditableDescription.propTypes = {
 };
 
 EditableDescription.defaultProps = {
+  allowImages: true,
   placeholder: '',
   onBlur: null,
   maxLength: null,
@@ -110,14 +115,15 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength }) =>
+export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength, allowImages }) =>
   authorized ? (
-    <EditableDescription description={description} update={update} onBlur={onBlur} placeholder={placeholder} maxLength={maxLength} />
+    <EditableDescription description={description} update={update} onBlur={onBlur} placeholder={placeholder} maxLength={maxLength} allowImages={allowImages} />
   ) : (
     <StaticDescription description={description} />
   );
 
 AuthDescription.propTypes = {
+  allowImages: PropTypes.bool,
   authorized: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -126,6 +132,7 @@ AuthDescription.propTypes = {
 };
 
 AuthDescription.defaultProps = {
+  allowImages: true,
   placeholder: '',
   maxLength: null,
   update: null,
