@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Link } from '../includes/link';
-import useLocalStorage from '../includes/local-storage';
+import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../../state/current-user';

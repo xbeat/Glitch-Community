@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
-import useLocalStorage from '../includes/local-storage';
+import useLocalStorage from '../../state/local-storage';
 import { useCurrentUser } from '../../state/current-user';
 import { EmailErrorPage, OauthErrorPage } from './error';
 
