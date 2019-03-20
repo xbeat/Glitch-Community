@@ -279,8 +279,8 @@ SignInPopBase.propTypes = {
 };
 
 const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
-    <SignInPopBase {...props} />
+  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in">
+    {({ togglePopover }) => <SignInPopBase {...props} togglePopover={togglePopover} />}
   </PopoverWithButton>
 );
 
