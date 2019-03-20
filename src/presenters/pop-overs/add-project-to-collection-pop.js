@@ -66,7 +66,6 @@ class AddProjectToCollectionPopContents extends React.Component {
           }}
         >
           <CollectionResultItem
-            api={this.props.api}
             onClick={this.props.addProjectToCollection}
             project={this.props.project}
             collection={collection}
@@ -119,7 +118,6 @@ class AddProjectToCollectionPopContents extends React.Component {
 AddProjectToCollectionPopContents.propTypes = {
   addProjectToCollection: PropTypes.func,
   collections: PropTypes.array,
-  api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func, // required but added dynamically
   project: PropTypes.object.isRequired,
@@ -186,7 +184,6 @@ class AddProjectToCollectionPop extends React.Component {
         alternateContent={() => (
           <CreateCollectionPop
             {...this.props}
-            api={this.props.api}
             collections={this.state.maybeCollections}
             togglePopover={this.props.togglePopover}
           />

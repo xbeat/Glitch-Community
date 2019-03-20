@@ -49,14 +49,7 @@ class CollectionsList extends React.Component {
             {!hasCollections && <CreateFirstCollection />}
           </>
         )}
-        <CollectionsUL
-          {...{
-            collections,
-            api,
-            isAuthorized,
-            deleteCollection,
-          }}
-        />
+        <CollectionsUL collections={collections} isAuthorized={isAuthorized} deleteCollection={deleteCollection} />
       </article>
     );
   }
@@ -180,7 +173,6 @@ export const CollectionsUL = ({ collections, deleteCollection, isAuthorized }) =
 };
 
 CollectionsUL.propTypes = {
-  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
@@ -195,4 +187,3 @@ export default function CollectionsListWrapper(props) {
   const currentUser = useCurrentUser();
   return <CollectionsList {...props} api={api} maybeCurrentUser={currentUser} />;
 }
-
