@@ -10,7 +10,15 @@ import Markdown from '../src/components/text/markdown';
 
 storiesOf('Button', module)
   .addDecorator((story) => <MemoryRouter>{story()}</MemoryRouter>)
-  .add('regular', () => <Button>Hello Button</Button>)
+  .add('regular', () => (
+    <Button
+      onClick={() => {
+        alert('hello');
+      }}
+    >
+      Hello Button
+    </Button>
+  ))
   .add('cta', () => <Button type="cta">CTA Button</Button>)
   .add('small', () => <Button size="small">Small Button</Button>)
   .add('tertiary', () => (

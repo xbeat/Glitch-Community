@@ -49,9 +49,16 @@ Button.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
-  onClick(props, propName) {
-    if (props.href === false && (props[propName] === null || typeof props[propName] !== 'function')) {
-      return new Error('Please provide a href or an onClick function');
+  onClick: (props, propName, componentName) => {
+    if (!props.onClick && !props.href) {
+      return new Error(`One of props 'onClick' or 'href' was not specified in '${componentName}'.`);
+    }
+    return null;
+  },
+  /** OR link when button clicked */
+  href: (props, propName, componentName) => {
+    if (!props.onClick && !props.href) {
+      return new Error(`One of props 'href' or 'onClick' was not specified in '${componentName}'.`);
     }
     return null;
   },
@@ -65,13 +72,6 @@ Button.propTypes = {
   hover: PropTypes.bool,
   /** whether or not the button takes on the colour of the background */
   transparent: PropTypes.bool,
-  /** link when button clicked */
-  href(props, propName) {
-    if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
-      return new Error('Please provide a href or an onClick function');
-    }
-    return null;
-  },
 };
 
 Button.defaultProps = {
