@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getAvatarStyle, getProfileStyle } from '../models/user';
-import { CurrentUserConsumer } from './current-user';
+import { CurrentUserConsumer } from '../state/current-user';
 import { UserLink } from './includes/link';
 
 import { CoverContainer } from './includes/profile';

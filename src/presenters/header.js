@@ -12,7 +12,7 @@ import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
 import NewProjectPop from './pop-overs/new-project-pop';
 import NewStuffContainer from './overlays/new-stuff';
-import { CurrentUserConsumer } from './current-user';
+import { CurrentUserConsumer } from '../state/current-user';
 
 const ResumeCoding = () => (
   <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
