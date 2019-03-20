@@ -86,7 +86,6 @@ class LoginPage extends React.Component {
       if (this.props.provider === 'Email') {
         return (
           <EmailErrorPage
-            api={this.props.api}
             title={`${this.props.provider} Login Problem`}
             description={this.state.errorMessage || genericDescription}
           />
@@ -94,7 +93,6 @@ class LoginPage extends React.Component {
       }
       return (
         <OauthErrorPage
-          api={this.props.api}
           title={`${this.props.provider} Login Problem`}
           description={this.state.errorMessage || genericDescription}
         />

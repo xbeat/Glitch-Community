@@ -143,7 +143,6 @@ const CollectionPageContents = ({
                     <AddCollectionProject
                       addProjectToCollection={addProjectToCollection}
                       collection={collection}
-                      api={api}
                       currentUser={currentUser}
                     />
                   )}
@@ -153,7 +152,6 @@ const CollectionPageContents = ({
                     {...props}
                     projects={collection.projects}
                     collection={collection}
-                    api={api}
                     hideNote={hideNote}
                     projectOptions={{
                       removeProjectFromCollection,
@@ -168,14 +166,13 @@ const CollectionPageContents = ({
                     {...props}
                     projects={collection.projects}
                     collection={collection}
-                    api={api}
                     projectOptions={{
                       addProjectToCollection,
                     }}
                   />
                 )}
                 {!currentUserIsAuthor && !userIsLoggedIn && (
-                  <ProjectsUL projects={collection.projects} collection={collection} api={api} projectOptions={{}} />
+                  <ProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />
                 )}
               </div>
             </>
@@ -190,7 +187,6 @@ const CollectionPageContents = ({
 
 CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
-  api: PropTypes.any,
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string,
     coverColor: PropTypes.string,
@@ -208,7 +204,6 @@ CollectionPageContents.propTypes = {
 };
 
 CollectionPageContents.defaultProps = {
-  api: null,
   updateOrAddNote: null,
   addNoteField: null,
   hideNote: null,
@@ -245,7 +240,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
   const api = useAPI();
   const { currentUser } = useCurrentUser();
   return (
-    <Layout api={api}>
+    <Layout>
       <DataLoader get={() => loadCollection(api, ownerName, name)}>
         {(collection) =>
           collection ? (
@@ -255,11 +250,10 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
                 groupId: collection.team ? collection.team.id.toString() : '0',
               }}
             >
-              <CollectionEditor api={api} initialCollection={collection}>
+              <CollectionEditor initialCollection={collection}>
                 {(collectionFromEditor, funcs, currentUserIsAuthor) => (
                   <CollectionPageContents
                     collection={collectionFromEditor}
-                    api={api}
                     currentUser={currentUser}
                     currentUserIsAuthor={currentUserIsAuthor}
                     {...funcs}
