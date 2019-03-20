@@ -6,6 +6,7 @@ import _ from 'lodash';
 // TODO: let's move these into components
 import { AuthDescription } from './includes/description-field';
 import { UserTile } from './users-list';
+import { TeamTile } from './teams-list';
 
 import { isDarkColor } from '../models/collection';
 
@@ -13,7 +14,7 @@ import { isDarkColor } from '../models/collection';
  * Note Component
  */
 const Note = ({
-  collectionCoverColor, author, project, update, hideNote,
+  collection, project, update, hideNote,
 }) => {
   function updateNoteVisibility(description) {
     description = _.trim(description);
@@ -25,6 +26,8 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
+  
+  const collectionCoverColor = collection.coverColor;
 
   const className = classNames({
     'description-container': true,
@@ -46,7 +49,11 @@ const Note = ({
         />
       </div>
       <div className="user">
-        <UserTile user={author} />
+        {
+          collection.teamId === -1 ?
+            <UserTile user={collection.user} /> :
+            <TeamTile team={collection.team} />
+        }
       </div>
     </div>
   );
@@ -54,8 +61,6 @@ const Note = ({
 
 
 Note.propTypes = {
-  collectionCoverColor: PropTypes.string,
-  author: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,
     isAddingANewNote: PropTypes.bool,
@@ -66,9 +71,7 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  author: {},
   update: null,
-  collectionCoverColor: null,
 };
 
 export default Note;
