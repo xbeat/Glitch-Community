@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
+import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
@@ -29,7 +30,16 @@ storiesOf('Button', module)
       Destructive Action
     </Button>
   ))
-  .add('link', () => <Button href="https://support.glitch.com">Support</Button>);
+  .add('link', () => <Button href="https://support.glitch.com">Support</Button>)
+  .add('with emoji', () => (
+    <Button>
+      <Emoji name="sunglasses" /> Show
+    </Button>
+  ));
+
+storiesOf('Emoji', module)
+  .add('standard', () => <Emoji name="herb" />)
+  .add('sunglasses', () => <Emoji name="sunglasses" />);
 
 storiesOf('TooltipContainer', module)
   .add('action', () => (
