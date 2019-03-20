@@ -26,7 +26,7 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-  
+
   const collectionCoverColor = collection.coverColor;
 
   const className = classNames({
@@ -50,9 +50,7 @@ const Note = ({
       </div>
       <div className="user">
         {
-          collection.teamId === -1 ?
-            <UserTile user={collection.user} /> :
-            <TeamTile team={collection.team} />
+          collection.teamId === -1 ? <UserTile user={collection.user} /> : <TeamTile team={collection.team} />
         }
       </div>
     </div>

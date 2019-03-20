@@ -41,6 +41,7 @@ const ProjectItem = ({
 ProjectItem.propTypes = {
   api: PropTypes.func,
   author: PropTypes.object,
+  hideNote: PropTypes.func,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
