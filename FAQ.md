@@ -1,5 +1,4 @@
-FAQ
----
+# FAQ
 
 ### I remixed this site... how do I log in?
 

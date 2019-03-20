@@ -7,11 +7,11 @@ import { UserLink, TeamLink } from './includes/link';
 import { getProfileStyle, getDisplayName } from '../models/user';
 
 // move to components
-//I wonder if this needs a new name or should be combined with the existing collectionItem in some way
+// I wonder if this needs a new name or should be combined with the existing collectionItem in some way
 const CollectionItem = ({ name, description, projects, coverColor }) => {
   // should this whole thing be a button, an anchor tag, or a div? end result is to make it all clickable
   return (
-    <div style={{ backgroundColor: coverColor }}>
+    <div className="more-collections-item" style={{ backgroundColor: coverColor }} >
       <button>{name}</button>
       <div>{description}</div>
       <div>projectslength:{projects.length}</div>
@@ -32,7 +32,7 @@ class MoreCollections extends React.Component {
     const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover })
     const isUserCollection = collection.teamId === -1;
     return (
-      <section className="more-collections">
+      <section>
         <h2>
           {  
             isUserCollection ? 
@@ -44,11 +44,11 @@ class MoreCollections extends React.Component {
           {(collections) => {
             return (
               <CoverContainer style={coverStyle} className="collections">
-                <>
+                <div className="more-collections">
                   {
                     collections.filter(c => c.id !== collection.id).map(c => <CollectionItem key={c.id} { ...c } />)
                   }
-                </>
+                </div>
               </CoverContainer>
             )
           }}

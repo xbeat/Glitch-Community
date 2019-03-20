@@ -9,7 +9,7 @@ import { captureException } from '../../utils/sentry';
 import { getAbuseReportTitle, getAbuseReportBody } from '../../utils/abuse-reporting';
 import { Loader } from '../includes/loader';
 
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import TextArea from '../../components/fields/text-area';
 
 class ReportAbusePop extends React.Component {
@@ -241,7 +241,7 @@ const ReportAbusePopContainer = (props) => (
 
 const ReportAbusePopButton = (props) => (
   <PopoverWithButton buttonClass="button-small button-tertiary margin" buttonText="Report Abuse">
-    <ReportAbusePopContainer reportedType={props.reportedType} reportedModel={props.reportedModel} />
+    {() => <ReportAbusePopContainer reportedType={props.reportedType} reportedModel={props.reportedModel} />}
   </PopoverWithButton>
 );
 

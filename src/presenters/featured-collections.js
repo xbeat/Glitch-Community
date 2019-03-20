@@ -59,6 +59,7 @@ CollectionWide.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
+// we have another loadCollection in collection.js consider combining the two
 const loadCollection = async (api, { owner, name }) => {
   try {
     const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);

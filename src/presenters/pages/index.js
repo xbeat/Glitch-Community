@@ -5,7 +5,7 @@ import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -14,6 +14,7 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Text from '../../components/text/text';
 
 import Heading from '../../components/text/heading';
 
@@ -96,7 +97,7 @@ class WhatIsGlitch extends React.Component {
 
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
-    <p>Of course, this site was made on Glitch too</p>
+    <Text>Of course, this site was made on Glitch too</Text>
     <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer" />
     </Link>

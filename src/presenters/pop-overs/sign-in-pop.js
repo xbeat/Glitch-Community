@@ -4,10 +4,10 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Link } from '../includes/link';
-import useLocalStorage from '../includes/local-storage';
+import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -279,8 +279,8 @@ SignInPopBase.propTypes = {
 };
 
 const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
-    <SignInPopBase {...props} />
+  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in">
+    {({ togglePopover }) => <SignInPopBase {...props} togglePopover={togglePopover} />}
   </PopoverWithButton>
 );
 

@@ -4,6 +4,7 @@ import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
+import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
@@ -67,6 +68,9 @@ storiesOf('Heading', module)
   .add('h2', () => <Heading tagName="h2">H2, 18px</Heading>)
   .add('h3', () => <Heading tagName="h3">H3, 16px</Heading>)
   .add('h4', () => <Heading tagName="h4">H4, 14px</Heading>);
+
+storiesOf('Text', module)
+  .add('regular ', () => <Text>Regular, 20px</Text>);
 
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)

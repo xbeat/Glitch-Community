@@ -3,7 +3,7 @@ const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
 
-const { getProject, getTeam, getUser, getZine } = require('./api');
+const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
 
@@ -86,7 +86,11 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      await render(res, team.name, team.description);
+      const args = [res, team.name, team.description];
+      if (team.hasAvatarImage) {
+        args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
+      }
+      await render(...args);
       return;
     }
     const user = await getUser(name);
@@ -95,6 +99,24 @@ module.exports = function(external) {
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
+  });
+
+  app.get('/@:name/:collection', async (req, res) => {
+    const { name, collection } = req.params;
+    const collectionObj = await getCollection(`${name}/${collection}`);
+    const author = name;
+
+    if (collectionObj) {
+      let { name, description } = collectionObj;
+
+      description = description.trimEnd(); // trim trailing whitespace from description
+      description += ` 🎏 A collection of apps by @${author}`;
+      description = description.trimStart(); // if there was no description, trim space before the fish
+
+      await render(res, name, description);
+      return;
+    }
+    await render(res, `${collection}`, `We couldn't find @${name}/${collection}`);
   });
 
   app.get('/auth/:domain', async (req, res) => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { partition } from 'lodash';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
 import TeamEditor from '../team-editor';
 import { getLink, getAvatarStyle, getProfileStyle } from '../../models/team';
@@ -27,6 +27,7 @@ import EntityPageProjects from '../entity-page-projects';
 import ProjectsLoader from '../projects-loader';
 import TeamAnalytics from '../includes/team-analytics';
 import { TeamMarketing, VerifiedBadge } from '../includes/team-elements';
+import Text from '../../components/text/text';
 import ReportButton from '../pop-overs/report-abuse-pop';
 
 import Heading from '../../components/text/heading';
@@ -143,7 +144,7 @@ class TeamPage extends React.Component {
             <img src="https://cdn.glitch.com/0c3ba0da-dac8-4904-bb5e-e1c7acc378a2%2Fbeta-flag.svg?1541448893958" alt="" />
             <div>
               <Heading tagName="h4">Teams are in beta</Heading>
-              <p>Learn More</p>
+              <Text>Learn More</Text>
             </div>
           </a>
           <ProfileContainer
