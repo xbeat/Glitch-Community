@@ -6,7 +6,7 @@ import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link', 'dropDown'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
 export const SIZES = ['small'];
 
 /**
@@ -20,7 +20,7 @@ const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }
     small: size === 'small' || type === 'dangerZone', // we want to demphasize dangerous actions, so we make them small
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-    unstyled: ['link', 'dropDown'].includes(type),
+    unstyled: type === 'dropDown',
     hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     opaque,
     hover,
