@@ -28,7 +28,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   render() {
-    const { description, placeholder, maxLength, allowImages } = this.props;
+    const { description, placeholder, maxLength, allowImages, maxRows } = this.props;
     return this.state.focused ? (
       <TextArea
         className="description content-editable"
@@ -39,6 +39,7 @@ class EditableDescriptionImpl extends React.Component {
         placeholder={placeholder}
         spellCheck={false}
         maxLength={maxLength}
+        maxRows={maxRows}
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
     ) : (
@@ -74,7 +75,7 @@ EditableDescriptionImpl.defaultProps = {
 };
 
 const EditableDescription = ({
-  description, placeholder, update, onBlur, maxLength, allowImages,
+  description, placeholder, update, onBlur, maxLength, allowImages, maxRows,
 }) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
@@ -85,6 +86,7 @@ const EditableDescription = ({
         placeholder={placeholder}
         maxLength={maxLength}
         allowImages={allowImages}
+        maxRows={maxRows}
       />
     )}
   </OptimisticValue>
@@ -115,7 +117,7 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength, allowImages }) =>
+export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength, allowImages, maxRows }) =>
   authorized ? (
     <EditableDescription
       description={description}
@@ -124,6 +126,7 @@ export const AuthDescription = ({ authorized, description, placeholder, update, 
       placeholder={placeholder}
       maxLength={maxLength}
       allowImages={allowImages}
+      maxRows={maxRows}
     />
   ) : (
     <StaticDescription description={description} />

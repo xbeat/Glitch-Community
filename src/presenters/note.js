@@ -40,6 +40,7 @@ const Note = ({
           onBlur={updateNoteVisibility}
           maxLength={75}
           allowImages={false}
+          maxRows={4}
         />
       </div>
       <div className="user">
