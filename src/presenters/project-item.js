@@ -9,7 +9,7 @@ import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
 const ProjectItem = ({
-  api, project, collection, ...props
+  project, collection, ...props
 }) => (
   <li>
     <Note
@@ -19,7 +19,7 @@ const ProjectItem = ({
       hideNote={props.hideNote}
     />
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
-    <ProjectOptionsPop {...{ project, api }} {...props} />
+    <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
       <div className={['project', project.private ? 'private-project' : ''].join(' ')} data-track="project" data-track-label={project.domain}>
         <div className="project-container">
@@ -39,7 +39,6 @@ const ProjectItem = ({
 );
 
 ProjectItem.propTypes = {
-  api: PropTypes.func,
   author: PropTypes.object,
   hideNote: PropTypes.func,
   project: PropTypes.shape({
@@ -56,7 +55,6 @@ ProjectItem.propTypes = {
 };
 
 ProjectItem.defaultProps = {
-  api: null,
   author: null,
   projectOptions: {},
   hideNote: () => {},

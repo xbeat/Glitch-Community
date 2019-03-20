@@ -8,7 +8,7 @@ import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
 import { NotificationConsumer } from './notifications';
 
-import useAPI from '../state/api';
+import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 
 import Heading from '../components/text/heading';
@@ -46,7 +46,7 @@ class CollectionsList extends React.Component {
         {canMakeCollections && (
           <>
             <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
-            {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
+            {!hasCollections && <CreateFirstCollection />}
           </>
         )}
         <CollectionsUL
@@ -156,13 +156,13 @@ CreateCollectionButton.defaultProps = {
   maybeTeam: undefined,
 };
 
-export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized }) => {
+export const CollectionsUL = ({ collections, deleteCollection, isAuthorized }) => {
   // order by updatedAt date
   const orderedCollections = orderBy(collections, (collection) => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
-        <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
+        <CollectionItem key={null} collection={null}isAuthorized={isAuthorized}></CollectionItem>
       */}
 
       {orderedCollections.map((collection) => (
@@ -170,7 +170,6 @@ export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized
           key={collection.id}
           {...{
             collection,
-            api,
             isAuthorized,
             deleteCollection,
           }}
