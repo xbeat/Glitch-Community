@@ -218,21 +218,22 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
       buttonClass="project-options button-borderless button-small"
       buttonText={<div className="down-arrow" aria-label="options" />}
       containerClass="project-options-pop-btn"
-      passToggleToPop
     >
-      <CurrentUserConsumer>
-        {(user, fetched, funcs, consumerProps) => (
-          <ProjectOptionsPop
-            {...consumerProps}
-            {...props}
-            {...projectOptions}
-            project={project}
-            api={api}
-            currentUser={user}
-            currentUserIsOnProject={currentUserIsOnProject(user)}
-          />
-        )}
-      </CurrentUserConsumer>
+      {({ togglePopover }) => (
+        <CurrentUserConsumer>
+          {(user) => (
+            <ProjectOptionsPop
+              {...props}
+              {...projectOptions}
+              project={project}
+              api={api}
+              currentUser={user}
+              currentUserIsOnProject={currentUserIsOnProject(user)}
+              togglePopover={togglePopover}
+            />
+          )}
+        </CurrentUserConsumer>
+      )}
     </PopoverWithButton>
   );
 }
