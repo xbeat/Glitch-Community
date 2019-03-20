@@ -116,8 +116,7 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   );
 };
 
-const MAX_PROJECT_RESULTS = 20;
-const MAX_USER_TEAM_RESULTS = 8;
+const MAX_RESULTS = 20;
 
 const showResults = (results) => !results || !!results.length;
 
@@ -150,7 +149,7 @@ class SearchResults extends React.Component {
     const { api, query } = this.props;
     const { data } = await api.get(`teams/search?q=${query}`);
     this.setState((prevState) => ({
-      teams: data.slice(0, MAX_USER_TEAM_RESULTS),
+      teams: data.slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
@@ -159,7 +158,7 @@ class SearchResults extends React.Component {
     const { api, query } = this.props;
     const { data } = await api.get(`users/search?q=${query}`);
     this.setState((prevState) => ({
-      users: data.slice(0, MAX_USER_TEAM_RESULTS),
+      users: data.slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
@@ -168,7 +167,7 @@ class SearchResults extends React.Component {
     const { api, query } = this.props;
     const { data } = await api.get(`projects/search?q=${query}`);
     this.setState((prevState) => ({
-      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_PROJECT_RESULTS),
+      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
