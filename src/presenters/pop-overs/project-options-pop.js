@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TrackClick } from '../analytics';
 import PopoverWithButton from './popover-with-button';
 import { NestedPopover } from './popover-nested';
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 
 import AddProjectToCollectionPop from './add-project-to-collection-pop';
 
@@ -99,12 +99,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {showAddNote && (
         <section className="pop-over-actions">
-          <PopoverButton
-            onClick={toggleAndAddNote}
-            {...props}
-            text="Add Note"
-            emoji="spiral_note_pad"
-          />
+          <PopoverButton onClick={toggleAndAddNote} {...props} text="Add Note" emoji="spiral_note_pad" />
         </section>
       )}
 
@@ -201,6 +196,7 @@ ProjectOptionsPop.defaultProps = {
 // Project Options Container
 // create as stateful react component
 export default function ProjectOptions({ projectOptions, project, api }, { ...props }) {
+  const { currentUser } = useCurrentUser();
   if (Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -220,19 +216,15 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
       containerClass="project-options-pop-btn"
     >
       {({ togglePopover }) => (
-        <CurrentUserConsumer>
-          {(user) => (
-            <ProjectOptionsPop
-              {...props}
-              {...projectOptions}
-              project={project}
-              api={api}
-              currentUser={user}
-              currentUserIsOnProject={currentUserIsOnProject(user)}
-              togglePopover={togglePopover}
-            />
-          )}
-        </CurrentUserConsumer>
+        <ProjectOptionsPop
+          {...props}
+          {...projectOptions}
+          project={project}
+          api={api}
+          currentUser={currentUser}
+          currentUserIsOnProject={currentUserIsOnProject(currentUser)}
+          togglePopover={togglePopover}
+        />
       )}
     </PopoverWithButton>
   );

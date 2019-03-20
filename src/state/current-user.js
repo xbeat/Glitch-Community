@@ -274,13 +274,6 @@ CurrentUserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const CurrentUserConsumer = (props) => (
-  <Context.Consumer>{({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}</Context.Consumer>
-);
-CurrentUserConsumer.propTypes = {
-  children: PropTypes.func.isRequired,
-};
-
 export const useCurrentUser = () => React.useContext(Context);
 
 export function normalizeUser(user, currentUser) {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 
@@ -120,8 +121,9 @@ CollectionEditor.defaultProps = {
   api: null,
 };
 
-const CollectionEditorContainer = ({ api, children, initialCollection }) => {
+const CollectionEditorContainer = ({ children, initialCollection }) => {
   const { currentUser } = useCurrentUser();
+  const api = useAPI();
   const errorFuncs = useErrorHandlers();
   return (
     <CollectionEditor {...{ api, currentUser, initialCollection }} {...errorFuncs}>
@@ -130,7 +132,6 @@ const CollectionEditorContainer = ({ api, children, initialCollection }) => {
   );
 };
 CollectionEditorContainer.propTypes = {
-  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
 };
