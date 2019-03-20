@@ -7,6 +7,8 @@ import TextArea from '../src/components/fields/text-area';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
+const EXTERNAL_ROUTES = [];
+
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
   .add('cta', () => <Button type="cta">CTA Button</Button>)
@@ -20,10 +22,10 @@ storiesOf('Button', module)
     <Button type="dangerZone" size="small">
       Destructive Action
     </Button>
+  ))
+  .add('link', () => (
+    <Button href="https://support.glitch.com">Support</Button>
   ));
-  // .add('link', () => (
-  //   <Button href="https://support.glitch.com">Support</Button>
-  // ));
 
 storiesOf('TooltipContainer', module)
   .add('action', () => (
