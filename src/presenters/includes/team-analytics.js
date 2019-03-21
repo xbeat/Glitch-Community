@@ -208,7 +208,7 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} api={this.props.api} />
+            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} />
           </section>
         )}
 
@@ -227,13 +227,8 @@ class TeamAnalytics extends React.Component {
 
 TeamAnalytics.propTypes = {
   id: PropTypes.number.isRequired,
-  api: PropTypes.any,
   projects: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-};
-
-TeamAnalytics.defaultProps = {
-  api: null,
 };
 
 export default TeamAnalytics;

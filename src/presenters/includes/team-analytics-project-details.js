@@ -7,6 +7,7 @@ import { Loader } from './loader';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import Text from '../../components/text/text';
+import { useAPI } from '../../state/api';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -164,7 +165,9 @@ class TeamAnalyticsProjectDetails extends React.Component {
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.any.isRequired,
 };
 
-export default TeamAnalyticsProjectDetails;
+export default (props) => {
+  const api = useAPI();
+  return <TeamAnalyticsProjectDetails api={api} />;
+};
