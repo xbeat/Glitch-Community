@@ -29,7 +29,6 @@ export function getAvatarUrl(id) {
 }
 
 export function getOwnerLink(collection) {
-  console.log("here's a collection?", collection)
   if (collection.team) {
     return getTeamLink(collection.team);
   }

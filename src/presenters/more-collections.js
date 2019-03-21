@@ -15,30 +15,31 @@ import Text from '../components/text/text';
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
-  
+
   let moreCollections;
-  
+
   // get all collections from the author
   moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
-  
+
   // filter out the current collection
   moreCollections = moreCollections.filter((c) => c.id !== collection.id);
-  
+
   // pick 3 collections
   moreCollections = sampleSize(moreCollections, 3);
-  
-  // get projects in depth for each collection
+
+  // get project details for each collection
   moreCollections = await Promise.all(moreCollections.map(async (c) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
-  
+
   // get author details and attach to each collection
   const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
   moreCollections = moreCollections.map((c) => {
     c[authorType] = authorDetails;
     return c;
   });
+
   return moreCollections;
 };
 
@@ -46,7 +47,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 const CollectionItem = ({ name, description, projects, coverColor, user, team, url }) => {
   const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
   return (
-    <a href={getLink({ user, team, url,})} className="more-collections-item" style={{ backgroundColor: coverColor }}>
+    <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
       <div className="projects-count">{projectsCount}</div>
@@ -55,40 +56,33 @@ const CollectionItem = ({ name, description, projects, coverColor, user, team, u
 };
 
 
-class MoreCollections extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const MoreCollections = ({ api, currentUser, collection }) => {
+  const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
+  const isUserCollection = collection.teamId === -1;
 
-  render() {
-    const { api, currentUser, collection } = this.props;
-    const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
-    const isUserCollection = collection.teamId === -1;
-    return (
-      <section>
-        <h2>
-          {
-            isUserCollection
-              ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
-              : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
-          }
-        </h2>
-        <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
-          {
-            (collections) => (
-              <CoverContainer style={coverStyle} className="collections">
-                <div className="more-collections">
-                  {collections.map((c) => <CollectionItem key={c.id} {...c} />)}
-                </div>
-              </CoverContainer>
-            )
-          }
-        </DataLoader>
-      </section>
-    );
-  }
-}
+  return (
+    <section>
+      <h2>
+        {
+          isUserCollection
+            ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
+            : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
+        }
+      </h2>
+      <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
+        {
+          (collections) => (
+            <CoverContainer style={coverStyle} className="collections">
+              <div className="more-collections">
+                {collections.map((c) => <CollectionItem key={c.id} {...c} />)}
+              </div>
+            </CoverContainer>
+          )
+        }
+      </DataLoader>
+    </section>
+  );
+};
 
 MoreCollections.propTypes = {
   collection: PropTypes.object.isRequired,
