@@ -83,7 +83,7 @@ module.exports = function(external) {
       return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    const description = description ? cheerio.load(md.render(project.description)).text() : '';
+    const description = project.description ? cheerio.load(md.render(project.description)).text() : '';
 
     await render(res, domain, description, avatar);
   });
@@ -92,7 +92,8 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const description = description ? cheerio.load(md.render(team.description)).text() : '';
+      console.log('team');
+      const description = team.description ? cheerio.load(md.render(team.description)).text() : '';
       const args = [res, team.name, description];
 
       if (team.hasAvatarImage) {
@@ -104,7 +105,7 @@ module.exports = function(external) {
     }
     const user = await getUser(name);
     if (user) {
-      const description = description ? cheerio.load(md.render(user.description)).text() : '';
+      const description = user.description ? cheerio.load(md.render(user.description)).text() : '';
 
       await render(res, user.name || `@${user.login}`, description, user.avatarThumbnailUrl);
       return;
