@@ -12,11 +12,14 @@ import { UserLink, TeamLink } from './includes/link';
 import Text from '../components/text/text';
 
 const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
+  let moreCollections;
   const isTeamCollection = collection.teamId !== -1;
   if (isTeamCollection) {
+    moreCollections = await getSingleItem(api, `v1/teams/${collection.teamId}/collections`, 'items');
   } else {
-    getSingleItem(api, 
+    moreCollections = await getSingleItem(api, `v1/users/${collection.userId}/collections`, 'items');
   }
+  return moreCollections;
 }
 
 
