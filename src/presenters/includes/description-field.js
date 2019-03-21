@@ -22,7 +22,7 @@ class EditableDescriptionImpl extends React.Component {
     }
   }
 
-  onBlur() {
+  onBlur(event) {
     this.setState({ focused: false });
     this.props.onBlur(event.target.value);
   }

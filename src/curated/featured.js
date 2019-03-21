@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Reach Out and Touch',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_2.jpg?1552917252788',
-    link: 'https://glitch.com/~handholding-simulator',
+    title: 'Generate Milling G-Codes',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_4.jpg?1552917255870',
+    link: 'https://millinggcode.glitch.me/',
   },
   {
-    title: 'Alternatives to "You Guys"',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_1.jpg?1552917246402',
-    link: 'https://glitch.com/~vosotros',
+    title: 'Pick Colors That Work Well Together',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_5.jpg?1552917255666',
+    link: 'https://wcag-contrast.glitch.me/',
   },
   {
-    title: 'Fine Art in 100 Rectangles',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_3.jpg?1552917253176',
-    link: 'https://glitch.com/~thorn-larkspur',  
+    title: 'Car-Crushin\' Dominoes!',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_6.jpg?1552917252964',
+    link: 'https://car-crush.glitch.me/',  
   }
 ];
