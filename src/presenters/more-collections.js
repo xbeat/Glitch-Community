@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { loadAllCollections } from './featured-collections'; // maybe we should move this elsewhere
+
 
 import { getProfileStyle, getDisplayName } from '../models/user';
 import { getLink } from '../models/collection';
@@ -11,6 +11,10 @@ import { CoverContainer } from './includes/profile';
 import { UserLink, TeamLink } from './includes/link';
 
 import Text from '../components/text/text';
+
+const loadMoreCollectionsByAuthor = () => {
+}
+
 
 const CollectionItem = ({ name, description, projects, coverColor, user, url }) => {
   const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
