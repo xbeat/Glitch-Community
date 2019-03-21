@@ -7,7 +7,7 @@ import TextArea from '../src/components/fields/text-area';
 import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
-import Markdown from '../src/components/segmented-buttons/segmented-buttons';
+import SegmentedButtons from '../src/components/segmented-buttons/segmented-buttons';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
@@ -78,4 +78,4 @@ storiesOf('Markdown', module)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
 
 storiesOf('Segmented-Buttons', module)
-  .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]}></SegmentedButtons>);
+  .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]} ></SegmentedButtons>);
