@@ -30,10 +30,17 @@ const envs = {
   },
 };
 
+const sources = {
+  styles: ['*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
+  images: ['*.glitch.com', '*.gomix.com', 'gomix.com', 'cdn.hyperdev.com', 's3.amazonaws.com', '*.webtype.com', 'fast.wistia.com', 'culture-zine.glitch.me', '*.akamaihd.net'],
+  fonts: ['data:', '*.webtype.com', 'fonts.gstatic.com'],
+};
+
 // in the backend, just switch between staging and production
 const currentEnv = process.env.RUNNING_ON === 'staging' ? 'staging' : 'production';
 module.exports = {
   ...envs,
+  sources,
   current: envs[currentEnv],
   currentEnv,
 };

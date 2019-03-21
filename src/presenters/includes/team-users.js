@@ -144,7 +144,7 @@ export class AddTeamUser extends React.Component {
     } catch (error) {
       this.setState((state) => ({
         invitee: '',
-        alreadyInvited: state.alreadyInvited.filter((u) => u.id !== user.id),
+        newlyInvited: state.newlyInvited.filter((u) => u.id !== user.id),
       }));
     }
   }
