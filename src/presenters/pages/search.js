@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import { capitalize, sum } from 'lodash';
+import { sum } from 'lodash';
 
 import Layout from '../layout';
 
 import { useCurrentUser } from '../../state/current-user';
 
-import Button from '../../components/buttons/button';
-import SE
+import SegmentedButtons from '../../components/segmented-buttons/segmented-buttons';
 import Heading from '../../components/text/heading';
 
 import useErrorHandlers from '../error-handlers';
@@ -37,23 +36,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      <div className="search-filters segmented-buttons">
-        {filters.map(
-          (filter) =>
-            (filter.hits === null || filter.hits > 0) && (
-              <Button
-                key={filter.name}
-                size="small"
-                type="tertiary"
-                active={activeFilter === filter.name.toLowerCase()}
-                onClick={() => setFilter(filter.name)}
-              >
-                {capitalize(filter.name)}
-                {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
-              </Button>
-            ),
-        )}
-      </div>
+      <SegmentedButtons buttons={filters} onClick={setFilter(event)} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
