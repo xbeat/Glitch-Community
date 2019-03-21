@@ -13,6 +13,7 @@ import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
+import { useAPI } from '../../state/api';
 import Text from '../../components/text/text';
 
 const dateFromTime = (newTime) => {
@@ -226,9 +227,13 @@ class TeamAnalytics extends React.Component {
 }
 
 TeamAnalytics.propTypes = {
+  api: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   projects: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-export default TeamAnalytics;
+export default (props) => {
+  const api = useAPI();
+  return <TeamAnalytics {...props} api={api} />;
+};
