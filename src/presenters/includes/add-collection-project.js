@@ -45,5 +45,5 @@ AddCollectionProject.propTypes = {
 
 export default (props) => {
   const api = useAPI();
-  return <AddCollectionProject api={api} />;
+  return <AddCollectionProject api={api} {...props} />;
 };

@@ -169,5 +169,5 @@ TeamAnalyticsProjectDetails.propTypes = {
 
 export default (props) => {
   const api = useAPI();
-  return <TeamAnalyticsProjectDetails api={api} />;
+  return <TeamAnalyticsProjectDetails {...props} api={api} />;
 };

@@ -225,13 +225,12 @@ ProjectPageLoader.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const ProjectPageContainer = ({ name }) => {
-  return (
-    <Layout>
-      <AnalyticsContext properties={{ origin: 'project' }}>
-        <ProjectPageLoader domain={name} />
-      </AnalyticsContext>
-    </Layout>
-  );
-};
+const ProjectPageContainer = ({ name }) => (
+  <Layout>
+    <AnalyticsContext properties={{ origin: 'project' }}>
+      <ProjectPageLoader domain={name} />
+    </AnalyticsContext>
+  </Layout>
+);
+
 export default ProjectPageContainer;

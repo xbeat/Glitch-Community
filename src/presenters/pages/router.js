@@ -50,7 +50,7 @@ class PageChangeHandlerBase extends React.Component {
     }
   }
 
-  track() {
+  track = () => {
     try {
       const { analytics } = window;
       if (analytics) {
@@ -59,7 +59,7 @@ class PageChangeHandlerBase extends React.Component {
     } catch (ex) {
       console.error('Error tracking page transition.', ex);
     }
-  }
+  };
 
   render() {
     return null;

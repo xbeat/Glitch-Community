@@ -5,6 +5,7 @@
       "modules": false,
       "targets": {
         "chrome": "41",
+        "ie": "11",
         "edge": "16"
       },
       "useBuiltIns": "usage",
