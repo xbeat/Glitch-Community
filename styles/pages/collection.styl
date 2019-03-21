@@ -90,13 +90,18 @@
   .collection-project-container-header
     margin: 0px 10px
   .projects-container
-    margin: 30px 16px
-    overflow: visible
-
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    grid-gap: 5px
+    list-style-type: none
+    
+    @media (max-width: mediumViewport)
+      grid-template-columns: 1fr
+      
   .projects-container > li
-    float: none
-    display: inline-block
-    margin-bottom: 25px
+    width: auto
+    min-width: calc(33.3% - 10px)
+    align-self: end
     
     .project-options-pop
       width: 200px

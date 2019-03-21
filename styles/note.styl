@@ -5,8 +5,6 @@
   
   .description-container
     width: calc(100% - 36px)
-    min-height: 80px
-    max-height: 160px
     position: relative
     display: inline-block
     padding: 0px 10px
@@ -14,8 +12,6 @@
     font-size: 14px
     word-break: break-word
     margin-bottom: -20px
-    overflow-y: scroll
-    overflow-x: hidden
     &:after
       top: 9px
       right: -10px
@@ -33,6 +29,11 @@
     p 
       margin-bottom: 0
       word-break: break-word
+    &:first-of-type
+      overflow-y: scroll
+      overflow-x: hidden
+      min-height: 80px
+      max-height: 160px
   .user
     position: absolute
     top: 0
