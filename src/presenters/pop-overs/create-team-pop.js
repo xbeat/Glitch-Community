@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { TrackClick } from '../analytics';
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';
@@ -156,21 +156,17 @@ CreateTeamPopBase.defaultProps = {
 
 const CreateTeamPop = withRouter(CreateTeamPopBase);
 
-const CreateTeamPopOrSignIn = ({ api }) => (
-  <CurrentUserConsumer>
-    {(user) =>
-      user && user.login ? (
-        <CreateTeamPop api={api} />
-      ) : (
-        <SignInPopBase
-          api={api}
-          hash="create-team"
-          header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
-          prompt={<p className="action-description">You'll need to sign in to create a team</p>}
-        />
-      )
-    }
-  </CurrentUserConsumer>
-);
-
+const CreateTeamPopOrSignIn = ({ api }) => {
+  const { currentUser: user } = useCurrentUser();
+  return user && user.login ? (
+    <CreateTeamPop api={api} />
+  ) : (
+    <SignInPopBase
+      api={api}
+      hash="create-team"
+      header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
+      prompt={<p className="action-description">You'll need to sign in to create a team</p>}
+    />
+  );
+};
 export default CreateTeamPopOrSignIn;

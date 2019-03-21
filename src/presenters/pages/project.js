@@ -28,7 +28,7 @@ import RelatedProjects from '../includes/related-projects';
 import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
 
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 
 import Layout from '../layout';
 
@@ -232,12 +232,14 @@ ProjectPageLoader.defaultProps = {
   api: null,
 };
 
-const ProjectPageContainer = ({ api, name }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'project' }}>
-      <CurrentUserConsumer>{(currentUser) => <ProjectPageLoader api={api} domain={name} currentUser={currentUser} />}</CurrentUserConsumer>
-    </AnalyticsContext>
-  </Layout>
-);
-
+const ProjectPageContainer = ({ api, name }) => {
+  const { currentUser } = useCurrentUser();
+  return (
+    <Layout api={api}>
+      <AnalyticsContext properties={{ origin: 'project' }}>
+        <ProjectPageLoader api={api} domain={name} currentUser={currentUser} />
+      </AnalyticsContext>
+    </Layout>
+  );
+};
 export default ProjectPageContainer;
