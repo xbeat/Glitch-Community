@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 import { Link } from '../../presenters/includes/link';
+import Emoji from '../images
 
 const cx = classNames.bind(styles);
 
@@ -26,24 +27,10 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     hover,
   });
 
-  const linkOrButton = () => {
-    if (href) {
-      return (
-        
-      );
-    }
-    return (
-      <button onClick={onClick} className={className} disabled={disabled}>
-        {children}
-      </button>
-    );
-  };
-
   return (
     href ?
-      <Link to={href} className={className}> {children}
-        </Link>
-  
+      <Link to={href} className={className}> {children} </Link> :
+      <button onClick={onClick} className={className} disabled={disabled}>{children}</button>
   );
 };
 
