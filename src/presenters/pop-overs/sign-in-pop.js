@@ -273,7 +273,7 @@ const SignInPopWithoutRouter = (props) => {
 
 export const SignInPopBase = withRouter(SignInPopWithoutRouter);
 SignInPopBase.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   header: PropTypes.node,
   prompt: PropTypes.node,
   hash: PropTypes.string,

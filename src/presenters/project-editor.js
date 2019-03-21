@@ -41,7 +41,7 @@ class ProjectEditor extends React.Component {
 }
 
 ProjectEditor.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
@@ -51,7 +51,6 @@ ProjectEditor.propTypes = {
 
 ProjectEditor.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
 const ProjectEditorContainer = ({ children, initialProject }) => {

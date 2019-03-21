@@ -64,7 +64,6 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  api: PropTypes.func.isRequired,
   /* eslint-enable */
 };
 

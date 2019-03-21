@@ -108,7 +108,7 @@ class CollectionEditor extends React.Component {
   }
 }
 CollectionEditor.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
@@ -118,7 +118,6 @@ CollectionEditor.propTypes = {
 
 CollectionEditor.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
 const CollectionEditorContainer = ({ children, initialCollection }) => {

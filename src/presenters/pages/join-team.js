@@ -69,7 +69,7 @@ JoinTeamPageBase.propTypes = {
 };
 
 const JoinTeamPage = (props) => {
-  const api = useAPI()
+  const api = useAPI();
   const { login } = useCurrentUser();
   const notify = useNotifications();
   return <JoinTeamPageBase replaceCurrentUser={login} api={api} {...notify} {...props} />;

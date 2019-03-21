@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import AddTeamProjectPop from '../pop-overs/add-team-project-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
+import { useAPI } from '../../state/api';
 
 const AddTeamProject = ({ currentUserIsOnTeam, ...props }) => {
+  const api = useAPI();
   if (!currentUserIsOnTeam) {
     return null;
   }
@@ -31,12 +33,10 @@ AddTeamProject.propTypes = {
   addProject: PropTypes.func.isRequired,
   teamProjects: PropTypes.array.isRequired,
   extraButtonClass: PropTypes.string,
-  api: PropTypes.func,
 };
 
 AddTeamProject.defaultProps = {
   extraButtonClass: '',
-  api: null,
 };
 
 export default AddTeamProject;

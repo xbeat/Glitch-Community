@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
+import { useAPI } from '../../state/api';
 
 class AddCollectionProject extends React.Component {
   constructor(props) {
@@ -42,4 +43,7 @@ AddCollectionProject.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export default AddCollectionProject;
+export default (props) => {
+  const api = useAPI();
+  return <AddCollectionProject api={api} />;
+};
