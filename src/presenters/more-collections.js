@@ -14,19 +14,24 @@ import Text from '../components/text/text';
 
 const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
   let moreCollections;
-  const authorType = collection.teamId === -1 ? 'users' : 'teams';
-  const authorId = authorType === 'users' ? collection.userId : collection.teamId;
-  //get more collections
-  moreCollections = await getSingleItem(api, `v1/${authorType}/${authorId}/collections`, 'items');
-  //pick 3
+  const authorType = collection.teamId === -1 ? 'user' : 'team';
+  const authorId = authorType === 'user' ? collection.userId : collection.teamId;
+  // get more collections from the author
+  moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
+  // pick 3 collections
   moreCollections = sampleSize(moreCollections, 3);
-  // get projects in depth
+  // get projects in depth for each collection
   moreCollections = await Promise.all(moreCollections.map(async (c) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
-  // get author details
-  moreCollections[authorType.sl
+  // get author details and attach to each collection
+  const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
+  moreCollections = moreCollections.map((c) => {
+    c[authorType] = authorDetails;
+    return c;
+  });
+  console.log({ moreCollections });
   return moreCollections;
 };
 
