@@ -1,19 +1,31 @@
 const express = require('express');
+const helmet = require('helmet');
+const enforce = require('express-sslify');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
 
-const { getProject, getTeam, getUser, getZine } = require('./api');
+const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
 
 module.exports = function(external) {
   const app = express.Router();
 
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
     response.header('Access-Control-Allow-Origin', '*');
-    response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    response.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept',
+    );
+
+    // security headers added by jenn to get mozilla observatory score up
+    response.header('X-XSS-Protection', '1; mode=block');
+    response.header('X-Content-Type-Options', 'nosniff');
+    response.header('Strict-Transport-Security', 'max-age=15768000');
     return next();
   });
 
@@ -24,8 +36,15 @@ module.exports = function(external) {
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
 
+  // Log all requests for diagnostics
+  app.use(function(request, response, next) {
+    console.log(request.method, request.originalUrl, request.body);
+    return next();
+  });
+
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+
   async function render(res, title, description, image = imageDefault) {
     let built = true;
 
@@ -49,7 +68,9 @@ module.exports = function(external) {
         }
       });
     } catch (error) {
-      console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
+      console.error(
+        "Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.",
+      );
       built = false;
     }
 
@@ -70,6 +91,21 @@ module.exports = function(external) {
   }
 
   const { CDN_URL } = constants.current;
+  const { sources } = constants;
+
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        // style-src unsafe-inline is required for our SVGs
+        // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
+        styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
+        imgSrc: ["'self'", ...sources.images],
+        fontSrc: ["'self'", ...sources.fonts],
+        baseUri: ["'self'"],
+        reportUri: 'https://csp-reporting-server.glitch.me/report',
+      },
+    }),
+  );
 
   app.get('/~:domain', async (req, res) => {
     const { domain } = req.params;
@@ -86,15 +122,42 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      await render(res, team.name, team.description);
+      const args = [res, team.name, team.description];
+      if (team.hasAvatarImage) {
+        args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
+      }
+      await render(...args);
       return;
     }
     const user = await getUser(name);
     if (user) {
-      await render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
+      await render(
+        res,
+        user.name || `@${user.login}`,
+        user.description,
+        user.avatarThumbnailUrl,
+      );
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
+  });
+
+  app.get('/@:name/:collection', async (req, res) => {
+    const { name, collection } = req.params;
+    const collectionObj = await getCollection(`${name}/${collection}`);
+    const author = name;
+
+    if (collectionObj) {
+      let { name, description } = collectionObj;
+
+      description = description.trimEnd(); // trim trailing whitespace from description
+      description += ` 🎏 A collection of apps by @${author}`;
+      description = description.trimStart(); // if there was no description, trim space before the fish
+
+      await render(res, name, description);
+      return;
+    }
+    await render(res, `${collection}`, `We couldn't find @${name}/${collection}`);
   });
 
   app.get('/auth/:domain', async (req, res) => {

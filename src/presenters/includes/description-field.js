@@ -22,12 +22,13 @@ class EditableDescriptionImpl extends React.Component {
     }
   }
 
-  onBlur() {
+  onBlur(event) {
     this.setState({ focused: false });
+    this.props.onBlur(event.target.value);
   }
 
   render() {
-    const { description, placeholder } = this.props;
+    const { description, placeholder, maxLength, allowImages, maxRows } = this.props;
     return this.state.focused ? (
       <TextArea
         className="description content-editable"
@@ -37,6 +38,8 @@ class EditableDescriptionImpl extends React.Component {
         onBlur={this.onBlur}
         placeholder={placeholder}
         spellCheck={false}
+        maxLength={maxLength}
+        maxRows={maxRows}
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
     ) : (
@@ -49,36 +52,59 @@ class EditableDescriptionImpl extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        <Markdown>{description}</Markdown>
+        {description && <Markdown allowImages={allowImages}>{description}</Markdown>}
       </p>
     );
   }
 }
+
 EditableDescriptionImpl.propTypes = {
+  allowImages: PropTypes.bool,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  maxLength: PropTypes.number,
 };
 
 EditableDescriptionImpl.defaultProps = {
+  allowImages: true,
   placeholder: '',
+  onBlur: () => {},
+  maxLength: 524288, // this is the built in default
 };
 
-const EditableDescription = ({ description, placeholder, update }) => (
+const EditableDescription = ({
+  description, placeholder, update, onBlur, maxLength, allowImages, maxRows,
+}) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
-      <EditableDescriptionImpl description={optimisticValue} update={optimisticUpdate} placeholder={placeholder} />
+      <EditableDescriptionImpl
+        description={optimisticValue}
+        update={optimisticUpdate}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        allowImages={allowImages}
+        maxRows={maxRows}
+      />
     )}
   </OptimisticValue>
 );
 EditableDescription.propTypes = {
+  allowImages: PropTypes.bool,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  maxLength: PropTypes.number,
 };
 
 EditableDescription.defaultProps = {
+  allowImages: true,
   placeholder: '',
+  onBlur: () => {},
+  maxLength: null,
 };
 
 export const StaticDescription = ({ description }) =>
@@ -91,19 +117,33 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({ authorized, description, placeholder, update }) =>
+export const AuthDescription = ({ authorized, description, placeholder, update, onBlur, maxLength, allowImages, maxRows }) =>
   authorized ? (
-    <EditableDescription description={description} update={update} placeholder={placeholder} />
+    <EditableDescription
+      description={description}
+      update={update}
+      onBlur={onBlur}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      allowImages={allowImages}
+      maxRows={maxRows}
+    />
   ) : (
     <StaticDescription description={description} />
   );
+
 AuthDescription.propTypes = {
+  allowImages: PropTypes.bool,
   authorized: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  update: PropTypes.func.isRequired,
+  update: PropTypes.func,
+  maxLength: PropTypes.number,
 };
 
 AuthDescription.defaultProps = {
+  allowImages: true,
   placeholder: '',
+  maxLength: null,
+  update: null,
 };

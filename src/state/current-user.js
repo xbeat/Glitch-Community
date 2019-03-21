@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
-import useLocalStorage from './includes/local-storage';
+import useLocalStorage from './local-storage';
 
 const Context = React.createContext();
 
@@ -278,13 +278,6 @@ export const CurrentUserProvider = ({ children }) => {
   );
 };
 CurrentUserProvider.propTypes = {
-  children: PropTypes.func.isRequired,
-};
-
-export const CurrentUserConsumer = (props) => (
-  <Context.Consumer>{({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}</Context.Consumer>
-);
-CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 

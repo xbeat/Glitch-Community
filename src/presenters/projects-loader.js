@@ -4,7 +4,7 @@ import { chunk, keyBy, flatMap, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
-import { CurrentUserConsumer, normalizeProjects } from './current-user';
+import { useCurrentUser, normalizeProjects } from '../state/current-user';
 
 function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});
@@ -68,13 +68,9 @@ class ProjectsLoader extends React.Component {
   }
 
   render() {
-    const { children, projects } = this.props;
+    const { children, projects, currentUser } = this.props;
     const loadedProjects = projects.map((project) => this.state[project.id] || project);
-    return (
-      <CurrentUserConsumer>
-        {(currentUser) => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
-      </CurrentUserConsumer>
-    );
+    return children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this));
   }
 }
 
@@ -84,4 +80,9 @@ ProjectsLoader.propTypes = {
   projects: PropTypes.array.isRequired,
 };
 
-export default ProjectsLoader;
+const ProjectsLoaderWrap = (props) => {
+  const { currentUser } = useCurrentUser();
+  return <ProjectsLoader {...props} currentUser={currentUser} />;
+};
+
+export default ProjectsLoaderWrap;

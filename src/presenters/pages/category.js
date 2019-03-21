@@ -11,7 +11,9 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
+
+import Heading from '../../components/text/heading';
 
 const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, ...props }) => (
   <>
@@ -21,7 +23,7 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
     <main className="collection-page">
       <article className="projects collection-full" style={{ backgroundColor: category.backgroundColor }}>
         <header className="collection">
-          <h1 className="collection-name">{category.name}</h1>
+          <Heading tagName="h1">{category.name}</Heading>
           <div className="collection-image-container">
             <img src={category.avatarUrl} alt="" />
           </div>
@@ -33,7 +35,7 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
           {(projects) => (
             <div className="collection-contents">
               <div className="collection-project-container-header">
-                <h3>Projects ({category.projects.length})</h3>
+                <Heading tagName="h3">Projects ({category.projects.length})</Heading>
               </div>
 
               {currentUser.login ? (
@@ -89,26 +91,24 @@ async function loadCategory(api, id) {
   return data;
 }
 
-const CategoryPage = ({ api, category, ...props }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'category' }}>
-      <DataLoader get={() => loadCategory(api, category.id)}>
-        {(loadedCategory) => (
-          <CollectionEditor api={api} initialCollection={loadedCategory}>
-            {(categoryFromEditor, funcs) => (
-              <CurrentUserConsumer>
-                {(currentUser) => (
-                  <CategoryPageWrap category={categoryFromEditor} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props} />
-                )}
-              </CurrentUserConsumer>
-            )}
-          </CollectionEditor>
-        )}
-      </DataLoader>
-    </AnalyticsContext>
-  </Layout>
-);
-
+const CategoryPage = ({ api, category, ...props }) => {
+  const { currentUser } = useCurrentUser();
+  return (
+    <Layout api={api}>
+      <AnalyticsContext properties={{ origin: 'category' }}>
+        <DataLoader get={() => loadCategory(api, category.id)}>
+          {(loadedCategory) => (
+            <CollectionEditor api={api} initialCollection={loadedCategory}>
+              {(categoryFromEditor, funcs) => (
+                <CategoryPageWrap category={categoryFromEditor} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props} />
+              )}
+            </CollectionEditor>
+          )}
+        </DataLoader>
+      </AnalyticsContext>
+    </Layout>
+  );
+};
 CategoryPage.propTypes = {
   api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
