@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { loadAllCollections } from './featured-collections'; //maybe we should move this elsewhere
+import { loadAllCollections } from './featured-collections'; // maybe we should move this elsewhere
 
 import { getProfileStyle, getDisplayName } from '../models/user';
 import { getLink } from '../models/collection';
