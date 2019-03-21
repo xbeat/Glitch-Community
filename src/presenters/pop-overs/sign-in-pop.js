@@ -258,7 +258,7 @@ const SignInPopWithoutRouter = (props) => {
                 {prompt}
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
-                {googleAuthEnabled && <SignInPopButton href={googleAuthLink()} company="Google" emoji="" onClick={onClick} />}
+                {googleAuthEnabled && <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />}
                 <EmailSignInButton
                   onClick={() => {
                     onClick();
