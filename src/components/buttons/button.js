@@ -14,27 +14,20 @@ export const SIZES = ['small'];
 /**
  * Button Component
  */
-<<<<<<< HEAD
 
-const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children }) => {
-=======
-const Button = ({ onClick, disabled, type, size, hover, children, active }) => {
->>>>>>> 826ae07de4637c417be2aecc808499475970c1ed
+const Button = ({ onClick, disabled, type, size, matchBackground, hover, children, active }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
     small: size === 'small' || type === 'dangerZone', // we want to demphasize dangerous actions, so we make them small
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-<<<<<<< HEAD
     unstyled: type === 'dropDown',
     hasEmoji: React.Children.toArray(children).some(
       (child) => child.type && child.type.name === React.createElement(Emoji, { name: 'herb' }).type.name,
     ),
     matchBackground: matchBackground === true,
-=======
     active,
->>>>>>> 826ae07de4637c417be2aecc808499475970c1ed
     hover,
   });
 
@@ -69,13 +62,10 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
-<<<<<<< HEAD
   /** whether or not the button should match its background */
   matchBackground: PropTypes.bool,
-=======
   /** whether the button is active or not */
   active: PropTypes.bool,
->>>>>>> 826ae07de4637c417be2aecc808499475970c1ed
 };
 
 Button.defaultProps = {
@@ -85,11 +75,8 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
-<<<<<<< HEAD
   matchBackground: true,
-=======
   active: false,
->>>>>>> 826ae07de4637c417be2aecc808499475970c1ed
 };
 
 export default Button;
