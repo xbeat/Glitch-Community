@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 import { Link } from '../../presenters/includes/link';
+import Emoji from '../images/emoji';
 
 const cx = classNames.bind(styles);
 
@@ -21,28 +22,21 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, a
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: type === 'dropDown',
+<<<<<<< HEAD
     hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
     active,
+=======
+    hasEmoji: React.Children.toArray(children).some(
+      (child) => child.type && child.type.name === React.createElement(Emoji, { name: 'herb' }).type.name,
+    ),
+>>>>>>> 665307438ff9ac95bd1a2b78fc4d6fcdd2f92715
     matchBackground: matchBackground === true,
     hover,
   });
 
-  const linkOrButton = () => {
-    if (href) {
-      return (
-        <Link to={href} className={className}>
-          {children}
-        </Link>
-      );
-    }
-    return (
-      <button onClick={onClick} className={className} disabled={disabled}>
-        {children}
-      </button>
-    );
-  };
-
-  return linkOrButton();
+  return href
+    ? <Link to={href} className={className}>{children}</Link>
+    : <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
 };
 
 
