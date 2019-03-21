@@ -181,7 +181,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
 
             return (
               <TooltipContainer
-              className="button user-options-pop-button"
+                className="button user-options-pop-button"
                 target={userOptionsButton}
                 tooltip="User options"
                 id="user-options-tooltip"

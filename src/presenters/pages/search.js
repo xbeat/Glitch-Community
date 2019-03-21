@@ -204,11 +204,7 @@ class SearchResults extends React.Component {
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (
-          <ProjectResults
-            projects={projects}
-            currentUser={this.props.currentUser}
-            addProjectToCollection={this.addProjectToCollection}
-          />
+          <ProjectResults projects={projects} currentUser={this.props.currentUser} addProjectToCollection={this.addProjectToCollection} />
         )}
         {noResults && <NotFound name="any results" />}
       </main>
@@ -216,13 +212,9 @@ class SearchResults extends React.Component {
   }
 }
 SearchResults.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,
-};
-
-SearchResults.defaultProps = {
-  api: null,
 };
 
 const SearchPage = ({ query }) => {

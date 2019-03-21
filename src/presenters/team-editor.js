@@ -238,7 +238,7 @@ class TeamEditor extends React.Component {
   }
 }
 TeamEditor.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func.isRequired,
@@ -248,7 +248,6 @@ TeamEditor.propTypes = {
 
 TeamEditor.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
 const TeamEditorContainer = ({ children, initialTeam }) => {

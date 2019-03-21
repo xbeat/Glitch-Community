@@ -67,4 +67,3 @@ export const MoreIdeasCategories = () => (
 );
 
 export default MoreIdeasCategories;
-

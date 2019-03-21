@@ -28,7 +28,7 @@ const CollectionWide = ({ collection }) => {
         <CollectionLink className="collection-image-container" collection={collection}>
           <CollectionAvatar color={collection.coverColor} />
         </CollectionLink>
-      <CollectionLink className="collection-name" collection={collection}>
+        <CollectionLink className="collection-name" collection={collection}>
           <Heading tagName="h2">{collection.name}</Heading>
         </CollectionLink>
         {!!collection.team && <TeamTile team={collection.team} />}

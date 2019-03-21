@@ -233,5 +233,4 @@ const SignInPop = (props) => {
   );
 };
 
-
 export default SignInPop;

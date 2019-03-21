@@ -13,9 +13,7 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({
-  collection, project, update, hideNote,
-}) => {
+const Note = ({ collection, project, update, hideNote }) => {
   function updateNoteVisibility(description) {
     description = _.trim(description);
     if (!description || description.length === 0) {
@@ -48,15 +46,10 @@ const Note = ({
           maxRows={4}
         />
       </div>
-      <div className="user">
-        {
-          collection.teamId === -1 ? <UserTile user={collection.user} /> : <TeamTile team={collection.team} />
-        }
-      </div>
+      <div className="user">{collection.teamId === -1 ? <UserTile user={collection.user} /> : <TeamTile team={collection.team} />}</div>
     </div>
   );
 };
-
 
 Note.propTypes = {
   project: PropTypes.shape({

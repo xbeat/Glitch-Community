@@ -8,9 +8,7 @@ import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
-const ProjectItem = ({
-  project, collection, ...props
-}) => (
+const ProjectItem = ({ project, collection, ...props }) => (
   <li>
     <Note
       collection={collection}

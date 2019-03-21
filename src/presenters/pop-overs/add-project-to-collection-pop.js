@@ -182,11 +182,7 @@ class AddProjectToCollectionPop extends React.Component {
     return (
       <NestedPopover
         alternateContent={() => (
-          <CreateCollectionPop
-            {...this.props}
-            collections={this.state.maybeCollections}
-            togglePopover={this.props.togglePopover}
-          />
+          <CreateCollectionPop {...this.props} collections={this.state.maybeCollections} togglePopover={this.props.togglePopover} />
         )}
         startAlternateVisible={false}
       >

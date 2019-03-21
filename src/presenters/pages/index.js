@@ -123,13 +123,12 @@ IndexPage.propTypes = {
   }).isRequired,
 };
 
-
 const IndexPageContainer = () => {
   const { currentUser } = useCurrentUser();
   return (
     <Layout>
       <AnalyticsContext properties={{ origin: 'index' }}>
-        <IndexPage  user={currentUser} />
+        <IndexPage user={currentUser} />
       </AnalyticsContext>
     </Layout>
   );

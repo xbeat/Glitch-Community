@@ -52,9 +52,7 @@ const RecentProjects = () => {
   return (
     <RecentProjectsContainer user={user}>
       {fetched ? (
-        <ProjectsLoader projects={user.projects.slice(0, 3)}>
-          {(projects) => <ProjectsUL projects={projects} />}
-        </ProjectsLoader>
+        <ProjectsLoader projects={user.projects.slice(0, 3)}>{(projects) => <ProjectsUL projects={projects} />}</ProjectsLoader>
       ) : (
         <Loader />
       )}

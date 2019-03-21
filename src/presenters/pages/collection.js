@@ -142,11 +142,7 @@ const CollectionPageContents = ({
               <div className="collection-contents">
                 <div className="collection-project-container-header">
                   {currentUserIsAuthor && (
-                    <AddCollectionProject
-                      addProjectToCollection={addProjectToCollection}
-                      collection={collection}
-                      currentUser={currentUser}
-                    />
+                    <AddCollectionProject addProjectToCollection={addProjectToCollection} collection={collection} currentUser={currentUser} />
                   )}
                 </div>
                 {currentUserIsAuthor && (
@@ -173,9 +169,7 @@ const CollectionPageContents = ({
                     }}
                   />
                 )}
-                {!currentUserIsAuthor && !userIsLoggedIn && (
-                  <ProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />
-                )}
+                {!currentUserIsAuthor && !userIsLoggedIn && <ProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />}
               </div>
             </>
           )}

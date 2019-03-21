@@ -280,5 +280,5 @@ AddCollectionProjectPop.defaultProps = {
 
 export default (props) => {
   const api = useAPI();
-  return <AddCollectionProjectPop {...props} api={api} />
+  return <AddCollectionProjectPop {...props} api={api} />;
 };
