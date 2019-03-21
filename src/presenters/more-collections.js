@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
-
+import { getSingleItem } from '../../shared/api';
 import { getProfileStyle, getDisplayName } from '../models/user';
 import { getLink } from '../models/collection';
 
@@ -12,7 +11,12 @@ import { UserLink, TeamLink } from './includes/link';
 
 import Text from '../components/text/text';
 
-const loadMoreCollectionsByAuthor = () => {
+const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
+  const isTeamCollection = collection.teamId !== -1;
+  if (isTeamCollection) {
+  } else {
+    getSingleItem(api, 
+  }
 }
 
 
@@ -36,10 +40,8 @@ class MoreCollections extends React.Component {
 
   render() {
     const { api, currentUser, collection } = this.props;
-    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url })); // this isn't right
     const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
     const isUserCollection = collection.teamId === -1;
-    console.log(collection);
     return (
       <section>
         <h2>
@@ -49,7 +51,7 @@ class MoreCollections extends React.Component {
               : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
           }
         </h2>
-        <DataLoader get={() => loadAllCollections(api, collectionsToLoad)}>
+        <DataLoader get={() => loadMoreCollectionsLikeCollections({ api, collection })}>
           {
             (collections) => (
               <CoverContainer style={coverStyle} className="collections">
