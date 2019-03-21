@@ -21,18 +21,21 @@ import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
+
+  
+  // ={["This is ", <strong>not</strong>,  "working."]}
   
   // generate filterButton array
   const filterButtons = [];
-  filters.map( (filter) => {
+  filters.map((filter) => {
     let button = {};
     button.contents = capitalize(filter.name);
-    if(button.hits > 0){
-      button.contents = button.contents + <div className="status-badge">{filter.hits}</div>;
+    if (filter.hits > 0) {
+      button.contents += <div className="status-badge">{filter.hits}</div>;
     }
     button.active = activeFilter === filter.name.toLowerCase();
     filterButtons.push(button);
-  })
+  });
   console.log('filterButtons', filterButtons);
 
   if (!loaded) {

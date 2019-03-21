@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './segmented-buttons.styl';
-import Button from '../../buttons/button';
+import Button from '../buttons/button';
 
 const cx = classNames.bind(styles);
 
@@ -31,8 +31,8 @@ class SegmentedButtons extends React.Component {
 
     return (
       <div className={className}>
-        {buttons.map((button) => (
-          <Button size="small" type="tertiary" active={button.active} onClick={(event) => setFilter}>
+        {buttons.map((button, index) => (
+          <Button key={index} size="small" type="tertiary" active={button.active} onClick={(event) => setFilter}>
             {button.contents}
           </Button>
         ))}
