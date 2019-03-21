@@ -22,7 +22,10 @@ class SegmentedButtons extends React.Component {
 
   setFilter(event) {
     console.log(event); 
-    // this.setState({ activeFilter: filter });
+    this.setState({ : filter });
+    // call the onclick event passed to the component
+    this.props.onClick();
+    
   }
 
   render() {
@@ -32,7 +35,7 @@ class SegmentedButtons extends React.Component {
     return (
       <div className={className}>
         {buttons.map((button, index) => (
-          <Button key={index} size="small" type="tertiary" active={button.active} onClick={(event) => setFilter}>
+          <Button key={index} size="small" type="tertiary" active={button.active} onClick={this.setFilter}>
             {button.contents}
           </Button>
         ))}

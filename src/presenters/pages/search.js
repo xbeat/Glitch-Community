@@ -21,9 +21,6 @@ import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-
-  
-  // ={["This is ", <strong>not</strong>,  "working."]}
   
   // generate filterButton array
   const filterButtons = [];
@@ -142,6 +139,7 @@ class SearchResults extends React.Component {
   }
 
   setFilter(filter) {
+    console.log('set filter');
     this.setState({ activeFilter: filter });
   }
 
