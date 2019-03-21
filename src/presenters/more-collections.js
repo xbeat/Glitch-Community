@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadAllCollections } from './featured-collections';
+
+import { loadAllCollections } from './featured-collections'; //maybe we should move this elsewhere
+
+import { getProfileStyle, getDisplayName } from '../models/user';
+import { getLink } from '../models/collection';
+
 import { DataLoader } from './includes/loader';
 import { CoverContainer } from './includes/profile';
 import { UserLink, TeamLink } from './includes/link';
-import { getProfileStyle, getDisplayName } from '../models/user';
+
 import Text from '../components/text/text';
-// move to components
-// I wonder if this needs a new name or should be combined with the existing collectionItem in some way
-const CollectionItem = ({ name, description, projects, coverColor }) => {
+
+const CollectionItem = ({ name, description, projects, coverColor, user, url }) => {
   const projectsCount = `${projects.length} project${projects.length > 1 ? 's' : ''}`;
   return (
-    <a className="more-collections-item" style={{ backgroundColor: coverColor }}>
+    <a href={getLink({ user, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
       {projects.length > 0 && <div>{projectsCount}</div>}
