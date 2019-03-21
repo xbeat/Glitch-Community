@@ -12,34 +12,41 @@ import { UserLink, TeamLink } from './includes/link';
 
 import Text from '../components/text/text';
 
-const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
-  let moreCollections;
+const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
-  // get more collections from the author
+  
+  let moreCollections;
+  
+  // get all collections from the author
   moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
+  
+  // filter out the current collection
+  moreCollections = moreCollections.filter((c) => c.id !== collection.id);
+  
   // pick 3 collections
   moreCollections = sampleSize(moreCollections, 3);
+  
   // get projects in depth for each collection
   moreCollections = await Promise.all(moreCollections.map(async (c) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
+  
   // get author details and attach to each collection
-  moreCollections = await Promise.all(moreCollections.map(async (c) => {
-    c[user] =  await getSingleItem(api, `v1/${user}s/by/id/?id=${authorId}`, authorId);
-
+  const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
+  moreCollections = moreCollections.map((c) => {
+    c[authorType] = authorDetails;
     return c;
   });
-  console.log({ moreCollections });
   return moreCollections;
 };
 
 
-const CollectionItem = ({ name, description, projects, coverColor, user, url }) => {
+const CollectionItem = ({ name, description, projects, coverColor, user, team, url }) => {
   const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
   return (
-    <a href={getLink({ user, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
+    <a href={getLink({ user, team, url,})} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
       <div className="projects-count">{projectsCount}</div>
@@ -67,12 +74,12 @@ class MoreCollections extends React.Component {
               : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
           }
         </h2>
-        <DataLoader get={() => loadMoreCollectionsLikeCollections({ api, collection })}>
+        <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
           {
             (collections) => (
               <CoverContainer style={coverStyle} className="collections">
                 <div className="more-collections">
-                  {collections.filter((c) => c.id !== collection.id).map((c) => <CollectionItem key={c.id} {...c} />)}
+                  {collections.map((c) => <CollectionItem key={c.id} {...c} />)}
                 </div>
               </CoverContainer>
             )
