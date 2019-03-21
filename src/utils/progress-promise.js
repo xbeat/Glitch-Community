@@ -4,7 +4,7 @@
 // From: https://github.com/domenic/promises-unwrapping/issues/18
 if (Promise.prototype.finally == null) {
   // eslint-disable-next-line func-names
-  Promise.prototype.finally = function(callback) {
+  Promise.prototype.finally = function _finally(callback) {
     // We don’t invoke the callback in here,
     // because we want then() to handle its exceptions
     return this.then(
@@ -23,7 +23,7 @@ if (Promise.prototype._notify == null) {
   Promise.prototype._notify = function _notify(event) {
     return this._progressHandlers.forEach((handler) => {
       try {
-        return handler(event);
+        handler(event);
       } catch (error) {
         // empty
       }
@@ -44,16 +44,18 @@ if (Promise.prototype.progress == null) {
 
 function ProgressPromise(fn) {
   const p = new Promise((resolve, reject) => {
-    const notify = () =>
-      p._progressHandlers != null
-        ? p._progressHandlers.forEach((handler) => {
-            try {
-              return handler(event);
-            } catch (error) {
-              // empty
-            }
-          })
-        : undefined;
+    const notify = (event) => {
+      if (p._progressHandlers == null) {
+        return;
+      }
+      p._progressHandlers.forEach((handler) => {
+        try {
+          handler(event);
+        } catch (error) {
+          // empty
+        }
+      });
+    };
     return fn(resolve, reject, notify);
   });
 
