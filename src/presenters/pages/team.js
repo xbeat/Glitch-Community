@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { partition } from 'lodash';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
 import TeamEditor from '../team-editor';
 import { getLink, getAvatarStyle, getProfileStyle } from '../../models/team';
@@ -335,10 +335,10 @@ const teamConflictsWithUser = (team, currentUser) => {
   return false;
 };
 
-const TeamNameConflict = ({ team }) => (
-  <CurrentUserConsumer>{(currentUser) => teamConflictsWithUser(team, currentUser) && <NameConflictWarning />}</CurrentUserConsumer>
-);
-
+const TeamNameConflict = ({ team }) => {
+  const { currentUser } = useCurrentUser();
+  return teamConflictsWithUser(team, currentUser) && <NameConflictWarning />;
+};
 const TeamPageEditor = ({ api, initialTeam, children }) => (
   <TeamEditor api={api} initialTeam={initialTeam}>
     {(team, funcs, ...args) => (
@@ -377,31 +377,30 @@ const TeamPageEditor = ({ api, initialTeam, children }) => (
     )}
   </TeamEditor>
 );
-const TeamPageContainer = ({ api, team, ...props }) => (
-  <AnalyticsContext properties={{ origin: 'team' }} context={{ groupId: team.id.toString() }}>
-    <TeamPageEditor api={api} initialTeam={team}>
-      {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-        <>
-          <Helmet>
-            <title>{teamFromEditor.name}</title>
-          </Helmet>
-          <CurrentUserConsumer>
-            {(currentUser) => (
-              <TeamPage
-                api={api}
-                team={teamFromEditor}
-                {...funcs}
-                currentUser={currentUser}
-                currentUserIsOnTeam={currentUserIsOnTeam}
-                currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-                {...props}
-              />
-            )}
-          </CurrentUserConsumer>
-          <TeamNameConflict team={teamFromEditor} />
-        </>
-      )}
-    </TeamPageEditor>
-  </AnalyticsContext>
-);
+const TeamPageContainer = ({ api, team, ...props }) => {
+  const { currentUser } = useCurrentUser();
+  return (
+    <AnalyticsContext properties={{ origin: 'team' }} context={{ groupId: team.id.toString() }}>
+      <TeamPageEditor api={api} initialTeam={team}>
+        {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+          <>
+            <Helmet>
+              <title>{teamFromEditor.name}</title>
+            </Helmet>
+            <TeamPage
+              api={api}
+              team={teamFromEditor}
+              {...funcs}
+              currentUser={currentUser}
+              currentUserIsOnTeam={currentUserIsOnTeam}
+              currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+              {...props}
+            />
+            <TeamNameConflict team={teamFromEditor} />
+          </>
+        )}
+      </TeamPageEditor>
+    </AnalyticsContext>
+  );
+};
 export default TeamPageContainer;

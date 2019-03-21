@@ -6,7 +6,7 @@ import { orderBy, partition } from 'lodash';
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../../state/current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { AuthDescription } from '../includes/description-field';
 import EditableField from '../includes/editable-field';
 import UserEditor from '../user-editor';
@@ -218,26 +218,23 @@ UserPage.propTypes = {
   unfeatureProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({ api, user }) => (
-  <AnalyticsContext properties={{ origin: 'user' }}>
-    <UserEditor api={api} initialUser={user}>
-      {(userFromEditor, funcs, isAuthorized) => (
-        <>
-          <Helmet>
-            <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
-          </Helmet>
-
-          <CurrentUserConsumer>
-            {(maybeCurrentUser) => (
-              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
-                {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
-              </ProjectsLoader>
-            )}
-          </CurrentUserConsumer>
-        </>
-      )}
-    </UserEditor>
-  </AnalyticsContext>
-);
-
+const UserPageContainer = ({ api, user }) => {
+  const { currentUser: maybeCurrentUser } = useCurrentUser();
+  return (
+    <AnalyticsContext properties={{ origin: 'user' }}>
+      <UserEditor api={api} initialUser={user}>
+        {(userFromEditor, funcs, isAuthorized) => (
+          <>
+            <Helmet>
+              <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
+            </Helmet>
+            <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
+              {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
+            </ProjectsLoader>
+          </>
+        )}
+      </UserEditor>
+    </AnalyticsContext>
+  );
+};
 export default UserPageContainer;
