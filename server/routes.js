@@ -56,9 +56,6 @@ module.exports = function(external) {
       console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
       built = false;
     }
-    
-    // convert raw markdown to text (for social cards)
-    description = cheerio.load(md.render(description)).text();
 
     res.render('index.ejs', {
       title,
@@ -78,7 +75,6 @@ module.exports = function(external) {
 
   const { CDN_URL } = constants.current;
 
-  // todo has markdown
   app.get('/~:domain', async (req, res) => {
     const { domain } = req.params;
     const project = await getProject(domain);
@@ -87,15 +83,21 @@ module.exports = function(external) {
       return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    await render(res, domain, project.description, avatar);
+    
+    // convert raw markdown to text (for social cards)
+    const description = cheerio.load(md.render(project.description)).text();
+
+    await render(res, domain, description, avatar);
   });
 
-  // todo has markdown
   app.get('/@:name', async (req, res) => {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const args = [res, team.name, team.description];
+      // convert raw markdown to text (for social cards)
+      const description = cheerio.load(md.render(team.description)).text();
+      
+      const args = [res, team.name, description];
       if (team.hasAvatarImage) {
         args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
       }
@@ -104,13 +106,15 @@ module.exports = function(external) {
     }
     const user = await getUser(name);
     if (user) {
-      await render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
+      // convert raw markdown to text (for social cards)
+      const description = cheerio.load(md.render(user.description)).text();
+      
+      await render(res, user.name || `@${user.login}`, description, user.avatarThumbnailUrl);
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
-  // todo has markdown
   app.get('/@:name/:collection', async (req, res) => {
     const { name, collection } = req.params;
     const collectionObj = await getCollection(`${name}/${collection}`);
