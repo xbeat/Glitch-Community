@@ -3,7 +3,6 @@
 // Extend promises with `finally`
 // From: https://github.com/domenic/promises-unwrapping/issues/18
 if (Promise.prototype.finally == null) {
-  // eslint-disable-next-line func-names
   Promise.prototype.finally = function _finally(callback) {
     // We don’t invoke the callback in here,
     // because we want then() to handle its exceptions
