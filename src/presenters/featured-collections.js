@@ -10,12 +10,14 @@ import { isDarkColor } from '../models/collection';
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
 import ProjectsLoader from './projects-loader';
 import { getSingleItem } from '../../shared/api';
 import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
+
+import Heading from '../components/text/heading';
 
 const CollectionWide = ({ collection, api }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
@@ -26,12 +28,12 @@ const CollectionWide = ({ collection, api }) => {
           <CollectionAvatar color={collection.coverColor} />
         </CollectionLink>
         <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
+          <Heading tagName="h2">{collection.name}</Heading>
         </CollectionLink>
         {!!collection.team && <TeamTile team={collection.team} />}
         {!!collection.user && <UserTile {...collection.user} />}
         <div className="collection-description">
-          <TruncatedMarkdown length={80}>{collection.description}</TruncatedMarkdown>
+          <Markdown length={80}>{collection.description}</Markdown>
         </div>
       </header>
       <div className="collection-contents">
@@ -57,6 +59,7 @@ CollectionWide.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
+// we have another loadCollection in collection.js consider combining the two
 const loadCollection = async (api, { owner, name }) => {
   try {
     const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);

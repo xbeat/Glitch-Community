@@ -15,11 +15,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- facebook open graph tags -->
-    <meta name="og:type" content="website">
-    <meta name="og:url" content="https://glitch.com">
-    <meta name="og:title" content="<%= title %>">
-    <meta name="og:description" content="<%= description %>">
-    <meta name="og:image" content="<%= image %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glitch.com">
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:image" content="<%= image %>">
     <!-- twitter card tags (stacks with og: tags) -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@glitch">
@@ -79,10 +79,26 @@
               <h1>The site isn&apos;t quite ready yet</h1>
               <p>Try refreshing in a few moments.</p>
             </div>
+            <div class="error-msg" id="fallback-ie" style="display: none">
+              <h1>Glitch doesn't support Internet Explorer yet</h1>
+              <p>Please upgrade to a web browser that can support Glitch features. Please use 
+                <a href="https://www.mozilla.org/en-US/firefox/">Firefox</a>, <a href="https://www.google.com/chrome/">Chrome</a> or <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">Edge</a>.</p>
+            </div>
           </main>
       </div>
     </div>
 
+    <script>
+      var isIe = /Trident\/[7]{1}/i.test(navigator.userAgent);
+      if (isIe) {
+        var fallback = document.getElementById('fallback');
+        var fallbackIe = document.getElementById('fallback-ie');
+        var fallbackImg = document.getElementById('fallback-img');
+        fallback.style.display = 'block';
+        fallbackIe.style.display = 'block';
+        fallbackImg.style.display = 'block';
+      }
+    </script>
     <% for (let i = 0; i < scripts.length; ++i) { %>
     <script src="<%= scripts[i] %>"></script>
     <% } %>

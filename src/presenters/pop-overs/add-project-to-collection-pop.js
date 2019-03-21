@@ -144,6 +144,10 @@ class AddProjectToCollectionPop extends React.Component {
     this.loadCollections();
   }
 
+  componentWillUnmount() {
+    this.unmounted = true;
+  }
+
   async loadCollections() {
     try {
       const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
@@ -165,7 +169,9 @@ class AddProjectToCollectionPop extends React.Component {
 
       const orderedCollections = orderBy(allCollections, (collection) => collection.updatedAt, ['desc']);
 
-      this.setState({ maybeCollections: orderedCollections });
+      if (!this.unmounted) {
+        this.setState({ maybeCollections: orderedCollections });
+      }
     } catch (error) {
       captureException(error);
     }

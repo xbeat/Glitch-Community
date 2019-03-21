@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
-import ProjectResultItem from '../includes/project-result-item';
+import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
 
 import { getRemixUrl } from '../../models/project';
@@ -17,6 +17,18 @@ const importGitRepo = () => {
   }
   window.location.href = `/edit/#!/import/git?url=${repoUrl}`;
 };
+
+const NewProjectResultItem = ({ id, domain, description }) => (
+  <div className="result result-project">
+    <ProjectAvatar domain={domain} id={id} />
+    <div className="results-info">
+      <div className="result-name" title={domain}>
+        {domain}
+      </div>
+      {description.length > 0 && <div className="result-description">{description}</div>}
+    </div>
+  </div>
+);
 
 const NewProjectPop = ({ projects }) => (
   <div className="pop-over new-project-pop">
@@ -33,7 +45,7 @@ const NewProjectPop = ({ projects }) => (
                 origin: 'community new project pop',
               }}
             >
-              <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} onClick={() => {}} />
+              <NewProjectResultItem {...project} />
             </TrackedExternalLink>
           ))
         ) : (
@@ -86,7 +98,7 @@ class NewProjectPopButton extends React.Component {
   render() {
     return (
       <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
-        <NewProjectPop projects={this.state.projects} />
+        {() => <NewProjectPop projects={this.state.projects} />}
       </PopoverWithButton>
     );
   }

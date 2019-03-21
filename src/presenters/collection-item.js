@@ -2,24 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
+import Text from '../components/text/text';
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
-import { CollectionLink, ProjectLink } from './includes/link';
+import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
 import { Loader } from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar';
+import { TeamAvatar, UserAvatar } from './includes/avatar';
 import { getAvatarUrl } from '../models/project';
 import { isDarkColor } from '../models/collection';
 
 const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
   const emptyState = isAuthorized ? (
-    <p>
+    <Text>
       {'This collection is empty – add some projects '}
       <span role="img" aria-label="">
         ☝️
       </span>
-    </p>
+    </Text>
   ) : (
-    <p>No projects to see in this collection just yet.</p>
+    <Text>No projects to see in this collection just yet.</Text>
   );
 
   if (collection.projects.length > 0) {
@@ -51,17 +53,35 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-const CollectionItem = (props) => {
-  const { collection, deleteCollection, isAuthorized } = props;
-
+const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator }) => {
+  const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
   return (
     <li>
       {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
 
+      {showCurator && (
+        <div className="collection-curator">
+          {collection.user && (
+            <UserLink user={collection.user}>
+              <UserAvatar user={collection.user} />
+            </UserLink>
+          )}
+          {collection.team && (
+            <TeamLink team={collection.team}>
+              <TeamAvatar team={collection.team} />
+            </TeamLink>
+          )}
+        </div>
+      )}
+
       {collection && (
-        <div className={`collection${isAuthorized ? ' authorized' : ''}`} id={`collection-${collection.id}`}>
+        <div className={className} id={`collection-${collection.id}`}>
           <div className="collection-container">
-            <CollectionLink collection={collection} className="collection-info button-area" style={{ backgroundColor: collection.coverColor }}>
+            <CollectionLink
+              collection={collection}
+              className="collection-info button-area"
+              style={{ backgroundColor: collection.coverColor, borderColor: collection.coverColor }}
+            >
               <div className="avatar-container" aria-hidden="true">
                 <div className="avatar">
                   <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
@@ -78,7 +98,7 @@ const CollectionItem = (props) => {
                     color: isDarkColor(collection.coverColor) ? 'white' : '',
                   }}
                 >
-                  <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+                  <Markdown length={96}>{collection.description}</Markdown>
                 </div>
               </div>
 
@@ -101,12 +121,15 @@ const CollectionItem = (props) => {
 
 CollectionItem.propTypes = {
   collection: PropTypes.object.isRequired,
-  isAuthorized: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool,
+  showCurator: PropTypes.bool,
   deleteCollection: PropTypes.func,
 };
 
 CollectionItem.defaultProps = {
   deleteCollection: () => {},
+  isAuthorized: false,
+  showCurator: false,
 };
 
 export default CollectionItem;

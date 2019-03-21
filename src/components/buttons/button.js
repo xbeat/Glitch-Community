@@ -8,16 +8,18 @@ const cx = classNames.bind(styles);
 export const TYPES = ['tertiary', 'cta', 'dangerZone'];
 export const SIZES = ['small'];
 
+
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, hover, children }) => {
+const Button = ({ onClick, disabled, type, size, hover, children, active }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
     small: size === 'small',
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
+    active,
     hover,
   });
 
@@ -27,6 +29,7 @@ const Button = ({ onClick, disabled, type, size, hover, children }) => {
     </button>
   );
 };
+
 
 Button.propTypes = {
   /** element(s) to display in the button */
@@ -41,14 +44,17 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
+  /** whether the button is active or not */
+  active: PropTypes.bool,
 };
 
 Button.defaultProps = {
   onClick: () => {},
   disabled: false,
-  type: '',
-  size: '',
+  type: null,
+  size: null,
   hover: false,
+  active: false,
 };
 
 export default Button;
