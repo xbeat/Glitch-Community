@@ -83,8 +83,6 @@ module.exports = function(external) {
       return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    
-    // convert raw markdown to text (for social cards)
     const description = cheerio.load(md.render(project.description)).text();
 
     await render(res, domain, description, avatar);
@@ -94,21 +92,20 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      // convert raw markdown to text (for social cards)
       const description = cheerio.load(md.render(team.description)).text();
-      
       const args = [res, team.name, description];
+
       if (team.hasAvatarImage) {
         args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
       }
+
       await render(...args);
       return;
     }
     const user = await getUser(name);
     if (user) {
-      // convert raw markdown to text (for social cards)
       const description = cheerio.load(md.render(user.description)).text();
-      
+
       await render(res, user.name || `@${user.login}`, description, user.avatarThumbnailUrl);
       return;
     }
@@ -122,7 +119,7 @@ module.exports = function(external) {
 
     if (collectionObj) {
       let { name, description } = collectionObj;
-
+      description = cheerio.load(md.render(description)).text();
       description = description.trimEnd(); // trim trailing whitespace from description
       description += ` 🎏 A collection of apps by @${author}`;
       description = description.trimStart(); // if there was no description, trim space before the fish
