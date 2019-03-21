@@ -7,7 +7,7 @@ module.exports = {
   env: {
     es6: true, // We are writing ES6 code
     browser: true, // for the browser
-  },
+  }
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
@@ -24,7 +24,7 @@ module.exports = {
     indent: ['error', 2, { SwitchCase: 1 }],
     'linebreak-style': ['error', 'unix'],
     semi: ['error', 'always'],
-   'no-debugger': WARN,
+    'no-debugger': WARN,
     'jsx-a11y/label-has-for': OFF, // It's been deprecated. -- https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
     'arrow-parens': [ERROR, 'always'],
     'operator-linebreak': [ERROR, 'after', { overrides: { '?': 'before', ':': 'before' } }],
