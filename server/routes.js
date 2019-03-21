@@ -78,6 +78,7 @@ module.exports = function(external) {
 
   const { CDN_URL } = constants.current;
 
+  // todo has markdown
   app.get('/~:domain', async (req, res) => {
     const { domain } = req.params;
     const project = await getProject(domain);
@@ -89,6 +90,7 @@ module.exports = function(external) {
     await render(res, domain, project.description, avatar);
   });
 
+  // todo has markdown
   app.get('/@:name', async (req, res) => {
     const { name } = req.params;
     const team = await getTeam(name);
@@ -108,6 +110,7 @@ module.exports = function(external) {
     await render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
+  // todo has markdown
   app.get('/@:name/:collection', async (req, res) => {
     const { name, collection } = req.params;
     const collectionObj = await getCollection(`${name}/${collection}`);
