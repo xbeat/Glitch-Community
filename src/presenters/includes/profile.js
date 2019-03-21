@@ -11,7 +11,7 @@ export const ImageButtons = ({ name, uploadImage, clearImage }) => (
   <div className="upload-image-buttons">
     {!!uploadImage && (
       <TrackClick name={`Upload ${name}`}>
-        <Button size="small" type="tertiary" onClick={uploadImage}>
+        <Button size="small" type="tertiary" matchBackground="false" onClick={uploadImage}>
           Upload {name}
         </Button>
       </TrackClick>

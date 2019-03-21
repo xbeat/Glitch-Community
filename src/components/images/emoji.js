@@ -45,7 +45,6 @@ const emojiMap = {
 
 const Emoji = ({ name }) => {
   const classNameObj = { emoji: true, [name]: true };
-  classNameObj[name] = true;
 
   const className = cx(classNameObj);
 
