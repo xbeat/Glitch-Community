@@ -18,7 +18,7 @@ const CollectionItem = ({ name, description, projects, coverColor, user, url }) 
     <a href={getLink({ user, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
-      {projects.length > 0 && <div>{projectsCount}</div>}
+      {projects.length > 0 && <div className="projects-count">{projectsCount}</div>}
     </a>
   );
 };
