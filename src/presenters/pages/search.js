@@ -21,18 +21,17 @@ import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
-  
+
   // generate filterButton array
   const filterButtons = [];
   filters.map((filter) => {
-    let button = {};
+    const button = {};
     button.contents = capitalize(filter.name);
     if (filter.hits > 0) {
       button.contents += <div className="status-badge">{filter.hits}</div>;
     }
     filterButtons.push(button);
   });
-  console.log('filterButtons', filterButtons);
 
   if (!loaded) {
     return (
@@ -178,17 +177,17 @@ class SearchResults extends React.Component {
     const teamHits = teams ? teams.length : 0;
     const userHits = users ? users.length : 0;
     const projectHits = projects ? projects.length : 0;
-    
+
     const filters = [
       { name: 'all', hits: null },
       { name: 'teams', hits: teamHits },
       { name: 'users', hits: userHits },
       { name: 'projects', hits: projectHits },
     ];
-    
+
     const activeFilter = filters[activeFilterIndex].name;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
-    
+
     const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
     const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
     const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);

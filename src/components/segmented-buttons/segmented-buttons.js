@@ -13,7 +13,6 @@ const className = cx({
 class SegmentedButtons extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props', props);
     this.state = {
       activeFilter: 0,
     };
@@ -21,15 +20,13 @@ class SegmentedButtons extends React.Component {
   }
 
   setFilter(index) {
-    console.log('index');
     this.setState({ activeFilter: index });
-    
     // call the onclick event passed to the component
     this.props.onClick(index);
   }
 
   render() {
-    const { buttons, onClick } = this.props;
+    const { buttons } = this.props;
     const { setFilter } = this.state;
 
     return (
