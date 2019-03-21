@@ -78,4 +78,4 @@ storiesOf('Markdown', module)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
 
 storiesOf('Segmented-Buttons', module)
-  .add('regular', () => <SegmentedButtons buttons={[contents:1, contents:2, contents:3]}></SegmentedButtons>
+  .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]}></SegmentedButtons>);

@@ -22,7 +22,7 @@ import UserItem from '../user-item';
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
 
-  // generate filterButton array
+  // generate filterButton array to pass to SegmentedButtons
   const filterButtons = [];
   filters.map((filter) => {
     const button = {};
