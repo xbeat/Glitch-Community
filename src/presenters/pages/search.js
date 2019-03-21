@@ -19,12 +19,9 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
-  const totalHits = sum(filters.map((filter) => filter.hits));
-
-  // generate filterButton array to pass to SegmentedButtons
+function generateFilterButtons(filters) {
   const filterButtons = [];
-  filters.map((filter) => {
+  filters.forEach((filter) => {
     const button = {};
     button.contents = capitalize(filter.name);
     if (filter.hits > 0) {
@@ -32,6 +29,11 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
     }
     filterButtons.push(button);
   });
+  return filterButtons;
+}
+
+const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
+  const totalHits = sum(filters.map((filter) => filter.hits));
 
   if (!loaded) {
     return (
@@ -47,7 +49,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      <SegmentedButtons buttons={filterButtons} onClick={setFilter} />
+      <SegmentedButtons buttons={generateFilterButtons(filters)} onClick={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
@@ -137,7 +139,6 @@ class SearchResults extends React.Component {
   }
 
   setFilter(index) {
-    console.log('set filter');
     this.setState({ activeFilterIndex: index });
   }
 
