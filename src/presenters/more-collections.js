@@ -12,6 +12,7 @@ import { UserLink, TeamLink } from './includes/link';
 
 import Text from '../components/text/text';
 
+// this should probably live outside this file
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
@@ -43,7 +44,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   return moreCollections;
 };
 
-
+// could easily be moved to a /components file if we want? though I'm not sure we'll ever reuse it
 const CollectionItem = ({ name, description, projects, coverColor, user, team, url }) => {
   const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
   return (
@@ -55,7 +56,8 @@ const CollectionItem = ({ name, description, projects, coverColor, user, team, u
   );
 };
 
-
+// should this also be in /components? should we combine it with above into one react component?
+// how do we feel about `DataLoader`?
 const MoreCollections = ({ api, currentUser, collection }) => {
   const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
   const isUserCollection = collection.teamId === -1;
