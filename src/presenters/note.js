@@ -43,9 +43,7 @@ const Note = ({
           placeholder="Share why you love this app."
           update={update}
           onBlur={updateNoteVisibility}
-          maxLength={75}
-          allowImages={false}
-          maxRows={4}
+          allowImages
         />
       </div>
       <div className="user">
