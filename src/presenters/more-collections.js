@@ -26,9 +26,9 @@ const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
     return c;
   }));
   // get author details and attach to each collection
-  const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
-  moreCollections = moreCollections.map((c) => {
-    c[authorType] = authorDetails;
+  moreCollections = await Promise.all(moreCollections.map(async (c) => {
+    c[user] =  await getSingleItem(api, `v1/${user}s/by/id/?id=${authorId}`, authorId);
+
     return c;
   });
   console.log({ moreCollections });
