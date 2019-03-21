@@ -13,12 +13,12 @@ import { UserLink, TeamLink } from './includes/link';
 import Text from '../components/text/text';
 
 const CollectionItem = ({ name, description, projects, coverColor, user, url }) => {
-  const projectsCount = `${projects.length} project${projects.length > 1 ? 's' : ''}`;
+  const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
   return (
     <a href={getLink({ user, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <button>{name}</button>
       <Text>{description}</Text>
-      {projects.length > 0 && <div className="projects-count">{projectsCount}</div>}
+      <div className="projects-count">{projectsCount}</div>
     </a>
   );
 };
