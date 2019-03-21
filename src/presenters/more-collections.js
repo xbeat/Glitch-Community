@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { sampleSize } from 'lodash';
 
 import { getSingleItem } from '../../shared/api';
 import { getProfileStyle, getDisplayName } from '../models/user';
@@ -16,9 +17,14 @@ const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
   const isTeamCollection = collection.teamId !== -1;
   if (isTeamCollection) {
     moreCollections = await getSingleItem(api, `v1/teams/${collection.teamId}/collections`, 'items');
+    moreCollections = sampleSize(moreCollections, 3);
+    moreCollections = moreCollections.map(async (c) => {
+      c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
+    })
   } else {
     moreCollections = await getSingleItem(api, `v1/users/${collection.userId}/collections`, 'items');
   }
+  console.log({ moreCollections })
   return moreCollections;
 }
 
