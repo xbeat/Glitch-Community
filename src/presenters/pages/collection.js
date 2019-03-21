@@ -28,7 +28,6 @@ import { UserTile } from '../users-list';
 import { useCurrentUser } from '../../state/current-user';
 
 import Text from '../../components/text/text';
-import Heading from '../../components/text/heading';
 
 function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
@@ -122,6 +121,10 @@ const CollectionPageContents = ({
               />
             </div>
 
+            <div className="collection-project-count">
+              <Text>{collection.projects.length} Projects</Text>
+            </div>
+
             {currentUserIsAuthor && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
           </header>
           {!collectionHasProjects && currentUserIsAuthor && (
@@ -137,7 +140,6 @@ const CollectionPageContents = ({
             <>
               <div className="collection-contents">
                 <div className="collection-project-container-header">
-                  <Heading tagName="h3">Projects ({collection.projects.length})</Heading>
                   {currentUserIsAuthor && (
                     <AddCollectionProject
                       addProjectToCollection={addProjectToCollection}
