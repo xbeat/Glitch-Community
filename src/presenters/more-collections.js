@@ -14,19 +14,21 @@ import Text from '../components/text/text';
 
 const loadMoreCollectionsLikeCollections = async ({ api, collection }) => {
   let moreCollections;
-  const isTeamCollection = collection.teamId !== -1;
-  if (isTeamCollection) {
-    moreCollections = await getSingleItem(api, `v1/teams/${collection.teamId}/collections`, 'items');
-    moreCollections = sampleSize(moreCollections, 3);
-    moreCollections = moreCollections.map(async (c) => {
-      c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
-    })
-  } else {
-    moreCollections = await getSingleItem(api, `v1/users/${collection.userId}/collections`, 'items');
-  }
-  console.log({ moreCollections })
+  const authorType = collection.teamId === -1 ? 'users' : 'teams';
+  const authorId = authorType === 'users' ? collection.userId : collection.teamId;
+  //get more collections
+  moreCollections = await getSingleItem(api, `v1/${authorType}/${authorId}/collections`, 'items');
+  //pick 3
+  moreCollections = sampleSize(moreCollections, 3);
+  // get projects in depth
+  moreCollections = await Promise.all(moreCollections.map(async (c) => {
+    c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
+    return c;
+  }));
+  // get author details
+  moreCollections[authorType.sl
   return moreCollections;
-}
+};
 
 
 const CollectionItem = ({ name, description, projects, coverColor, user, url }) => {
