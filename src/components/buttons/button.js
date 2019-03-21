@@ -21,7 +21,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: type === 'dropDown',
-    hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
+    hasEmoji: React.Children.toArray(children).some((child) => child.type && child.type.name === 'Emoji'),
     matchBackground: matchBackground === true,
     hover,
   });
@@ -29,9 +29,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
   const linkOrButton = () => {
     if (href) {
       return (
-        <Link to={href} className={className}>
-          {children}
-        </Link>
+        
       );
     }
     return (
@@ -41,7 +39,12 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     );
   };
 
-  return linkOrButton();
+  return (
+    href ?
+      <Link to={href} className={className}> {children}
+        </Link>
+  
+  );
 };
 
 Button.propTypes = {
