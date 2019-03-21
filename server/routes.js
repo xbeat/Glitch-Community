@@ -92,7 +92,6 @@ module.exports = function(external) {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      console.log('team');
       const description = team.description ? cheerio.load(md.render(team.description)).text() : '';
       const args = [res, team.name, description];
 
