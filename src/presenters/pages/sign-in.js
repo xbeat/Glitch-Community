@@ -182,7 +182,7 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPop = (props) => {
+const SignInPop = () => {
   const api = useAPI();
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
