@@ -22,16 +22,16 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: type === 'dropDown',
-    hasEmoji: React.Children.toArray(children).some((child) => child.type && child.type.name === Emoji.type.name),
+    hasEmoji: React.Children.toArray(children).some(
+      (child) => child.type && child.type.name === React.createElement(Emoji, { name: 'herb' }).type.name,
+    ),
     matchBackground: matchBackground === true,
     hover,
   });
 
-  return (
-    href
-      ? <Link to={href} className={className}> {children} </Link>
-      : <button onClick={onClick} className={className} disabled={disabled}>{children}</button>
-  );
+  return href
+    ? <Link to={href} className={className}>{children}</Link>
+    : <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
 };
 
 Button.propTypes = {
