@@ -31,7 +31,7 @@ const dateFromTime = (newTime) => {
   return timeMap[newTime];
 };
 
-const getAnalytics = async ({ id, api, projects }, fromDate, currentProjectDomain) => {
+const getAnalytics = async ({ id, api, projects, fromDate, currentProjectDomain }) => {
   if (!projects.length) {
     const data = _.cloneDeep(sampleAnalytics);
     // Update timestamps so they're relative to now
@@ -114,7 +114,9 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
 
-    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then((data) => {
+    const { id, api, projects } = this.props;
+    const { fromDate, currentProjectsDomain } = this.state;
+    getAnalytics({ id, api, projects, fromDate, currentProjectsDomain }).then((data) => {
       this.setState(
         {
           isGettingData: false,

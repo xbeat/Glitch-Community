@@ -253,7 +253,7 @@ Results.propTypes = {
 const AddTeamUserPopWithDevToggles = (props) => {
   const api = useAPI();
   const allowEmailInvites = useDevToggle('Email Invites');
-  return <AddTeamUserPop {...props} allowEmailInvites={allowEmailInvites} />;
+  return <AddTeamUserPop {...props} api={api} allowEmailInvites={allowEmailInvites} />;
 };
 
 export default AddTeamUserPopWithDevToggles;
