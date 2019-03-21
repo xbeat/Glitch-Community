@@ -13,6 +13,7 @@ const className = cx({
 class SegmentedButtons extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props', props);
     this.state = {
       activeFilter: this.props.buttons[0],
     };
@@ -20,8 +21,8 @@ class SegmentedButtons extends React.Component {
   }
 
   setFilter(event) {
-    let button = event.target;
-    this.setState({ activeFilter: filter });
+    console.log(event); 
+    // this.setState({ activeFilter: filter });
   }
 
   render() {
@@ -41,6 +42,7 @@ class SegmentedButtons extends React.Component {
 }
 
 SegmentedButtons.propTypes = {
+  /** Expected button format: [content: String, active: true/false]*/
   buttons: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 };
