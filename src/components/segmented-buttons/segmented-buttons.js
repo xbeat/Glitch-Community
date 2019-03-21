@@ -6,10 +6,6 @@ import Button from '../buttons/button';
 
 const cx = classNames.bind(styles);
 
-const className = cx({
-  'segmented-buttons': true,
-});
-
 class SegmentedButtons extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +25,7 @@ class SegmentedButtons extends React.Component {
     const { buttons } = this.props;
 
     return (
-      <div className={className}>
+      <div className={styles.segmentedButtons}>
         {buttons.map((button, index) => (
           <Button key={button.content} size="small" type="tertiary" active={index === this.state.activeFilter} onClick={() => this.setFilter(index)}>
             {button.contents}
