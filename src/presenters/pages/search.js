@@ -30,7 +30,6 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
     if (filter.hits > 0) {
       button.contents += <div className="status-badge">{filter.hits}</div>;
     }
-    button.active = activeFilter === filter.name.toLowerCase();
     filterButtons.push(button);
   });
   console.log('filterButtons', filterButtons);
@@ -124,7 +123,7 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
-      activeFilter: 'all',
+      activeFilterIndex: 0,
       loadedResults: 0,
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
@@ -138,9 +137,9 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
-  setFilter(filter) {
+  setFilter(index) {
     console.log('set filter');
-    this.setState({ activeFilter: filter });
+    this.setState({ activeFilterIndex: index });
   }
 
   async searchTeams() {
@@ -175,22 +174,24 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects, activeFilter } = this.state;
-    const noResults = [teams, users, projects].every((results) => !showResults(results));
-    // I'm sure there's a better way to do this
-    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
-    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
-    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
-
+    const { teams, users, projects, activeFilterIndex } = this.state;
     const teamHits = teams ? teams.length : 0;
     const userHits = users ? users.length : 0;
     const projectHits = projects ? projects.length : 0;
+    
     const filters = [
       { name: 'all', hits: null },
       { name: 'teams', hits: teamHits },
       { name: 'users', hits: userHits },
       { name: 'projects', hits: projectHits },
     ];
+    
+    const activeFilter = filters[activeFilterIndex].name;
+    const noResults = [teams, users, projects].every((results) => !showResults(results));
+    
+    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
 
     const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
 
