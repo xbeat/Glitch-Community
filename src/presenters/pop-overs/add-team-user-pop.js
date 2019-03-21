@@ -9,6 +9,8 @@ import useDevToggle from '../includes/dev-toggles';
 import { Loader } from '../includes/loader';
 import UserResultItem, { InviteByEmail, WhitelistEmailDomain } from '../includes/user-result-item';
 
+import { useAPI } from '../../state/api';
+
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
   if (email && email.domain.includes('.')) {
@@ -249,6 +251,7 @@ Results.propTypes = {
 };
 
 const AddTeamUserPopWithDevToggles = (props) => {
+  const api = useAPI();
   const allowEmailInvites = useDevToggle('Email Invites');
   return <AddTeamUserPop {...props} allowEmailInvites={allowEmailInvites} />;
 };
