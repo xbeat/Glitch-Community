@@ -32,9 +32,10 @@ class MoreCollections extends React.Component {
 
   render() {
     const { api, currentUser, collection } = this.props;
-    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url }));
+    const collectionsToLoad = currentUser.collections.map((c) => ({ owner: currentUser.login, name: c.url })); // this isn't right
     const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
     const isUserCollection = collection.teamId === -1;
+    console.log(collection);
     return (
       <section>
         <h2>
