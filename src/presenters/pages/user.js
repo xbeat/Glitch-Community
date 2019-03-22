@@ -68,13 +68,7 @@ NameAndLogin.defaultProps = {
 
 // has science gone too far?
 const UserPage = ({
-  user: {
-    // has science gone too far?
-    _deletedProjects,
-    _cacheCover,
-    featuredProjectId,
-    ...user
-  },
+  user,
   api,
   isAuthorized,
   maybeCurrentUser,
@@ -95,10 +89,15 @@ const UserPage = ({
   addProjectToCollection,
 }) => {
   const pinnedSet = new Set(user.pins.map(({ id }) => id));
+  const {
+    _deletedProjects,
+    _cacheCover,
+    featuredProjectId,
+  } = user;
   // filter featuredProject out of both pinned & recent projects
   const [pinnedProjects, recentProjects] = partition(user.projects.filter(({ id }) => id !== featuredProjectId), ({ id }) => pinnedSet.has(id));
   const featuredProject = user.projects.find(({ id }) => id === featuredProjectId);
-
+  console.log("inside user.js", _cacheCover)
   return (
     <main className="profile-page user-page">
       <section>

@@ -10,8 +10,8 @@ const cx = classNames.bind(styles);
 
 const cacheBuster = Math.floor(Math.random() * 1000);
 
-export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cache = cacheBuster, size = 'large', _cacheCover }) {
-  console.log("inside getProfileStyle", { _cacheCover, cache } )
+export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, size = 'large', _cacheCover }) {
+  const cache = _cacheCover || cacheBuster;
   const customImage = `${CDN_URL}/${entityType}-cover/${id}/${size}?${cache}`;
   const defaultImage = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625';
   return {

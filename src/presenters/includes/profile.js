@@ -65,9 +65,10 @@ InfoContainer.propTypes = {
 
 // Profile Container
 
-export class ProfileContainer extends React.PureComponent {
+export class ProfileContainer extends React.Component {
   render() {
     const { avatarStyle, avatarButtons, coverButtons, children, teams, entity, entityType } = this.props;
+    console.log("inside profileContainer", entity._cacheCover)
     return (
       <CoverContainer buttons={coverButtons} entity={entity} entityType={entityType}>
         <InfoContainer>
