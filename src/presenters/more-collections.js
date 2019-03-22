@@ -64,26 +64,35 @@ const MoreCollections = ({ api, currentUser, collection }) => {
   const isUserCollection = collection.teamId === -1;
 
   return (
-    <section>
-      <h2>
-        {
-          isUserCollection
-            ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
-            : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
-        }
-      </h2>
-      <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
-        {
-          (collections) => (
+    <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
+      {
+        (collections) => (
+          <section>
+            <h2>
+              {
+                isUserCollection
+                  ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
+                  : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
+              }
+            </h2>
             <CoverContainer style={coverStyle} className="collections">
               <div className="more-collections">
-                {collections.map((c) => <CollectionItem key={c.id} {...c} />)}
+                {collections.map((c) => {
+                  const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
+  return (
+    <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
+      <Button>{name}</Button>
+      <Markdown>{description}</Markdown>
+      <div className="projects-count">{projectsCount}</div>
+    </a>
+  );
+                })}
               </div>
             </CoverContainer>
-          )
-        }
-      </DataLoader>
-    </section>
+          </section>
+        )
+      }
+    </DataLoader>
   );
 };
 
