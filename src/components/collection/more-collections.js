@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getProfileStyle, getDisplayName } from '../models/user';
-import { getLink } from '../models/collection';
+import { getProfileStyle, getDisplayName } from '../../models/user';
+import { getLink } from '../../models/collection';
 
-import { CoverContainer } from './includes/profile';
-import { UserLink, TeamLink } from './includes/link';
+import { CoverContainer } from '../../presenters/includes/profile';
+import { UserLink, TeamLink } from '../../presenters/includes/link';
 
-import Markdown from '../components/text/markdown';
-import Button from '../components/buttons/button';
+import Markdown from '../text/markdown';
+import Button from '../buttons/button';
 
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
   const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
@@ -45,8 +45,8 @@ const MoreCollections = ({ currentCollection, collections, currentUser }) => {
 
 MoreCollections.propTypes = {
   currentCollection: PropTypes.object.isRequired,
+  collections: PropTypes.array.isRequired,
   currentUser: PropTypes.object.isRequired,
-  api: PropTypes.func.isRequired,
 };
 
-export default 
+export default MoreCollections;

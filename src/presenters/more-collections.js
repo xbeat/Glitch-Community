@@ -5,6 +5,7 @@ import { sampleSize } from 'lodash';
 import { getSingleItem } from '../../shared/api';
 
 import { DataLoader } from './includes/loader';
+import MoreCollections from '../components/collection/more-collections';
 
 // where should this live?
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
