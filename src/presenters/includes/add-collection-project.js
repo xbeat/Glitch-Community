@@ -5,12 +5,12 @@ import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import { useAsync } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
+import { getAllPages } from '../../../shared/api';
 
 async function getTeamProjects(api, teamId) {
   if (teamId > 0) {
-    const { data: team } = await api.get(`teams/${teamId}`);
-    console.log({ team })
-    return team.projects;
+    const projects = await getAllPages(api, `/v1/teams/by/id/projects?limit=100&orderKey=updatedAt&orderDirection=ASC&id=${teamId}`);
+    return projects;
   }
   return null;
 }
