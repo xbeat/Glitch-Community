@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './segmented-buttons.styl';
-import Button from '../buttons/button';
+import Button from './button';
 
 class SegmentedButtons extends React.Component {
   constructor(props) {

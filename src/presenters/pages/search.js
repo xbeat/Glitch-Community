@@ -8,7 +8,7 @@ import Layout from '../layout';
 
 import { useCurrentUser } from '../../state/current-user';
 
-import SegmentedButtons from '../../components/segmented-buttons/segmented-buttons';
+import SegmentedButtons from '../../components/buttons/segmented-buttons';
 import Badge from '../../components/badges/badge';
 import Heading from '../../components/text/heading';
 

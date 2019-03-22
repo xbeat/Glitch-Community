@@ -8,7 +8,7 @@ import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 import Badge from '../src/components/badges/badge';
-import SegmentedButtons from '../src/components/segmented-buttons/segmented-buttons';
+import SegmentedButtons from '../src/components/buttons/segmented-buttons';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
@@ -88,8 +88,8 @@ storiesOf('Segmented-Buttons', module)
   .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]} />)
   .add('jsx contents', () => <SegmentedButtons 
                                buttons={[
-                                {contents: <><Badge>Normal</Badge> Badge</>}, 
-                                {contents: <><Badge type="error">Error</Badge> Badge</>}
+                                {contents:<><Badge>Normal</Badge> Badge</>}, 
+                                {contents:<><Badge type="error">Error</Badge> Badge</>}
                                 ]}
                              />
   );
