@@ -6,7 +6,7 @@ import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
-import { NotificationConsumer } from './notifications';
+import { useNotifications } from './notifications';
 
 import Heading from '../components/text/heading';
 
@@ -68,19 +68,20 @@ const CreateFirstCollection = () => (
   </div>
 );
 
-function CreateCollectionButtton ({ api, maybeTeam, currentUser }) {
-  const [loading, setLoading] = useState(false)
-  const [newCollectionUrl, setNewCollectionUrl] = useState('')
-  
-  async function createCollectionOnClick(createNotification) {
-    setLoading(true)
+const collectionStates = {
+  ready: () => ({ type: 'ready' }),
+  loading: () => ({ type: 'loading' }),
+  newCollection: (url) => ({ type: 'newCollection', value: url }),
+};
 
-    const collectionResponse = await createCollection(
-      api,
-      null,
-      maybeTeam ? maybeTeam.id : null,
-      createNotification,
-    );
+function CreateCollectionButton({ api, maybeTeam, currentUser }) {
+  const { createNotification } = useNotifications();
+  const [state, setState] = useState(collectionStates.ready());
+
+  async function createCollectionOnClick() {
+    setState(collectionStates.loading());
+
+    const collectionResponse = await createCollection(api, null, maybeTeam ? maybeTeam.id : null, createNotification);
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
       if (maybeTeam) {
@@ -88,51 +89,34 @@ function CreateCollectionButtton ({ api, maybeTeam, currentUser }) {
       } else {
         collection.user = currentUser;
       }
-      setNewCollectionUrl(getLink(collection));
+      const newCollectionUrl = getLink(collection);
+      setState(collectionStates.newCollection(newCollectionUrl));
     } else {
       // error messaging handled in createCollection
-      setLoading(false)
+      setState(collectionStates.ready());
     }
   }
-}
 
-export class CreateCollectionButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      newCollectionUrl: '',
-    };
-    this.createCollectionOnClick = this.createCollectionOnClick.bind(this);
+  if (state.type === 'newCollection') {
+    return <Redirect to={state.value} push />;
   }
-
-  
-
-  render() {
-    if (this.state.newCollectionUrl) {
-      return <Redirect to={this.state.newCollectionUrl} push />;
-    }
-    if (this.state.loading) {
-      return (
-        <div id="create-collection-container">
-          <Loader />
-        </div>
-      );
-    }
+  if (state.type === 'loading') {
     return (
-      <NotificationConsumer>
-        {({ createNotification }) => (
-          <div id="create-collection-container">
-            <TrackClick name="Create Collection clicked">
-              <button className="button" id="create-collection" onClick={() => this.createCollectionOnClick(createNotification)}>
-                Create Collection
-              </button>
-            </TrackClick>
-          </div>
-        )}
-      </NotificationConsumer>
+      <div id="create-collection-container">
+        <Loader />
+      </div>
     );
   }
+
+  return (
+    <div id="create-collection-container">
+      <TrackClick name="Create Collection clicked">
+        <button className="button" id="create-collection" onClick={this.createCollectionOnClick}>
+          Create Collection
+        </button>
+      </TrackClick>
+    </div>
+  );
 }
 
 CreateCollectionButton.propTypes = {
