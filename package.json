@@ -8,7 +8,7 @@
     "storybook": "build-storybook -c storybook-config -o build/storybook"
   },
   "dependencies": {
-    "@babel/core": "^7.4.0",
+    "@babel/core": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/polyfill": "^7.2.5",
@@ -82,7 +82,8 @@
     "express-sslify": "^1.2.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-middleware": "^3.6.1",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "core-js": "^2.6.0"
   },
   "engines": {
     "node": "10.x"
