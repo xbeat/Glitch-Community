@@ -21,7 +21,6 @@ dependencies:
   cheerio: 0.22.0
   classnames: 2.2.6
   compression: 1.7.4
-  core-js: 2.6.5
   css-loader: 2.1.1
   d3-array: 2.0.3
   dayjs: 1.8.11
@@ -11501,7 +11500,6 @@ specifiers:
   cheerio: ^0.22.0
   classnames: ^2.2.6
   compression: ^1.7.3
-  core-js: ^2.6.0
   css-loader: ^2.1.1
   d3-array: ^2.0.3
   dayjs: ^1.8.8
