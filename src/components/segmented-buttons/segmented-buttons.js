@@ -15,7 +15,7 @@ class SegmentedButtons extends React.Component {
   setFilter(index) {
     this.setState({ activeFilter: index });
     // call the onclick event passed to the component
-    if (this.props.onClick) this.props.onClick(index);
+    this.props.onClick(index);
   }
 
   render() {
@@ -34,7 +34,6 @@ class SegmentedButtons extends React.Component {
 }
 
 SegmentedButtons.propTypes = {
-  /** Expected button format: [content: ButtonName] */
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
