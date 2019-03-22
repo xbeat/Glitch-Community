@@ -11,6 +11,7 @@ import { CoverContainer } from './includes/profile';
 import { UserLink, TeamLink } from './includes/link';
 
 import Text from '../components/text/text';
+import Button from '../components/buttons/button';
 
 // this should probably live outside this file
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
@@ -49,7 +50,7 @@ const CollectionItem = ({ name, description, projects, coverColor, user, team, u
   const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
   return (
     <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
-      <button>{name}</button>
+      <Button>{name}</Button>
       <Text>{description}</Text>
       <div className="projects-count">{projectsCount}</div>
     </a>
