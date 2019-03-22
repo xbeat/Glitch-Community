@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getAvatarStyle, getProfileStyle } from '../models/user';
+import { getAvatarStyle } from '../models/user';
 import { useCurrentUser } from '../state/current-user';
 import { UserLink } from './includes/link';
 
@@ -18,7 +18,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
     <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
     </Heading>
-    <CoverContainer style={getProfileStyle(user)}>
+    <CoverContainer entity={user}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>

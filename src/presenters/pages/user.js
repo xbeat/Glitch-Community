@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { orderBy, partition } from 'lodash';
-import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
+import { getAvatarStyle, getLink } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
 import { useCurrentUser } from '../../state/current-user';

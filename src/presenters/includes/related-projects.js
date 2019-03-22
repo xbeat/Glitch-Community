@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { sampleSize, difference } from 'lodash';
 
-import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
-import { getDisplayName, getProfileStyle as getUserProfileStyle } from '../../models/user';
+import { getDisplayName } from '../../models/user';
 
 import CoverContainer from '../../components/containers/cover-container';
 import { DataLoader } from './loader';
@@ -12,9 +11,9 @@ import { ProjectsUL } from '../projects-list';
 
 const PROJECT_COUNT = 3;
 
-const RelatedProjectsBody = ({ projects }) =>
+const RelatedProjectsBody = ({ projects, entity }) =>
   projects.length > 0 ? (
-    <CoverContainer className="projects">
+    <CoverContainer entity={entity}>
       <ProjectsUL projects={projects} />
     </CoverContainer>
   ) : null;
