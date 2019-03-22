@@ -10,6 +10,8 @@ import { UserLink, TeamLink } from '../../presenters/includes/link';
 import Markdown from '../text/markdown';
 import Button from '../buttons/button';
 
+import styles from './more-collections.styl';
+
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
   const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
   const isUserCollection = currentCollection.teamId === -1;
