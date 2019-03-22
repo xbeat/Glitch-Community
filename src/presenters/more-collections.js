@@ -10,7 +10,7 @@ import { DataLoader } from './includes/loader';
 import { CoverContainer } from './includes/profile';
 import { UserLink, TeamLink } from './includes/link';
 
-import Text from '../components/text/text';
+import Markdown from '../components/text/markdown';
 import Button from '../components/buttons/button';
 
 // this should probably live outside this file
@@ -51,7 +51,7 @@ const CollectionItem = ({ name, description, projects, coverColor, user, team, u
   return (
     <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
       <Button>{name}</Button>
-      <Text>{description}</Text>
+      <Markdown>{description}</Markdown>
       <div className="projects-count">{projectsCount}</div>
     </a>
   );
