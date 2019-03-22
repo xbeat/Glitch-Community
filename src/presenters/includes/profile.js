@@ -67,9 +67,9 @@ InfoContainer.propTypes = {
 
 export class ProfileContainer extends React.PureComponent {
   render() {
-    const { avatarStyle, avatarButtons, coverStyle, coverButtons, children, teams } = this.props;
+    const { avatarStyle, avatarButtons, coverButtons, children, teams } = this.props;
     return (
-      <CoverContainer style={coverStyle} buttons={coverButtons}>
+      <CoverContainer buttons={coverButtons}>
         <InfoContainer>
           <div className="avatar-container">
             <div className="user-avatar" style={avatarStyle} />
