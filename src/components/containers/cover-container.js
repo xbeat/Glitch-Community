@@ -2,17 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './cover-container.styl';
-import { getProfileStyle as getTeamStyle } from '../../models/team';
-import { getProfileStyle as getUserStyle } from '../../models/user';
+
 
 const cx = classNames.bind(styles);
 // Cover Container
 
+export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cache = cacheBuster, size = 'large' }) {
+  const customImage = `${CDN_URL}/${entityType}-cover/${id}/${size}?${cache}`;
+  const defaultImage = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625';
+  return {
+    backgroundColor: coverColor,
+    backgroundImage: `url('${hasCoverImage ? customImage : defaultImage}')`,
+  };
+}
+
 const CoverContainer = ({ buttons, children, className, entity, ...props }) => {
-  const { user, team } = entity;
-  const entityStyle = user ? getUserStyle(user) : getTeamStyle(team);
   return (
-    <div style={entityStyle} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
+    <div style={getProfileStyle(entity)} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
       {children}
       {buttons}
     </div>

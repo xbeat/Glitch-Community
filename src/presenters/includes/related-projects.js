@@ -11,9 +11,9 @@ import { ProjectsUL } from '../projects-list';
 
 const PROJECT_COUNT = 3;
 
-const RelatedProjectsBody = ({ projects, entity }) =>
+const RelatedProjectsBody = ({ projects, entity, entityType }) =>
   projects.length > 0 ? (
-    <CoverContainer entity={entity}>
+    <CoverContainer entity={entity} entityType={entityType}>
       <ProjectsUL projects={projects} />
     </CoverContainer>
   ) : null;
@@ -72,7 +72,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <TeamLink team={team}>More by {team.name} →</TeamLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} entity={team} />
+                    <RelatedProjectsBody projects={projects} entity={team} entityType={"team"}/>
                   </>
                 )
               }
@@ -88,7 +88,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <UserLink user={user}>More by {getDisplayName(user)} →</UserLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} entity={user} />
+                    <RelatedProjectsBody projects={projects} entity={user} entityType={"user"}/>
                   </>
                 )
               }
