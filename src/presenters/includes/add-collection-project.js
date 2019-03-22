@@ -3,47 +3,42 @@ import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
-import { useAPI } from '../../state/api';
+import { useAsync } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 
-class AddCollectionProject extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { projects: [] };
+async function getProjects(api, teamId) {
+  const { data: team } = await api.get(`teams/${teamId}`);
+  return team.projects;
+}
+
+function AddCollectionProject({ collection, addProjectToCollection }) {
+  const projects = useAsync(getProjects, collection.teamId);
+  const { currentUser } = useCurrentUser();
+
+  let initialProjects = [];
+  if (this.props.collection.teamId > 0) {
+    initialProjects = projects;
+  } else if (currentUser) {
+    initialProjects = currentUser.projects;
   }
 
-  async componentDidMount() {
-    const { api, collection } = this.props;
-    if (collection.teamId > 0) {
-      const { data: team } = await api.get(`teams/${collection.teamId}`);
-      this.setState({ projects: team.projects });
-    }
-  }
-
-  render() {
-    let initialProjects = [];
-    if (this.props.collection.teamId > 0) {
-      initialProjects = this.state.projects;
-    } else if (this.props.currentUser) {
-      initialProjects = this.props.currentUser.projects;
-    }
-    return (
-      <PopoverWithButton buttonClass="add-project" buttonText="Add Project">
-        {({ togglePopover }) => (
-          <AddCollectionProjectPop initialProjects={initialProjects.slice(0, 20)} togglePopover={togglePopover} {...this.props} />
-        )}
-      </PopoverWithButton>
-    );
-  }
+  return (
+    <PopoverWithButton buttonClass="add-project" buttonText="Add Project">
+      {({ togglePopover }) => (
+        <AddCollectionProjectPop
+          collection={collection}
+          initialProjects={initialProjects.slice(0, 20)}
+          addProjectToCollection={addProjectToCollection}
+          togglePopover={togglePopover}
+        />
+      )}
+    </PopoverWithButton>
+  );
 }
 
 AddCollectionProject.propTypes = {
   collection: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-  api: PropTypes.func.isRequired,
 };
 
-export default (props) => {
-  const api = useAPI();
-  return <AddCollectionProject api={api} {...props} />;
-};
+export default AddCollectionProject;
