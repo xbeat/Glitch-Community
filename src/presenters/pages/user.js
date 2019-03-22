@@ -66,7 +66,6 @@ NameAndLogin.defaultProps = {
   login: '',
 };
 
-// has science gone too far?
 const UserPage = ({
   user,
   api,
@@ -130,7 +129,6 @@ const UserPage = ({
       {featuredProject && (
         <EntityPageFeaturedProject
           featuredProject={featuredProject}
-          api={api}
           isAuthorized={isAuthorized}
           unfeatureProject={unfeatureProject}
           addProjectToCollection={addProjectToCollection}
@@ -142,7 +140,6 @@ const UserPage = ({
       <EntityPageProjects
         projects={pinnedProjects}
         isAuthorized={isAuthorized}
-        api={api}
         removePin={removePin}
         projectOptions={{
           featureProject,
@@ -160,7 +157,6 @@ const UserPage = ({
             ...collection,
             user,
           }))}
-          api={api}
           isAuthorized={isAuthorized}
           maybeCurrentUser={maybeCurrentUser}
         />
@@ -170,7 +166,6 @@ const UserPage = ({
       <EntityPageProjects
         projects={recentProjects}
         isAuthorized={isAuthorized}
-        api={api}
         addPin={addPin}
         projectOptions={{
           featureProject,
@@ -180,9 +175,7 @@ const UserPage = ({
         }}
         currentUser={maybeCurrentUser}
       />
-      {isAuthorized && (
-        <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />
-      )}
+      {isAuthorized && <DeletedProjects setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
     </main>
   );
@@ -217,18 +210,18 @@ UserPage.propTypes = {
   unfeatureProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({ api, user }) => {
+const UserPageContainer = ({ user }) => {
   const { currentUser: maybeCurrentUser } = useCurrentUser();
   return (
     <AnalyticsContext properties={{ origin: 'user' }}>
-      <UserEditor api={api} initialUser={user}>
+      <UserEditor initialUser={user}>
         {(userFromEditor, funcs, isAuthorized) => (
           <>
             <Helmet>
               <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
             </Helmet>
-            <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
-              {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
+            <ProjectsLoader projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
+              {(projects) => <UserPage {...{ isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
             </ProjectsLoader>
           </>
         )}

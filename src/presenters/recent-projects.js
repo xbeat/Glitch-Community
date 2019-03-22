@@ -13,7 +13,7 @@ import SignInPop from './pop-overs/sign-in-pop';
 
 import Heading from '../components/text/heading';
 
-const RecentProjectsContainer = ({ children, user, api }) => (
+const RecentProjectsContainer = ({ children, user }) => (
   <section className="profile recent-projects">
     <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
@@ -26,7 +26,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
           </UserLink>
           {!user.login && (
             <div className="anon-user-sign-up">
-              <SignInPop api={api} />
+              <SignInPop />
             </div>
           )}
         </div>
@@ -47,21 +47,16 @@ RecentProjectsContainer.propTypes = {
   }).isRequired,
 };
 
-const RecentProjects = ({ api }) => {
+const RecentProjects = () => {
   const { currentUser: user, fetched } = useCurrentUser();
   return (
-    <RecentProjectsContainer user={user} api={api}>
+    <RecentProjectsContainer user={user}>
       {fetched ? (
-        <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
-          {(projects) => <ProjectsUL projects={projects} />}
-        </ProjectsLoader>
+        <ProjectsLoader projects={user.projects.slice(0, 3)}>{(projects) => <ProjectsUL projects={projects} />}</ProjectsLoader>
       ) : (
         <Loader />
       )}
     </RecentProjectsContainer>
   );
-};
-RecentProjects.propTypes = {
-  api: PropTypes.any.isRequired,
 };
 export default RecentProjects;

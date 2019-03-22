@@ -11,11 +11,13 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
+import Image from '../../components/image/image';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Heading from '../../components/text/heading';
 
-const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, ...props }) => (
+const CategoryPageWrap = ({ addProjectToCollection, category, currentUser, ...props }) => (
   <>
     <Helmet>
       <title>{category.name}</title>
@@ -25,13 +27,13 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
         <header className="collection">
           <Heading tagName="h1">{category.name}</Heading>
           <div className="collection-image-container">
-            <img src={category.avatarUrl} alt="" />
+            <Image src={category.avatarUrl} />
           </div>
 
           <p className="description">{category.description}</p>
         </header>
 
-        <ProjectsLoader api={api} projects={category.projects}>
+        <ProjectsLoader projects={category.projects}>
           {(projects) => (
             <div className="collection-contents">
               <div className="collection-project-container-header">
@@ -43,7 +45,6 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
                   {...{
                     projects,
                     currentUser,
-                    api,
                     addProjectToCollection,
                   }}
                   category
@@ -57,7 +58,6 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
                   {...{
                     projects,
                     currentUser,
-                    api,
                     addProjectToCollection,
                   }}
                   category
@@ -70,7 +70,7 @@ const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, 
         </ProjectsLoader>
       </article>
     </main>
-    <MoreIdeas api={api} />
+    <MoreIdeas />
   </>
 );
 
@@ -82,7 +82,6 @@ CategoryPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.any.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
@@ -91,16 +90,17 @@ async function loadCategory(api, id) {
   return data;
 }
 
-const CategoryPage = ({ api, category, ...props }) => {
+const CategoryPage = ({ category, ...props }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   return (
-    <Layout api={api}>
+    <Layout>
       <AnalyticsContext properties={{ origin: 'category' }}>
         <DataLoader get={() => loadCategory(api, category.id)}>
           {(loadedCategory) => (
-            <CollectionEditor api={api} initialCollection={loadedCategory}>
+            <CollectionEditor initialCollection={loadedCategory}>
               {(categoryFromEditor, funcs) => (
-                <CategoryPageWrap category={categoryFromEditor} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props} />
+                <CategoryPageWrap category={categoryFromEditor} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props} />
               )}
             </CollectionEditor>
           )}
@@ -110,7 +110,6 @@ const CategoryPage = ({ api, category, ...props }) => {
   );
 };
 CategoryPage.propTypes = {
-  api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
 };
 

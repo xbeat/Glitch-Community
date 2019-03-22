@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list';
 
-const EntityPageProjects = ({ api, projects, currentUser, isAuthorized, addPin, removePin, projectOptions }) => {
+const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions }) => {
   const pinnedTitle = (
     <>
       Pinned Projects
@@ -21,13 +21,12 @@ const EntityPageProjects = ({ api, projects, currentUser, isAuthorized, addPin, 
   return (
     <>
       {projects.length > 0 && (
-        <ProjectsList title={removePin ? pinnedTitle : recentTitle} projects={projects} api={api} projectOptions={projectOptionsToPass} />
+        <ProjectsList title={removePin ? pinnedTitle : recentTitle} projects={projects} projectOptions={projectOptionsToPass} />
       )}
     </>
   );
 };
 EntityPageProjects.propTypes = {
-  api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
