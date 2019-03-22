@@ -10,7 +10,6 @@ const cx = classNames.bind(styles);
 export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
 export const SIZES = ['small'];
 
-
 /**
  * Button Component
  */
@@ -23,9 +22,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
     unstyled: type === 'dropDown',
-    hasEmoji: React.Children.toArray(children).some(
-      (child) => child.type && child.type.name === React.createElement(Emoji, { name: 'herb' }).type.name,
-    ),
+    hasEmoji: React.Children.toArray(children).some((child) => child.type && child.type === Emoji),
     matchBackground: matchBackground === true,
     active,
     hover,
