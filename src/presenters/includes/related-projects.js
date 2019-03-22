@@ -72,7 +72,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <TeamLink team={team}>More by {team.name} →</TeamLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} entity={team} entityType={"team"}/>
+                    <RelatedProjectsBody projects={projects} entity={team} entityType="team" />
                   </>
                 )
               }
@@ -88,7 +88,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <UserLink user={user}>More by {getDisplayName(user)} →</UserLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} entity={user} entityType={"user"}/>
+                    <RelatedProjectsBody projects={projects} entity={user} entityType="user" />
                   </>
                 )
               }

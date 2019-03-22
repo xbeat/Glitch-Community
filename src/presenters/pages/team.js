@@ -149,8 +149,8 @@ class TeamPage extends React.Component {
           </a>
           <ProfileContainer
             avatarStyle={getAvatarStyle({ ...team, cache: team._cacheAvatar })} // eslint-disable-line
-            entity={team} // eslint-disable-line
-            entityType={"team"}
+            entity={team}
+            entityType="team"
             avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
             coverButtons={
               this.props.currentUserIsTeamAdmin ? (

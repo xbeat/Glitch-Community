@@ -18,7 +18,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
     <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
     </Heading>
-    <CoverContainer entity={user} entityTy>
+    <CoverContainer entity={user} entityType="user">
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>

@@ -5,7 +5,7 @@ import styles from './cover-container.styl';
 
 
 const cx = classNames.bind(styles);
-// Cover Container
+const cacheBuster = Math.floor(Math.random() * 1000);
 
 export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cache = cacheBuster, size = 'large' }) {
   const customImage = `${CDN_URL}/${entityType}-cover/${id}/${size}?${cache}`;
@@ -16,9 +16,10 @@ export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cac
   };
 }
 
-const CoverContainer = ({ buttons, children, className, entity, ...props }) => {
+// Cover Container
+const CoverContainer = ({ buttons, children, className, entity, entityType, ...props }) => {
   return (
-    <div style={getProfileStyle(entity)} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
+    <div style={getProfileStyle(entityType, entity)} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
       {children}
       {buttons}
     </div>

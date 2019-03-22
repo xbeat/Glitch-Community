@@ -105,7 +105,7 @@ const UserPage = ({
         <ProfileContainer
           avatarStyle={getAvatarStyle(user)}
           entity={user}
-          entityType={"user"}
+          entityType="user"
           coverButtons={
             isAuthorized &&
             !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null} />
