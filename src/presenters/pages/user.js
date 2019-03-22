@@ -225,9 +225,7 @@ const UserPageContainer = ({ api, user }) => {
       <UserEditor api={api} initialUser={user}>
         {(userFromEditor, funcs, isAuthorized) => (
           <>
-            <Helmet>
-              <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
-            </Helmet>
+            <Helmet title={userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)} />
             <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
               {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
             </ProjectsLoader>

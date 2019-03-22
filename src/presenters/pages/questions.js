@@ -9,9 +9,7 @@ import MoreIdeas from '../more-ideas';
 
 const QuestionsPage = ({ api }) => (
   <Layout api={api}>
-    <Helmet>
-      <title>Questions</title>
-    </Helmet>
+    <Helmet title="Questions" />
     <main className="questions-page">
       <Questions api={api} max={12} />
       <MoreIdeas api={api} />

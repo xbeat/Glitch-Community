@@ -92,9 +92,7 @@ const CollectionPageContents = ({
 
   return (
     <>
-      <Helmet>
-        <title>{collection.name}</title>
-      </Helmet>
+      <Helmet title={collection.name} />
       <main className="collection-page">
         <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
           <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
