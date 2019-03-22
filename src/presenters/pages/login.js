@@ -136,7 +136,7 @@ export const GitHubLoginPage = ({ code, ...props }) => {
 
 export const GoogleLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/google`;
-  const url = `/auth/google/callbacl?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
+  const url = `/auth/google/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
   return <LoginPageContainer {...props} provider="Google" url={url} />;
 };
 
