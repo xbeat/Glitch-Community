@@ -27,13 +27,13 @@ function generateFilterButtons(filters) {
     button.id = filter.name;
     button.contents = (
       <>
-        {' '}
         {capitalize(filter.name)}
-        {filter.hits > 0 && <Badge>{filter.hits}</Badge>}
+        {filter.hits && <Badge>{filter.hits}</Badge>}
       </>
     );
     filterButtons.push(button);
   });
+  console.log('filterButtons', filterButtons);
   return filterButtons;
 }
 

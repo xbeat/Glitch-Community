@@ -20,6 +20,7 @@ class SegmentedButtons extends React.Component {
 
   render() {
     const { buttons } = this.props;
+    console.log(buttons);
 
     return (
       <div className={styles.segmentedButtons}>
