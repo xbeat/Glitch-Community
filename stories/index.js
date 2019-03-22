@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
+import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
@@ -8,20 +9,49 @@ import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
+const helloAlert = () => {
+  alert('hello');
+};
+
 storiesOf('Button', module)
-  .add('regular', () => <Button>Hello Button</Button>)
-  .add('cta', () => <Button type="cta">CTA Button</Button>)
-  .add('small', () => <Button size="small">Small Button</Button>)
+  .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
+  .add('cta', () => (
+    <Button type="cta" onClick={helloAlert}>
+      CTA Button
+    </Button>
+  ))
+  .add('small', () => (
+    <Button size="small" onClick={helloAlert}>
+      Small Button
+    </Button>
+  ))
   .add('tertiary', () => (
-    <Button type="tertiary" size="small">
+    <Button type="tertiary" size="small" onClick={helloAlert}>
       Tertiary (Small) Button
     </Button>
   ))
-  .add('danger zone', () => (
-    <Button type="dangerZone" size="small">
+  .add('danger zone (red on hover)', () => (
+    <Button type="dangerZone" size="small" onClick={helloAlert}>
       Destructive Action
     </Button>
+  ))
+  .add('link (click to a different page)', () => <Button href="https://support.glitch.com">Support</Button>)
+  .add('with emoji', () => (
+    <Button onClick={helloAlert}>
+      <Emoji name="sunglasses" /> Show
+    </Button>
+  ))
+  .add(`match background`, () => (
+    <div style={{ width: '100%', height: '100%', backgroundColor: '#F5F5F5' }}>
+      <Button onClick={helloAlert} matchBackground={true}>
+        Support <Emoji name="ambulance" />
+      </Button>
+    </div>
   ));
+
+storiesOf('Emoji', module)
+  .add('standard', () => <Emoji name="herb" />)
+  .add('sunglasses', () => <Emoji name="sunglasses" />);
 
 storiesOf('TooltipContainer', module)
   .add('action', () => (
@@ -69,8 +99,7 @@ storiesOf('Heading', module)
   .add('h3', () => <Heading tagName="h3">H3, 16px</Heading>)
   .add('h4', () => <Heading tagName="h4">H4, 14px</Heading>);
 
-storiesOf('Text', module)
-  .add('regular ', () => <Text>Regular, 20px</Text>);
+storiesOf('Text', module).add('regular ', () => <Text>Regular, 20px</Text>);
 
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)

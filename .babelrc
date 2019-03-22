@@ -9,6 +9,7 @@
         "edge": "16"
       },
       "useBuiltIns": "usage",
+      "corejs": 2
     }],
   ],
   "plugins": [

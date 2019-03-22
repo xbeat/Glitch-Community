@@ -34,7 +34,7 @@ const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject
 
         {isAuthorized ? (
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized} />
+            <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
           </div>
         ) : (
           reportBtn
@@ -58,7 +58,7 @@ const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject
               baseDomain: featuredProject.domain,
             }}
           >
-            <RemixButton className="button-small" name={featuredProject.domain} isMember={isAuthorized} />
+            <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
           </TrackClick>
         </div>
       </section>
