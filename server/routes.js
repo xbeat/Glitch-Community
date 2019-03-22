@@ -5,6 +5,10 @@ const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
 
+const MarkdownIt = require('markdown-it');
+const md = new MarkdownIt();
+const cheerio = require('cheerio');
+
 const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
@@ -109,28 +113,29 @@ module.exports = function(external) {
       return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    await render(res, domain, project.description, avatar);
+    const description = project.description ? cheerio.load(md.render(project.description)).text() : '';
+
+    await render(res, domain, description, avatar);
   });
 
   app.get('/@:name', async (req, res) => {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const args = [res, team.name, team.description];
+      const description = team.description ? cheerio.load(md.render(team.description)).text() : '';
+      const args = [res, team.name, description];
+
       if (team.hasAvatarImage) {
         args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
       }
+
       await render(...args);
       return;
     }
     const user = await getUser(name);
     if (user) {
-      await render(
-        res,
-        user.name || `@${user.login}`,
-        user.description,
-        user.avatarThumbnailUrl,
-      );
+      const description = user.description ? cheerio.load(md.render(user.description)).text() : '';
+      await render(res, user.name || `@${user.login}`, description, user.avatarThumbnailUrl);
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
@@ -143,7 +148,7 @@ module.exports = function(external) {
 
     if (collectionObj) {
       let { name, description } = collectionObj;
-
+      description = description ? cheerio.load(md.render(description)).text() : '';
       description = description.trimEnd(); // trim trailing whitespace from description
       description += ` 🎏 A collection of apps by @${author}`;
       description = description.trimStart(); // if there was no description, trim space before the fish
