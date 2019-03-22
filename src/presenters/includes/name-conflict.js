@@ -18,41 +18,19 @@ NameConflictWarning.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-class NameConflict extends React.Component {
-  componentDidMount() {
-    const content = NameConflictWarning({ id: this.props.userId });
-    this.notification = this.props.createPersistentNotification(content);
-  }
-
-  componentWillUnmount() {
-    this.notification.removeNotification();
-  }
-
-  render() {
-    return null;
-  }
-}
-NameConflict.propTypes = {
-  createPersistentNotification: PropTypes.func.isRequired,
-  userId: PropTypes.number.isRequired,
-};
-
-function useNameConflict () {
+export function useNameConflict() {
   const { currentUser } = useCurrentUser();
   const { createPersistentNotification } = useNotifications();
-  const ref = useRef(null)
   useEffect(() => {
-    ref.current = createPersistentNotification(<NameConflictWarning id={currentUser.id} />)
+    const notification = createPersistentNotification(<NameConflictWarning id={currentUser.id} />);
     return () => {
-      if (ref.current) {
-        ref.current.removeNotification()
-      }
-    }
-  }, [currentUser.id])
+      notification.removeNotification();
+    };
+  }, [currentUser.id]);
 }
 
-function NameConflictContainer () {
-  useNameConflict()
-  return null
-};
-export default NameConflictContainer;
+function NameConflict() {
+  useNameConflict();
+  return null;
+}
+export default NameConflict;

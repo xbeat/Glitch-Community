@@ -10,32 +10,31 @@ import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
 import { useAPI } from '../../state/api';
 
-import { NotificationConsumer, AddProjectToCollectionMsg } from '../notifications';
+import { useNotification, AddProjectToCollectionMsg } from '../notifications';
 
-const ProjectResultsUL = ({ projects, collection, onClick }) => (
-  <ul className="results">
-    {projects.map((project) => (
-      <NotificationConsumer key={project.id}>
-        {({ createNotification }) => (
-          <li>
-            <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
-              <ProjectResultItem
-                domain={project.domain}
-                description={project.description}
-                users={project.users}
-                id={project.id}
-                isActive={false}
-                collection={collection}
-                onClick={() => onClick(project, collection, createNotification)}
-                isPrivate={project.private}
-              />
-            </TrackClick>
-          </li>
-        )}
-      </NotificationConsumer>
-    ))}
-  </ul>
-);
+const ProjectResultsUL = ({ projects, collection, onClick }) => {
+  const { createNotification } = useNotification();
+  return (
+    <ul className="results">
+      {projects.map((project) => (
+        <li key={project.id}>
+          <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
+            <ProjectResultItem
+              domain={project.domain}
+              description={project.description}
+              users={project.users}
+              id={project.id}
+              isActive={false}
+              collection={collection}
+              onClick={() => onClick(project, collection, createNotification)}
+              isPrivate={project.private}
+            />
+          </TrackClick>
+        </li>
+      ))}
+    </ul>
+  );
+};
 ProjectResultsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   collection: PropTypes.object.isRequired,

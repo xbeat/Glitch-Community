@@ -9,7 +9,7 @@ import { TrackClick } from '../analytics';
 import { getLink, createCollection } from '../../models/collection';
 import { useAPI } from '../../state/api';
 
-import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { AddProjectToCollectionMsg, useNotifications } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
@@ -117,7 +117,7 @@ class CreateCollectionPop extends React.Component {
 
   render() {
     const { error, query } = this.state;
-    const { collections } = this.props;
+    const { collections, createNotification } = this.props;
     const { teams } = this.props.currentUser;
     let queryError; // if user already has a collection with the specified name
 
@@ -137,8 +137,6 @@ class CreateCollectionPop extends React.Component {
     }
 
     return (
-      <NotificationConsumer>
-        {({ createNotification }) => (
           <dialog className="pop-over create-collection-pop wide-pop">
             <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
 
@@ -185,8 +183,6 @@ class CreateCollectionPop extends React.Component {
               </form>
             </section>
           </dialog>
-        )}
-      </NotificationConsumer>
     );
   }
 }
@@ -197,6 +193,7 @@ CreateCollectionPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
 };
 
 CreateCollectionPop.defaultProps = {
@@ -205,5 +202,6 @@ CreateCollectionPop.defaultProps = {
 
 export default (props) => {
   const api = useAPI();
-  return <CreateCollectionPop {...props} api={api} />;
+  const { createNotification } = useNotifications()
+  return <CreateCollectionPop {...props} api={api} createNotification={createNotification} />;
 };
