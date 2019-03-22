@@ -6,7 +6,7 @@ import Button, { SIZES } from '../../components/buttons/button';
 import Emoji from '../../components/images/emoji';
 
 export const ShowButton = ({ name, size }) => (
-  <Button href={getShowUrl(name)} size={size}>
+  <Button href={getShowUrl(name)} size={size} matchBackground={false}>
     <Emoji name="sunglasses" /> Show
   </Button>
 );
@@ -15,7 +15,7 @@ ShowButton.propTypes = {
 };
 
 export const EditButton = ({ name, isMember, size }) => (
-  <Button href={getEditorUrl(name)} size={size}>
+  <Button href={getEditorUrl(name)} size={size} matchBackground={false}>
     {isMember ? 'Edit Project' : 'View Source'}
   </Button>
 );

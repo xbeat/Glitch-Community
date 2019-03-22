@@ -32,6 +32,9 @@ storiesOf('Button', module)
     <Button onClick={helloAlert}>
       <Emoji name="sunglasses" /> Show
     </Button>
+  ))
+  .add('match background', () => (
+    <div 
   ));
 
 storiesOf('Emoji', module)
