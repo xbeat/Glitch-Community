@@ -375,9 +375,7 @@ const TeamPageContainer = ({ team, ...props }) => {
       <TeamPageEditor initialTeam={team}>
         {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
           <>
-            <Helmet>
-              <title>{teamFromEditor.name}</title>
-            </Helmet>
+            <Helmet title={teamFromEditor.name} />
             <TeamPage
               api={api}
               team={teamFromEditor}

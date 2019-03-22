@@ -223,7 +223,7 @@ const SearchPage = ({ query }) => {
   const errorFuncs = useErrorHandlers();
   return (
     <Layout searchQuery={query}>
-      <Helmet>{!!query && <title>Search for {query}</title>}</Helmet>
+      {!!query && <Helmet title={`Search for ${query}`} />}
       {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
