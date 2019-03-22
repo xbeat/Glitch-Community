@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 import { Link } from '../../presenters/includes/link';
-import Emoji from '../images/emoji';
+import Emoji, { EMOJIS } from '../images/emoji';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +24,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     dangerZone: type === 'dangerZone',
     unstyled: type === 'dropDown',
     hasEmoji: React.Children.toArray(children).some(
-      (child) => child.type && child.type.name === React.createElement(Emoji, { name: 'herb' }).type.name,
+      (child) => child.type && child.type.name === React.createElement(Emoji, { name: EMOJIS[0] }).type.name,
     ),
     matchBackground: matchBackground === true,
     active,

@@ -5,7 +5,7 @@ import styles from './emoji.styl';
 
 const cx = classNames.bind(styles);
 
-const EMOJIS = {
+export const EMOJIS = {
   ambulance: 'https://cdn.glitch.com/cc880f8d-a84f-4909-b676-497522a8c625%2Fambulance.png',
   arrowDown: 'https://cdn.glitch.com/20b03a49-e2c4-45fb-b411-c56cf5a734d4%2Farrow-down.png',
   balloon: 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fballoon.png',
