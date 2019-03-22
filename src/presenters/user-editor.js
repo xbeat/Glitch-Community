@@ -56,7 +56,6 @@ class UserEditor extends React.Component {
       hasCoverImage: true,
       coverColor: color,
     });
-    console.log("updating cachecover")
     this.setState({ _cacheCover: Date.now() });
   }
 
