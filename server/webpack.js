@@ -27,9 +27,9 @@ function webpackExpressMiddleware() {
 }
 
 module.exports = function(app) {
-  if (process.env.NODE_ENV === 'production') {
-    webpackBackgroundProcess();
-  } else {
-    app.use(webpackExpressMiddleware());
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   webpackBackgroundProcess();
+  // } else {
+  //   app.use(webpackExpressMiddleware());
+  // }
 };
