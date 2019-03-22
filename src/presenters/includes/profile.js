@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TrackClick } from '../analytics';
 import TeamsList from '../teams-list';
 import Button from '../../components/buttons/button';
-
+import CoverContainer from '../../c
 // Image Buttons
 
 export const ImageButtons = ({ name, uploadImage, clearImage }) => (
@@ -60,24 +60,6 @@ ProjectInfoContainer.defaultProps = {
 export const InfoContainer = ({ children }) => <div className="profile-info">{children}</div>;
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
-};
-
-// Cover Container
-
-export const CoverContainer = ({ buttons, children, className, ...props }) => (
-  <div className={`cover-container ${className}`} {...props}>
-    {children}
-    {buttons}
-  </div>
-);
-CoverContainer.propTypes = {
-  buttons: PropTypes.node,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-CoverContainer.defaultProps = {
-  className: '',
-  buttons: null,
 };
 
 // Profile Container
