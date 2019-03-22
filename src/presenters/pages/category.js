@@ -17,7 +17,7 @@ import Heading from '../../components/text/heading';
 
 const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, ...props }) => (
   <>
-    <Helmet title="category.name" />
+    <Helmet title={category.name} />
     <main className="collection-page">
       <article className="projects collection-full" style={{ backgroundColor: category.backgroundColor }}>
         <header className="collection">
