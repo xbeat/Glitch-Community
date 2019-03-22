@@ -48,7 +48,6 @@ CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
   maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
-  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
