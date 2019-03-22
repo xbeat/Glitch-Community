@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import { sampleSize } from 'lodash';
 
 import { getSingleItem } from '../../shared/api';
-import { getProfileStyle, getDisplayName } from '../models/user';
-import { getLink } from '../models/collection';
 
 import { DataLoader } from './includes/loader';
-import { CoverContainer } from './includes/profile';
-import { UserLink, TeamLink } from './includes/link';
 
-import Markdown from '../components/text/markdown';
-import Button from '../components/buttons/button';
-
-// this should probably live outside this file
+// where should this live?
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
@@ -45,61 +38,19 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   return moreCollections;
 };
 
-// could easily be moved to a /components file if we want? though I'm not sure we'll ever reuse it
-const CollectionItem = ({ name, description, projects, coverColor, user, team, url }) => {
-  const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
-  return (
-    <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
-      <Button>{name}</Button>
-      <Markdown>{description}</Markdown>
-      <div className="projects-count">{projectsCount}</div>
-    </a>
-  );
-};
 
-// should this also be in /components? should we combine it with above into one react component?
 // how do we feel about `DataLoader`?
-const MoreCollections = ({ api, currentUser, collection }) => {
-  const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
-  const isUserCollection = collection.teamId === -1;
+const MoreCollectionsContainer = ({ api, currentUser, collection }) => (
+  <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
+    {(collections) => <MoreCollections currentCollection={collection} currentUser={currentUser} collections={collections} />}
+  </DataLoader>
+);
 
-  return (
-    <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
-      {
-        (collections) => (
-          <section>
-            <h2>
-              {
-                isUserCollection
-                  ? (<UserLink user={collection.user}>More from {getDisplayName(collection.user)} →</UserLink>)
-                  : (<TeamLink team={collection.team}>More from {collection.team.name} →</TeamLink>)
-              }
-            </h2>
-            <CoverContainer style={coverStyle} className="collections">
-              <div className="more-collections">
-                {collections.map((c) => {
-                  const projectsCount = `${projects.length} project${projects.length === 1 ? '' : 's'}`;
-  return (
-    <a href={getLink({ user, team, url })} className="more-collections-item" style={{ backgroundColor: coverColor }}>
-      <Button>{name}</Button>
-      <Markdown>{description}</Markdown>
-      <div className="projects-count">{projectsCount}</div>
-    </a>
-  );
-                })}
-              </div>
-            </CoverContainer>
-          </section>
-        )
-      }
-    </DataLoader>
-  );
-};
 
-MoreCollections.propTypes = {
+MoreCollectionsContainer.propTypes = {
   collection: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
 };
 
-export default MoreCollections;
+export default MoreCollectionsContainer;
