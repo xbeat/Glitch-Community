@@ -13,7 +13,7 @@ const PROJECT_COUNT = 3;
 
 const RelatedProjectsBody = ({ projects, entity, entityType }) =>
   projects.length > 0 ? (
-    <CoverContainer entity={entity} entityType={entityType}>
+    <CoverContainer entity={entity} entityType={entityType} className="projects">
       <ProjectsUL projects={projects} />
     </CoverContainer>
   ) : null;

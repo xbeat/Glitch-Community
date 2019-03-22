@@ -1,3 +1,5 @@
+/* globals CDN_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -17,14 +19,12 @@ export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cac
 }
 
 // Cover Container
-const CoverContainer = ({ buttons, children, className, entity, entityType, ...props }) => {
-  return (
-    <div style={getProfileStyle(entityType, entity)} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
-      {children}
-      {buttons}
-    </div>
-  );
-};
+const CoverContainer = ({ buttons, children, className, entity, entityType, ...props }) => (
+  <div style={getProfileStyle(entityType, entity)} className={`${cx({ 'cover-container': true })} ${className}`} {...props}>
+    {children}
+    {buttons}
+  </div>
+);
 
 CoverContainer.propTypes = {
   buttons: PropTypes.node,
