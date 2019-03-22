@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { orderBy } from 'lodash';
@@ -10,53 +10,40 @@ import { NotificationConsumer } from './notifications';
 
 import Heading from '../components/text/heading';
 
-class CollectionsList extends React.Component {
-  constructor(props) {
-    super(props);
+function CollectionsList({ collections: rawCollections, title, api, isAuthorized, maybeCurrentUser, maybeTeam }) {
+  const [deletedCollectionIds, setDeletedCollectionIds] = useState([]);
 
-    this.state = {
-      deletedCollectionIds: [],
-    };
-    this.deleteCollection = this.deleteCollection.bind(this);
+  function deleteCollection(id) {
+    setDeletedCollectionIds((ids) => [...ids, id]);
+    return api.delete(`/collections/${id}`);
   }
 
-  async deleteCollection(id) {
-    this.setState(({ deletedCollectionIds }) => ({
-      deletedCollectionIds: [...deletedCollectionIds, id],
-    }));
-    await this.props.api.delete(`/collections/${id}`);
-  }
+  const collections = rawCollections.filter(({ id }) => !deletedCollectionIds.includes(id));
+  const hasCollections = !!collections.length;
+  const canMakeCollections = isAuthorized && !!maybeCurrentUser;
 
-  render() {
-    const { title, api, isAuthorized, maybeCurrentUser, maybeTeam } = this.props;
-    const { deleteCollection } = this;
-    const collections = this.props.collections.filter(({ id }) => !this.state.deletedCollectionIds.includes(id));
-    const hasCollections = !!collections.length;
-    const canMakeCollections = isAuthorized && !!maybeCurrentUser;
-
-    if (!hasCollections && !canMakeCollections) {
-      return null;
-    }
-    return (
-      <article className="collections">
-        <Heading tagName="h2">{title}</Heading>
-        {canMakeCollections && (
-          <>
-            <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
-            {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
-          </>
-        )}
-        <CollectionsUL
-          {...{
-            collections,
-            api,
-            isAuthorized,
-            deleteCollection,
-          }}
-        />
-      </article>
-    );
+  if (!hasCollections && !canMakeCollections) {
+    return null;
   }
+  return (
+    <article className="collections">
+      <Heading tagName="h2">{title}</Heading>
+      {canMakeCollections && (
+        <>
+          <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
+          {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
+        </>
+      )}
+      <CollectionsUL
+        {...{
+          collections,
+          api,
+          isAuthorized,
+          deleteCollection,
+        }}
+      />
+    </article>
+  );
 }
 
 CollectionsList.propTypes = {
@@ -81,43 +68,48 @@ const CreateFirstCollection = () => (
   </div>
 );
 
+function CreateCollectionButtton ({ api, maybeTeam, currentUser }) {
+  const [loading, setLoading] = useState(false)
+  const [newCollectionUrl, setNewCollectionUrl] = useState('')
+  
+  async function createCollectionOnClick(createNotification) {
+    setLoading(true)
+
+    const collectionResponse = await createCollection(
+      api,
+      null,
+      maybeTeam ? maybeTeam.id : null,
+      createNotification,
+    );
+    if (collectionResponse && collectionResponse.id) {
+      const collection = collectionResponse;
+      if (maybeTeam) {
+        collection.team = maybeTeam;
+      } else {
+        collection.user = currentUser;
+      }
+      setNewCollectionUrl(getLink(collection));
+    } else {
+      // error messaging handled in createCollection
+      setLoading(false)
+    }
+  }
+}
+
 export class CreateCollectionButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shouldRedirect: false,
       loading: false,
       newCollectionUrl: '',
     };
     this.createCollectionOnClick = this.createCollectionOnClick.bind(this);
   }
 
-  async createCollectionOnClick(createNotification) {
-    this.setState({ loading: true });
-
-    const collectionResponse = await createCollection(
-      this.props.api,
-      null,
-      this.props.maybeTeam ? this.props.maybeTeam.id : null,
-      createNotification,
-    );
-    if (collectionResponse && collectionResponse.id) {
-      const collection = collectionResponse;
-      if (this.props.maybeTeam) {
-        collection.team = this.props.maybeTeam;
-      } else {
-        collection.user = this.props.currentUser;
-      }
-      const newCollectionUrl = getLink(collection);
-      this.setState({ newCollectionUrl, shouldRedirect: true });
-    } else {
-      // error messaging handled in createCollection
-      this.setState({ loading: false });
-    }
-  }
+  
 
   render() {
-    if (this.state.shouldRedirect) {
+    if (this.state.newCollectionUrl) {
       return <Redirect to={this.state.newCollectionUrl} push />;
     }
     if (this.state.loading) {
