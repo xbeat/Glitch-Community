@@ -1,26 +1,29 @@
-// .more-collections
-//   display: grid
-//   grid-template-columns: 1fr 1fr 1fr
-//   grid-gap: 10px
-//   a
-//     &:hover
-//       text-decoration: none  
-      
-// .more-collections-item
-//   border-radius: 5px
-//   display: flex
-//   flex-direction: column
-//   button
-//     margin: 12px
-//     width: fit-content
-//   span
-//     margin: 12px
-//     flex-grow: 1
+.more-collections
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  grid-gap: 10px
+  a
+    &:hover
+      text-decoration: none  
+  
+  @media (max-width: mediumViewport)
+    grid-template-columns: 1fr
+    
+.more-collections-item
+  border-radius: 5px
+  display: flex
+  flex-direction: column
+  button
+    margin: 12px
+    width: fit-content
+  span
+    margin: 12px
+    flex-grow: 1
 
-// .projects-count
-//   background-color: secondary-background
-//   padding: 12px
-//   border-bottom-right-radius: 5px
-//   border-bottom-left-radius: 5px
-//   align-self: flex-end
-//   width: 100%
+.projects-count
+  background-color: secondary-background
+  padding: 12px
+  border-bottom-right-radius: 5px
+  border-bottom-left-radius: 5px
+  align-self: flex-end
+  width: 100%

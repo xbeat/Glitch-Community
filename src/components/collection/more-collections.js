@@ -10,7 +10,11 @@ import { UserLink, TeamLink } from '../../presenters/includes/link';
 import Markdown from '../text/markdown';
 import Button from '../buttons/button';
 
-import styles from './more-collections.styl';
+// import styles from './more-collections.styl';
+// TODO:
+// - componentize CoverContainer
+// - componentize UserLink and TeamLink (this is in-flight by Sheridan, probs will just be one generic link)
+// bring in styles from here and delete styles/more-collections.styl
 
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
   const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
