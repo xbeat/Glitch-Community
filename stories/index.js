@@ -80,6 +80,8 @@ storiesOf('Markdown', module)
 
 storiesOf('Badge', module)
   .add('regular', () => <Badge>Regular</Badge>)
+  .add('success', () => <Badge type="success">Success</Badge>)
+  .add('warning', () => <Badge type="warning">Warning</Badge>)
   .add('error', () => <Badge type="error">Error</Badge>);
 
 storiesOf('Segmented-Buttons', module)
