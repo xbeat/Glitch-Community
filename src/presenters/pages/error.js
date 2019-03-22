@@ -9,6 +9,7 @@ import { getShowUrl } from '../../models/project';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import NotFound from '../includes/not-found';
+import Image from '../../components/image/image';
 
 import Text from '../../components/text/text';
 import Heading from '../../components/text/heading';
@@ -19,7 +20,7 @@ export const NotFoundPage = () => (
   <Layout>
     <Helmet title="👻 Page not found" />
     <main className="error-page-container">
-      <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
+      <Image className="error-image" src={telescopeImageUrl} role="presentation" width="318px" height="297px" />
       <div className="error-msg">
         <Heading tagName="h1">Page Not Found</Heading>
         <Text>Maybe a typo, or perhaps it's moved?</Text>

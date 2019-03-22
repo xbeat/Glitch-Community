@@ -14,6 +14,7 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Image from '../../components/image/image';
 import Text from '../../components/text/text';
 
 import Heading from '../../components/text/heading';
@@ -27,7 +28,7 @@ function loadScript(src) {
 
 const Callout = ({ classes, imgUrl, title, description }) => (
   <div className={`callout ${classes}`}>
-    <img className="badge" src={imgUrl} alt={title} />
+    <Image className="badge" src={imgUrl} width="114" height="115" alt={title} />
     <div className="window">
       <div className="title">{title}</div>
       <div className="description">{description}</div>
@@ -67,13 +68,12 @@ class WhatIsGlitch extends React.Component {
         <span>
           <figure>
             <Heading tagName="h1">
-              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
-              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
+              <Image src={witchSmall} srcSet={[`${witchLarge} 1000w`]} alt={whatsGlitchAlt} width="100%" />
             </Heading>
 
             <OverlayVideo>
               <div className="button video">
-                <img className="play-button" src={play} alt="How it works" />
+                <Image src={play} className="play-button" alt="How it works" width="25%" />
                 <span>How it works</span>
               </div>
             </OverlayVideo>

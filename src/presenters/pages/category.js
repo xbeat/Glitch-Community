@@ -11,6 +11,7 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
+import Image from '../../components/image/image';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
@@ -26,7 +27,7 @@ const CategoryPageWrap = ({ addProjectToCollection, category, currentUser, ...pr
         <header className="collection">
           <Heading tagName="h1">{category.name}</Heading>
           <div className="collection-image-container">
-            <img src={category.avatarUrl} alt="" />
+            <Image src={category.avatarUrl} />
           </div>
 
           <p className="description">{category.description}</p>
