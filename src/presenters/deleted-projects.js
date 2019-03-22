@@ -48,14 +48,12 @@ DeletedProjectsList.propTypes = {
   undelete: PropTypes.func.isRequired,
 };
 
-// states: init (!loaded, !shown) | loading (!loaded, shown) | ready (loaded, shown)
-
-function DeletedProjects ({ deletedProjects, setDeletedProjects }) {
+function DeletedProjects({ deletedProjects, setDeletedProjects, undelete }) {
   const api = useAPI();
-  // hidden | loading | ready
-  const [state, setState] = useState('hidden')
+  // states: hidden | loading | ready
+  const [state, setState] = useState('hidden');
   const clickShow = async () => {
-    setState('loading')
+    setState('loading');
     try {
       const { data } = await api.get('user/deleted-projects');
       setDeletedProjects(data);
@@ -63,44 +61,43 @@ function DeletedProjects ({ deletedProjects, setDeletedProjects }) {
     } catch (e) {
       setState('hidden');
     }
-  }
+  };
   const clickHide = () => {
-    setState('hidden')
-  }
-  
-   if (!this.state.shown) {
-      return (
-        <button className="button button-tertiary" onClick={this.clickShow}>
-          Show
-        </button>
-      );
-    }
-    if (!this.state.loaded) {
-      return <Loader />;
-    }
-    if (!this.props.deletedProjects.length) {
-      return 'nothing found';
-    }
+    setState('hidden');
+  };
+
+  if (state === 'hidden') {
     return (
-      <>
-        <DeletedProjectsList {...this.props} />
-        <button className="button button-tertiary" onClick={this.clickHide}>
-          Hide Deleted Projects
-        </button>
-      </>
+      <button className="button button-tertiary" onClick={clickShow}>
+        Show
+      </button>
     );
   }
+  if (state === 'loading') {
+    return <Loader />;
+  }
+  if (!deletedProjects.length) {
+    return 'nothing found';
+  }
+  return (
+    <>
+      <DeletedProjectsList deletedProjects={deletedProjects} undelete={undelete} />
+      <button className="button button-tertiary" onClick={clickHide}>
+        Hide Deleted Projects
+      </button>
+    </>
+  );
 }
 
 DeletedProjects.propTypes = {
   deletedProjects: PropTypes.array,
   setDeletedProjects: PropTypes.func.isRequired,
+  undelete: PropTypes.func.isRequired,
 };
 
 DeletedProjects.defaultProps = {
   deletedProjects: [],
 };
-
 
 const DeletedProjectsWrap = (props) => (
   <article className="deleted-projects">
@@ -109,6 +106,6 @@ const DeletedProjectsWrap = (props) => (
     </Heading>
     <DeletedProjects {...props} />
   </article>
-)
+);
 
-export default DeletedProjectsWrap; 
+export default DeletedProjectsWrap;
