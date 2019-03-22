@@ -1,42 +1,41 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import { uniqueId } from 'lodash';
+import classNames from 'classnames';
 
 import { OptimisticValue, TrimmedValue, FieldErrorMessage } from './field-helpers';
 
-export class PureEditableWrappingField extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { id: uniqueId('editable-field-') };
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(evt) {
-    this.props.update(evt.target.value.replace(/\r?\n/g, ''));
-  }
-
-  render() {
-    const classes = ['content-editable', this.props.error ? 'error' : ''].join(' ');
-    const inputProps = {
-      id: this.state.id,
-      className: classes,
-      value: this.props.value,
-      onChange: this.onChange,
-      spellCheck: false,
-      autoComplete: 'off',
-      placeholder: this.props.placeholder,
-      autoFocus: this.props.autoFocus,
-    };
-
-    return (
-      <label htmlFor={inputProps.id}>
-        <TextArea {...inputProps} />
-        {!!this.props.error && <FieldErrorMessage error={this.props.error} />}
-      </label>
-    );
-  }
+function useUniqueId(prefix) {
+  const ref = useRef(uniqueId(prefix));
+  return ref.current;
 }
+
+function PureEditableWrappingField({ value, placeholder, update, autoFocus, error }) {
+  const id = useUniqueId('editable-field-');
+  const onChange = (event) => {
+    update(event.target.value.replace(/\r?\n/g, ''));
+  };
+
+  const inputProps = {
+    id: id,
+    className: classNames('content-editable', { error: error }),
+    value: value,
+    onChange: onChange,
+    spellCheck: false,
+    autoComplete: 'off',
+    placeholder: placeholder,
+    autoFocus: autoFocus,
+  };
+
+  return (
+    <label htmlFor={id}>
+      <TextArea {...inputProps} />
+      {!!error && <FieldErrorMessage error={error} />}
+    </label>
+  );
+}
+
 PureEditableWrappingField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
