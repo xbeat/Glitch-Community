@@ -31,12 +31,10 @@ AddTeamProject.propTypes = {
   addProject: PropTypes.func.isRequired,
   teamProjects: PropTypes.array.isRequired,
   extraButtonClass: PropTypes.string,
-  api: PropTypes.func,
 };
 
 AddTeamProject.defaultProps = {
   extraButtonClass: '',
-  api: null,
 };
 
 export default AddTeamProject;

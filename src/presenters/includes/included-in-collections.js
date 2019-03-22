@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { sampleSize } from 'lodash';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
+import { useAPI } from '../../state/api';
 
 import CollectionItem from '../collection-item';
 
@@ -27,7 +28,8 @@ const useAsync = (asyncFunction, api, ...args) => {
   return result;
 };
 
-const IncludedInCollections = ({ api, projectId }) => {
+const IncludedInCollections = ({ projectId }) => {
+  const api = useAPI();
   const rawCollections = useAsync(getIncludedCollections, api, projectId);
   const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
   if (!collections || !collections.length) {

@@ -8,6 +8,7 @@ import ErrorBoundary from './includes/error-boundary';
 import { Link } from './includes/link';
 import QuestionItem from './question-item';
 import { captureException } from '../utils/sentry';
+import { useAPI } from '../state/api';
 
 import Heading from '../components/text/heading';
 
@@ -100,11 +101,15 @@ class Questions extends React.Component {
   }
 }
 Questions.propTypes = {
-  api: PropTypes.any.isRequired,
   max: PropTypes.number,
 };
 Questions.defaultProps = {
   max: 3,
 };
 
-export default Questions;
+const QuestionsWrap = (props) => {
+  const api = useAPI();
+  return <Questions {...props} api={api} />;
+};
+
+export default QuestionsWrap;

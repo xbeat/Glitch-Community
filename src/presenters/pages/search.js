@@ -6,6 +6,7 @@ import { capitalize, sum } from 'lodash';
 
 import Layout from '../layout';
 
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Button from '../../components/buttons/button';
@@ -99,7 +100,7 @@ const UserResults = ({ users }) => (
   </article>
 );
 
-const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) => {
+const ProjectResults = ({ addProjectToCollection, projects, currentUser }) => {
   if (!projects) {
     return (
       <article>
@@ -110,9 +111,9 @@ const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) 
   }
   const loggedInUserWithProjects = projects && currentUser.login;
   return loggedInUserWithProjects ? (
-    <ProjectsList title="Projects" projects={projects} api={api} projectOptions={{ addProjectToCollection }} />
+    <ProjectsList title="Projects" projects={projects} projectOptions={{ addProjectToCollection }} />
   ) : (
-    <ProjectsList title="Projects" projects={projects} api={api} />
+    <ProjectsList title="Projects" projects={projects} />
   );
 };
 
@@ -203,12 +204,7 @@ class SearchResults extends React.Component {
         {showTeams && <TeamResults teams={teams} />}
         {showUsers && <UserResults users={users} />}
         {showProjects && (
-          <ProjectResults
-            projects={projects}
-            currentUser={this.props.currentUser}
-            api={this.props.api}
-            addProjectToCollection={this.addProjectToCollection}
-          />
+          <ProjectResults projects={projects} currentUser={this.props.currentUser} addProjectToCollection={this.addProjectToCollection} />
         )}
         {noResults && <NotFound name="any results" />}
       </main>
@@ -216,28 +212,24 @@ class SearchResults extends React.Component {
   }
 }
 SearchResults.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,
 };
 
-SearchResults.defaultProps = {
-  api: null,
-};
-
-const SearchPage = ({ api, query }) => {
+const SearchPage = ({ query }) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   const errorFuncs = useErrorHandlers();
   return (
-    <Layout api={api} searchQuery={query}>
+    <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
       {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
-      <MoreIdeas api={api} />
+      <MoreIdeas />
     </Layout>
   );
 };
 SearchPage.propTypes = {
-  api: PropTypes.any.isRequired,
   query: PropTypes.string,
 };
 SearchPage.defaultProps = {

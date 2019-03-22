@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
+import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 import { useNotifications } from './notifications';
@@ -237,7 +238,7 @@ class TeamEditor extends React.Component {
   }
 }
 TeamEditor.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func.isRequired,
@@ -247,10 +248,10 @@ TeamEditor.propTypes = {
 
 TeamEditor.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
-const TeamEditorContainer = ({ api, children, initialTeam }) => {
+const TeamEditorContainer = ({ children, initialTeam }) => {
+  const api = useAPI();
   const { currentUser, update } = useCurrentUser();
   const uploadFuncs = useUploader();
   const notificationFuncs = useNotifications();
@@ -262,7 +263,6 @@ const TeamEditorContainer = ({ api, children, initialTeam }) => {
   );
 };
 TeamEditorContainer.propTypes = {
-  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
 };
