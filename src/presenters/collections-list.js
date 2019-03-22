@@ -13,8 +13,9 @@ import { useCurrentUser } from '../state/current-user';
 
 import Heading from '../components/text/heading';
 
-function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeCurrentUser, maybeTeam }) {
+function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeTeam }) {
   const api = useAPI();
+  const { currentUser } = useCurrentUser();
   const [deletedCollectionIds, setDeletedCollectionIds] = useState([]);
 
   function deleteCollection(id) {
@@ -24,7 +25,7 @@ function CollectionsList({ collections: rawCollections, title, isAuthorized, may
 
   const collections = rawCollections.filter(({ id }) => !deletedCollectionIds.includes(id));
   const hasCollections = !!collections.length;
-  const canMakeCollections = isAuthorized && !!maybeCurrentUser;
+  const canMakeCollections = isAuthorized && !!currentUser;
 
   if (!hasCollections && !canMakeCollections) {
     return null;
@@ -34,7 +35,7 @@ function CollectionsList({ collections: rawCollections, title, isAuthorized, may
       <Heading tagName="h2">{title}</Heading>
       {canMakeCollections && (
         <>
-          <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
+          <CreateCollectionButton maybeTeam={maybeTeam} />
           {!hasCollections && <CreateFirstCollection />}
         </>
       )}
@@ -45,7 +46,6 @@ function CollectionsList({ collections: rawCollections, title, isAuthorized, may
 
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
-  maybeCurrentUser: PropTypes.object,
   maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
@@ -53,7 +53,6 @@ CollectionsList.propTypes = {
 };
 
 CollectionsList.defaultProps = {
-  maybeCurrentUser: undefined,
   maybeTeam: undefined,
 };
 
@@ -71,8 +70,9 @@ const collectionStates = {
   newCollection: (url) => ({ type: 'newCollection', value: url }),
 };
 
-function CreateCollectionButton({ maybeTeam, currentUser }) {
-  const api = useAPI()
+function CreateCollectionButton({ maybeTeam }) {
+  const api = useAPI();
+  const { currentUser } = useCurrentUser();
   const { createNotification } = useNotifications();
   const [state, setState] = useState(collectionStates.ready());
 
@@ -118,8 +118,6 @@ function CreateCollectionButton({ maybeTeam, currentUser }) {
 }
 
 CreateCollectionButton.propTypes = {
-  api: PropTypes.any.isRequired,
-  currentUser: PropTypes.object.isRequired,
   maybeTeam: PropTypes.object,
 };
 
