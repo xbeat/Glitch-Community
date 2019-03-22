@@ -111,7 +111,7 @@ function CreateCollectionButton({ api, maybeTeam, currentUser }) {
   return (
     <div id="create-collection-container">
       <TrackClick name="Create Collection clicked">
-        <button className="button" id="create-collection" onClick={this.createCollectionOnClick}>
+        <button className="button" id="create-collection" onClick={createCollectionOnClick}>
           Create Collection
         </button>
       </TrackClick>
