@@ -24,10 +24,12 @@ function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
     const button = {};
+    button.id = filter.name;
     button.contents = (
       <>
         {' '}
-        {capitalize(filter.name)} {filter.hits > 0 && <Badge children={filter.hits} />}
+        {capitalize(filter.name)}
+        {filter.hits > 0 && <Badge>{filter.hits}</Badge>}
       </>
     );
     filterButtons.push(button);

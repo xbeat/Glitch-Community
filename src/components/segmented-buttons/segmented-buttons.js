@@ -24,7 +24,7 @@ class SegmentedButtons extends React.Component {
     return (
       <div className={styles.segmentedButtons}>
         {buttons.map((button, index) => (
-          <Button key={index} size="small" type="tertiary" active={index === this.state.activeFilter} onClick={() => this.setFilter(index)}>
+          <Button key={button.id} size="small" type="tertiary" active={index === this.state.activeFilter} onClick={() => this.setFilter(index)}>
             {button.contents}
           </Button>
         ))}
@@ -37,6 +37,7 @@ SegmentedButtons.propTypes = {
   /** Expected button format: [content: ButtonName] */
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       content: PropTypes.node.isRequired,
     }),
   ).isRequired,
