@@ -6,18 +6,22 @@ import PopoverWithButton from '../pop-overs/popover-with-button';
 import { useAsync } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
-async function getProjects(api, teamId) {
-  const { data: team } = await api.get(`teams/${teamId}`);
-  return team.projects;
+async function getTeamProjects(api, teamId) {
+  if (teamId > 0) {
+    const { data: team } = await api.get(`teams/${teamId}`);
+    console.log({ team })
+    return team.projects;
+  }
+  return null;
 }
 
 function AddCollectionProject({ collection, addProjectToCollection }) {
-  const projects = useAsync(getProjects, collection.teamId);
+  const maybeTeamProjects = useAsync(getTeamProjects, collection.teamId);
   const { currentUser } = useCurrentUser();
 
   let initialProjects = [];
-  if (this.props.collection.teamId > 0) {
-    initialProjects = projects;
+  if (maybeTeamProjects) {
+    initialProjects = maybeTeamProjects;
   } else if (currentUser) {
     initialProjects = currentUser.projects;
   }
