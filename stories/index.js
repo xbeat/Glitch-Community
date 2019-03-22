@@ -41,9 +41,9 @@ storiesOf('Button', module)
       <Emoji name="sunglasses" /> Show
     </Button>
   ))
-  .add('match background', () => (
+  .add(`match background`, () => (
     <div style={{ width: '100%', height: '100%', backgroundColor: '#F5F5F5' }}>
-      <Button onClick={helloAlert} matchBackground={false}>
+      <Button onClick={helloAlert} matchBackground={true}>
         Support <Emoji name="ambulance" />
       </Button>
     </div>

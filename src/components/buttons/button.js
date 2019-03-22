@@ -75,7 +75,7 @@ Button.defaultProps = {
   type: null,
   size: null,
   hover: false,
-  matchBackground: true,
+  matchBackground: false,
   active: false,
 };
 
