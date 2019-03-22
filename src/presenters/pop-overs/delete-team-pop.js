@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Loader } from '../includes/loader';
 import { NotificationConsumer } from '../notifications';
+import { useAPI } from '../../state/api';
 
 class DeleteTeamPopBase extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class DeleteTeamPopBase extends React.Component {
       teamIsDeleting: true,
     });
     try {
-      await this.props.api().delete(`teams/${this.props.teamId}`);
+      await this.props.api.delete(`teams/${this.props.teamId}`);
       this.props.history.push('/');
     } catch (error) {
       console.error('deleteTeam', error, error.response);
@@ -66,12 +67,12 @@ class DeleteTeamPopBase extends React.Component {
   }
 }
 
-const DeleteTeamPop = withRouter((props) => (
-  <NotificationConsumer>{(notifyFuncs) => <DeleteTeamPopBase {...notifyFuncs} {...props} />}</NotificationConsumer>
-));
+const DeleteTeamPop = withRouter((props) => {
+  const api = useAPI();
+  return <NotificationConsumer>{(notifyFuncs) => <DeleteTeamPopBase {...notifyFuncs} {...props} api={api} />}</NotificationConsumer>;
+});
 
 DeleteTeamPop.propTypes = {
-  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,

@@ -8,7 +8,6 @@ const cx = classNames.bind(styles);
 export const TYPES = ['tertiary', 'cta', 'dangerZone'];
 export const SIZES = ['small'];
 
-
 /**
  * Button Component
  */
@@ -29,7 +28,6 @@ const Button = ({ onClick, disabled, type, size, hover, children, active }) => {
     </button>
   );
 };
-
 
 Button.propTypes = {
   /** element(s) to display in the button */

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 import useErrorHandlers from './error-handlers';
 
@@ -62,10 +63,7 @@ class CollectionEditor extends React.Component {
         return { ...project };
       }),
     }));
-    await this.props.api.patch(
-      `collections/${this.state.id}/project/${projectId}`,
-      { annotation: note },
-    );
+    await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });
   }
 
   addNoteField(projectId) {
@@ -107,7 +105,7 @@ class CollectionEditor extends React.Component {
   }
 }
 CollectionEditor.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
@@ -117,11 +115,11 @@ CollectionEditor.propTypes = {
 
 CollectionEditor.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
-const CollectionEditorContainer = ({ api, children, initialCollection }) => {
+const CollectionEditorContainer = ({ children, initialCollection }) => {
   const { currentUser } = useCurrentUser();
+  const api = useAPI();
   const errorFuncs = useErrorHandlers();
   return (
     <CollectionEditor {...{ api, currentUser, initialCollection }} {...errorFuncs}>
@@ -130,7 +128,6 @@ const CollectionEditorContainer = ({ api, children, initialCollection }) => {
   );
 };
 CollectionEditorContainer.propTypes = {
-  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
 };

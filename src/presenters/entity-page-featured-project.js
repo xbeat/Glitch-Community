@@ -10,7 +10,7 @@ import { TrackClick } from './analytics';
 
 import Heading from '../components/text/heading';
 
-const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
+const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
       <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
@@ -44,7 +44,6 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
           {currentUser.login && (
             <AddProjectToCollection
               className="button-small"
-              api={api}
               currentUser={currentUser}
               project={featuredProject}
               fromProject
@@ -68,7 +67,6 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
 };
 
 EntityPageFeaturedProject.propTypes = {
-  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,

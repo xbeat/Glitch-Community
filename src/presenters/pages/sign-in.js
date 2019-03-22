@@ -12,6 +12,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { captureException } from '../../utils/sentry';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
 
@@ -181,8 +182,8 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPop = (props) => {
-  const { api } = props;
+const SignInPop = () => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
   const isSignedIn = persistentToken && login;
@@ -200,9 +201,9 @@ const SignInPop = (props) => {
   }
 
   return (
-    <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
+    <NestedPopover alternateContent={() => <SignIn api={api} />} startAlternateVisible={false}>
       {(showEmailLogin) => (
-        <NestedPopover alternateContent={() => <SignInWithConsumer {...props} />} startAlternateVisible={false}>
+        <NestedPopover alternateContent={() => <SignInWithConsumer api={api} />} startAlternateVisible={false}>
           {(showCodeLogin) => (
             <div
               className="pop-over sign-in-pop middle"
@@ -230,10 +231,6 @@ const SignInPop = (props) => {
       )}
     </NestedPopover>
   );
-};
-
-SignInPop.propTypes = {
-  api: PropTypes.func.isRequired,
 };
 
 export default SignInPop;

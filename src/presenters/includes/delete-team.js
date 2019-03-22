@@ -22,14 +22,10 @@ const DeleteTeam = ({ ...props }) => (
 );
 
 DeleteTeam.propTypes = {
-  api: PropTypes.func,
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
   teamAdmins: PropTypes.array.isRequired,
-};
-DeleteTeam.defaultProps = {
-  api: null,
 };
 
 export default DeleteTeam;

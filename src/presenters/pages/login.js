@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import useLocalStorage from '../../state/local-storage';
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { EmailErrorPage, OauthErrorPage } from './error';
 
@@ -83,21 +84,9 @@ class LoginPage extends React.Component {
     if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       if (this.props.provider === 'Email') {
-        return (
-          <EmailErrorPage
-            api={this.props.api}
-            title={`${this.props.provider} Login Problem`}
-            description={this.state.errorMessage || genericDescription}
-          />
-        );
+        return <EmailErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription} />;
       }
-      return (
-        <OauthErrorPage
-          api={this.props.api}
-          title={`${this.props.provider} Login Problem`}
-          description={this.state.errorMessage || genericDescription}
-        />
-      );
+      return <OauthErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription} />;
     }
     return <div className="content" />;
   }
@@ -118,9 +107,10 @@ LoginPage.defaultProps = {
 };
 
 const LoginPageContainer = (props) => {
+  const api = useAPI();
   const { login } = useCurrentUser();
   const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
-  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props} />;
+  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} api={api} {...props} />;
 };
 
 export const FacebookLoginPage = ({ code, ...props }) => {

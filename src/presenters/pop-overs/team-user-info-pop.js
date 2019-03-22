@@ -10,6 +10,7 @@ import { Thanks } from '../includes/thanks';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 import { useNotifications } from '../notifications';
 import TeamUserRemovePop from './team-user-remove-pop';
+import { useAPI } from '../../state/api';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -132,10 +133,11 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, userTea
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
 const TeamUserInfoAndRemovePop = (props) => {
+  const api = useAPI();
   const { createNotification } = useNotifications();
   const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null });
   useEffect(() => {
-    props.api.get(`users/${props.user.id}`).then(({ data }) => {
+    api.get(`users/${props.user.id}`).then(({ data }) => {
       setUserTeamProjects({
         status: 'ready',
         data: data.projects.filter((userProj) => props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
@@ -169,7 +171,6 @@ TeamUserInfoAndRemovePop.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   userIsTheOnlyMember: PropTypes.bool.isRequired,
-  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({

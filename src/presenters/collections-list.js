@@ -8,9 +8,13 @@ import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
 import { useNotifications } from './notifications';
 
+import { useAPI } from '../state/api';
+import { useCurrentUser } from '../state/current-user';
+
 import Heading from '../components/text/heading';
 
-function CollectionsList({ collections: rawCollections, title, api, isAuthorized, maybeCurrentUser, maybeTeam }) {
+function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeCurrentUser, maybeTeam }) {
+  const api = useAPI();
   const [deletedCollectionIds, setDeletedCollectionIds] = useState([]);
 
   function deleteCollection(id) {
@@ -31,17 +35,10 @@ function CollectionsList({ collections: rawCollections, title, api, isAuthorized
       {canMakeCollections && (
         <>
           <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
-          {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
+          {!hasCollections && <CreateFirstCollection />}
         </>
       )}
-      <CollectionsUL
-        {...{
-          collections,
-          api,
-          isAuthorized,
-          deleteCollection,
-        }}
-      />
+      <CollectionsUL collections={collections} isAuthorized={isAuthorized} deleteCollection={deleteCollection} />
     </article>
   );
 }
@@ -74,7 +71,8 @@ const collectionStates = {
   newCollection: (url) => ({ type: 'newCollection', value: url }),
 };
 
-function CreateCollectionButton({ api, maybeTeam, currentUser }) {
+function CreateCollectionButton({ maybeTeam, currentUser }) {
+  const api = useAPI()
   const { createNotification } = useNotifications();
   const [state, setState] = useState(collectionStates.ready());
 
@@ -129,13 +127,13 @@ CreateCollectionButton.defaultProps = {
   maybeTeam: undefined,
 };
 
-export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized }) => {
+export const CollectionsUL = ({ collections, deleteCollection, isAuthorized }) => {
   // order by updatedAt date
   const orderedCollections = orderBy(collections, (collection) => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
-        <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
+        <CollectionItem key={null} collection={null}isAuthorized={isAuthorized}></CollectionItem>
       */}
 
       {orderedCollections.map((collection) => (
@@ -143,7 +141,6 @@ export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized
           key={collection.id}
           {...{
             collection,
-            api,
             isAuthorized,
             deleteCollection,
           }}
@@ -154,7 +151,6 @@ export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized
 };
 
 CollectionsUL.propTypes = {
-  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
