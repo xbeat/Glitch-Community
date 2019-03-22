@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useCurrentUser } from '../../state/current-user';
 import { Link } from './link';
-import { NotificationConsumer } from '../notifications';
+import { useNotifications } from '../notifications';
 import Text from '../../components/text/text';
 
 const NameConflictWarning = ({ id }) => (
@@ -37,10 +37,22 @@ NameConflict.propTypes = {
   userId: PropTypes.number.isRequired,
 };
 
-const NameConflictContainer = () => {
-  const {
-    currentUser: { id },
-  } = useCurrentUser();
-  return <NotificationConsumer>{(notifyFuncs) => <NameConflict userId={id} {...notifyFuncs} />}</NotificationConsumer>;
+function useNameConflict () {
+  const { currentUser } = useCurrentUser();
+  const { createPersistentNotification } = useNotifications();
+  const ref = useRef(null)
+  useEffect(() => {
+    ref.current = createPersistentNotification(<NameConflictWarning id={currentUser.id} />)
+    return () => {
+      if (ref.current) {
+        ref.current.removeNotification()
+      }
+    }
+  }, [currentUser.id])
+}
+
+function NameConflictContainer () {
+  useNameConflict()
+  return null
 };
 export default NameConflictContainer;
