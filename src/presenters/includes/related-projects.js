@@ -5,8 +5,8 @@ import { sampleSize, difference } from 'lodash';
 import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
 import { getDisplayName, getProfileStyle as getUserProfileStyle } from '../../models/user';
 
+import CoverContainer from '../../components/containers/cover-container';
 import { DataLoader } from './loader';
-import { CoverContainer } from './profile';
 import { TeamLink, UserLink } from './link';
 import { ProjectsUL } from '../projects-list';
 

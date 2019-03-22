@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { TrackClick } from '../analytics';
 import TeamsList from '../teams-list';
 import Button from '../../components/buttons/button';
-import CoverContainer from '../../c
+import CoverContainer from '../../components/containers/cover-container';
+
 // Image Buttons
 
 export const ImageButtons = ({ name, uploadImage, clearImage }) => (
