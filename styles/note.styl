@@ -1,21 +1,14 @@
 .note
-  position: absolute
-  width: 100%
-  display: contents
+  margin-bottom: -15px
+  
   .description-container
     width: calc(100% - 36px)
-    height: 120px
     position: relative
     display: inline-block
-    padding: 0px 10px
+    padding: 0px 10px 20px
     border-radius: 5px
     font-size: 14px
-    min-height: 115px
     word-break: break-word
-    margin-bottom: -20px
-    max-height: 80%
-    overflow-y: scroll
-    overflow-x: hidden
     &:after
       top: 9px
       right: -10px
@@ -30,9 +23,12 @@
     textarea
       margin: 14px 0
       line-height: 20px
-
     p 
-      margin-bottom: 0
+      margin: 8px 3px
+      line-height: 20px
+      word-break: break-word
+    .description
+      overflow-x: hidden
   .user
     position: absolute
     top: 0
