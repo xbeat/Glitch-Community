@@ -29,9 +29,13 @@ const CoverContainer = ({ buttons, children, className, entity, entityType, ...p
 
 CoverContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  // There is no need to use these, you can pass everything as 'children', this just supports
-  buttons: PropTypes.node, 
-  className: PropTypes.string, 
+  entity: PropTypes.object.isRequired,
+  // currently used for 'user' and 'team'
+  entityType: PropTypes.string.isRequired,
+  // There is no need to use these props,
+  // this is just needed to support old instances of CoverContainer without having refactor all-the-things
+  buttons: PropTypes.node, // please use 'children'
+  className: PropTypes.string, // please avoid styling components where possible
 };
 
 CoverContainer.defaultProps = {
