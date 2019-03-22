@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './cover-container.styl';
+import { getProfileStyle as get} from '../../models/team';
 
 const cx = classNames.bind(styles);
 // Cover Container
