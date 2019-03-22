@@ -38,12 +38,10 @@ class SegmentedButtons extends React.Component {
 
 SegmentedButtons.propTypes = {
   /** Expected button format: [content: ButtonName] */
-  buttons: PropTypes.array.isRequired,
-  onClick: PropTypes.func,
-};
-
-SegmentedButtons.defaultProps = {
-  onClick: () => {},
+  buttons: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.node.isRequired,
+  })).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default SegmentedButtons;

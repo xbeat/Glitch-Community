@@ -23,10 +23,7 @@ function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
     const button = {};
-    button.contents = capitalize(filter.name);
-    if (filter.hits > 0) {
-      button.contents += <div className="status-badge">{filter.hits}</div>;
-    }
+    button.contents = <> {capitalize(filter.name)} { filter.hits > 0 &&  <div className="status-badge">{filter.hits}</div>}</>;
     filterButtons.push(button);
   });
   return filterButtons;
