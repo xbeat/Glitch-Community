@@ -33,7 +33,6 @@ function generateFilterButtons(filters) {
     );
     filterButtons.push(button);
   });
-  console.log('filterButtons', filterButtons);
   return filterButtons;
 }
 

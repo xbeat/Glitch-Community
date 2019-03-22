@@ -20,7 +20,6 @@ class SegmentedButtons extends React.Component {
 
   render() {
     const { buttons } = this.props;
-    console.log(buttons);
 
     return (
       <div className={styles.segmentedButtons}>
@@ -38,7 +37,7 @@ SegmentedButtons.propTypes = {
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      content: PropTypes.node.isRequired,
+      contents: PropTypes.node.isRequired,
     }),
   ).isRequired,
   onClick: PropTypes.func.isRequired,
