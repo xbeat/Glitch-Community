@@ -14,10 +14,13 @@
     &:not(:first-child):not(:last-child)
       border-radius: 0px
       border-left: 0
-    &.active
-      background: secondary-background-active
-    &.active:hover
-      background-color: secondary-background-hover
+    &:hover, &:focus
+      background-color: secondary-background
     &:focus
       outline: none
-      background-color: secondary-background
+    &.active
+      background-color: secondary-background-active
+    &.active:focus
+      background-color: secondar-background-hover
+    &.active:focus
+      outline: none
