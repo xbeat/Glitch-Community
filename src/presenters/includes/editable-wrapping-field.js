@@ -18,14 +18,14 @@ function PureEditableWrappingField({ value, placeholder, update, autoFocus, erro
   };
 
   const inputProps = {
-    id: id,
+    id,
     className: classNames('content-editable', { error: error }),
-    value: value,
-    onChange: onChange,
+    value,
+    onChange,
+    placeholder,
+    autoFocus,
     spellCheck: false,
     autoComplete: 'off',
-    placeholder: placeholder,
-    autoFocus: autoFocus,
   };
 
   return (
