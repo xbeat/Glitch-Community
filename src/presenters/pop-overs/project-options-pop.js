@@ -157,13 +157,12 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
 // Project Options Pop
 const ProjectOptionsPop = ({ ...props }) => (
-  <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover} />}>
+  <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} togglePopover={props.togglePopover} />}>
     {(addToCollectionPopover) => <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover} />}
   </NestedPopover>
 );
 
 ProjectOptionsPop.propTypes = {
-  api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
@@ -195,7 +194,7 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({ projectOptions, project, api }, { ...props }) {
+export default function ProjectOptions({ projectOptions, project }, { ...props }) {
   const { currentUser } = useCurrentUser();
   if (Object.keys(projectOptions).length === 0) {
     return null;
@@ -220,7 +219,6 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
           {...props}
           {...projectOptions}
           project={project}
-          api={api}
           currentUser={currentUser}
           currentUserIsOnProject={currentUserIsOnProject(currentUser)}
           togglePopover={togglePopover}
@@ -231,12 +229,10 @@ export default function ProjectOptions({ projectOptions, project, api }, { ...pr
 }
 
 ProjectOptions.propTypes = {
-  api: PropTypes.func,
   project: PropTypes.object.isRequired,
   projectOptions: PropTypes.object,
 };
 
 ProjectOptions.defaultProps = {
-  api: null,
   projectOptions: {},
 };

@@ -31,7 +31,9 @@ export default function UserItem({ user }) {
                 <p className="name">@{user.login}</p>
               </>
             ) : (
-              <UserLink user={user} className="button">@{user.login}</UserLink>
+              <UserLink user={user} className="button">
+                @{user.login}
+              </UserLink>
             )}
             {!!user.description && (
               <p className="description">

@@ -17,7 +17,9 @@ const App = () => (
         <UserPrefsProvider>
           <DevTogglesProvider>
             <AnalyticsContext context={{ groupId: '0' }}>
-              <CurrentUserProvider>{(api) => <Router api={api} />}</CurrentUserProvider>
+              <CurrentUserProvider>
+                <Router />
+              </CurrentUserProvider>
             </AnalyticsContext>
           </DevTogglesProvider>
         </UserPrefsProvider>
