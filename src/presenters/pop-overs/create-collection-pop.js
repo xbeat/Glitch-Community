@@ -137,52 +137,47 @@ class CreateCollectionPop extends React.Component {
     }
 
     return (
-          <dialog className="pop-over create-collection-pop wide-pop">
-            <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
+      <dialog className="pop-over create-collection-pop wide-pop">
+        <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
 
-            <section className="pop-over-actions">
-              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
-                <PureEditableField
-                  className="pop-over-input create-input"
-                  value={query}
-                  update={this.handleChange}
-                  placeholder={placeholder}
-                  error={error || queryError}
-                  aria-label={placeholder}
-                />
+        <section className="pop-over-actions">
+          <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
+            <PureEditableField
+              className="pop-over-input create-input"
+              value={query}
+              update={this.handleChange}
+              placeholder={placeholder}
+              error={error || queryError}
+              aria-label={placeholder}
+            />
 
-                {teams && teams.length > 0 && (
-                  <div>
-                    {'for '}
-                    <Dropdown
-                      containerClass="user-or-team-toggle"
-                      options={this.options}
-                      selection={this.state.selection}
-                      onUpdate={this.setSelection}
-                    />
-                  </div>
-                )}
+            {teams && teams.length > 0 && (
+              <div>
+                {'for '}
+                <Dropdown containerClass="user-or-team-toggle" options={this.options} selection={this.state.selection} onUpdate={this.setSelection} />
+              </div>
+            )}
 
-                {!this.state.loading ? (
-                  <TrackClick
-                    name="Create Collection clicked"
-                    properties={(inherited) => ({
-                      ...inherited,
-                      origin: `${inherited.origin} project`,
-                    })}
-                  >
-                    <div className="button-wrap">
-                      <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
-                        Create
-                      </button>
-                    </div>
-                  </TrackClick>
-                ) : (
-                  <Loader />
-                )}
-              </form>
-            </section>
-          </dialog>
+            {!this.state.loading ? (
+              <TrackClick
+                name="Create Collection clicked"
+                properties={(inherited) => ({
+                  ...inherited,
+                  origin: `${inherited.origin} project`,
+                })}
+              >
+                <div className="button-wrap">
+                  <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
+                    Create
+                  </button>
+                </div>
+              </TrackClick>
+            ) : (
+              <Loader />
+            )}
+          </form>
+        </section>
+      </dialog>
     );
   }
 }
@@ -202,6 +197,6 @@ CreateCollectionPop.defaultProps = {
 
 export default (props) => {
   const api = useAPI();
-  const { createNotification } = useNotifications()
+  const { createNotification } = useNotifications();
   return <CreateCollectionPop {...props} api={api} createNotification={createNotification} />;
 };

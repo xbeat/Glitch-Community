@@ -10,10 +10,10 @@ import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
 import { useAPI } from '../../state/api';
 
-import { useNotification, AddProjectToCollectionMsg } from '../notifications';
+import { useNotifications, AddProjectToCollectionMsg } from '../notifications';
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => {
-  const { createNotification } = useNotification();
+  const { createNotification } = useNotifications();
   return (
     <ul className="results">
       {projects.map((project) => (
