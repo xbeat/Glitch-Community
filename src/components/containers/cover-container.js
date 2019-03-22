@@ -7,6 +7,7 @@ import styles from './cover-container.styl';
 
 
 const cx = classNames.bind(styles);
+
 const cacheBuster = Math.floor(Math.random() * 1000);
 
 export function getProfileStyle(entityType, { id, hasCoverImage, coverColor, cache = cacheBuster, size = 'large' }) {
@@ -27,9 +28,10 @@ const CoverContainer = ({ buttons, children, className, entity, entityType, ...p
 );
 
 CoverContainer.propTypes = {
-  buttons: PropTypes.node,
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
+  // There is no need to use these, you can pass everything as 'children', this just supports
+  buttons: PropTypes.node, 
+  className: PropTypes.string, 
 };
 
 CoverContainer.defaultProps = {

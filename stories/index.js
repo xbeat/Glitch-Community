@@ -7,6 +7,7 @@ import TextArea from '../src/components/fields/text-area';
 import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
+import CoverContainer from '../src/components/container/cover-container';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
@@ -75,3 +76,12 @@ storiesOf('Text', module)
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
+
+storiesOf('CoverContainer', module)
+  .add('when passed a user', () => {
+    const user = { }
+    return <CoverContainer />
+  })
+  .add('when passed a team', () => {
+    return <CoverContainer />
+  })
