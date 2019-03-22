@@ -24,7 +24,12 @@ function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
     const button = {};
-    button.contents = <> {capitalize(filter.name)} { filter.hits > 0 &&  <div className="status-badge">{filter.hits}</div>}</>;
+    button.contents = (
+      <>
+        {' '}
+        {capitalize(filter.name)} {filter.hits > 0 && <Badge children={filter.hits} />}
+      </>
+    );
     filterButtons.push(button);
   });
   return filterButtons;
