@@ -43,7 +43,13 @@ const MoreCollections = ({ currentCollection, collections, currentUser }) => {
         <div className="more-collections">
           {
             collections.map((collection) => (
-              <CollectionItem showCurator={false} key={collection.id} collection={collection} showProjectPreview={false} />
+              <CollectionItem
+                key={collection.id}
+                collection={collection}
+                showCurator={false}
+                showProjectPreview={false}
+                showCollectionAvatar={false}
+              />
             ))
           }
         </div>

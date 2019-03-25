@@ -61,10 +61,9 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator, showProjectPreview = true }) => {
+const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator, showProjectPreview = true, showCollectionAvatar = true }) => {
   const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
   const projectsCount = collection.projects ? `${collection.projects.length} project${collection.projects.length === 1 ? '' : 's'}` : '';
-
   return (
     <li>
       {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
@@ -92,11 +91,13 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
               className="collection-info button-area"
               style={{ backgroundColor: collection.coverColor, borderColor: collection.coverColor }}
             >
-              <div className="avatar-container" aria-hidden="true">
-                <div className="avatar">
-                  <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
+              {showCollectionAvatar && (
+                <div className="avatar-container" aria-hidden="true">
+                  <div className="avatar">
+                    <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="collection-name-description button-area">
                 <div className="button">
                   <span className="project-badge private-project-badge" aria-label="private" />
