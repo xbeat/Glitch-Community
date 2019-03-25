@@ -30,13 +30,14 @@ function createAction(type) {
   return actionCreator;
 }
 
-export function createSlice({ slice, initialState, reducers }) {
+export function createSlice({ slice, reducers }) {
   const mappedReducers = slice ? mapKeys(reducers, (_, actionType) => `${slice}/${actionType}`) : reducers;
   const reducer = createReducer(mappedReducers);
   const actions = mapValues(reducers, (value, actionType) => {
     const type = slice ? `${slice}/${actionType}` : actionType;
     return createAction(type);
   });
+  return { actions, reducer };
 }
 
 // from redux-aop (helpers for making middleware)
@@ -50,8 +51,9 @@ export function before(matcher, middleware) {
     }
     const result = middleware(store, action);
     if (result) {
-      next(result);
+      return next(result);
     }
+    return undefined;
   };
 }
 

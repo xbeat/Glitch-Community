@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
@@ -180,7 +179,7 @@ function getInitialState() {
     // cachedUser mirrors GET /users/{id} and is what we actually display
     cachedUser: readFromStorage('community-cachedUser') || null,
     // states: init | loading | ready
-    loadStatus: status.init(),
+    loadStatus: 'init',
   };
 }
 
@@ -239,7 +238,13 @@ const persistToStorage = after(always, (store, action, prevState) => {
   }
 });
 
-const middleware = [handleLoadRequest, persistToStorage];
+const logActions = after(always, (store, action, prevState) => {
+  const d = new Date()
+  const ts = `${d.getHour()}:${d.getMinutes()}:${d.getSeconds()}.${d.get
+  console.log( prevState, action, store.getState())
+});
+
+const middleware = [handleLoadRequest, trackUserChanges, persistToStorage];
 
 export const CurrentUserProvider = ({ children }) => {
   const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState, ...middleware);
