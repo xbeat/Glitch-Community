@@ -13,10 +13,10 @@ import ProjectsLoader from './projects-loader';
 import { ProjectsUL } from './projects-list';
 import SignInPop from './pop-overs/sign-in-pop';
 
-const SignInNotice = ({ api }) => (
+const SignInNotice = () => (
   <div className="anon-user-sign-up">
     <span>
-      <SignInPop api={api} /> to keep your projects.
+      <SignInPop /> to keep your projects.
     </span>
     <div className="note">Anonymous projects expire after 2 weeks</div>
   </div>
@@ -26,7 +26,7 @@ const ClearSession = ({ clearUser }) => {
   function clickClearSession() {
     if (
       // eslint-disable-next-line
-      !window.confirm(`All projects created under this anonymous account will be cleared.
+      !window.confirm(`You won't be able to sign back in under this same anonymous account.
 Are you sure you want to continue?`)
     ) {
       return;
@@ -43,23 +43,18 @@ Are you sure you want to continue?`)
   );
 };
 
-const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
+const RecentProjectsContainer = ({ children, user, clearUser }) => (
   <section className="profile recent-projects">
     <Heading tagName="h2">
       <UserLink user={user}>Your Projects →</UserLink>
     </Heading>
-    {!user.login && <SignInNotice api={api} />}
+    {!user.login && <SignInNotice />}
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt="" />
           </UserLink>
-          {!user.login && (
-            <div className="anon-user-sign-up">
-              <SignInPop />
-            </div>
-          )}
         </div>
       </div>
       <article className="projects">{children}</article>
@@ -68,7 +63,6 @@ const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
   </section>
 );
 RecentProjectsContainer.propTypes = {
-  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({
     avatarUrl: PropTypes.string,
@@ -81,29 +75,11 @@ RecentProjectsContainer.propTypes = {
   clearUser: PropTypes.func.isRequired,
 };
 
-<<<<<<< HEAD
-const RecentProjects = ({ api }) => (
-  <CurrentUserConsumer>
-    {(user, fetched, { clear }) => (
-      <RecentProjectsContainer user={user} api={api} clearUser={clear}>
-        {fetched ? (
-          <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
-            {(projects) => <ProjectsUL projects={projects} />}
-          </ProjectsLoader>
-        ) : (
-          <Loader />
-        )}
-      </RecentProjectsContainer>
-    )}
-  </CurrentUserConsumer>
-);
-RecentProjects.propTypes = {
-  api: PropTypes.any.isRequired,
-=======
-const RecentProjects = ({ api }) => {
-  const { currentUser: user, fetched, { clear } } = useCurrentUser();
+
+const RecentProjects = () => {
+  const { currentUser: user, fetched, clear } = useCurrentUser();
   return (
-    <RecentProjectsContainer api={api} user={user} clearUser={clear}>
+    <RecentProjectsContainer user={user} clearUser={clear}>
       {fetched ? (
         <ProjectsLoader projects={user.projects.slice(0, 3)}>{(projects) => <ProjectsUL projects={projects} />}</ProjectsLoader>
       ) : (
@@ -111,7 +87,7 @@ const RecentProjects = ({ api }) => {
       )}
     </RecentProjectsContainer>
   );
-RecentProjects.propTypes = {
-  api: PropTypes.any.isRequired,
 };
+
+
 export default RecentProjects;

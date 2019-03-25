@@ -56,13 +56,8 @@ const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
       <SearchForm defaultValue={searchQuery} />
       <NewProjectPop />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
-<<<<<<< HEAD
-      {!(maybeUser && maybeUser.login) && <SignInPop api={api} />}
-      {!!maybeUser && maybeUser.login && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
-=======
       {!(maybeUser && maybeUser.login) && <SignInPop />}
-      {!!maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} />}
->>>>>>> 1eee10750ab9eb21659fc49b57cec28d0e6f1972
+      {!!maybeUser && maybeUser.login && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} />}
     </nav>
   </header>
 );

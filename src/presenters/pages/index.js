@@ -133,18 +133,5 @@ const IndexPageContainer = () => {
     </Layout>
   );
 };
-<<<<<<< HEAD
 
-const IndexPageContainer = ({ api }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'index' }}>
-      <CurrentUserConsumer>
-        {(user) => <IndexPage api={api} user={user} />}
-      </CurrentUserConsumer>
-    </AnalyticsContext>
-  </Layout>
-);
-
-=======
->>>>>>> 1eee10750ab9eb21659fc49b57cec28d0e6f1972
 export default IndexPageContainer;
