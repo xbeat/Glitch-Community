@@ -71,7 +71,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
 
-  function toggleAndAddNote() {
+  function toggleAndDisplayNote() {
     props.togglePopover();
     props.displayNewNote(props.project.id);
   }
@@ -99,7 +99,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {showAddNote && (
         <section className="pop-over-actions">
-          <PopoverButton onClick={toggleAndAddNote} {...props} text="Add Note" emoji="spiral_note_pad" />
+          <PopoverButton onClick={toggleAndDisplayNote} {...props} text="Add Note" emoji="spiral_note_pad" />
         </section>
       )}
 
