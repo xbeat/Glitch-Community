@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
@@ -284,11 +284,22 @@ CurrentUserManager.defaultProps = {
 
 function getInitialState () {
   return {
+    // sharedUser syncs with the editor and is authoritative on id and persistentToken
     sharedUser: readFromStorage('cachedUser') || null,
+    // cachedUser mirrors GET /users/{id} and is what we actually display
     cachedUser: readFromStorage('community-cachedUser') || null,
+    // states: init | loading | ready
     status: status.init(),
   }
 }
+
+function useReducerWithMiddleware (reducer, initialState, ...middleware) {
+  const [state, baseDispatch] = useReducer(reducer, initialState)
+  const store = { getState: () => state, dispatch: () => }
+  store.dispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch)
+  return store
+}
+
 
 function reducer (state, action) {
 
