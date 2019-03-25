@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
-import { sampleSize } from 'lodash';
 
 import { captureException } from '../utils/sentry';
 import { featuredCollections } from '../curated/collections';
@@ -81,8 +80,8 @@ CollectionWide.propTypes = {
 // };
 
 const loadAllCollections = async (api, infos) => {
-  // don't await until every request is sent so they can all run at once
-  const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name));
+  const numOfProjectsToLoad = 3;
+  const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name, numOfProjectsToLoad));
   return Promise.all(promises);
 };
 

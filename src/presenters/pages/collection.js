@@ -203,13 +203,16 @@ CollectionPageContents.defaultProps = {
   hideNote: null,
 };
 
-export async function loadCollection(api, ownerName, collectionName) {
+export async function loadCollection(api, ownerName, collectionName, numOfProjectsToLoad) {
   try {
     const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);
 
     // fetch projects in depth
     if (collection.projects.length) {
+      if (numOfProjectsToLoad) {
+        collection.projects = _.sampleSize(collection.projects, numOfProjectsToLoad);
+      }
       const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
       collection.projects = projects.map((project) => {
         const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
