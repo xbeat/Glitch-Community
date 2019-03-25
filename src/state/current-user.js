@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { bindActionCreators, createSlice, useReducerWithMiddleware } from './util';
+import { bindActionCreators, createSlice, useReducerWithMiddleware, before, after, matchTypes } from './util';
 
 const Context = React.createContext();
 
@@ -223,17 +223,43 @@ const { reducer, actions } = createSlice({
       sharedUser: null,
       cachedUser: null,
     }),
+  },
+});
+
+const handleLoadRequest = before(matchTypes(actions.requestedLoad), (store, action) => {
+  // prevent multiple 'load's from running
+  if (store.getState().loadStatus === 'loading') {
+    return null;
   }
-})
+
+  Promise.resolve()
+    .then(() => load(store.getState()))
+    .then((result) => {
+      store.dispatch(actions.loaded(result));
+    });
+
+  return action;
+});
+
+
+const persistToStorage = after(matchTypes(actions.loaded, actions.loggedIn, actions.updated, actions.loggedOut), (store, action) => {
+  const { sharedUser, cachedUser } = store.getState();
+  writeToStorage('cachedUser', sharedUser);
+  writeToStorage('community-cachedUser', cachedUser);
+  return action;
+});
+
+
+const middleware = [handleLoadRequest, persistToStorage]
 
 export const CurrentUserProvider = ({ children }) => {
-  const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState)
-  const boundActions = bindActionCreators(actions, dispatch)
+  const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState, ...middleware);
+  const boundActions = bindActionCreators(actions, dispatch);
   // kick off initial load
   useEffect(() => {
-    boundActions.requestedLoad()
-  }, [])
-  
+    boundActions.requestedLoad();
+  }, []);
+
   const userContext = {
     currentUser: { ...defaultUser, ...state.sharedUser, ...state.cachedUser },
     persistentToken: state.sharedUser && state.sharedUser.persistentToken,
@@ -242,11 +268,9 @@ export const CurrentUserProvider = ({ children }) => {
     login: boundActions.loggedIn,
     update: boundActions.updated,
     clear: boundActions.loggedOut,
-  }
-  return (
-    <Context.Provider value={userContext}>{children}</Context.Provider>
-  )
-}
+  };
+  return <Context.Provider value={userContext}>{children}</Context.Provider>;
+};
 
 export const useCurrentUser = () => React.useContext(Context);
 

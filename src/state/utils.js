@@ -67,6 +67,7 @@ export function after(matcher, middleware) {
 
 export const always = () => true
 export const matchTypes = (...actionsOrTypes) => {
+  // coerce to strings, to use with redux-starter-kit action creators
   const types = actionsOrTypes.map(String)
   return (action) => types.includes(action)
 }
