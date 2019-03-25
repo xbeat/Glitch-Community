@@ -2,17 +2,16 @@
 import { useReducer } from 'react';
 import { mapKeys, mapValues } from 'lodash';
 
-
-function useReducerWithMiddleware(reducer, initialState, ...middleware) {
-  const [state, baseDispatch] = useReducer(reducer, initialState);
+export function useReducerWithMiddleware(reducer, init, ...middleware) {
+  const [state, baseDispatch] = useReducer(reducer, undefined, init);
   let proxiedDispatch = null;
   const store = { getState: () => state, dispatch: (action) => proxiedDispatch(action) };
   proxiedDispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch);
-  return store;
+  return [state, store.dispatch];
 }
 
 // from redux
-const bindActionCreators = (actionCreators, dispatch) => 
+export const bindActionCreators = (actionCreators, dispatch) => 
   mapValues(actionCreators, (actionCreator) => (payload) => dispatch(actionCreator(payload)))
 
 // from 'redux-starter-kit'

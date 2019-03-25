@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
+import { bindActionCreators, createSlice, useReducerWithMiddleware } from './util';
 
 const Context = React.createContext();
 
@@ -286,9 +287,28 @@ function getInitialState() {
     // cachedUser mirrors GET /users/{id} and is what we actually display
     cachedUser: readFromStorage('community-cachedUser') || null,
     // states: init | loading | ready
-    status: status.init(),
+    loadStatus: status.init(),
   };
 }
+
+export const CurrentUserProvider = ({ children }) => {
+  const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState)
+  const boundActions = bindActionCreators(actions, dispatch)
+  
+  const userContext = {
+    currentUser: { ...defaultUser, ...state.sharedUser, ...state.cachedUser },
+    persistentToken: state.sharedUser && state.sharedUser.persistentToken,
+    fetched: state.loadStatus === 'ready',
+    reload: boundActions.loadRequested,
+    login: boundActions.loggedIn,
+    update: boundActions.updated,
+    clear: boundActions.loggedOut,
+  }
+  return (
+    <Context.Provider value={userContext}>{children}</Context.Provider>
+  )
+}
+
 
 
 
