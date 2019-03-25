@@ -24,15 +24,17 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    const button = {};
-    button.id = filter.name;
-    button.contents = (
-      <>
-        {capitalize(filter.name)}
-        {filter.hits && <Badge>{filter.hits}</Badge>}
-      </>
-    );
-    filterButtons.push(button);
+    if (filter.hits > 0 || filter.hits === null) {
+      const button = {};
+      button.id = filter.name;
+      button.contents = (
+        <>
+          {capitalize(filter.name)}
+          {filter.hits && <Badge>{filter.hits}</Badge>}
+        </>
+      );
+      filterButtons.push(button);
+    }
   });
   return filterButtons;
 }

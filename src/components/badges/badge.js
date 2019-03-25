@@ -1,22 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
-
 import styles from './badge.styl';
 
 export const TYPES = ['success', 'warning', 'error'];
-const cx = classNames.bind(styles);
 
 /**
  * Badge Component
  */
 const Badge = ({ type, children }) => {
-  const className = cx({
-    badge: true,
-    success: type === 'success',
-    warning: type === 'warning',
-    error: type === 'error',
-  });
+  const className = styles.badge + (type ? styles.type : '');
   return <div className={className}>{children}</div>;
 };
 
