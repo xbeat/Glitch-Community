@@ -13,6 +13,14 @@ import { getAvatarUrl } from '../models/project';
 import { isDarkColor } from '../models/collection';
 
 const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
+  if (!collection.projects) {
+    return (
+      <div className="collection-link">
+        <Loader />
+      </div>
+    );
+  }
+
   const emptyState = isAuthorized ? (
     <Text>
       {'This collection is empty – add some projects '}
@@ -53,8 +61,10 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator }) => {
+const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator, showProjectPreview = true }) => {
   const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
+  const projectsCount = collection.projects ? `${collection.projects.length} project${collection.projects.length === 1 ? '' : 's'}` : '';
+
   return (
     <li>
       {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
@@ -104,13 +114,10 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
 
               <div className="overflow-mask" />
             </CollectionLink>
-
-            {collection.projects ? (
+            {showProjectPreview ? (
               <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection} isAuthorized={isAuthorized} />
             ) : (
-              <div className="collection-link">
-                <Loader />
-              </div>
+              <div className="projects-count">{projectsCount}</div>
             )}
           </div>
         </div>

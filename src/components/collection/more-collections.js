@@ -42,7 +42,9 @@ const MoreCollections = ({ currentCollection, collections, currentUser }) => {
       <CoverContainer style={coverStyle} className="collections">
         <div className="more-collections">
           {
-            collections.map((collection) => <CollectionItem showCurator={false} key={collection.id} collection={collection} />)
+            collections.map((collection) => (
+              <CollectionItem showCurator={false} key={collection.id} collection={collection} showProjectPreview={false} />
+            ))
           }
         </div>
       </CoverContainer>
