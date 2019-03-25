@@ -295,16 +295,24 @@ function getInitialState () {
 
 function useReducerWithMiddleware (reducer, initialState, ...middleware) {
   const [state, baseDispatch] = useReducer(reducer, initialState)
-  const store = { getState: () => state, dispatch: () => }
-  store.dispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch)
+  let proxiedDispatch = null
+  const store = { getState: () => state, dispatch: (action) => proxiedDispatch(action) }
+  proxiedDispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch)
   return store
 }
 
 
-function reducer (state, action) {
-
-
+function createReducer (reducers) {
+  return (state, action) => {
+    if (reducers[action.type]) { return reducers[action.type](state, action) }
+    return state
+  }
 }
+
+function createSlice ({ slice, initialState, reducers }) {
+  const mappedReducers = slice ? mapKeys(reducers, (_, type) => `${slice}/${type}`) : 
+}
+
 
 
 
