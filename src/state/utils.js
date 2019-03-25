@@ -34,9 +34,12 @@ export const useActions = (actions) => {
 // combine slices into a redux store
 
 export function createStoreFromSlices(slices) {
+  const reducer = fromPairs(slices.map((slice) => [slice.slice, slice.reducer]))
+  const middleware = [...getDefaultMiddleware(), ...flatMap(slices, (slice) => slice.middleware)]
+  // console.log(reducer, middleware)
   return configureStore({
-    reducer: fromPairs(slices.map((slice) => [slice.slice, slice.reducer])),
-    middleware: [...getDefaultMiddleware(), ...flatMap(slices, (slice) => slice.middleware)],
+    reducer,
+    middleware,
     devTools: true,
   });
 }
@@ -62,6 +65,7 @@ export function before(matcher, middleware) {
 // useful for middleware that perform side effects (logging, dispatching other actions)
 export function after(matcher, middleware) {
   return (next) => (store) => (action) => {
+    console.log('after', action, matcher(action))
     if (!matcher(action)) {
       return action;
     }
