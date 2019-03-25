@@ -63,7 +63,7 @@ ProjectsPreview.propTypes = {
 
 const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator, showProjectPreview = true, showCollectionAvatar = true }) => {
   const className = `collection${isAuthorized ? ' authorized' : ''} ${showCurator ? ' show-curator' : ''}`;
-  const projectsCount = collection.projects ? `${collection.projects.length} project${collection.projects.length === 1 ? '' : 's'}` : '';
+  const projectsCount = collection.projects ? `${collection.projects.length} project${collection.projects.length === 1 ? ' →' : 's →'}` : '';
   return (
     <li>
       {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}

@@ -4,10 +4,15 @@ import { sampleSize } from 'lodash';
 
 import { getSingleItem } from '../../shared/api';
 
-import { DataLoader } from './includes/loader';
-import MoreCollections from '../components/collection/more-collections';
+import { getProfileStyle as getUserStyle, getDisplayName } from '../models/user';
+import { getProfileStyle as getTeamStyle } from '../models/team';
 
-// where should this live?
+import { DataLoader } from './includes/loader';
+import { CoverContainer } from './includes/profile';
+import { UserLink, TeamLink } from './includes/link';
+
+import CollectionItem from './collection-item';
+
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
@@ -40,7 +45,48 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 };
 
 
-// how do we feel about `DataLoader`?
+// TODO: componentize this?! (CoverContainer, Links, CollectionItem, More Collections itself?)
+
+const MoreCollections = ({ currentCollection, collections, currentUser }) => {
+  const isUserCollection = currentCollection.teamId === -1;
+  const coverStyle = isUserCollection
+    ? getUserStyle({ ...currentUser, cache: currentUser._cacheCover }) // eslint-disable-line no-underscore-dangle
+    : getTeamStyle({ ...currentCollection.team });
+
+  return (
+    <section>
+      <h2>
+        {
+          isUserCollection
+            ? (<UserLink user={currentCollection.user}>More by {getDisplayName(currentCollection.user)} →</UserLink>)
+            : (<TeamLink team={currentCollection.team}>More from {currentCollection.team.name} →</TeamLink>)
+        }
+      </h2>
+      <CoverContainer style={coverStyle} className="collections">
+        <div className="more-collections">
+          {
+            collections.map((collection) => (
+              <CollectionItem
+                key={collection.id}
+                collection={collection}
+                showCurator={false}
+                showProjectPreview={false}
+                showCollectionAvatar={false}
+              />
+            ))
+          }
+        </div>
+      </CoverContainer>
+    </section>
+  );
+};
+
+MoreCollections.propTypes = {
+  currentCollection: PropTypes.object.isRequired,
+  collections: PropTypes.array.isRequired,
+  currentUser: PropTypes.object.isRequired,
+};
+
 const MoreCollectionsContainer = ({ api, currentUser, collection }) => (
   <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
     {
