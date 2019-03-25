@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
@@ -143,7 +143,7 @@ async function fixSharedUser(sharedUser) {
 }
 
 async function load(initState) {
-  const nextState = { ...initState }
+  const nextState = { ...initState };
 
   // If we're signed out create a new anon user
   if (!nextState.sharedUser) {
@@ -167,19 +167,18 @@ async function load(initState) {
 
     if (usersMatch(initState.sharedUser, nextState.sharedUser)) {
       // The user wasn't changed, so we need to fix it
-      nextState.fetched 
+      nextState.fetched;
       // this.setState({ fetched: false });
       nextState.sharedUser = await fixSharedUser(initState.sharedUser);
       // this.props.setSharedUser(newSharedUser);
     }
-    
+
     // implied: run `load` again?
   } else {
     // The shared user is good, store it
     this.props.setCachedUser(newCachedUser);
     this.setState({ fetched: true });
     console.log('load ok');
-    
   }
 }
 
@@ -280,9 +279,7 @@ CurrentUserManager.defaultProps = {
   sharedUser: null,
 };
 
-
-
-function getInitialState () {
+function getInitialState() {
   return {
     // sharedUser syncs with the editor and is authoritative on id and persistentToken
     sharedUser: readFromStorage('cachedUser') || null,
@@ -290,29 +287,8 @@ function getInitialState () {
     cachedUser: readFromStorage('community-cachedUser') || null,
     // states: init | loading | ready
     status: status.init(),
-  }
+  };
 }
-
-function useReducerWithMiddleware (reducer, initialState, ...middleware) {
-  const [state, baseDispatch] = useReducer(reducer, initialState)
-  let proxiedDispatch = null
-  const store = { getState: () => state, dispatch: (action) => proxiedDispatch(action) }
-  proxiedDispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch)
-  return store
-}
-
-
-function createReducer (reducers) {
-  return (state, action) => {
-    if (reducers[action.type]) { return reducers[action.type](state, action) }
-    return state
-  }
-}
-
-function createSlice ({ slice, initialState, reducers }) {
-  const mappedReducers = slice ? mapKeys(reducers, (_, type) => `${slice}/${type}`) : 
-}
-
 
 
 
