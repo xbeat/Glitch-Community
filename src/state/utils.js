@@ -11,8 +11,8 @@ export function useReducerWithMiddleware(reducer, init, ...middleware) {
 }
 
 // from redux
-export const bindActionCreators = (actionCreators, dispatch) => 
-  mapValues(actionCreators, (actionCreator) => (payload) => dispatch(actionCreator(payload)))
+export const bindActionCreators = (actionCreators, dispatch) =>
+  mapValues(actionCreators, (actionCreator) => (payload) => dispatch(actionCreator(payload)));
 
 // from 'redux-starter-kit'
 function createReducer(reducers) {
@@ -41,8 +41,32 @@ export function createSlice({ slice, initialState, reducers }) {
 
 // from redux-aop (helpers for making middleware)
 
-function beforeReducer (store, action) {
-
+export function before(matcher, middleware) {
+  return (next) => (store) => (action) => {
+    if (!matcher(action)) {
+      return next(action);
+    }
+    const result = middleware(store, action);
+    if (result) {
+      next(result);
+    }
+  };
 }
 
-function filterActrions ()
+export function after(matcher, middleware) {
+  return (next) => (store) => (action) => {
+    if (!matcher(action)) {
+      return action;
+    }
+    const result = next(action);
+    if (result) {
+      return middleware(store, result);
+    }
+  };
+}
+
+export const always = () => true
+export const matchTypes = (...actionsOrTypes) => {
+  const types = actionsOrTypes.map(String)
+  return (action) => types.includes(action)
+}
