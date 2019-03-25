@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 import { sampleSize } from 'lodash';
+import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
@@ -59,7 +60,8 @@ CollectionWide.propTypes = {
 
 const loadAllCollections = async (api, infos) => {
   const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name));
-  return Promise.all(promises);
+  
+  return Promise.all(promises).catch((error) => captureException(error));
 };
 
 export const FeaturedCollections = () => {

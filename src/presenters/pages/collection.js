@@ -7,7 +7,6 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
-import { captureException } from '../../utils/sentry';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
@@ -227,9 +226,8 @@ export async function loadCollection(api, ownerName, collectionName) {
     if (error && error.response && error.response.status === 404) {
       return null;
     }
-    captureException(error);
+    throw error;
   }
-  return null;
 }
 
 const CollectionPage = ({ ownerName, name, ...props }) => {
