@@ -32,7 +32,6 @@ application models -> presenter -> DOM
 - [Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/)
 
 
-
 ```
   ___     ___      ___
  {o,o}   {o.o}    {o,o}
