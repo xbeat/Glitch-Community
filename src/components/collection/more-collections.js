@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getProfileStyle, getDisplayName } from '../../models/user';
+import { getProfileStyle as getUserStyle, getDisplayName } from '../../models/user';
+import { getProfileStyle as getTeamStyle } from '../../models/team';
 import { getLink } from '../../models/collection';
 
 import { CoverContainer } from '../../presenters/includes/profile';
@@ -17,8 +18,8 @@ import Button from '../buttons/button';
 // bring in styles from here and delete styles/more-collections.styl
 
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
-  const coverStyle = getProfileStyle({ ...currentUser, cache: currentUser._cacheCover }); // eslint-disable-line no-underscore-dangle
   const isUserCollection = currentCollection.teamId === -1;
+  const coverStyle = isUserCollection ? getUserStyle({ ...currentUser, cache: currentUser._cacheCover }) : getTeamStyle({ ...currentCollection.team }); // eslint-disable-line no-underscore-dangle
 
   return (
     <section>
