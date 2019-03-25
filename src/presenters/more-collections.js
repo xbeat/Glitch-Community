@@ -22,18 +22,22 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   // get all collections from the author
   moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
 
-  // filter out the current collection
+  // filter out the current collection 
   moreCollections = moreCollections.filter((c) => c.id !== collection.id);
-
-  // pick 3 collections
-  moreCollections = sampleSize(moreCollections, 3);
 
   // get project details for each collection
   moreCollections = await Promise.all(moreCollections.map(async (c) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
+  
+  // filter out collections that don't have projects
+  moreCollections = moreCollections.filter((c) => 
 
+  // pick 3 collections
+  moreCollections = sampleSize(moreCollections, 3);
+  
+  
   // get author details and attach to each collection
   const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
   moreCollections = moreCollections.map((c) => {
