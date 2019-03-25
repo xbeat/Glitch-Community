@@ -103,17 +103,20 @@ class CurrentUserManager extends React.Component {
 
   componentDidMount() {
     identifyUser(this.props.cachedUser);
+    console.log("didMount", this.props.sharedUser && this.props.sharedUser.persistentToken)
     this.load();
   }
 
   componentDidUpdate(prev) {
     const { cachedUser, sharedUser } = this.props;
-
+    console.log("didUpdate", this.props.sharedUser && this.props.sharedUser.persistentToken)
+    
     if (!usersMatch(cachedUser, prev.cachedUser)) {
       identifyUser(cachedUser);
     }
 
     if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+      console.log('reloading')
       // delay loading a moment so both items from storage have a chance to update
       setTimeout(() => this.load(), 1);
     }
@@ -172,11 +175,13 @@ class CurrentUserManager extends React.Component {
 
   async load() {
     if (this.state.working) return;
+    console.log("load init")
     this.setState({ working: true });
     let { sharedUser } = this.props;
 
     // If we're signed out create a new anon user
     if (!sharedUser) {
+      console.log("load anonUser")
       sharedUser = await this.getAnonUser();
       this.props.setSharedUser(sharedUser);
     }
@@ -186,6 +191,7 @@ class CurrentUserManager extends React.Component {
       this.props.setCachedUser(undefined);
     }
 
+    console.log("load cachedUser")
     const newCachedUser = await this.getCachedUser();
     if (newCachedUser === 'error') {
       // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
@@ -194,6 +200,7 @@ class CurrentUserManager extends React.Component {
       if (usersMatch(sharedUser, this.props.sharedUser)) {
         // The user wasn't changed, so we need to fix it
         this.setState({ fetched: false });
+        console.log("load newSharedUser")
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
         console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
@@ -211,6 +218,7 @@ class CurrentUserManager extends React.Component {
       // The shared user is good, store it
       this.props.setCachedUser(newCachedUser);
       this.setState({ fetched: true });
+      console.log("load ok")
     }
 
     this.setState({ working: false });
