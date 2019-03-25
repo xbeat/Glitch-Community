@@ -203,7 +203,7 @@ CollectionPageContents.defaultProps = {
   hideNote: null,
 };
 
-async function loadCollection(api, ownerName, collectionName) {
+export async function loadCollection(api, ownerName, collectionName) {
   try {
     const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);

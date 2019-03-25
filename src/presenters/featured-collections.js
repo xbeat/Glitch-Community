@@ -7,6 +7,7 @@ import { captureException } from '../utils/sentry';
 import { featuredCollections } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
 
+import { loadCollection } from './pages/collection';
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
@@ -38,7 +39,7 @@ const CollectionWide = ({ collection }) => {
         </div>
       </header>
       <div className="collection-contents">
-        <ProjectsLoader projects={collection.projects}>{(projects) => <ProjectsUL projects={projects} />}</ProjectsLoader>
+        <ProjectsUL projects={collection.projects} />
         <CollectionLink collection={collection} className="collection-view-all">
           View all <Pluralize count={collection.projectCount} singular="project" /> <span aria-hidden>→</span>
         </CollectionLink>
@@ -58,29 +59,30 @@ CollectionWide.propTypes = {
 };
 
 // we have another loadCollection in collection.js consider combining the two
-const loadCollection = async (api, { owner, name }) => {
-  try {
-    const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
-    collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
-    collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
-    collection.projectCount = collection.projects.length;
-    collection.projects = sampleSize(collection.projects, 3).map((p) => ({
-      ...p,
-      users: p.users || [],
-    }));
-    return collection;
-  } catch (error) {
-    if (error && error.response && error.response.status === 404) {
-      return null;
-    }
-    captureException(error);
-  }
-  return null;
-};
+// const loadCollection = async (api, { owner, name }) => {
+//   try {
+//     const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
+//     collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
+//     collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+//     collection.projectCount = collection.projects.length;
+//     collection.projects = sampleSize(collection.projects, 3).map((p) => ({
+//       ...p,
+//       users: p.users || [],
+//     }));
+//     console.log("collection", collection)
+//     return collection;
+//   } catch (error) {
+//     if (error && error.response && error.response.status === 404) {
+//       return null;
+//     }
+//     captureException(error);
+//   }
+//   return null;
+// };
 
 const loadAllCollections = async (api, infos) => {
   // don't await until every request is sent so they can all run at once
-  const promises = infos.map((info) => loadCollection(api, info));
+  const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name));
   return Promise.all(promises);
 };
 
