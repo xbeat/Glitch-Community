@@ -57,7 +57,7 @@ const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
       <NewProjectPop />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop />}
-      {!!maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} />}
+      {!!maybeUser && maybeUser.login && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} />}
     </nav>
   </header>
 );

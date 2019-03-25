@@ -133,4 +133,5 @@ const IndexPageContainer = () => {
     </Layout>
   );
 };
+
 export default IndexPageContainer;
