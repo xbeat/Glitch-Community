@@ -1,56 +1,49 @@
 // transitional utilities that are redux-compatible without literally bringing in redux
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { configureStore } from 'redux-starter-kit';
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { mapValues, fromPairs } from 'lodash';
 
-import { mapKeys, mapValues } from 'lodash';
+// react-redux bindings (TODO: use react-redux when these are supported natively)
 
 const ReduxContext = createContext()
 
+export const Provider = ({ store, children }) => 
+  <ReduxContext.Provider value={store}>{children}</ReduxContext.Provider>
 
-
+export const useStore = () => useContext(ReduxContext)
 
 export const createSelectorHook = (selector) => (...args) => {
-  const store = useContext()
+  const store = useStore()
   const [state, setState] = useState(selector(store.getState(), ...args));
   useEffect(() => {
     return store.subscribe(() => {
-      setState(selector(store.getState(), ...args)
+      setState(selector(store.getState(), ...args))
     })
   }, args)
-  
+  return state
 }
 
-// from redux
-export const bindActionCreators = (actionCreators, dispatch) =>
-  mapValues(actionCreators, (actionCreator) => (payload) => dispatch(actionCreator(payload)));
+const bindActionCreators = (actions, dispatch) =>
+  mapValues(actions, (actionCreator) => (payload) => dispatch(actionCreator(payload)));
 
-// from 'redux-starter-kit'
-function createReducer(reducers) {
-  return (state, action) => {
-    if (reducers[action.type]) {
-      return reducers[action.type](state, action);
-    }
-    return state;
-  };
+export const useActions = (actions) => {
+  const store = useStore()
+  return bindActionCreators(actions, store.dispatch)
 }
 
-function createAction(type) {
-  const actionCreator = (payload) => ({ type, payload });
-  actionCreator.toString = () => type;
-  return actionCreator;
+// combine slices into a redux store
+
+function createStoreFromSlices (slices) {
+  return configureStore({
+    reducer: fromPairs(slices.map(slice => [slice.slice, slice.reducer])),
+    middleware: getDefaultMiddleware().concat(flatMap(slices, (0)
+  })
 }
 
-export function createSlice({ slice, reducers }) {
-  const mappedReducers = slice ? mapKeys(reducers, (_, actionType) => `${slice}/${actionType}`) : reducers;
-  const reducer = createReducer(mappedReducers);
-  const actions = mapValues(reducers, (value, actionType) => {
-    const type = slice ? `${slice}/${actionType}` : actionType;
-    return createAction(type);
-  });
-  return { actions, reducer };
-}
 
-// from redux-aop (helpers for making middleware)
+
+
+// helpers for making middleware, after redux-aop
 
 // run _before_ the reducer gets the action.
 // useful for middleware that transform actions (e.g. running Promises).
