@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import ProjectResultItem from '../includes/project-result-item';
 
@@ -188,15 +189,13 @@ AddTeamProjectPop.propTypes = {
   teamProjects: PropTypes.array.isRequired,
   addProject: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  api: PropTypes.any,
-};
-AddTeamProjectPop.defaultProps = {
-  api: null,
+  api: PropTypes.func.isRequired,
 };
 
 const AddTeamProjectPopContainer = (props) => {
+  const api = useAPI();
   const { currentUser } = useCurrentUser();
-  return <AddTeamProjectPop myProjects={currentUser.projects} {...props} />;
+  return <AddTeamProjectPop myProjects={currentUser.projects} api={api} {...props} />;
 };
 
 export default AddTeamProjectPopContainer;

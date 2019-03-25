@@ -1,13 +1,13 @@
 const body =
-  '<p>Get started with Virtual Reality.</p><p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>';
+  '<p>How today’s tech from artificial intelligence to virtual reality is changing the way art is made.</p>';
 
 // make sure image urls use https
 export default {
-  image: 'https://culture-zine.glitch.me/culture/content/images/2019/02/WebVR-Starter-Kit.-Part-1_-Intro-to-WebVR-1.png',
+  image: 'https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FGlitch_Illo_TechArt-Article-Inline1-v1%20(1).jpg?1553514484331',
   mask: 'mask-4',
-  title: 'WebVR Starter Kit',
-  appDomain: 'starter-aframe-animated',
-  blogUrl: '/an-intro-to-webvr/',
+  title: 'When Art Meets Algorithm',
+  appDomain: 'orbit',
+  blogUrl: '/art-meets-algorithm/',
   body,
-  color: '#F39B4D',
+  color: '#f5f5f5'
 };

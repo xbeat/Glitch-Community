@@ -17,9 +17,7 @@ const md = ({ allowImages }) => {
   if (!allowImages) {
     mdIt.disable('image');
   }
-  return mdIt
-    .use(markdownEmoji)
-    .use(markdownSanitizer);
+  return mdIt.use(markdownEmoji).use(markdownSanitizer);
 };
 
 /**

@@ -6,6 +6,8 @@ import { captureException } from '../../utils/sentry';
 
 import { TrackClick } from '../analytics';
 import { getAvatarUrl } from '../../models/project';
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 
 import { Loader } from '../includes/loader';
 
@@ -64,7 +66,6 @@ class AddProjectToCollectionPopContents extends React.Component {
           }}
         >
           <CollectionResultItem
-            api={this.props.api}
             onClick={this.props.addProjectToCollection}
             project={this.props.project}
             collection={collection}
@@ -117,7 +118,6 @@ class AddProjectToCollectionPopContents extends React.Component {
 AddProjectToCollectionPopContents.propTypes = {
   addProjectToCollection: PropTypes.func,
   collections: PropTypes.array,
-  api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func, // required but added dynamically
   project: PropTypes.object.isRequired,
@@ -182,12 +182,7 @@ class AddProjectToCollectionPop extends React.Component {
     return (
       <NestedPopover
         alternateContent={() => (
-          <CreateCollectionPop
-            {...this.props}
-            api={this.props.api}
-            collections={this.state.maybeCollections}
-            togglePopover={this.props.togglePopover}
-          />
+          <CreateCollectionPop {...this.props} collections={this.state.maybeCollections} togglePopover={this.props.togglePopover} />
         )}
         startAlternateVisible={false}
       >
@@ -216,4 +211,10 @@ AddProjectToCollectionPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-export default AddProjectToCollectionPop;
+const AddProjectToCollectionPopWrap = (props) => {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return <AddProjectToCollectionPop {...props} currentUser={currentUser} api={api} />;
+};
+
+export default AddProjectToCollectionPopWrap;

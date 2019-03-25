@@ -1,21 +1,30 @@
 @require '../constants'
 
-button.btn
-  text-align: left
-  font-size: 14px
-  line-height: 14px
-  font-weight: 600
-  font-family: sansserif
+.btn
   background-color: white
   border: solid primary 2px
-  display: inline-block
   border-radius: 5px
+  color: primary
+  cursor: pointer
+  display: inline-block
+  font-family: sansserif
+  font-size: 14px
+  font-weight: 600
+  line-height: 14px
   padding: 6px 12px
   padding-bottom: 5px
-  cursor: pointer
   position: relative
+  text-align: left
+  text-decoration: none
+  &.matchBackground
+    background-color: inherit
+  &.hasEmoji
+    padding-top: 5px;
+    padding-bottom: 5px;
+  
   &.dangerZone
-    background-color: warning-background
+    &:hover
+      background-color: warning-background
   &:hover
     background-color: secondary-background
     text-decoration: none
@@ -46,6 +55,10 @@ button.btn
     font-size: 12px
     padding: 3px 8px
     padding-top: 5px
+    margin-bottom: 10px
+    &.hasEmoji
+      padding-top: 3px;
+      padding-bottom: 3px;
 
   &.tertiary
     color: tertiary
@@ -54,3 +67,15 @@ button.btn
     &:hover
       color: primary
       border-color: line-on-secondary-background
+      
+  &.unstyled
+    padding: 0
+    border-radius: 0
+    border: none
+    background: none
+    font-weight: normal
+    &:hover
+      opacity: 1;
+      background-color: #eaeaea;
+      border-radius: 5px;
+      border: none;

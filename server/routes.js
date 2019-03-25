@@ -5,6 +5,10 @@ const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
 
+const MarkdownIt = require('markdown-it');
+const md = new MarkdownIt();
+const cheerio = require('cheerio');
+
 const { getProject, getTeam, getUser, getCollection, getZine } = require('./api');
 const initWebpack = require('./webpack');
 const constants = require('./constants');
@@ -35,12 +39,6 @@ module.exports = function(external) {
   const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
-
-  // Log all requests for diagnostics
-  app.use(function(request, response, next) {
-    console.log(request.method, request.originalUrl, request.body);
-    return next();
-  });
 
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
@@ -91,16 +89,10 @@ module.exports = function(external) {
   }
 
   const { CDN_URL } = constants.current;
-  const { sources } = constants;
 
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
-        // style-src unsafe-inline is required for our SVGs
-        // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
-        styleSrc: ["'self'", "'unsafe-inline'", ...sources.styles],
-        imgSrc: ["'self'", ...sources.images],
-        fontSrc: ["'self'", ...sources.fonts],
         baseUri: ["'self'"],
         reportUri: 'https://csp-reporting-server.glitch.me/report',
       },
@@ -115,28 +107,29 @@ module.exports = function(external) {
       return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    await render(res, domain, project.description, avatar);
+    const description = project.description ? cheerio.load(md.render(project.description)).text() : '';
+
+    await render(res, domain, description, avatar);
   });
 
   app.get('/@:name', async (req, res) => {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
-      const args = [res, team.name, team.description];
+      const description = team.description ? cheerio.load(md.render(team.description)).text() : '';
+      const args = [res, team.name, description];
+
       if (team.hasAvatarImage) {
         args.push(`${CDN_URL}/team-avatar/${team.id}/large`);
       }
+
       await render(...args);
       return;
     }
     const user = await getUser(name);
     if (user) {
-      await render(
-        res,
-        user.name || `@${user.login}`,
-        user.description,
-        user.avatarThumbnailUrl,
-      );
+      const description = user.description ? cheerio.load(md.render(user.description)).text() : '';
+      await render(res, user.name || `@${user.login}`, description, user.avatarThumbnailUrl);
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
@@ -149,7 +142,7 @@ module.exports = function(external) {
 
     if (collectionObj) {
       let { name, description } = collectionObj;
-
+      description = description ? cheerio.load(md.render(description)).text() : '';
       description = description.trimEnd(); // trim trailing whitespace from description
       description += ` 🎏 A collection of apps by @${author}`;
       description = description.trimStart(); // if there was no description, trim space before the fish

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { chunk, keyBy, flatMap, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
-
+import { useAPI } from '../state/api';
 import { useCurrentUser, normalizeProjects } from '../state/current-user';
 
 function listToObject(list, val) {
@@ -82,7 +82,8 @@ ProjectsLoader.propTypes = {
 
 const ProjectsLoaderWrap = (props) => {
   const { currentUser } = useCurrentUser();
-  return <ProjectsLoader {...props} currentUser={currentUser} />;
+  const api = useAPI();
+  return <ProjectsLoader {...props} api={api} currentUser={currentUser} />;
 };
 
 export default ProjectsLoaderWrap;
