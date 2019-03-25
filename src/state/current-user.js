@@ -148,18 +148,14 @@ async function load(initState) {
 
   // If we're signed out create a new anon user
   if (!nextState.sharedUser) {
-    console.log('load anonUser');
     nextState.sharedUser = await getAnonUser();
-    //this.props.setSharedUser(sharedUser);
   }
 
   // Check if we have to clear the cached user
   if (!usersMatch(nextState.sharedUser, nextState.cachedUser)) {
     nextState.cachedUser = undefined;
-    // this.props.setCachedUser(undefined);
   }
 
-  console.log('load cachedUser');
   const newCachedUser = await getCachedUser(nextState.sharedUser);
   if (newCachedUser === 'error') {
     // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
@@ -168,19 +164,13 @@ async function load(initState) {
 
     if (usersMatch(initState.sharedUser, nextState.sharedUser)) {
       // The user wasn't changed, so we need to fix it
-      nextState.fetched;
-      // this.setState({ fetched: false });
       nextState.sharedUser = await fixSharedUser(initState.sharedUser);
-      // this.props.setSharedUser(newSharedUser);
     }
-
-    // implied: run `load` again?
   } else {
     // The shared user is good, store it
-    this.props.setCachedUser(newCachedUser);
-    this.setState({ fetched: true });
-    console.log('load ok');
+    nextState.cachedUser = newCachedUser;
   }
+  return nextState;
 }
 
 function getInitialState() {
@@ -241,6 +231,16 @@ const handleLoadRequest = before(matchTypes(actions.requestedLoad), (store, acti
   return action;
 });
 
+const trackUserChanges = before(matchTypes(actions.loaded), (store, action) => {
+  const prev = store.getState();
+  const { cachedUser } = action.payload;
+
+  if (!usersMatch(cachedUser, prev.cachedUser)) {
+    identifyUser(cachedUser);
+  }
+
+  return action;
+});
 
 const persistToStorage = after(matchTypes(actions.loaded, actions.loggedIn, actions.updated, actions.loggedOut), (store, action) => {
   const { sharedUser, cachedUser } = store.getState();
@@ -249,16 +249,19 @@ const persistToStorage = after(matchTypes(actions.loaded, actions.loggedIn, acti
   return action;
 });
 
-
-const middleware = [handleLoadRequest, persistToStorage]
+const middleware = [handleLoadRequest, persistToStorage];
 
 export const CurrentUserProvider = ({ children }) => {
   const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState, ...middleware);
   const boundActions = bindActionCreators(actions, dispatch);
   // kick off initial load
   useEffect(() => {
+    identifyUser(state.cachedUser);
     boundActions.requestedLoad();
   }, []);
+
+  // for easier debugging
+  window.currentUser = state.cachedUser;
 
   const userContext = {
     currentUser: { ...defaultUser, ...state.sharedUser, ...state.cachedUser },

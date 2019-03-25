@@ -58,9 +58,10 @@ export function after(matcher, middleware) {
     if (!matcher(action)) {
       return action;
     }
+    const prevState = store.getState();
     const result = next(action);
     if (result) {
-      return middleware(store, result);
+      return middleware(store, result, prevState);
     }
   };
 }
