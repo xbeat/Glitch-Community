@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { partition } from 'lodash';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
 import TeamEditor from '../team-editor';
 import { getLink, getAvatarStyle, getProfileStyle } from '../../models/team';
@@ -27,6 +28,7 @@ import EntityPageProjects from '../entity-page-projects';
 import ProjectsLoader from '../projects-loader';
 import TeamAnalytics from '../includes/team-analytics';
 import { TeamMarketing, VerifiedBadge } from '../includes/team-elements';
+import Text from '../../components/text/text';
 import ReportButton from '../pop-overs/report-abuse-pop';
 
 import Heading from '../../components/text/heading';
@@ -51,11 +53,10 @@ const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
   </>
 );
 
-const TeamPageCollections = ({ collections, team, api, currentUser, currentUserIsOnTeam }) => (
+const TeamPageCollections = ({ collections, team, currentUser, currentUserIsOnTeam }) => (
   <CollectionsList
     title="Collections"
     collections={collections.map((collection) => ({ ...collection, team }))}
-    api={api}
     maybeCurrentUser={currentUser}
     maybeTeam={team}
     isAuthorized={currentUserIsOnTeam}
@@ -143,7 +144,7 @@ class TeamPage extends React.Component {
             <img src="https://cdn.glitch.com/0c3ba0da-dac8-4904-bb5e-e1c7acc378a2%2Fbeta-flag.svg?1541448893958" alt="" />
             <div>
               <Heading tagName="h4">Teams are in beta</Heading>
-              <p>Learn More</p>
+              <Text>Learn More</Text>
             </div>
           </a>
           <ProfileContainer
@@ -182,7 +183,6 @@ class TeamPage extends React.Component {
                   members={team.users.map(({ id }) => id)}
                   invitedMembers={this.state.invitees}
                   whitelistedDomain={team.whitelistedDomain}
-                  api={this.props.api}
                 />
               )}
               {this.userCanJoinTeam() && <JoinTeam onClick={this.props.joinTeam} />}
@@ -198,13 +198,12 @@ class TeamPage extends React.Component {
         </section>
 
         <ErrorBoundary>
-          <AddTeamProject {...this.props} teamProjects={team.projects} api={this.props.api} />
+          <AddTeamProject {...this.props} teamProjects={team.projects} />
         </ErrorBoundary>
 
         {featuredProject && (
           <EntityPageFeaturedProject
             featuredProject={featuredProject}
-            api={this.props.api}
             isAuthorized={this.props.currentUserIsOnTeam}
             unfeatureProject={this.props.unfeatureProject}
             addProjectToCollection={this.props.addProjectToCollection}
@@ -218,7 +217,6 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
           projectOptions={this.getProjectOptions()}
-          api={this.props.api}
         />
 
         {/* Recent Projects */}
@@ -227,7 +225,6 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           projectOptions={this.getProjectOptions()}
-          api={this.props.api}
         />
 
         {team.projects.length === 0 && this.props.currentUserIsOnTeam && (
@@ -256,7 +253,6 @@ class TeamPage extends React.Component {
         {this.props.currentUserIsOnTeam && (
           <ErrorBoundary>
             <TeamAnalytics
-              api={this.props.api}
               id={team.id}
               currentUserIsOnTeam={this.props.currentUserIsOnTeam}
               projects={team.projects}
@@ -266,9 +262,7 @@ class TeamPage extends React.Component {
           </ErrorBoundary>
         )}
 
-        {this.props.currentUserIsTeamAdmin && (
-          <DeleteTeam api={() => this.props.api} teamId={team.id} teamName={team.name} teamAdmins={this.teamAdmins()} users={team.users} />
-        )}
+        {this.props.currentUserIsTeamAdmin && <DeleteTeam teamId={team.id} teamName={team.name} teamAdmins={this.teamAdmins()} users={team.users} />}
 
         {!this.props.currentUserIsOnTeam && (
           <>
@@ -306,7 +300,7 @@ TeamPage.propTypes = {
   updateWhitelistedDomain: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -323,9 +317,6 @@ TeamPage.propTypes = {
   unfeatureProject: PropTypes.func.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
-TeamPage.defaultProps = {
-  api: null,
-};
 
 const teamConflictsWithUser = (team, currentUser) => {
   if (currentUser && currentUser.login) {
@@ -334,14 +325,14 @@ const teamConflictsWithUser = (team, currentUser) => {
   return false;
 };
 
-const TeamNameConflict = ({ team }) => (
-  <CurrentUserConsumer>{(currentUser) => teamConflictsWithUser(team, currentUser) && <NameConflictWarning />}</CurrentUserConsumer>
-);
-
-const TeamPageEditor = ({ api, initialTeam, children }) => (
-  <TeamEditor api={api} initialTeam={initialTeam}>
+const TeamNameConflict = ({ team }) => {
+  const { currentUser } = useCurrentUser();
+  return teamConflictsWithUser(team, currentUser) && <NameConflictWarning />;
+};
+const TeamPageEditor = ({ initialTeam, children }) => (
+  <TeamEditor initialTeam={initialTeam}>
     {(team, funcs, ...args) => (
-      <ProjectsLoader api={api} projects={team.projects}>
+      <ProjectsLoader projects={team.projects}>
         {(projects, reloadProjects) => {
           // Inject page specific changes to the editor
           // Mainly url updating and calls to reloadProjects
@@ -376,31 +367,29 @@ const TeamPageEditor = ({ api, initialTeam, children }) => (
     )}
   </TeamEditor>
 );
-const TeamPageContainer = ({ api, team, ...props }) => (
-  <AnalyticsContext properties={{ origin: 'team' }} context={{ groupId: team.id.toString() }}>
-    <TeamPageEditor api={api} initialTeam={team}>
-      {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-        <>
-          <Helmet>
-            <title>{teamFromEditor.name}</title>
-          </Helmet>
-          <CurrentUserConsumer>
-            {(currentUser) => (
-              <TeamPage
-                api={api}
-                team={teamFromEditor}
-                {...funcs}
-                currentUser={currentUser}
-                currentUserIsOnTeam={currentUserIsOnTeam}
-                currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-                {...props}
-              />
-            )}
-          </CurrentUserConsumer>
-          <TeamNameConflict team={teamFromEditor} />
-        </>
-      )}
-    </TeamPageEditor>
-  </AnalyticsContext>
-);
+const TeamPageContainer = ({ team, ...props }) => {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return (
+    <AnalyticsContext properties={{ origin: 'team' }} context={{ groupId: team.id.toString() }}>
+      <TeamPageEditor initialTeam={team}>
+        {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+          <>
+            <Helmet title={teamFromEditor.name} />
+            <TeamPage
+              api={api}
+              team={teamFromEditor}
+              {...funcs}
+              currentUser={currentUser}
+              currentUserIsOnTeam={currentUserIsOnTeam}
+              currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+              {...props}
+            />
+            <TeamNameConflict team={teamFromEditor} />
+          </>
+        )}
+      </TeamPageEditor>
+    </AnalyticsContext>
+  );
+};
 export default TeamPageContainer;

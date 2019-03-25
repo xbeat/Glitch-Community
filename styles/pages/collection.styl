@@ -60,6 +60,10 @@
       margin: 0
     > * p
       margin: 0 !important
+  .collection-project-count
+    margin: 25px 0px 0px
+    font-size: 14px
+    font-weight: 600
   .edit-collection-color-btn
     margin-top: 25px
   .collection-url
@@ -70,7 +74,7 @@
     color: text-on-secondary-background 
   .collection-contents 
     width: 75%
-    padding: 12px
+    padding: 20px 12px
     background-color: secondary-background
     border-top-right-radius: 5px
     border-bottom-right-radius: 5px
@@ -86,13 +90,21 @@
   .collection-project-container-header
     margin: 0px 10px
   .projects-container
-    margin: 30px 30px 30px 16px
-    overflow: visible
+    margin: 10px
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    grid-gap: 5px
+    list-style-type: none
+    
+    @media (max-width: mediumViewport)
+      grid-template-columns: 1fr
+      
   .projects-container > li
-    @media(max-width: largeViewport)
-      width: 31%
-    @media(max-width: mediumViewport)
-      width: 100%
+    width: auto
+    min-width: calc(33.3% - 10px)
+    align-self: end
+    margin-bottom: 20px
+    
     .project-options-pop
       width: 200px
   .empty-collection-hint
@@ -111,8 +123,11 @@
   .project-options
     display: block
     background: none
+    &:hover, &:focus
+      background: secondary-background
 a.collection-view-all
   font-weight: 600
   font-size: 13px
 a.collection-view-all:hover
   text-decoration: underline !important
+

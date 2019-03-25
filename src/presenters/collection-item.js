@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
 import Markdown from '../components/text/markdown';
+import Text from '../components/text/text';
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
 import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
 import { Loader } from './includes/loader';
@@ -13,14 +14,14 @@ import { isDarkColor } from '../models/collection';
 
 const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
   const emptyState = isAuthorized ? (
-    <p>
+    <Text>
       {'This collection is empty – add some projects '}
       <span role="img" aria-label="">
         ☝️
       </span>
-    </p>
+    </Text>
   ) : (
-    <p>No projects to see in this collection just yet.</p>
+    <Text>No projects to see in this collection just yet.</Text>
   );
 
   if (collection.projects.length > 0) {

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { sampleSize } from 'lodash';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
+import { useAPI } from '../../state/api';
 
 import CollectionItem from '../collection-item';
 
 const getIncludedCollections = async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
-  const withData = await Promise.all(
-    collections.map(async (collection) => {
+  const selectedCollections = sampleSize(collections, 3);
+  return Promise.all(
+    selectedCollections.map(async (collection) => {
       const { projects, user, team } = await allByKeys({
         projects: getAllPages(api, `/v1/collections/by/id/projects?id=${collection.id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
         user: collection.user && getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id),
@@ -16,18 +18,18 @@ const getIncludedCollections = async (api, projectId) => {
       return { ...collection, projects, user, team };
     }),
   );
-  return sampleSize(withData, 3);
 };
 
-const useAsync = (asyncFunction, ...args) => {
+const useAsync = (asyncFunction, api, ...args) => {
   const [result, setResult] = useState(null);
   useEffect(() => {
-    asyncFunction(...args).then(setResult);
+    asyncFunction(api, ...args).then(setResult);
   }, args);
   return result;
 };
 
-const IncludedInCollections = ({ api, projectId }) => {
+const IncludedInCollections = ({ projectId }) => {
+  const api = useAPI();
   const rawCollections = useAsync(getIncludedCollections, api, projectId);
   const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
   if (!collections || !collections.length) {

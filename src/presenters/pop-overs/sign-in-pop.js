@@ -4,10 +4,11 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Link } from '../includes/link';
-import useLocalStorage from '../includes/local-storage';
+import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { useCurrentUser } from '../current-user';
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -281,16 +282,18 @@ const SignInPopWithoutRouter = (props) => {
 
 export const SignInPopBase = withRouter(SignInPopWithoutRouter);
 SignInPopBase.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   header: PropTypes.node,
   prompt: PropTypes.node,
   hash: PropTypes.string,
 };
 
-const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
-    <SignInPopBase {...props} />
-  </PopoverWithButton>
-);
-
+const SignInPopContainer = (props) => {
+  const api = useAPI();
+  return (
+    <PopoverWithButton buttonClass="button button-small" buttonText="Sign in">
+      {({ togglePopover }) => <SignInPopBase {...props} api={api} togglePopover={togglePopover} />}
+    </PopoverWithButton>
+  );
+};
 export default SignInPopContainer;

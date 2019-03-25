@@ -8,6 +8,7 @@ import { TrackClick } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
+import { useAPI } from '../../state/api';
 
 import { NotificationConsumer, AddProjectToCollectionMsg } from '../notifications';
 
@@ -246,7 +247,7 @@ class AddCollectionProjectPop extends React.Component {
             {isLoading && <Loader />}
 
             {!!results && (
-              <ProjectsLoader api={this.props.api} projects={results}>
+              <ProjectsLoader projects={results}>
                 {(projects) => (
                   <ProjectSearchResults
                     projects={projects}
@@ -266,7 +267,7 @@ class AddCollectionProjectPop extends React.Component {
 }
 
 AddCollectionProjectPop.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   collection: PropTypes.object.isRequired,
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
@@ -275,7 +276,9 @@ AddCollectionProjectPop.propTypes = {
 
 AddCollectionProjectPop.defaultProps = {
   togglePopover: null,
-  api: null,
 };
 
-export default AddCollectionProjectPop;
+export default (props) => {
+  const api = useAPI();
+  return <AddCollectionProjectPop {...props} api={api} />;
+};

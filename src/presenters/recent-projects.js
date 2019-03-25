@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getAvatarStyle, getProfileStyle } from '../models/user';
-import { CurrentUserConsumer } from './current-user';
+import { useCurrentUser } from '../state/current-user';
 import { UserLink } from './includes/link';
 
 import Heading from '../components/text/heading';
@@ -55,6 +55,11 @@ const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
           <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt="" />
           </UserLink>
+          {!user.login && (
+            <div className="anon-user-sign-up">
+              <SignInPop />
+            </div>
+          )}
         </div>
       </div>
       <article className="projects">{children}</article>
@@ -63,6 +68,7 @@ const RecentProjectsContainer = ({ children, user, api, clearUser }) => (
   </section>
 );
 RecentProjectsContainer.propTypes = {
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({
     avatarUrl: PropTypes.string,
@@ -75,6 +81,7 @@ RecentProjectsContainer.propTypes = {
   clearUser: PropTypes.func.isRequired,
 };
 
+<<<<<<< HEAD
 const RecentProjects = ({ api }) => (
   <CurrentUserConsumer>
     {(user, fetched, { clear }) => (
@@ -90,6 +97,20 @@ const RecentProjects = ({ api }) => (
     )}
   </CurrentUserConsumer>
 );
+RecentProjects.propTypes = {
+  api: PropTypes.any.isRequired,
+=======
+const RecentProjects = ({ api }) => {
+  const { currentUser: user, fetched, { clear } } = useCurrentUser();
+  return (
+    <RecentProjectsContainer api={api} user={user} clearUser={clear}>
+      {fetched ? (
+        <ProjectsLoader projects={user.projects.slice(0, 3)}>{(projects) => <ProjectsUL projects={projects} />}</ProjectsLoader>
+      ) : (
+        <Loader />
+      )}
+    </RecentProjectsContainer>
+  );
 RecentProjects.propTypes = {
   api: PropTypes.any.isRequired,
 };

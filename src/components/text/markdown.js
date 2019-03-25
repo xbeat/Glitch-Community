@@ -6,21 +6,25 @@ import markdownSanitizer from 'markdown-it-sanitizer';
 import truncate from 'html-truncate';
 import styles from './markdown.styl';
 
-const md = markdownIt({
-  html: true,
-  breaks: true,
-  linkify: true,
-  typographer: true,
-})
-  .disable('smartquotes')
-  .use(markdownEmoji)
-  .use(markdownSanitizer);
+const md = ({ allowImages }) => {
+  const mdIt = markdownIt({
+    html: true,
+    breaks: true,
+    linkify: true,
+    typographer: true,
+  }).disable('smartquotes');
+
+  if (!allowImages) {
+    mdIt.disable('image');
+  }
+  return mdIt.use(markdownEmoji).use(markdownSanitizer);
+};
 
 /**
  * Markdown Component
  */
-const Markdown = ({ children, length }) => {
-  let rendered = md.render(children || '');
+const Markdown = ({ children, length, allowImages }) => {
+  let rendered = md({ allowImages }).render(children || '');
   if (length > 0) {
     rendered = truncate(rendered, length, { ellipsis: '…' });
   }
@@ -37,10 +41,12 @@ Markdown.propTypes = {
   children: PropTypes.node.isRequired,
   /** length to truncate rendered Markdown to */
   length: PropTypes.number,
+  allowImages: PropTypes.bool,
 };
 
 Markdown.defaultProps = {
   length: -1,
+  allowImages: true,
 };
 
 export default Markdown;

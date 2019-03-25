@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Reach Out and Touch',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_2.jpg?1552917252788',
-    link: 'https://glitch.com/~handholding-simulator',
+    title: 'Frankenstein PDFs',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbyzan.jpg?1553509760730',
+    link: 'https://glitch.com/~byzantine',
   },
   {
-    title: 'Alternatives to "You Guys"',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_1.jpg?1552917246402',
-    link: 'https://glitch.com/~vosotros',
+    title: 'Collaborate on Constellations',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fstars.jpg?1553509761272',
+    link: 'https://glitch.com/~make-a-constellation',
   },
   {
-    title: 'Fine Art in 100 Rectangles',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fimg_3.jpg?1552917253176',
-    link: 'https://glitch.com/~thorn-larkspur',  
+    title: 'Teach Your Calculator',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcalculate.jpg?1553509759461',
+    link: 'https://glitch.com/~teach-your-calculator',  
   }
 ];

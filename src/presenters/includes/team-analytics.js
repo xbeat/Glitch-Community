@@ -13,6 +13,9 @@ import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
+import { useAPI } from '../../state/api';
+import Text from '../../components/text/text';
+
 const dateFromTime = (newTime) => {
   const timeMap = {
     'Last 4 Weeks': dayjs()
@@ -28,7 +31,7 @@ const dateFromTime = (newTime) => {
   return timeMap[newTime];
 };
 
-const getAnalytics = async ({ id, api, projects }, fromDate, currentProjectDomain) => {
+const getAnalytics = async ({ id, api, projects, fromDate, currentProjectDomain }) => {
   if (!projects.length) {
     const data = _.cloneDeep(sampleAnalytics);
     // Update timestamps so they're relative to now
@@ -111,7 +114,9 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
 
-    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then((data) => {
+    const { id, api, projects } = this.props;
+    const { fromDate, currentProjectsDomain } = this.state;
+    getAnalytics({ id, api, projects, fromDate, currentProjectsDomain }).then((data) => {
       this.setState(
         {
           isGettingData: false,
@@ -206,15 +211,15 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} api={this.props.api} />
+            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} />
           </section>
         )}
 
         <section className="explanation">
-          <p>
+          <Text>
             Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get
             uniques by adding Google Analytics to your project.
-          </p>
+          </Text>
         </section>
 
         {!this.props.projects.length && <div className="placeholder-mask" />}
@@ -224,14 +229,13 @@ class TeamAnalytics extends React.Component {
 }
 
 TeamAnalytics.propTypes = {
+  api: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.any,
   projects: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-TeamAnalytics.defaultProps = {
-  api: null,
+export default (props) => {
+  const api = useAPI();
+  return <TeamAnalytics {...props} api={api} />;
 };
-
-export default TeamAnalytics;

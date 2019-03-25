@@ -10,7 +10,7 @@ import { TrackClick } from './analytics';
 
 import Heading from '../components/text/heading';
 
-const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
+const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
       <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
@@ -34,7 +34,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
 
         {isAuthorized ? (
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized} />
+            <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
           </div>
         ) : (
           reportBtn
@@ -44,7 +44,6 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
           {currentUser.login && (
             <AddProjectToCollection
               className="button-small"
-              api={api}
               currentUser={currentUser}
               project={featuredProject}
               fromProject
@@ -59,7 +58,7 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
               baseDomain: featuredProject.domain,
             }}
           >
-            <RemixButton className="button-small" name={featuredProject.domain} isMember={isAuthorized} />
+            <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
           </TrackClick>
         </div>
       </section>
@@ -68,7 +67,6 @@ const EntityPageFeaturedProject = ({ api, isAuthorized, currentUser, unfeaturePr
 };
 
 EntityPageFeaturedProject.propTypes = {
-  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,

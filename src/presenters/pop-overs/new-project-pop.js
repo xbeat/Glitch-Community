@@ -6,6 +6,7 @@ import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
 
+import { useAPI } from '../../state/api';
 import { getRemixUrl } from '../../models/project';
 
 const importGitRepo = () => {
@@ -98,7 +99,7 @@ class NewProjectPopButton extends React.Component {
   render() {
     return (
       <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
-        <NewProjectPop projects={this.state.projects} />
+        {() => <NewProjectPop projects={this.state.projects} />}
       </PopoverWithButton>
     );
   }
@@ -108,4 +109,7 @@ NewProjectPopButton.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-export default NewProjectPopButton;
+export default (props) => {
+  const api = useAPI();
+  return <NewProjectPopButton {...props} api={api} />;
+};

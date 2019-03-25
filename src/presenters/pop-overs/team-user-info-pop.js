@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { getAvatarThumbnailUrl } from '../../models/user';
+import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
 import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
-
+import { useNotifications } from '../notifications';
 import TeamUserRemovePop from './team-user-remove-pop';
+import { useAPI } from '../../state/api';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -69,12 +70,21 @@ const ThanksCount = ({ count }) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...props }) => {
+const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, userTeamProjects, removeUser, ...props }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
 
   const currentUserHasRemovePriveleges = currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   const canRemoveUser = !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin);
   const canCurrentUserRemoveUser = canRemoveUser && currentUserHasRemovePriveleges;
+
+  // if user is a member of no projects, skip the confirm step
+  function onRemove() {
+    if (userTeamProjects.status === 'ready' && userTeamProjects.data.length === 0) {
+      removeUser();
+    } else {
+      showRemove();
+    }
+  }
 
   return (
     <dialog className="pop-over team-user-info-pop">
@@ -95,7 +105,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
             <div className="status-badge">
               <TooltipContainer
                 id={`admin-badge-tooltip-${props.user.login}`}
-                type="information"
+                type="info"
                 target={<span className="status admin">Team Admin</span>}
                 tooltip="Can edit team info and billing"
               />
@@ -112,7 +122,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
           canChangeUserAdminStatus={!props.userIsTheOnlyAdmin}
         />
       )}
-      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={showRemove} />}
+      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={onRemove} />}
     </dialog>
   );
 };
@@ -122,11 +132,32 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
 // Team User Info or Remove
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
-const TeamUserInfoAndRemovePop = (props) => (
-  <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} />}>
-    {(showRemove) => <TeamUserInfo {...props} showRemove={showRemove} />}
-  </NestedPopover>
-);
+const TeamUserInfoAndRemovePop = (props) => {
+  const api = useAPI();
+  const { createNotification } = useNotifications();
+  const [userTeamProjects, setUserTeamProjects] = useState({ status: 'loading', data: null });
+  useEffect(() => {
+    api.get(`users/${props.user.id}`).then(({ data }) => {
+      setUserTeamProjects({
+        status: 'ready',
+        data: data.projects.filter((userProj) => props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
+      });
+    });
+  }, [props.user.id]);
+
+  function removeUser(selectedProjects = []) {
+    createNotification(`${getDisplayName(props.user)} removed from Team`);
+    props.removeUserFromTeam(props.user.id, Array.from(selectedProjects));
+  }
+
+  const propsWithUserRemoval = { ...props, removeUser, userTeamProjects };
+
+  return (
+    <NestedPopover alternateContent={() => <TeamUserRemovePop {...propsWithUserRemoval} />}>
+      {(showRemove) => <TeamUserInfo {...propsWithUserRemoval} showRemove={showRemove} />}
+    </NestedPopover>
+  );
+};
 
 TeamUserInfoAndRemovePop.propTypes = {
   user: PropTypes.shape({
@@ -140,7 +171,6 @@ TeamUserInfoAndRemovePop.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   userIsTheOnlyMember: PropTypes.bool.isRequired,
-  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({

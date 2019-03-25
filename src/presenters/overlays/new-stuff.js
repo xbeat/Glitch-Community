@@ -6,6 +6,7 @@ import Markdown from '../../components/text/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
+import Text from '../../components/text/text';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
@@ -37,11 +38,11 @@ const NewStuffOverlay = ({ setShowNewStuff, showNewStuff, newStuff }) => (
             <Markdown>{body}</Markdown>
           </div>
           {!!link && (
-            <p>
+            <Text>
               <Link className="link" to={link}>
                 Read the blog post →
               </Link>
-            </p>
+            </Text>
           )}
         </article>
       ))}
@@ -93,11 +94,11 @@ class NewStuff extends React.Component {
             <TooltipContainer
               id="new-stuff-tooltip"
               type="info"
-              target={(
+              target={
                 <button className="button-unstyled new-stuff" onClick={show}>
                   <figure className="new-stuff-avatar" alt="New Stuff" />
                 </button>
-              )}
+              }
               tooltip="New"
               persistent
               align={['top']}

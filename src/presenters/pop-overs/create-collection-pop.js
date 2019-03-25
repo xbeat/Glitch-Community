@@ -7,6 +7,7 @@ import { kebabCase, orderBy } from 'lodash';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
 import { TrackClick } from '../analytics';
 import { getLink, createCollection } from '../../models/collection';
+import { useAPI } from '../../state/api';
 
 import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
@@ -202,4 +203,7 @@ CreateCollectionPop.defaultProps = {
   addProjectToCollection: null,
 };
 
-export default CreateCollectionPop;
+export default (props) => {
+  const api = useAPI();
+  return <CreateCollectionPop {...props} api={api} />;
+};

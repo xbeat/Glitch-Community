@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { Link } from './link';
 import { NotificationConsumer } from '../notifications';
+import Text from '../../components/text/text';
 
 const NameConflictWarning = ({ id }) => (
   <>
-    <p>This team has your name. You should update your info to remain unique ❄</p>
+    <Text>This team has your name. You should update your info to remain unique ❄</Text>
     <Link className="button button-small button-tertiary button-in-notification-container" to={`/user/${id}`}>
       Your Profile
     </Link>
@@ -36,10 +37,10 @@ NameConflict.propTypes = {
   userId: PropTypes.number.isRequired,
 };
 
-const NameConflictContainer = () => (
-  <CurrentUserConsumer>
-    {({ id }) => <NotificationConsumer>{(notifyFuncs) => <NameConflict userId={id} {...notifyFuncs} />}</NotificationConsumer>}
-  </CurrentUserConsumer>
-);
-
+const NameConflictContainer = () => {
+  const {
+    currentUser: { id },
+  } = useCurrentUser();
+  return <NotificationConsumer>{(notifyFuncs) => <NameConflict userId={id} {...notifyFuncs} />}</NotificationConsumer>;
+};
 export default NameConflictContainer;

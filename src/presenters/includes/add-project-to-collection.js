@@ -12,19 +12,14 @@ const AddProjectToCollection = ({ project, ...props }) => (
         Add to Collection <span className="emoji framed-picture" role="presentation" />
       </>
     }
-    passToggleToPop
   >
-    <AddProjectToCollectionPop {...props} project={project} />
+    {({ togglePopover }) => <AddProjectToCollectionPop {...props} project={project} togglePopover={togglePopover} />}
   </PopoverWithButton>
 );
 
 AddProjectToCollection.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
-  api: PropTypes.func,
-};
-AddProjectToCollection.defaultProps = {
-  api: null,
 };
 
 export default AddProjectToCollection;

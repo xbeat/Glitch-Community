@@ -8,6 +8,9 @@ import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
 import { NotificationConsumer } from './notifications';
 
+import { useAPI } from '../state/api';
+import { useCurrentUser } from '../state/current-user';
+
 import Heading from '../components/text/heading';
 
 class CollectionsList extends React.Component {
@@ -43,17 +46,10 @@ class CollectionsList extends React.Component {
         {canMakeCollections && (
           <>
             <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
-            {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
+            {!hasCollections && <CreateFirstCollection />}
           </>
         )}
-        <CollectionsUL
-          {...{
-            collections,
-            api,
-            isAuthorized,
-            deleteCollection,
-          }}
-        />
+        <CollectionsUL collections={collections} isAuthorized={isAuthorized} deleteCollection={deleteCollection} />
       </article>
     );
   }
@@ -153,13 +149,13 @@ CreateCollectionButton.defaultProps = {
   maybeTeam: undefined,
 };
 
-export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized }) => {
+export const CollectionsUL = ({ collections, deleteCollection, isAuthorized }) => {
   // order by updatedAt date
   const orderedCollections = orderBy(collections, (collection) => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
-        <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
+        <CollectionItem key={null} collection={null}isAuthorized={isAuthorized}></CollectionItem>
       */}
 
       {orderedCollections.map((collection) => (
@@ -167,7 +163,6 @@ export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized
           key={collection.id}
           {...{
             collection,
-            api,
             isAuthorized,
             deleteCollection,
           }}
@@ -178,7 +173,6 @@ export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized
 };
 
 CollectionsUL.propTypes = {
-  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
@@ -188,4 +182,8 @@ CollectionsUL.defaultProps = {
   deleteCollection: () => {},
 };
 
-export default CollectionsList;
+export default function CollectionsListWrapper(props) {
+  const api = useAPI();
+  const currentUser = useCurrentUser();
+  return <CollectionsList {...props} api={api} maybeCurrentUser={currentUser} />;
+}

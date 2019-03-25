@@ -54,7 +54,7 @@ module.exports = {
     'no-param-reassign': [OFF],
     'react/jsx-no-bind': [OFF],
     'no-restricted-syntax': [OFF],
-    'no-restricted-globals': [OFF],
+    'no-restricted-globals': [ERROR, 'event'],
     'no-alert': [OFF],
     'react/button-has-type': [OFF], // TODO turn back on when button componentization is done
     'max-len': [
@@ -72,7 +72,7 @@ module.exports = {
     // React hooks config
     'react-hooks/rules-of-hooks': 'error',
     'react/jsx-one-expression-per-line': [OFF],
-    'react/jsx-filename-extension': [ERROR, { extensions: ['.js'] }],
+    'react/jsx-filename-extension': [ERROR, { extensions: ['.js'] }]
   },
   settings: {
     'import/ignore': ['sentry'],

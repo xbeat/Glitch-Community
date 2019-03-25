@@ -8,9 +8,7 @@ const cx = classNames.bind(styles);
 export const TYPES = ['action', 'info'];
 export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
-function TooltipContainer({
-  id, type, tooltip, target, align, persistent, children, fallback,
-}) {
+function TooltipContainer({ id, type, tooltip, target, align, persistent, children, fallback }) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
   const tooltipContainerClassName = cx({
