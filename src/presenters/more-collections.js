@@ -64,20 +64,18 @@ const MoreCollections = ({ currentCollection, collections }) => {
             : (<TeamLink team={currentCollection.team}>More from {currentCollection.team.name} →</TeamLink>)
         }
       </h2>
-      <CoverContainer style={coverStyle} className="collections">
-        <div className="more-collections">
-          {
-            collections.map((collection) => (
-              <CollectionItem
-                key={collection.id}
-                collection={collection}
-                showCurator={false}
-                showProjectPreview={false}
-                showCollectionAvatar={false}
-              />
-            ))
-          }
-        </div>
+      <CoverContainer style={coverStyle} className="collections more-collections">
+        {
+          collections.map((collection) => (
+            <CollectionItem
+              key={collection.id}
+              collection={collection}
+              showCurator={false}
+              showProjectPreview={false}
+              showCollectionAvatar={false}
+            />
+          ))
+        }
       </CoverContainer>
     </section>
   );
