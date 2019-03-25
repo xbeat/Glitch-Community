@@ -38,3 +38,11 @@ export function createSlice({ slice, initialState, reducers }) {
     return createAction(type);
   });
 }
+
+// from redux-aop (helpers for making middleware)
+
+function beforeReducer (store, action) {
+
+}
+
+function filterActrions ()

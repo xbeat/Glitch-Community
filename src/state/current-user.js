@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
@@ -183,103 +183,6 @@ async function load(initState) {
   }
 }
 
-// This takes sharedUser and cachedUser
-// sharedUser is stored in localStorage['cachedUser']
-// cachedUser is stored in localStorage['community-cachedUser']
-// sharedUser syncs with the editor and is authoritative on id and persistentToken
-// cachedUser mirrors GET /users/{id} and is what we actually display
-
-class CurrentUserManager extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fetched: false, // Set true on first complete load
-      working: false, // Used to prevent simultaneous loading
-    };
-  }
-
-  componentDidMount() {
-    identifyUser(this.props.cachedUser);
-    console.log('didMount', this.props.sharedUser && this.props.sharedUser.persistentToken);
-    this.load();
-  }
-
-  componentDidUpdate(prev) {
-    const { cachedUser, sharedUser } = this.props;
-    console.log('didUpdate', this.props.sharedUser && this.props.sharedUser.persistentToken);
-
-    if (!usersMatch(cachedUser, prev.cachedUser)) {
-      identifyUser(cachedUser);
-    }
-
-    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-      console.log('reloading');
-      // delay loading a moment so both items from storage have a chance to update
-      setTimeout(() => this.load(), 1);
-    }
-
-    // hooks for easier debugging
-    window.currentUser = cachedUser;
-  }
-
-  persistentToken() {
-    const { sharedUser } = this.props;
-    return sharedUser ? sharedUser.persistentToken : null;
-  }
-
-  async load() {
-    if (this.state.working) return;
-    console.log('load init');
-    this.setState({ working: true });
-    await load(this.props);
-    this.setState({ working: false });
-  }
-
-  async login(user) {
-    this.props.setSharedUser(user);
-    this.props.setCachedUser(undefined);
-  }
-
-  update(changes) {
-    this.props.setCachedUser({
-      ...this.props.cachedUser,
-      ...changes,
-    });
-  }
-
-  async logout() {
-    this.props.setSharedUser(undefined);
-    this.props.setCachedUser(undefined);
-  }
-
-  render() {
-    const { children, sharedUser, cachedUser } = this.props;
-    return children({
-      currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
-      persistentToken: this.persistentToken(),
-      fetched: !!cachedUser && this.state.fetched,
-      reload: () => this.load(),
-      login: (user) => this.login(user),
-      update: (changes) => this.update(changes),
-      clear: () => this.logout(),
-    });
-  }
-}
-CurrentUserManager.propTypes = {
-  sharedUser: PropTypes.shape({
-    id: PropTypes.number,
-    persistentToken: PropTypes.string,
-  }),
-  cachedUser: PropTypes.object,
-  setSharedUser: PropTypes.func.isRequired,
-  setCachedUser: PropTypes.func.isRequired,
-};
-
-CurrentUserManager.defaultProps = {
-  cachedUser: null,
-  sharedUser: null,
-};
-
 function getInitialState() {
   return {
     // sharedUser syncs with the editor and is authoritative on id and persistentToken
@@ -291,15 +194,51 @@ function getInitialState() {
   };
 }
 
+const { reducer, actions } = createSlice({
+  slice: 'currentUser',
+  reducers: {
+    requestedLoad: (state) => ({
+      ...state,
+      loadState: 'loading',
+    }),
+    loaded: (state, { payload }) => ({
+      ...state,
+      ...payload,
+      loadState: 'ready',
+    }),
+    loggedIn: (state, { payload }) => ({
+      ...state,
+      sharedUser: payload,
+      cachedUser: undefined,
+    }),
+    updated: (state, { payload }) => ({
+      ...state,
+      cachedUser: {
+        ...state.cachedUser,
+        ...payload,
+      },
+    }),
+    loggedOut: (state) => ({
+      ...state,
+      sharedUser: null,
+      cachedUser: null,
+    }),
+  }
+})
+
 export const CurrentUserProvider = ({ children }) => {
   const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState)
   const boundActions = bindActionCreators(actions, dispatch)
+  // kick off initial load
+  useEffect(() => {
+    boundActions.requestedLoad()
+  }, [])
   
   const userContext = {
     currentUser: { ...defaultUser, ...state.sharedUser, ...state.cachedUser },
     persistentToken: state.sharedUser && state.sharedUser.persistentToken,
     fetched: state.loadStatus === 'ready',
-    reload: boundActions.loadRequested,
+    reload: boundActions.requestedLoad,
     login: boundActions.loggedIn,
     update: boundActions.updated,
     clear: boundActions.loggedOut,
@@ -308,22 +247,6 @@ export const CurrentUserProvider = ({ children }) => {
     <Context.Provider value={userContext}>{children}</Context.Provider>
   )
 }
-
-
-
-
-export const CurrentUserProvider = ({ children }) => {
-  const [sharedUser, setSharedUser] = useLocalStorage('cachedUser', null);
-  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
-  return (
-    <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
-      {(props) => <Context.Provider value={props}>{children}</Context.Provider>}
-    </CurrentUserManager>
-  );
-};
-CurrentUserProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export const useCurrentUser = () => React.useContext(Context);
 
