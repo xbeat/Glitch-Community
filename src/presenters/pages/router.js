@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
 
@@ -68,6 +68,10 @@ class PageChangeHandlerBase extends React.Component {
 
 const PageChangeHandler = withRouter(({ location }) => {
   const { reload } = useCurrentUser();
+  // kick off initial loading of user
+  useEffect(() => {
+    reload();
+  }, []);
   return <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />;
 });
 

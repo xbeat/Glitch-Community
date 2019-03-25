@@ -2,7 +2,7 @@ import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { useSelector, useActions, before, after, matchAlways, matchOnce, matchTypes } from './utils';
+import { useSelector, useActions, after, matchAlways, matchTypes } from './utils';
 
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
@@ -211,14 +211,6 @@ const { slice, reducer, actions } = createSlice({
 
 const selectCurrentUser = (state) => state.currentUser;
 
-const triggerInitialLoad = after(matchOnce, (store, action) => {
-  
-  const { cachedState } = selectCurrentUser(store.getState());
-  identifyUser(cachedState);
-  store.dispatch(actions.requestedLoad());
-  return action;
-});
-
 const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
   const prevUser = selectCurrentUser(prevState);
   // prevent multiple 'load's from running
@@ -248,7 +240,7 @@ const persistToStorage = after(matchAlways, (store, action, prevState) => {
 export const currentUserSlice = {
   slice,
   reducer,
-  middleware: [triggerInitialLoad, handleLoadRequest, trackUserChanges, persistToStorage],
+  middleware: [handleLoadRequest, trackUserChanges, persistToStorage],
 };
 
 export function useCurrentUser() {

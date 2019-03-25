@@ -45,6 +45,13 @@ export function createStoreFromSlices(slices) {
 
 // helpers for making middleware, after redux-aop
 
+export function once(middleware) {
+  return (store) => {
+    middleware(store);
+    return (next) => (action) => next(action);
+  };
+}
+
 // run _before_ the reducer gets the action.
 // useful for middleware that transform actions (e.g. running Promises).
 export function before(matcher, middleware) {
@@ -67,8 +74,8 @@ export function after(matcher, middleware) {
     const prevState = store.getState();
     const result = next(action);
 
-    if (result && matcher(action)) {
-      middleware(store, result, prevState);
+    if (matcher(action)) {
+      middleware(store, action, prevState);
     }
 
     return result;
