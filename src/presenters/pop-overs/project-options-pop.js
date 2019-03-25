@@ -73,10 +73,10 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
   function toggleAndAddNote() {
     props.togglePopover();
-    props.addNoteField(props.project.id);
+    props.displayNewNote(props.project.id);
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
-  const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.addNoteField;
+  const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.displayNewNote;
 
   return (
     <dialog className="pop-over project-options-pop">
@@ -177,7 +177,7 @@ ProjectOptionsPop.propTypes = {
   leaveTeamProject: PropTypes.func,
   featureProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool,
-  addNoteField: PropTypes.func,
+  displayNewNote: PropTypes.func,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false,
@@ -189,7 +189,7 @@ ProjectOptionsPop.defaultProps = {
   joinTeamProject: null,
   leaveTeamProject: null,
   featureProject: null,
-  addNoteField: null,
+  displayNewNote: null,
 };
 
 // Project Options Container

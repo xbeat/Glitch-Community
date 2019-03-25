@@ -46,10 +46,10 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 
 
 // TODO: componentize this (CoverContainer, Links, CollectionItem, More Collections itself?)
-const MoreCollections = ({ currentCollection, collections, currentUser }) => {
+const MoreCollections = ({ currentCollection, collections }) => {
   const isUserCollection = currentCollection.teamId === -1;
   const coverStyle = isUserCollection
-    ? getUserStyle({ ...currentUser, cache: currentUser._cacheCover }) // eslint-disable-line no-underscore-dangle
+    ? getUserStyle({ ...currentCollection.user, cache: currentCollection.user._cacheCover }) // eslint-disable-line no-underscore-dangle
     : getTeamStyle({ ...currentCollection.team, cache: currentCollection.team._cacheCover }); // eslint-disable-line no-underscore-dangle
 
   return (
@@ -83,14 +83,13 @@ const MoreCollections = ({ currentCollection, collections, currentUser }) => {
 MoreCollections.propTypes = {
   currentCollection: PropTypes.object.isRequired,
   collections: PropTypes.array.isRequired,
-  currentUser: PropTypes.object.isRequired,
 };
 
-const MoreCollectionsContainer = ({ api, currentUser, collection }) => (
+const MoreCollectionsContainer = ({ api, collection }) => (
   <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
     {
       (collections) => collections.length > 0
-        ? <MoreCollections currentCollection={collection} currentUser={currentUser} collections={collections} />
+        ? <MoreCollections currentCollection={collection} collections={collections} />
         : null
     }
   </DataLoader>
@@ -99,7 +98,6 @@ const MoreCollectionsContainer = ({ api, currentUser, collection }) => (
 
 MoreCollectionsContainer.propTypes = {
   collection: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
 };
 

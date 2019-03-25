@@ -27,7 +27,7 @@ import { UserTile } from '../users-list';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
-import MoreCollections from '../more-collections';
+import MoreCollectionsContainer from '../more-collections';
 import Text from '../../components/text/text';
 
 function syncPageToUrl(collection, url) {
@@ -84,7 +84,7 @@ const CollectionPageContents = ({
   removeProjectFromCollection,
   updateColor,
   updateOrAddNote,
-  addNoteField,
+  displayNewNote,
   hideNote,
   ...props
 }) => {
@@ -153,7 +153,7 @@ const CollectionPageContents = ({
                       removeProjectFromCollection,
                       addProjectToCollection,
                       updateOrAddNote,
-                      addNoteField,
+                      displayNewNote,
                     }}
                   />
                 )}
@@ -175,7 +175,7 @@ const CollectionPageContents = ({
         {!currentUserIsAuthor && <ReportButton reportedType="collection" reportedModel={collection} />}
       </main>
       {currentUserIsAuthor && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
-      <MoreCollections api={api} currentUser={currentUser} collection={collection} />
+      <MoreCollectionsContainer api={api} collection={collection} />
     </>
   );
 };
@@ -194,13 +194,13 @@ CollectionPageContents.propTypes = {
   currentUserIsAuthor: PropTypes.bool.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
   updateOrAddNote: PropTypes.func,
-  addNoteField: PropTypes.func,
+  displayNewNote: PropTypes.func,
   hideNote: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
   updateOrAddNote: null,
-  addNoteField: null,
+  displayNewNote: null,
   hideNote: null,
 };
 
@@ -248,6 +248,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
               <CollectionEditor initialCollection={collection}>
                 {(collectionFromEditor, funcs, currentUserIsAuthor) => (
                   <CollectionPageContents
+                    api={api}
                     collection={collectionFromEditor}
                     currentUser={currentUser}
                     currentUserIsAuthor={currentUserIsAuthor}

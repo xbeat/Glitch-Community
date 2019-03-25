@@ -13,18 +13,14 @@ import { getAvatarUrl } from '../models/project';
 import { isDarkColor } from '../models/collection';
 
 const ProjectsPreview = ({ collection, isAuthorized }) => {
-  
-  const loadingState = (
-    <div className="collection-link">
-      <Loader />
-    </div>
-  );
-  
-    
-  if (!collection.projects) {
-    return loadingState;
+  const isLoading = !collection.projects;
+  if (isLoading) {
+    return (
+      <div className="collection-link">
+        <Loader />
+      </div>
+    );
   }
-
 
   if (collection.projects.length > 0) {
     return (
@@ -48,7 +44,7 @@ const ProjectsPreview = ({ collection, isAuthorized }) => {
       </>
     );
   }
-  
+
   const emptyState = isAuthorized ? (
     <Text>
       {'This collection is empty – add some projects '}
