@@ -87,13 +87,13 @@ function usersMatch(a, b) {
 }
 
 async function getAnonUser() {
-  const api = getAPIForToken(undefined);
+  const api = getAPIForToken(null);
   const { data } = await api.post('users/anon');
   return data;
 }
 
-async function getSharedUser() {
-  const api = getAPIForToken(undefined);
+async function getSharedUser(sharedUser) {
+  const api = getAPIForToken(sharedUser ? sharedUser.persistentToken : null);
   try {
     const {
       data: { user },
@@ -124,6 +124,27 @@ async function getCachedUser(sharedUser) {
     }
     throw error;
   }
+}
+
+// Looks like our sharedUser is bad, make sure it wasn't changed since we read it
+// Anon users get their token and id deleted when they're merged into a user on sign in
+// If it did change then quit out and let componentDidUpdate sort it out
+function fixSharedUser (sharedUser) {
+    // The user wasn't changed, so we need to fix it
+    this.setState({ fetched: false });
+    console.log("load newSharedUser")
+    const newSharedUser = await getSharedUser(sharedUser);
+    this.props.setSharedUser(newSharedUser);
+    console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
+    addBreadcrumb({
+      level: 'info',
+      message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
+    });
+    addBreadcrumb({
+      level: 'info',
+      message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
+    });
+    captureMessage('Invalid cachedUser');
 }
 
 // This takes sharedUser and cachedUser
@@ -191,25 +212,8 @@ class CurrentUserManager extends React.Component {
     console.log("load cachedUser")
     const newCachedUser = await getCachedUser(this.props.sharedUser);
     if (newCachedUser === 'error') {
-      // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
-      // Anon users get their token and id deleted when they're merged into a user on sign in
-      // If it did change then quit out and let componentDidUpdate sort it out
       if (usersMatch(sharedUser, this.props.sharedUser)) {
-        // The user wasn't changed, so we need to fix it
-        this.setState({ fetched: false });
-        console.log("load newSharedUser")
-        const newSharedUser = await this.getSharedUser(this.props.sharedUser);
-        this.props.setSharedUser(newSharedUser);
-        console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
-        addBreadcrumb({
-          level: 'info',
-          message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
-        });
-        addBreadcrumb({
-          level: 'info',
-          message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
-        });
-        captureMessage('Invalid cachedUser');
+        fixSharedUser()
       }
     } else {
       // The shared user is good, store it
