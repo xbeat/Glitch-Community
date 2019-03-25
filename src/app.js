@@ -2,9 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import ErrorBoundary from './presenters/includes/error-boundary';
-import { ReduxProvider } from './state'
+import ReduxProvider from './state';
 import { AnalyticsContext } from './presenters/analytics';
-import { CurrentUserProvider } from './state/current-user';
 import { UserPrefsProvider } from './presenters/includes/user-prefs';
 import { DevTogglesProvider } from './presenters/includes/dev-toggles';
 import { Notifications } from './presenters/notifications';
