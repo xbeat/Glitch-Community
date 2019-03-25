@@ -52,8 +52,8 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 const MoreCollections = ({ currentCollection, collections }) => {
   const isUserCollection = currentCollection.teamId === -1;
   const coverStyle = isUserCollection
-    ? getUserStyle({ ...currentCollection.user, cache: currentCollection.user._cacheCover }) // eslint-disable-line no-underscore-dangle
-    : getTeamStyle({ ...currentCollection.team, cache: currentCollection.team._cacheCover }); // eslint-disable-line no-underscore-dangle
+    ? getUserStyle({ ...currentCollection.user })
+    : getTeamStyle({ ...currentCollection.team });
 
   return (
     <section>
