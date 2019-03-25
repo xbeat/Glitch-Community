@@ -1,5 +1,5 @@
 /* globals API_URL */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { memoize } from 'lodash';
 import { useCurrentUser } from './current-user';
@@ -34,19 +34,43 @@ const useTeamsAPI = createAPIHook(async (api, teamID) => {
   return team;
 });
 
-function TeamWithProjects () {
-  const 
+function TeamWithProjects ({ teamID }) {
+  const { status, value } = useTeamsAPI(teamID)
+  
+  if (status === 'loading') {
+    return <Loading />
+  }
+  
+  // ... render the team ... 
 }
 
 */
 
 
+function useVersionedState (initState) {
+  const [state, setState] = useState(initState)
+  const version = useRef(1);
+  const 
+}
+
+
 
 export const createAPIHook = (asyncFunction) => (...args) => {
   const api = useAPI();
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState({ state: 'loading' });
+  
+  const version = useRef(1);
   useEffect(() => {
-    asyncFunction(api, ...args).then(setResult);
+    const thisVersion = version.current;
+    setResult({ state: 'loading' });
+    asyncFunction(api, ...args).then((value) => {
+      if (version.current === thisVersion) {
+        setResult({ state: 'ready', value });
+      }
+    });
+    return () => {
+      version.current++;
+    };
   }, args);
   return result;
-}
+};
