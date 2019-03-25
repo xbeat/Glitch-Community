@@ -61,8 +61,9 @@ export function after(matcher, middleware) {
     const prevState = store.getState();
     const result = next(action);
     if (result) {
-      return middleware(store, result, prevState);
+      middleware(store, result, prevState);
     }
+    return action
   };
 }
 

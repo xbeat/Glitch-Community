@@ -216,37 +216,25 @@ const { reducer, actions } = createSlice({
   },
 });
 
-const handleLoadRequest = before(matchTypes(actions.requestedLoad), (store, action) => {
+const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
   // prevent multiple 'load's from running
-  if (store.getState().loadStatus === 'loading') {
-    return null;
-  }
+  if (prevState.loadStatus === 'loading') return;
 
-  Promise.resolve()
-    .then(() => load(store.getState()))
-    .then((result) => {
-      store.dispatch(actions.loaded(result));
-    });
-
-  return action;
+  const result = await load(store.getState());
+  store.dispatch(actions.loaded(result));
 });
 
-const trackUserChanges = before(matchTypes(actions.loaded), (store, action) => {
-  const prev = store.getState();
-  const { cachedUser } = action.payload;
-
-  if (!usersMatch(cachedUser, prev.cachedUser)) {
+const trackUserChanges = after(matchTypes(actions.loaded), (store, action, prevState) => {
+  const { cachedUser } = store.getState();
+  if (!usersMatch(prevState.cachedUser, cachedUser)) {
     identifyUser(cachedUser);
   }
-
-  return action;
 });
 
 const persistToStorage = after(matchTypes(actions.loaded, actions.loggedIn, actions.updated, actions.loggedOut), (store, action) => {
   const { sharedUser, cachedUser } = store.getState();
   writeToStorage('cachedUser', sharedUser);
   writeToStorage('community-cachedUser', cachedUser);
-  return action;
 });
 
 const middleware = [handleLoadRequest, persistToStorage];
