@@ -1,4 +1,3 @@
-// transitional utilities that are redux-compatible without literally bringing in redux
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import { mapValues, fromPairs, flatMap } from 'lodash';

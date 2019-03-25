@@ -124,7 +124,6 @@ async function getCachedUser(sharedUser) {
 }
 
 async function fixSharedUser(sharedUser) {
-  console.log('load newSharedUser');
   const newSharedUser = await getSharedUser(sharedUser);
   console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
   addBreadcrumb({
