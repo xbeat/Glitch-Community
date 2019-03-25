@@ -34,9 +34,8 @@ export const useActions = (actions) => {
 // combine slices into a redux store
 
 export function createStoreFromSlices(slices) {
-  const reducer = fromPairs(slices.map((slice) => [slice.slice, slice.reducer]))
-  const middleware = [...getDefaultMiddleware(), ...flatMap(slices, (slice) => slice.middleware)]
-  // console.log(reducer, middleware)
+  const reducer = fromPairs(slices.map((slice) => [slice.slice, slice.reducer]));
+  const middleware = [...getDefaultMiddleware(), ...flatMap(slices, (slice) => slice.middleware)];
   return configureStore({
     reducer,
     middleware,
@@ -49,7 +48,7 @@ export function createStoreFromSlices(slices) {
 // run _before_ the reducer gets the action.
 // useful for middleware that transform actions (e.g. running Promises).
 export function before(matcher, middleware) {
-  return (next) => (store) => (action) => {
+  return (store) => (next) => (action) => {
     if (!matcher(action)) {
       return next(action);
     }
@@ -64,8 +63,7 @@ export function before(matcher, middleware) {
 // run _after_ the reducer gets the action.
 // useful for middleware that perform side effects (logging, dispatching other actions)
 export function after(matcher, middleware) {
-  return (next) => (store) => (action) => {
-    console.log('after', action, matcher(action))
+  return (store) => (next) => (action) => {
     if (!matcher(action)) {
       return action;
     }
