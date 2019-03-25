@@ -20,7 +20,7 @@ import Button from '../buttons/button';
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
   const isUserCollection = currentCollection.teamId === -1;
   const coverStyle = isUserCollection ? getUserStyle({ ...currentUser, cache: currentUser._cacheCover }) : getTeamStyle({ ...currentCollection.team }); // eslint-disable-line no-underscore-dangle
-
+  
   return (
     <section>
       <h2>

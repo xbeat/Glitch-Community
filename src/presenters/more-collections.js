@@ -43,7 +43,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 // how do we feel about `DataLoader`?
 const MoreCollectionsContainer = ({ api, currentUser, collection }) => (
   <DataLoader get={() => loadMoreCollectionsFromAuthor({ api, collection })}>
-    {(collections) => <MoreCollections currentCollection={collection} currentUser={currentUser} collections={collections} />}
+    {(collections) => collections.length > 0 ? <MoreCollections currentCollection={collection} currentUser={currentUser} collections={collections} /> : null}
   </DataLoader>
 );
 
