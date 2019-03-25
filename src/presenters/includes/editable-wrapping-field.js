@@ -11,7 +11,7 @@ function useUniqueId(prefix) {
   return ref.current;
 }
 
-function PureEditableWrappingField({ value, placeholder, update, autoFocus, error }) {
+export function PureEditableWrappingField({ value, placeholder, update, autoFocus, error }) {
   const id = useUniqueId('editable-field-');
   const onChange = (event) => {
     update(event.target.value.replace(/\r?\n/g, ''));
@@ -19,7 +19,7 @@ function PureEditableWrappingField({ value, placeholder, update, autoFocus, erro
 
   const inputProps = {
     id,
-    className: classNames('content-editable', { error: error }),
+    className: classNames('content-editable', { error }),
     value,
     onChange,
     placeholder,
