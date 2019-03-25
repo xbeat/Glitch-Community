@@ -15,10 +15,11 @@ export const useSelector = (selector, ...args) => {
   const store = useStore();
   const [state, setState] = useState(selector(store.getState(), ...args));
   useEffect(() => {
-    return store.subscribe(() => {
+    const unsubscribe = store.subscribe(() => {
       const nextState = selector(store.getState(), ...args);
       setState(nextState);
     });
+    return unsubscribe;
   }, [store, selector, ...args]);
   return state;
 };

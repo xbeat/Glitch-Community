@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-
+import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { createSlice, createSelectorHook, useActions, always, after, matchTypes } from './utils';
+import { useSelector, useActions, always, after, matchTypes } from './utils';
 
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
@@ -170,19 +169,16 @@ async function load(initState) {
   return nextState;
 }
 
-function getInitialState() {
-  return {
+const { slice, reducer, actions, selector: selectCurrentUser } = createSlice({
+  slice: 'currentUser',
+  initialState: {
     // sharedUser syncs with the editor and is authoritative on id and persistentToken
     sharedUser: readFromStorage('cachedUser') || null,
     // cachedUser mirrors GET /users/{id} and is what we actually display
     cachedUser: readFromStorage('community-cachedUser') || null,
     // states: init | loading | ready
     loadStatus: 'init',
-  };
-}
-
-const { slice, reducer, actions, selector: selectCurrentUser } = createSlice({
-  slice: 'currentUser',
+  },
   reducers: {
     requestedLoad: (state) => ({
       ...state,
@@ -223,7 +219,7 @@ const matchOnce = () => {
 };
 
 const triggerInitialLoad = after(matchOnce, (store) => {
-  const { cachedState } = selectCurrentUser(store.getState())
+  const { cachedState } = selectCurrentUser(store.getState());
   identifyUser(cachedState);
   store.dispatch(actions.requestedLoad());
 });
@@ -260,10 +256,8 @@ export const currentUserSlice = {
   middleware: [triggerInitialLoad, handleLoadRequest, trackUserChanges, persistToStorage],
 };
 
-const useCurrentUserState = createSelectorHook(selectCurrentUser);
-
 export function useCurrentUser() {
-  const { sharedUser, cachedUser, loadStatus } = useCurrentUserState();
+  const { sharedUser, cachedUser, loadStatus } = useSelector(selectCurrentUser);
   const boundActions = useActions(actions);
   return {
     currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
