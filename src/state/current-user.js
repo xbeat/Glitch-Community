@@ -86,6 +86,46 @@ function usersMatch(a, b) {
   return false;
 }
 
+async function getAnonUser() {
+  const api = getAPIForToken(undefined);
+  const { data } = await api.post('users/anon');
+  return data;
+}
+
+async function getSharedUser() {
+  const api = getAPIForToken(undefined);
+  try {
+    const {
+      data: { user },
+    } = await api.get('boot?latestProjectOnly=true');
+    return user;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      return undefined;
+    }
+    throw error;
+  }
+}
+
+async function getCachedUser(sharedUser) {
+  if (!sharedUser) return undefined;
+  if (!sharedUser.id || !sharedUser.persistentToken) return 'error';
+  const api = getAPIForToken(sharedUser.persistentToken);
+  try {
+    const { data } = await api.get(`users/${sharedUser.id}`);
+    if (!usersMatch(sharedUser, data)) {
+      return 'error';
+    }
+    return data;
+  } catch (error) {
+    if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+      // 401 means our token is bad, 404 means the user doesn't exist
+      return 'error';
+    }
+    throw error;
+  }
+}
+
 // This takes sharedUser and cachedUser
 // sharedUser is stored in localStorage['cachedUser']
 // cachedUser is stored in localStorage['community-cachedUser']
@@ -123,54 +163,11 @@ class CurrentUserManager extends React.Component {
 
     // hooks for easier debugging
     window.currentUser = cachedUser;
-    window.api = this.api();
-  }
-
-  async getAnonUser() {
-    const { data } = await this.api().post('users/anon');
-    return data;
-  }
-
-  async getSharedUser() {
-    try {
-      const {
-        data: { user },
-      } = await this.api().get('boot?latestProjectOnly=true');
-      return user;
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        return undefined;
-      }
-      throw error;
-    }
-  }
-
-  async getCachedUser() {
-    const { sharedUser } = this.props;
-    if (!sharedUser) return undefined;
-    if (!sharedUser.id || !sharedUser.persistentToken) return 'error';
-    try {
-      const { data } = await this.api().get(`users/${sharedUser.id}`);
-      if (!usersMatch(sharedUser, data)) {
-        return 'error';
-      }
-      return data;
-    } catch (error) {
-      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
-        // 401 means our token is bad, 404 means the user doesn't exist
-        return 'error';
-      }
-      throw error;
-    }
   }
 
   persistentToken() {
     const { sharedUser } = this.props;
     return sharedUser ? sharedUser.persistentToken : null;
-  }
-
-  api() {
-    return getAPIForToken(this.persistentToken());
   }
 
   async load() {
@@ -182,7 +179,7 @@ class CurrentUserManager extends React.Component {
     // If we're signed out create a new anon user
     if (!sharedUser) {
       console.log("load anonUser")
-      sharedUser = await this.getAnonUser();
+      sharedUser = await getAnonUser();
       this.props.setSharedUser(sharedUser);
     }
 
@@ -192,7 +189,7 @@ class CurrentUserManager extends React.Component {
     }
 
     console.log("load cachedUser")
-    const newCachedUser = await this.getCachedUser();
+    const newCachedUser = await getCachedUser(this.props.sharedUser);
     if (newCachedUser === 'error') {
       // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
       // Anon users get their token and id deleted when they're merged into a user on sign in
@@ -201,7 +198,7 @@ class CurrentUserManager extends React.Component {
         // The user wasn't changed, so we need to fix it
         this.setState({ fetched: false });
         console.log("load newSharedUser")
-        const newSharedUser = await this.getSharedUser();
+        const newSharedUser = await this.getSharedUser(this.props.sharedUser);
         this.props.setSharedUser(newSharedUser);
         console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
         addBreadcrumb({
