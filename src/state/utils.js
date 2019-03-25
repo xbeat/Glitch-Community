@@ -41,6 +41,8 @@ export function createSlice({ slice, initialState, reducers }) {
 
 // from redux-aop (helpers for making middleware)
 
+// run _before_ the reducer gets the action.
+// useful for middleware that transform actions (e.g. running Promises).
 export function before(matcher, middleware) {
   return (next) => (store) => (action) => {
     if (!matcher(action)) {
@@ -53,6 +55,8 @@ export function before(matcher, middleware) {
   };
 }
 
+// run _after_ the reducer gets the action.
+// useful for middleware that perform side effects (logging, dispatching other actions)
 export function after(matcher, middleware) {
   return (next) => (store) => (action) => {
     if (!matcher(action)) {
@@ -63,13 +67,13 @@ export function after(matcher, middleware) {
     if (result) {
       middleware(store, result, prevState);
     }
-    return action
+    return action;
   };
 }
 
-export const always = () => true
+export const always = () => true;
 export const matchTypes = (...actionsOrTypes) => {
   // coerce to strings, to use with redux-starter-kit action creators
-  const types = actionsOrTypes.map(String)
-  return (action) => types.includes(action)
-}
+  const types = actionsOrTypes.map(String);
+  return (action) => types.includes(action);
+};

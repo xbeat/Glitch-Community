@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { bindActionCreators, createSlice, useReducerWithMiddleware, before, after, matchTypes } from './util';
+import { bindActionCreators, createSlice, useReducerWithMiddleware, always, after, matchTypes } from './utils';
 
 const Context = React.createContext();
 
@@ -231,10 +231,12 @@ const trackUserChanges = after(matchTypes(actions.loaded), (store, action, prevS
   }
 });
 
-const persistToStorage = after(matchTypes(actions.loaded, actions.loggedIn, actions.updated, actions.loggedOut), (store, action) => {
+const persistToStorage = after(always, (store, action, prevState) => {
   const { sharedUser, cachedUser } = store.getState();
-  writeToStorage('cachedUser', sharedUser);
-  writeToStorage('community-cachedUser', cachedUser);
+  if (prevState.sharedUser !== sharedUser || prevState.cachedUser !== cachedUser) {
+    writeToStorage('cachedUser', sharedUser);
+    writeToStorage('community-cachedUser', cachedUser);
+  }
 });
 
 const middleware = [handleLoadRequest, persistToStorage];
