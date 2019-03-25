@@ -16,16 +16,18 @@ const useTeamProjects = createAPIHook(async (api, teamId) => {
 });
 
 function AddCollectionProject({ collection, addProjectToCollection }) {
-  const maybeTeamProjects = useTeamProjects(collection.teamId);
+  const teamResponse = useTeamProjects(collection.teamId);
   const { currentUser } = useCurrentUser();
 
   let initialProjects = [];
-  if (maybeTeamProjects) {
-    initialProjects = maybeTeamProjects;
-  } else if (currentUser) {
-    initialProjects = currentUser.projects;
+  if (teamResponse.status === 'ready') {
+    if (teamResponse.value) {
+      initialProjects = teamResponse.value;
+    } else {
+      initialProjects = currentUser.projects;
+    }
   }
-
+  
   return (
     <PopoverWithButton buttonClass="add-project" buttonText="Add Project">
       {({ togglePopover }) => (

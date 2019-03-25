@@ -36,12 +36,12 @@ const useTeamsAPI = createAPIHook(async (api, teamID) => {
 
 function TeamWithProjects ({ teamID }) {
   const { status, value } = useTeamsAPI(teamID)
-  
+
   if (status === 'loading') {
     return <Loading />
   }
-  
-  // ... render the team ... 
+
+  // ... render the team ...
 }
 
 */
@@ -61,7 +61,7 @@ function useAsyncEffectState(initState, handler, args) {
     };
     handler(setStateIfFresh, versionWhenEffectStarted);
     return () => {
-      versionRef.current++;
+      versionRef.current += 1;
     };
   }, args);
   return state;

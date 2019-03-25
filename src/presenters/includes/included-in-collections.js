@@ -5,7 +5,7 @@ import { createAPIHook } from '../../state/api';
 
 import CollectionItem from '../collection-item';
 
-const useIncludedCollections = async (api, projectId) => {
+const useIncludedCollections = createAPIHook(async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
   const selectedCollections = sampleSize(collections, 3);
   return Promise.all(
@@ -18,12 +18,15 @@ const useIncludedCollections = async (api, projectId) => {
       return { ...collection, projects, user, team };
     }),
   );
-};
+});
 
 const IncludedInCollections = ({ projectId }) => {
-  const rawCollections = useAsync(getIncludedCollections, projectId);
-  const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
-  if (!collections || !collections.length) {
+  const { state, value: rawCollections } = useIncludedCollections(projectId);
+  if (state === 'loading') {
+    return null;
+  }
+  const collections = rawCollections.filter((c) => c.team || c.user);
+  if (!collections.length) {
     return null;
   }
   return (
