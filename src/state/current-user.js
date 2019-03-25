@@ -126,25 +126,59 @@ async function getCachedUser(sharedUser) {
   }
 }
 
-// Looks like our sharedUser is bad, make sure it wasn't changed since we read it
-// Anon users get their token and id deleted when they're merged into a user on sign in
-// If it did change then quit out and let componentDidUpdate sort it out
-function fixSharedUser (sharedUser) {
-    // The user wasn't changed, so we need to fix it
-    this.setState({ fetched: false });
-    console.log("load newSharedUser")
-    const newSharedUser = await getSharedUser(sharedUser);
-    this.props.setSharedUser(newSharedUser);
-    console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
-    addBreadcrumb({
-      level: 'info',
-      message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
-    });
-    addBreadcrumb({
-      level: 'info',
-      message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
-    });
-    captureMessage('Invalid cachedUser');
+async function fixSharedUser(sharedUser) {
+  console.log('load newSharedUser');
+  const newSharedUser = await getSharedUser(sharedUser);
+  console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
+  addBreadcrumb({
+    level: 'info',
+    message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
+  });
+  addBreadcrumb({
+    level: 'info',
+    message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
+  });
+  captureMessage('Invalid cachedUser');
+  return newSharedUser;
+}
+
+async function load(initState) {
+  const nextState = { sharedUser: initState.sharedUser, cachedUser: initState.cachedUser }
+
+  // If we're signed out create a new anon user
+  if (!nextState.sharedUser) {
+    console.log('load anonUser');
+    nextState.sharedUser = await getAnonUser();
+    //this.props.setSharedUser(sharedUser);
+  }
+
+  // Check if we have to clear the cached user
+  if (!usersMatch(sharedUser, cachedUser)) {
+    nextState.cachedUser = undefined;
+    // this.props.setCachedUser(undefined);
+  }
+
+  console.log('load cachedUser');
+  const newCachedUser = await getCachedUser(nextState.sharedUser);
+  if (newCachedUser === 'error') {
+    // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
+    // Anon users get their token and id deleted when they're merged into a user on sign in
+    // If it did change then quit out and let componentDidUpdate sort it out
+
+    if (usersMatch(initState.sharedUser, nextState.sharedUser)) {
+      // The user wasn't changed, so we need to fix it
+      this.setState({ fetched: false });
+      const newSharedUser = await fixSharedUser(initState.sharedUser);
+      this.props.setSharedUser(newSharedUser);
+    }
+    
+    // implied: run `load` again?
+  } else {
+    // The shared user is good, store it
+    this.props.setCachedUser(newCachedUser);
+    this.setState({ fetched: true });
+    console.log('load ok');
+  }
 }
 
 // This takes sharedUser and cachedUser
@@ -164,20 +198,20 @@ class CurrentUserManager extends React.Component {
 
   componentDidMount() {
     identifyUser(this.props.cachedUser);
-    console.log("didMount", this.props.sharedUser && this.props.sharedUser.persistentToken)
+    console.log('didMount', this.props.sharedUser && this.props.sharedUser.persistentToken);
     this.load();
   }
 
   componentDidUpdate(prev) {
     const { cachedUser, sharedUser } = this.props;
-    console.log("didUpdate", this.props.sharedUser && this.props.sharedUser.persistentToken)
-    
+    console.log('didUpdate', this.props.sharedUser && this.props.sharedUser.persistentToken);
+
     if (!usersMatch(cachedUser, prev.cachedUser)) {
       identifyUser(cachedUser);
     }
 
     if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-      console.log('reloading')
+      console.log('reloading');
       // delay loading a moment so both items from storage have a chance to update
       setTimeout(() => this.load(), 1);
     }
@@ -193,35 +227,9 @@ class CurrentUserManager extends React.Component {
 
   async load() {
     if (this.state.working) return;
-    console.log("load init")
+    console.log('load init');
     this.setState({ working: true });
-    let { sharedUser } = this.props;
-
-    // If we're signed out create a new anon user
-    if (!sharedUser) {
-      console.log("load anonUser")
-      sharedUser = await getAnonUser();
-      this.props.setSharedUser(sharedUser);
-    }
-
-    // Check if we have to clear the cached user
-    if (!usersMatch(sharedUser, this.props.cachedUser)) {
-      this.props.setCachedUser(undefined);
-    }
-
-    console.log("load cachedUser")
-    const newCachedUser = await getCachedUser(this.props.sharedUser);
-    if (newCachedUser === 'error') {
-      if (usersMatch(sharedUser, this.props.sharedUser)) {
-        fixSharedUser()
-      }
-    } else {
-      // The shared user is good, store it
-      this.props.setCachedUser(newCachedUser);
-      this.setState({ fetched: true });
-      console.log("load ok")
-    }
-
+    await load(this.props);
     this.setState({ working: false });
   }
 
