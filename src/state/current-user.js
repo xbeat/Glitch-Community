@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
-import useLocalStorage from './local-storage';
+import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
 
 const Context = React.createContext();
@@ -279,6 +279,23 @@ CurrentUserManager.defaultProps = {
   cachedUser: null,
   sharedUser: null,
 };
+
+
+
+function getInitialState () {
+  return {
+    sharedUser: readFromStorage('cachedUser') || null,
+    cachedUser: readFromStorage('community-cachedUser') || null,
+    status: status.init(),
+  }
+}
+
+function reducer (state, action) {
+
+
+}
+
+
 
 export const CurrentUserProvider = ({ children }) => {
   const [sharedUser, setSharedUser] = useLocalStorage('cachedUser', null);

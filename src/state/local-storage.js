@@ -15,7 +15,7 @@ const getStorage = () => {
 };
 const storage = getStorage();
 
-const readFromStorage = (name) => {
+export const readFromStorage = (name) => {
   if (storage) {
     try {
       const raw = storage.getItem(name);
@@ -29,7 +29,7 @@ const readFromStorage = (name) => {
   return undefined;
 };
 
-const writeToStorage = (name, value) => {
+export const writeToStorage = (name, value) => {
   if (storage) {
     try {
       if (value !== undefined) {
