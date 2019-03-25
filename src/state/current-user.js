@@ -182,12 +182,12 @@ const { slice, reducer, actions } = createSlice({
   reducers: {
     requestedLoad: (state) => ({
       ...state,
-      loadState: 'loading',
+      loadStatus: 'loading',
     }),
     loaded: (state, { payload }) => ({
       ...state,
       ...payload,
-      loadState: 'ready',
+      loadStatus: 'ready',
     }),
     loggedIn: (state, { payload }) => ({
       ...state,
