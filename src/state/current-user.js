@@ -169,7 +169,7 @@ async function load(initState) {
   return nextState;
 }
 
-const { slice, reducer, actions, selector: selectCurrentUser } = createSlice({
+const { slice, reducer, actions } = createSlice({
   slice: 'currentUser',
   initialState: {
     // sharedUser syncs with the editor and is authoritative on id and persistentToken
@@ -211,12 +211,15 @@ const { slice, reducer, actions, selector: selectCurrentUser } = createSlice({
 
 let didFire = false;
 const matchOnce = () => {
+  console.log('matchOnce')
   if (didFire) {
     return false;
   }
   didFire = true;
   return true;
 };
+
+const selectCurrentUser = (state) => state.currentUser;
 
 const triggerInitialLoad = after(matchOnce, (store) => {
   const { cachedState } = selectCurrentUser(store.getState());

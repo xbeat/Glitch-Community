@@ -28,7 +28,7 @@ function loadScript(src) {
 
 const Callout = ({ classes, imgUrl, title, description }) => (
   <div className={`callout ${classes}`}>
-    <Image className="badge" src={imgUrl} width="114" height="115" alt={title} />
+    <Image className="badge" src={imgUrl} width={114} height={115} alt={title} />
     <div className="window">
       <div className="title">{title}</div>
       <div className="description">{description}</div>
