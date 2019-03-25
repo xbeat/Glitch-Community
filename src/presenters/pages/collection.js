@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
+import { captureException } from '../../utils/sentry';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
@@ -203,16 +204,13 @@ CollectionPageContents.defaultProps = {
   hideNote: null,
 };
 
-export async function loadCollection(api, ownerName, collectionName, numOfProjectsToLoad) {
+export async function loadCollection(api, ownerName, collectionName) {
   try {
     const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);
 
     // fetch projects in depth
     if (collection.projects.length) {
-      if (numOfProjectsToLoad) {
-        collection.projects = _.sampleSize(collection.projects, numOfProjectsToLoad);
-      }
       const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
       collection.projects = projects.map((project) => {
         const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
@@ -229,8 +227,9 @@ export async function loadCollection(api, ownerName, collectionName, numOfProjec
     if (error && error.response && error.response.status === 404) {
       return null;
     }
-    throw error;
+    captureException(error);
   }
+  return null;
 }
 
 const CollectionPage = ({ ownerName, name, ...props }) => {
