@@ -78,7 +78,7 @@ const loadCollection = async (api, { owner, name }) => {
   return null;
 };
 
-export const loadAllCollections = async (api, infos) => {
+const loadAllCollections = async (api, infos) => {
   // don't await until every request is sent so they can all run at once
   const promises = infos.map((info) => loadCollection(api, info));
   return Promise.all(promises);
