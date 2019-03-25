@@ -32,11 +32,10 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   }));
   
   // filter out collections that don't have projects
-  moreCollections = moreCollections.filter((c) => 
+  moreCollections = moreCollections.filter((c) => c.projects && c.projects.length > 0); 
 
   // pick 3 collections
   moreCollections = sampleSize(moreCollections, 3);
-  
   
   // get author details and attach to each collection
   const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
