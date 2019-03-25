@@ -5,8 +5,6 @@ import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
 import { createSlice, createSelectorHook, useActions, always, after, matchTypes } from './utils';
 
-const Context = React.createContext();
-
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
 const defaultUser = {
@@ -225,28 +223,32 @@ const matchOnce = () => {
 };
 
 const triggerInitialLoad = after(matchOnce, (store) => {
-  identifyUser(selectCurrentUser(store.getState()).cachedState);
+  const { cachedState } = selectCurrentUser(store.getState())
+  identifyUser(cachedState);
   store.dispatch(actions.requestedLoad());
 });
 
 const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
+  const prevUser = selectCurrentUser(prevState);
   // prevent multiple 'load's from running
-  if (prevState.loadStatus === 'loading') return;
+  if (prevUser.loadStatus === 'loading') return;
 
-  const result = await load(store.getState());
+  const result = await load(selectCurrentUser(store.getState()));
   store.dispatch(actions.loaded(result));
 });
 
 const trackUserChanges = after(matchTypes(actions.loaded), (store, action, prevState) => {
-  const { cachedUser } = store.getState();
-  if (!usersMatch(prevState.cachedUser, cachedUser)) {
+  const prevUser = selectCurrentUser(prevState);
+  const { cachedUser } = selectCurrentUser(store.getState());
+  if (!usersMatch(prevUser.cachedUser, cachedUser)) {
     identifyUser(cachedUser);
   }
 });
 
 const persistToStorage = after(always, (store, action, prevState) => {
-  const { sharedUser, cachedUser } = store.getState();
-  if (prevState.sharedUser !== sharedUser || prevState.cachedUser !== cachedUser) {
+  const prevUser = selectCurrentUser(prevState);
+  const { sharedUser, cachedUser } = selectCurrentUser(store.getState());
+  if (prevUser.sharedUser !== sharedUser || prevUser.cachedUser !== cachedUser) {
     writeToStorage('cachedUser', sharedUser);
     writeToStorage('community-cachedUser', cachedUser);
   }

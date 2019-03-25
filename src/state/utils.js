@@ -16,9 +16,10 @@ export const useSelector = (selector, ...args) => {
   const [state, setState] = useState(selector(store.getState(), ...args));
   useEffect(() => {
     return store.subscribe(() => {
-      setState(selector(store.getState(), ...args));
+      const nextState = selector(store.getState(), ...args);
+      setState(nextState);
     });
-  }, [selector, ...args]);
+  }, [store, selector, ...args]);
   return state;
 };
 
