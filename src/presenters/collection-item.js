@@ -119,7 +119,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
             {showProjectPreview ? (
               <ProjectsPreview collection={collection} isAuthorized={isAuthorized} />
             ) : (
-              <div className="projects-count">{projectsCount}</div>
+              <a href={collection.url} className="projects-count">{projectsCount}</a>
             )}
           </div>
         </div>
