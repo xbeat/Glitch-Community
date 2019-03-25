@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { orderBy } from 'lodash';
@@ -6,66 +6,52 @@ import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
-import { NotificationConsumer } from './notifications';
+import { useNotifications } from './notifications';
 
 import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 
 import Heading from '../components/text/heading';
 
-class CollectionsList extends React.Component {
-  constructor(props) {
-    super(props);
+function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeTeam }) {
+  const api = useAPI();
+  const { currentUser } = useCurrentUser();
+  const [deletedCollectionIds, setDeletedCollectionIds] = useState([]);
 
-    this.state = {
-      deletedCollectionIds: [],
-    };
-    this.deleteCollection = this.deleteCollection.bind(this);
+  function deleteCollection(id) {
+    setDeletedCollectionIds((ids) => [...ids, id]);
+    return api.delete(`/collections/${id}`);
   }
 
-  async deleteCollection(id) {
-    this.setState(({ deletedCollectionIds }) => ({
-      deletedCollectionIds: [...deletedCollectionIds, id],
-    }));
-    await this.props.api.delete(`/collections/${id}`);
-  }
+  const collections = rawCollections.filter(({ id }) => !deletedCollectionIds.includes(id));
+  const hasCollections = !!collections.length;
+  const canMakeCollections = isAuthorized && !!currentUser;
 
-  render() {
-    const { title, api, isAuthorized, maybeCurrentUser, maybeTeam } = this.props;
-    const { deleteCollection } = this;
-    const collections = this.props.collections.filter(({ id }) => !this.state.deletedCollectionIds.includes(id));
-    const hasCollections = !!collections.length;
-    const canMakeCollections = isAuthorized && !!maybeCurrentUser;
-
-    if (!hasCollections && !canMakeCollections) {
-      return null;
-    }
-    return (
-      <article className="collections">
-        <Heading tagName="h2">{title}</Heading>
-        {canMakeCollections && (
-          <>
-            <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
-            {!hasCollections && <CreateFirstCollection />}
-          </>
-        )}
-        <CollectionsUL collections={collections} isAuthorized={isAuthorized} deleteCollection={deleteCollection} />
-      </article>
-    );
+  if (!hasCollections && !canMakeCollections) {
+    return null;
   }
+  return (
+    <article className="collections">
+      <Heading tagName="h2">{title}</Heading>
+      {canMakeCollections && (
+        <>
+          <CreateCollectionButton maybeTeam={maybeTeam} />
+          {!hasCollections && <CreateFirstCollection />}
+        </>
+      )}
+      <CollectionsUL collections={collections} isAuthorized={isAuthorized} deleteCollection={deleteCollection} />
+    </article>
+  );
 }
 
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
-  maybeCurrentUser: PropTypes.object,
   maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
-  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
 CollectionsList.defaultProps = {
-  maybeCurrentUser: undefined,
   maybeTeam: undefined,
 };
 
@@ -77,71 +63,60 @@ const CreateFirstCollection = () => (
   </div>
 );
 
-export class CreateCollectionButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shouldRedirect: false,
-      loading: false,
-      newCollectionUrl: '',
-    };
-    this.createCollectionOnClick = this.createCollectionOnClick.bind(this);
-  }
+const collectionStates = {
+  ready: () => ({ type: 'ready' }),
+  loading: () => ({ type: 'loading' }),
+  newCollection: (url) => ({ type: 'newCollection', value: url }),
+};
 
-  async createCollectionOnClick(createNotification) {
-    this.setState({ loading: true });
+function CreateCollectionButton({ maybeTeam }) {
+  const api = useAPI();
+  const { currentUser } = useCurrentUser();
+  const { createNotification } = useNotifications();
+  const [state, setState] = useState(collectionStates.ready());
 
-    const collectionResponse = await createCollection(
-      this.props.api,
-      null,
-      this.props.maybeTeam ? this.props.maybeTeam.id : null,
-      createNotification,
-    );
+  async function createCollectionOnClick() {
+    setState(collectionStates.loading());
+
+    const collectionResponse = await createCollection(api, null, maybeTeam ? maybeTeam.id : null, createNotification);
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
-      if (this.props.maybeTeam) {
-        collection.team = this.props.maybeTeam;
+      if (maybeTeam) {
+        collection.team = maybeTeam;
       } else {
-        collection.user = this.props.currentUser;
+        collection.user = currentUser;
       }
       const newCollectionUrl = getLink(collection);
-      this.setState({ newCollectionUrl, shouldRedirect: true });
+      setState(collectionStates.newCollection(newCollectionUrl));
     } else {
       // error messaging handled in createCollection
-      this.setState({ loading: false });
+      setState(collectionStates.ready());
     }
   }
 
-  render() {
-    if (this.state.shouldRedirect) {
-      return <Redirect to={this.state.newCollectionUrl} push />;
-    }
-    if (this.state.loading) {
-      return (
-        <div id="create-collection-container">
-          <Loader />
-        </div>
-      );
-    }
+  if (state.type === 'newCollection') {
+    return <Redirect to={state.value} push />;
+  }
+  if (state.type === 'loading') {
     return (
-      <NotificationConsumer>
-        {({ createNotification }) => (
-          <div id="create-collection-container">
-            <TrackClick name="Create Collection clicked">
-              <button className="button" id="create-collection" onClick={() => this.createCollectionOnClick(createNotification)}>
-                Create Collection
-              </button>
-            </TrackClick>
-          </div>
-        )}
-      </NotificationConsumer>
+      <div id="create-collection-container">
+        <Loader />
+      </div>
     );
   }
+
+  return (
+    <div id="create-collection-container">
+      <TrackClick name="Create Collection clicked">
+        <button className="button" id="create-collection" onClick={createCollectionOnClick}>
+          Create Collection
+        </button>
+      </TrackClick>
+    </div>
+  );
 }
 
 CreateCollectionButton.propTypes = {
-  api: PropTypes.any.isRequired,
-  currentUser: PropTypes.object.isRequired,
   maybeTeam: PropTypes.object,
 };
 
@@ -182,8 +157,4 @@ CollectionsUL.defaultProps = {
   deleteCollection: () => {},
 };
 
-export default function CollectionsListWrapper(props) {
-  const api = useAPI();
-  const currentUser = useCurrentUser();
-  return <CollectionsList {...props} api={api} maybeCurrentUser={currentUser} />;
-}
+export default CollectionsList;
