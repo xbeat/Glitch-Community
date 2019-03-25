@@ -48,12 +48,12 @@ Image.propTypes = {
   backgroundImage: PropTypes.bool,
   backgroundRatio: PropTypes.number,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Object)]),
-  height: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   role: PropTypes.string,
   src: PropTypes.string.isRequired,
   srcSet: PropTypes.array,
   sizes: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 Image.defaultProps = {

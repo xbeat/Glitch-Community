@@ -64,21 +64,29 @@ export function before(matcher, middleware) {
 // useful for middleware that perform side effects (logging, dispatching other actions)
 export function after(matcher, middleware) {
   return (store) => (next) => (action) => {
-    if (!matcher(action)) {
-      return action;
-    }
     const prevState = store.getState();
     const result = next(action);
-    if (result) {
+
+    if (result && matcher(action)) {
       middleware(store, result, prevState);
     }
-    return action;
+
+    return result;
   };
 }
 
-export const always = () => true;
+export const matchAlways = () => true;
 export const matchTypes = (...actionsOrTypes) => {
   // coerce to strings, to use with redux-starter-kit action creators
   const types = actionsOrTypes.map(String);
-  return (action) => types.includes(action);
+  return (action) => action && types.includes(action.type);
+};
+
+let didFire = false;
+export const matchOnce = () => {
+  if (didFire) {
+    return false;
+  }
+  didFire = true;
+  return true;
 };
