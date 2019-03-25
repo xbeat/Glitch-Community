@@ -46,48 +46,42 @@ function TeamWithProjects ({ teamID }) {
 
 */
 
-
-
-function useVersionedState (initState) {
-  return {
-    state,
-    getVersion: () => versionRef.current,
-    bumpVersion: ()=> { versionRef.current++; },
-    setStateForVersion: (nextState, version) => {
-      if (version === versionRef.current) {
-        setState(nextState)
-      }
-    }
-  }
-}
-
-function useAsyncEffectState (initState, handler, args) {
-  const [state, setState] = useState(initState)
-  const versionRef = useRef(1);
+// we don't want to set "stale" state, e.g. if the user clicks over to a different team's page
+// while the first team's data is still loading, we don't want to show the first team's data when it loads.
+// this should also avoid errors from setting state on an unmounted component.
+function useAsyncEffectState(initState, handler, args) {
+  const [state, setState] = useState(initState);
+  const versionRef = useRef(0);
   useEffect(() => {
-    const version = versionRef.current;
-    const setState
-    
-    handler(setStateForVersion)
-    return () => { versionRef.current++; }
-  }, args)
-  return state.state;
-} 
-
-
+    const versionWhenEffectStarted = versionRef.current;
+    const setStateIfFresh = (value) => {
+      if (versionWhenEffectStarted === versionRef.current) {
+        setState(value);
+      }
+    };
+    handler(setStateIfFresh, versionWhenEffectStarted);
+    return () => {
+      versionRef.current++;
+    };
+  }, args);
+  return state;
+}
 
 export const createAPIHook = (asyncFunction) => (...args) => {
   const api = useAPI();
-  const { state, getVersion, bumpVersion, setStateForVersion } = useVersionedState({ state: 'loading' });
-  useEffect(() => {
-    const version = versionedState.getVersion();
-    versionedState({ state: 'loading' });
-    asyncFunction(api, ...args).then((value) => {
-      if (version.current === thisVersion) {
-        setResult({ state: 'ready', value });
+  const loading = { state: 'loading' };
+  const result = useAsyncEffectState(
+    loading,
+    (setResult, version) => {
+      // reset to 'loading' if the args change
+      if (version > 0) {
+        setResult(loading);
       }
-    });
-    return 
-  }, args);
+      asyncFunction(api, ...args).then((value) => {
+        setResult({ state: 'ready', value });
+      });
+    },
+    args,
+  );
   return result;
 };

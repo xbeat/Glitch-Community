@@ -1,11 +1,11 @@
 import React from 'react';
 import { sampleSize } from 'lodash';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
-import { useAsync } from '../../state/api';
+import { createAPIHook } from '../../state/api';
 
 import CollectionItem from '../collection-item';
 
-const getIncludedCollections = async (api, projectId) => {
+const useIncludedCollections = async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
   const selectedCollections = sampleSize(collections, 3);
   return Promise.all(
