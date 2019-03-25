@@ -47,30 +47,47 @@ function TeamWithProjects ({ teamID }) {
 */
 
 
+
 function useVersionedState (initState) {
-  const [state, setState] = useState(initState)
-  const version = useRef(1);
-  const 
+  return {
+    state,
+    getVersion: () => versionRef.current,
+    bumpVersion: ()=> { versionRef.current++; },
+    setStateForVersion: (nextState, version) => {
+      if (version === versionRef.current) {
+        setState(nextState)
+      }
+    }
+  }
 }
+
+function useAsyncEffectState (initState, handler, args) {
+  const [state, setState] = useState(initState)
+  const versionRef = useRef(1);
+  useEffect(() => {
+    const version = versionRef.current;
+    const setState
+    
+    handler(setStateForVersion)
+    return () => { versionRef.current++; }
+  }, args)
+  return state.state;
+} 
 
 
 
 export const createAPIHook = (asyncFunction) => (...args) => {
   const api = useAPI();
-  const [result, setResult] = useState({ state: 'loading' });
-  
-  const version = useRef(1);
+  const { state, getVersion, bumpVersion, setStateForVersion } = useVersionedState({ state: 'loading' });
   useEffect(() => {
-    const thisVersion = version.current;
-    setResult({ state: 'loading' });
+    const version = versionedState.getVersion();
+    versionedState({ state: 'loading' });
     asyncFunction(api, ...args).then((value) => {
       if (version.current === thisVersion) {
         setResult({ state: 'ready', value });
       }
     });
-    return () => {
-      version.current++;
-    };
+    return 
   }, args);
   return result;
 };
