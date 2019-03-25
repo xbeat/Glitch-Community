@@ -23,11 +23,30 @@ export function useAPI() {
   return getAPIForToken(persistentToken);
 }
 
-export const useAsync = (asyncFunction, ...args) => {
+/*
+Create a hook for working with the API via async functions.
+Usage:
+
+const useTeamsAPI = createAPIHook(async (api, teamID) => {
+  const team = await api.get(`/team/${teamID}`);
+  const { projectIDs } = team;
+  team.projects = await Promise.all(projectIDs.map(projectID => api.get(`/project/${projectID})`));
+  return team;
+});
+
+function TeamWithProjects () {
+  const 
+}
+
+*/
+
+
+
+export const createAPIHook = (asyncFunction) => (...args) => {
   const api = useAPI();
   const [result, setResult] = useState(null);
   useEffect(() => {
     asyncFunction(api, ...args).then(setResult);
   }, args);
   return result;
-};
+}
