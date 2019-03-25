@@ -1,13 +1,23 @@
 // transitional utilities that are redux-compatible without literally bringing in redux
-import { useReducer } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { configureStore } from 'redux-starter-kit';
+
 import { mapKeys, mapValues } from 'lodash';
 
-export function useReducerWithMiddleware(reducer, init, ...middleware) {
-  const [state, baseDispatch] = useReducer(reducer, undefined, init);
-  let proxiedDispatch = null;
-  const store = { getState: () => state, dispatch: (action) => proxiedDispatch(action) };
-  proxiedDispatch = middleware.reduceRight((next, m) => m(store)(next), baseDispatch);
-  return [state, store.dispatch];
+const ReduxContext = createContext()
+
+
+
+
+export const createSelectorHook = (selector) => (...args) => {
+  const store = useContext()
+  const [state, setState] = useState(selector(store.getState(), ...args));
+  useEffect(() => {
+    return store.subscribe(() => {
+      setState(selector(store.getState(), ...args)
+    })
+  }, args)
+  
 }
 
 // from redux
