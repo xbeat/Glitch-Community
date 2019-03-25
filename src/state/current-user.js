@@ -239,12 +239,10 @@ const persistToStorage = after(always, (store, action, prevState) => {
 });
 
 const logActions = after(always, (store, action, prevState) => {
-  const d = new Date()
-  const ts = `${d.getHour()}:${d.getMinutes()}:${d.getSeconds()}.${d.get
-  console.log( prevState, action, store.getState())
+  console.log(prevState, action, store.getState());
 });
 
-const middleware = [handleLoadRequest, trackUserChanges, persistToStorage];
+const middleware = [handleLoadRequest, trackUserChanges, persistToStorage, logActions];
 
 export const CurrentUserProvider = ({ children }) => {
   const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState, ...middleware);
