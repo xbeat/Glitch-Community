@@ -143,7 +143,7 @@ async function fixSharedUser(sharedUser) {
 }
 
 async function load(initState) {
-  const nextState = { sharedUser: initState.sharedUser, cachedUser: initState.cachedUser }
+  const nextState = { ...initState }
 
   // If we're signed out create a new anon user
   if (!nextState.sharedUser) {
@@ -153,7 +153,7 @@ async function load(initState) {
   }
 
   // Check if we have to clear the cached user
-  if (!usersMatch(sharedUser, cachedUser)) {
+  if (!usersMatch(nextState.sharedUser, nextState.cachedUser)) {
     nextState.cachedUser = undefined;
     // this.props.setCachedUser(undefined);
   }
@@ -167,9 +167,10 @@ async function load(initState) {
 
     if (usersMatch(initState.sharedUser, nextState.sharedUser)) {
       // The user wasn't changed, so we need to fix it
-      this.setState({ fetched: false });
-      const newSharedUser = await fixSharedUser(initState.sharedUser);
-      this.props.setSharedUser(newSharedUser);
+      nextState.fetched 
+      // this.setState({ fetched: false });
+      nextState.sharedUser = await fixSharedUser(initState.sharedUser);
+      // this.props.setSharedUser(newSharedUser);
     }
     
     // implied: run `load` again?
@@ -178,6 +179,7 @@ async function load(initState) {
     this.props.setCachedUser(newCachedUser);
     this.setState({ fetched: true });
     console.log('load ok');
+    
   }
 }
 
