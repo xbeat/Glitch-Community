@@ -12,31 +12,25 @@ import { TeamAvatar, UserAvatar } from './includes/avatar';
 import { getAvatarUrl } from '../models/project';
 import { isDarkColor } from '../models/collection';
 
-const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
+const ProjectsPreview = ({ collection, isAuthorized }) => {
+  
+  const loadingState = (
+    <div className="collection-link">
+      <Loader />
+    </div>
+  );
+  
+    
   if (!collection.projects) {
-    return (
-      <div className="collection-link">
-        <Loader />
-      </div>
-    );
+    return loadingState;
   }
 
-  const emptyState = isAuthorized ? (
-    <Text>
-      {'This collection is empty – add some projects '}
-      <span role="img" aria-label="">
-        ☝️
-      </span>
-    </Text>
-  ) : (
-    <Text>No projects to see in this collection just yet.</Text>
-  );
 
   if (collection.projects.length > 0) {
     return (
       <>
         <ul className="projects-preview">
-          {projects.slice(0, 3).map((project) => (
+          {collection.projects.slice(0, 3).map((project) => (
             <li key={project.id} className={`project-container ${project.private ? 'private' : ''}`}>
               <ProjectLink project={project} className="project-link">
                 <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
@@ -47,18 +41,29 @@ const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
           ))}
         </ul>
         <CollectionLink collection={collection} className="collection-link">
-          {`View ${projects.length >= 3 ? 'all' : ''} `}
-          <Pluralize count={projects.length} singular="project" />
+          {`View ${collection.projects.length >= 3 ? 'all' : ''} `}
+          <Pluralize count={collection.projects.length} singular="project" />
           <span aria-hidden="true"> →</span>
         </CollectionLink>
       </>
     );
   }
+  
+  const emptyState = isAuthorized ? (
+    <Text>
+      {'This collection is empty – add some projects '}
+      <span role="img" aria-label="">
+        ☝️
+      </span>
+    </Text>
+  ) : (
+    <Text>No projects to see in this collection just yet.</Text>
+  );
   return <div className="projects-preview empty">{emptyState}</div>;
 };
 
 ProjectsPreview.propTypes = {
-  projects: PropTypes.any.isRequired,
+  collection: PropTypes.object.isRequired,
 };
 
 const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurator, showProjectPreview = true, showCollectionAvatar = true }) => {
@@ -116,7 +121,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
               <div className="overflow-mask" />
             </CollectionLink>
             {showProjectPreview ? (
-              <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection} isAuthorized={isAuthorized} />
+              <ProjectsPreview collection={collection} isAuthorized={isAuthorized} />
             ) : (
               <div className="projects-count">{projectsCount}</div>
             )}

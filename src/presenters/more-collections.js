@@ -45,13 +45,12 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
 };
 
 
-// TODO: componentize this?! (CoverContainer, Links, CollectionItem, More Collections itself?)
-
+// TODO: componentize this (CoverContainer, Links, CollectionItem, More Collections itself?)
 const MoreCollections = ({ currentCollection, collections, currentUser }) => {
   const isUserCollection = currentCollection.teamId === -1;
   const coverStyle = isUserCollection
     ? getUserStyle({ ...currentUser, cache: currentUser._cacheCover }) // eslint-disable-line no-underscore-dangle
-    : getTeamStyle({ ...currentCollection.team });
+    : getTeamStyle({ ...currentCollection.team, cache: currentCollection.team._cacheCover }); // eslint-disable-line no-underscore-dangle
 
   return (
     <section>

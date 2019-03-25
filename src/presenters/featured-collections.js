@@ -62,9 +62,7 @@ const loadCollection = async (api, { owner, name }) => {
   try {
     const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
     collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
-    if (collection.team) {
-      collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
-    }
+    collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     collection.projectCount = collection.projects.length;
     collection.projects = sampleSize(collection.projects, 3).map((p) => ({
       ...p,
@@ -80,7 +78,6 @@ const loadCollection = async (api, { owner, name }) => {
   return null;
 };
 
-// maybe this can go in a model folder or something
 export const loadAllCollections = async (api, infos) => {
   // don't await until every request is sent so they can all run at once
   const promises = infos.map((info) => loadCollection(api, info));
