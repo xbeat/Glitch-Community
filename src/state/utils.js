@@ -1,47 +1,43 @@
 // transitional utilities that are redux-compatible without literally bringing in redux
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
-import { mapValues, fromPairs } from 'lodash';
+import { mapValues, fromPairs, flatMap } from 'lodash';
 
 // react-redux bindings (TODO: use react-redux when these are supported natively)
 
-const ReduxContext = createContext()
+const ReduxContext = createContext();
 
-export const Provider = ({ store, children }) => 
-  <ReduxContext.Provider value={store}>{children}</ReduxContext.Provider>
+export const Provider = ({ store, children }) => <ReduxContext.Provider value={store}>{children}</ReduxContext.Provider>;
 
-export const useStore = () => useContext(ReduxContext)
+export const useStore = () => useContext(ReduxContext);
 
-export const createSelectorHook = (selector) => (...args) => {
-  const store = useStore()
+export const useSelector = (selector, ...args) => {
+  const store = useStore();
   const [state, setState] = useState(selector(store.getState(), ...args));
   useEffect(() => {
     return store.subscribe(() => {
-      setState(selector(store.getState(), ...args))
-    })
-  }, args)
-  return state
-}
+      setState(selector(store.getState(), ...args));
+    });
+  }, [selector, ...args]);
+  return state;
+};
 
-const bindActionCreators = (actions, dispatch) =>
-  mapValues(actions, (actionCreator) => (payload) => dispatch(actionCreator(payload)));
+const bindActionCreators = (actions, dispatch) => mapValues(actions, (actionCreator) => (payload) => dispatch(actionCreator(payload)));
 
 export const useActions = (actions) => {
-  const store = useStore()
-  return bindActionCreators(actions, store.dispatch)
-}
+  const store = useStore();
+  return bindActionCreators(actions, store.dispatch);
+};
 
 // combine slices into a redux store
 
-function createStoreFromSlices (slices) {
+export function createStoreFromSlices(slices) {
   return configureStore({
-    reducer: fromPairs(slices.map(slice => [slice.slice, slice.reducer])),
-    middleware: getDefaultMiddleware().concat(flatMap(slices, (0)
-  })
+    reducer: fromPairs(slices.map((slice) => [slice.slice, slice.reducer])),
+    middleware: [...getDefaultMiddleware(), ...flatMap(slices, (slice) => slice.middleware)],
+    devTools: true,
+  });
 }
-
-
-
 
 // helpers for making middleware, after redux-aop
 

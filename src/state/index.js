@@ -1,3 +1,7 @@
+import { currentUserSlice } from './current-user'
+import { createStoreFromSlices } from '../utils'
 
-import currentUser from './current-user'
+const store = createStoreFromSlices([
+  currentUserSlice,
+])
 

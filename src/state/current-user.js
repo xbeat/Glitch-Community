@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { bindActionCreators, createSlice, useReducerWithMiddleware, always, after, matchTypes } from './utils';
+import { createSlice, createSelectorHook, useActions, always, after, matchTypes } from './utils';
 
 const Context = React.createContext();
 
@@ -183,7 +183,7 @@ function getInitialState() {
   };
 }
 
-const { reducer, actions } = createSlice({
+const { slice, reducer, actions, selector: selectCurrentUser } = createSlice({
   slice: 'currentUser',
   reducers: {
     requestedLoad: (state) => ({
@@ -215,6 +215,20 @@ const { reducer, actions } = createSlice({
   },
 });
 
+let didFire = false;
+const matchOnce = () => {
+  if (didFire) {
+    return false;
+  }
+  didFire = true;
+  return true;
+};
+
+const triggerInitialLoad = after(matchOnce, (store) => {
+  identifyUser(selectCurrentUser(store.getState()).cachedState);
+  store.dispatch(actions.requestedLoad());
+});
+
 const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
   // prevent multiple 'load's from running
   if (prevState.loadStatus === 'loading') return;
@@ -238,37 +252,27 @@ const persistToStorage = after(always, (store, action, prevState) => {
   }
 });
 
-const logActions = after(always, (store, action, prevState) => {
-  console.log(prevState, action, store.getState());
-});
+export const currentUserSlice = {
+  slice,
+  reducer,
+  middleware: [triggerInitialLoad, handleLoadRequest, trackUserChanges, persistToStorage],
+};
 
-const middleware = [handleLoadRequest, trackUserChanges, persistToStorage, logActions];
+const useCurrentUserState = createSelectorHook(selectCurrentUser);
 
-export const CurrentUserProvider = ({ children }) => {
-  const [state, dispatch] = useReducerWithMiddleware(reducer, getInitialState, ...middleware);
-  const boundActions = bindActionCreators(actions, dispatch);
-  // kick off initial load
-  useEffect(() => {
-    identifyUser(state.cachedUser);
-    boundActions.requestedLoad();
-  }, []);
-
-  // for easier debugging
-  window.currentUser = state.cachedUser;
-
-  const userContext = {
-    currentUser: { ...defaultUser, ...state.sharedUser, ...state.cachedUser },
-    persistentToken: state.sharedUser && state.sharedUser.persistentToken,
-    fetched: state.loadStatus === 'ready',
+export function useCurrentUser() {
+  const { sharedUser, cachedUser, loadStatus } = useCurrentUserState();
+  const boundActions = useActions(actions);
+  return {
+    currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
+    persistentToken: sharedUser && sharedUser.persistentToken,
+    fetched: loadStatus === 'ready',
     reload: boundActions.requestedLoad,
     login: boundActions.loggedIn,
     update: boundActions.updated,
     clear: boundActions.loggedOut,
   };
-  return <Context.Provider value={userContext}>{children}</Context.Provider>;
-};
-
-export const useCurrentUser = () => React.useContext(Context);
+}
 
 export function normalizeUser(user, currentUser) {
   return user.id === (currentUser && currentUser.id) ? currentUser : user;
