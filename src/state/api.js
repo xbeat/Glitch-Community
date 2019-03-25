@@ -69,7 +69,7 @@ function useAsyncEffectState(initState, handler, args) {
 
 export const createAPIHook = (asyncFunction) => (...args) => {
   const api = useAPI();
-  const loading = { state: 'loading' };
+  const loading = { status: 'loading' };
   const result = useAsyncEffectState(
     loading,
     (setResult, version) => {
@@ -78,7 +78,7 @@ export const createAPIHook = (asyncFunction) => (...args) => {
         setResult(loading);
       }
       asyncFunction(api, ...args).then((value) => {
-        setResult({ state: 'ready', value });
+        setResult({ status: 'ready', value });
       });
     },
     args,

@@ -20,14 +20,12 @@ function AddCollectionProject({ collection, addProjectToCollection }) {
   const { currentUser } = useCurrentUser();
 
   let initialProjects = [];
-  if (teamResponse.status === 'ready') {
-    if (teamResponse.value) {
-      initialProjects = teamResponse.value;
-    } else {
-      initialProjects = currentUser.projects;
-    }
+  if (teamResponse.status === 'ready' && teamResponse.value) {
+    initialProjects = teamResponse.value;
+  } else {
+    initialProjects = currentUser.projects;
   }
-  
+
   return (
     <PopoverWithButton buttonClass="add-project" buttonText="Add Project">
       {({ togglePopover }) => (
