@@ -22,7 +22,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   // get all collections from the author
   moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
 
-  // filter out the current collection 
+  // filter out the current collection
   moreCollections = moreCollections.filter((c) => c.id !== collection.id);
 
   // get project details for each collection
@@ -30,13 +30,13 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
-  
+
   // filter out collections that don't have projects
-  moreCollections = moreCollections.filter((c) => c.projects && c.projects.length > 0); 
+  moreCollections = moreCollections.filter((c) => c.projects && c.projects.length > 0);
 
   // pick 3 collections
   moreCollections = sampleSize(moreCollections, 3);
-  
+
   // get author details and attach to each collection
   const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
   moreCollections = moreCollections.map((c) => {
