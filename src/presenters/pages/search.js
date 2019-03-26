@@ -54,7 +54,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      <SegmentedButtons buttons={generateFilterButtons(filters)} onClick={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onClick={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
@@ -129,7 +129,7 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
-      activeFilterIndex: 0,
+      activeFilter: 'all',
       loadedResults: 0,
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
@@ -143,8 +143,8 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
-  setFilter(index) {
-    this.setState({ activeFilterIndex: index });
+  setFilter(id) {
+    this.setState({ activeFilter: id });
   }
 
   async searchTeams() {
@@ -179,7 +179,7 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects, activeFilterIndex } = this.state;
+    const { teams, users, projects, activeFilter } = this.state;
     const teamHits = teams ? teams.length : 0;
     const userHits = users ? users.length : 0;
     const projectHits = projects ? projects.length : 0;
@@ -191,7 +191,6 @@ class SearchResults extends React.Component {
       { name: 'projects', hits: projectHits },
     ];
 
-    const activeFilter = filters[activeFilterIndex].name;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
 
     const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
