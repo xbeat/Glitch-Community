@@ -8,7 +8,7 @@ import { useCurrentUser } from '../../state/current-user';
 import { getAllPages } from '../../../shared/api';
 
 const useTeamProjects = createAPIHook(async (api, teamId) => {
-  if (teamId) {
+  if (teamId > 0) {
     const projects = await getAllPages(api, `/v1/teams/by/id/projects?limit=100&orderKey=updatedAt&orderDirection=ASC&id=${teamId}`);
     return projects;
   }
