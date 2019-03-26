@@ -1,5 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+function useExpanding () {
+  const ref = useRef()
+  // collapsed -> expanding -> done
+  const [expandState, setExpandState] = useState('collapsed')
+  const [scrollHeight, setScrollHeight] = useState(Infinity)
+  useEffect(() => {
+    const setScrollHeightToRef = () => {
+      setScrollHeight(ref.current.scrollHeight)
+    }
+    
+    ref.current.addEventListener('load', setScrollHeightToRef, { capture: true,});
+    window.addEventListener('resize', setScrollHeightToRef, { passive: true });
+    
+    return () => {
+      ref.current.removeEventListener('load', this.updateHeight, {
+      capture: true,
+    });
+    window.removeEventListener('resize', this.updateHeight, { passive: true });
+    }
+  }, [])
+}
 
 export default class Expander extends React.Component {
   constructor(props) {
