@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Helmet from 'react-helmet';
 import { capitalize, sum } from 'lodash';
-
-import Layout from '../layout';
+import algoliasearch from 'algoliasearch';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
-
-import SegmentedButtons from '../../components/buttons/segmented-buttons';
-import Badge from '../../components/badges/badge';
-import Heading from '../../components/text/heading';
-
 import useErrorHandlers from '../error-handlers';
+
+import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
@@ -21,6 +16,7 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+const SearchResults = () => null;
 
 const SearchPage = ({ query }) => {
   const api = useAPI();
