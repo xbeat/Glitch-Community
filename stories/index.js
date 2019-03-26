@@ -9,8 +9,8 @@ import Image from '../src/components/image/image';
 import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
-import Badge from '../src/components/badges/badge';
-import SegmentedButtons from '../src/components/buttons/segmented-buttons';
+// import Badge from '../src/components/badges/badge';
+// import SegmentedButtons from '../src/components/buttons/segmented-buttons';
 
 const helloAlert = () => {
   alert('hello');
