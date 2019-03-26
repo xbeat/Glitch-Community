@@ -2,6 +2,7 @@
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
 
+
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
 const searchIndex = searchClient.initIndex('search');
@@ -51,14 +52,22 @@ function formatHit(hit) {
   }
 }
 
-
 export function useSearch(query) {
-  const [results, setResults] = useState({ hits: [], nbHits: 0 });
+  const [hits, setHits] = useState([]);
   useEffect(() => {
-    searchIndex.search({ query, hitsPerPage: 500 }).then((res) => setResults(res));
+    searchIndex.search({ 
+      query, 
+      hitsPerPage: 500,
+      // TODO: remove this line, add collections to search
+      filters: 'type:"user" OR type:"project" OR type:"team"',
+    }).then((res) => setHits(res.hits));
   }, [query]);
-  console.log(results.hits)
+  console.log(hits)
   return {
-    hits: results.hits.map(formatHit),
+    hits: hits.map(formatHit),
   };
+}
+
+export function useLegacySearch(query) {
+
 }
