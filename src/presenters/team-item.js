@@ -3,7 +3,6 @@ import React from 'react';
 
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
-import { TeamLink } from './includes/link';
 import Markdown from '../components/text/markdown';
 import { Thanks } from './includes/thanks';
 import UsersList from './users-list';
