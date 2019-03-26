@@ -114,7 +114,13 @@ const ProjectResults = ({ projects }) => {
   }
   const loggedInUserWithProjects = projects && currentUser.login;
   return loggedInUserWithProjects ? (
-    <ProjectsList title="Projects" projects={projects} projectOptions={{ addProjectToCollection }} />
+    <ProjectsList
+      title="Projects"
+      projects={projects}
+      projectOptions={{
+        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+      }}
+    />
   ) : (
     <ProjectsList title="Projects" projects={projects} />
   );
@@ -128,6 +134,8 @@ function SearchResults({ query }) {
   const noResults = hits.length === 0;
   const loaded = true;
   const grouped = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
+    console.log(hits, grouped);
+
 
   const filters = [
     { name: 'all', hits: hits.length },
@@ -140,7 +148,6 @@ function SearchResults({ query }) {
   const showUsers = ['all', 'users'].includes(activeFilter) && grouped.users.length;
   const showProjects = ['all', 'projects'].includes(activeFilter) && grouped.projects.length;
 
-  console.log(hits);
 
   return (
     <main className="search-results">
