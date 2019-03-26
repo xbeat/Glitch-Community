@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getLink as getCollectionLink } from '../../models/collection';
-import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { AddProjectToCollectionMsg, useNotifications } from '../notifications';
 import { UserAvatar, TeamAvatar } from './avatar';
 import CollectionAvatar from './collection-avatar';
 
@@ -18,6 +18,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
 };
 
 const CollectionResultItem = ({ onClick, project, collection, isActive, togglePopover }) => {
+  const { createNotification } = useNotifications();
   let resultClass = 'button-unstyled result result-collection';
   if (isActive) {
     resultClass += ' active';
@@ -26,32 +27,28 @@ const CollectionResultItem = ({ onClick, project, collection, isActive, togglePo
   const collectionPath = getCollectionLink(collection);
 
   return (
-    <NotificationConsumer>
-      {({ createNotification }) => (
-        <div>
-          <button
-            className={resultClass}
-            onClick={() => addProject(onClick, project, collection, collectionPath, createNotification, togglePopover)}
-            data-project-id={project.id}
-          >
-            <div className="avatar" id={`avatar-collection-${collection.id}`}>
-              <CollectionAvatar color={collection.coverColor} />
-            </div>
-            <div className="results-info">
-              <div className="result-name" title={collection.name}>
-                {collection.name}
-              </div>
-              {collection.description.length > 0 && <div className="result-description">{collection.description}</div>}
-              {collection.team && <TeamAvatar team={collection.team} />}
-              {collection.user && <UserAvatar user={collection.user} />}
-            </div>
-          </button>
-          <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
-            View →
-          </a>
+    <div>
+      <button
+        className={resultClass}
+        onClick={() => addProject(onClick, project, collection, collectionPath, createNotification, togglePopover)}
+        data-project-id={project.id}
+      >
+        <div className="avatar" id={`avatar-collection-${collection.id}`}>
+          <CollectionAvatar color={collection.coverColor} />
         </div>
-      )}
-    </NotificationConsumer>
+        <div className="results-info">
+          <div className="result-name" title={collection.name}>
+            {collection.name}
+          </div>
+          {collection.description.length > 0 && <div className="result-description">{collection.description}</div>}
+          {collection.team && <TeamAvatar team={collection.team} />}
+          {collection.user && <UserAvatar user={collection.user} />}
+        </div>
+      </button>
+      <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
+        View →
+      </a>
+    </div>
   );
 };
 

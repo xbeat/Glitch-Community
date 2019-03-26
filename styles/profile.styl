@@ -13,6 +13,10 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     right: 5px
     button
       margin-left: 5px
+  .clear-session
+    position: absolute
+    top: 16px
+    right: 16px
 
 .profile-info
   width: 100%
@@ -132,15 +136,30 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     &:after
       border-bottom-color: section-line
 
-  .anon-user-sign-up
-    margin-top: 5px
-    position: relative
-    width: 80%
+.anon-user-sign-up
+  background: #83ffcd
+  margin: 5px 0px
+  padding: 12px
+  border-radius: 5px
+  position: relative
+  
+  button
+    margin-right: 3px
     
-    @media(max-width: 800px)
-      width: 100%
-      margin-bottom: 1rem
+  button:hover
+    background-color: secondary-background-hover
+
+  @media(max-width: 800px)
+    width: 100%
+    margin-bottom: 1rem
     
-    .sign-in-pop
-      left: 0px
-      top: 26px
+  .note
+    color: tertiary
+    font-size: small
+    float: right
+    margin-top: 7px
+  
+  .sign-in-pop
+    left: 0px
+    top: 26px
+    

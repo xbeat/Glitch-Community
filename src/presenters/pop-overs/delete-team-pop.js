@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Loader } from '../includes/loader';
-import { NotificationConsumer } from '../notifications';
+import { useNotifications } from '../notifications';
 import { useAPI } from '../../state/api';
 
 class DeleteTeamPopBase extends React.Component {
@@ -69,7 +69,8 @@ class DeleteTeamPopBase extends React.Component {
 
 const DeleteTeamPop = withRouter((props) => {
   const api = useAPI();
-  return <NotificationConsumer>{(notifyFuncs) => <DeleteTeamPopBase {...notifyFuncs} {...props} api={api} />}</NotificationConsumer>;
+  const notifyFuncs = useNotifications();
+  return <DeleteTeamPopBase {...notifyFuncs} {...props} api={api} />;
 });
 
 DeleteTeamPop.propTypes = {

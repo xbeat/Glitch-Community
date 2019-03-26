@@ -124,6 +124,12 @@ export const GitHubLoginPage = ({ code, ...props }) => {
   return <LoginPageContainer {...props} provider="GitHub" url={url} />;
 };
 
+export const GoogleLoginPage = ({ code, ...props }) => {
+  const callbackUrl = `${APP_URL}/login/google`;
+  const url = `/auth/google/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
+  return <LoginPageContainer {...props} provider="Google" url={url} />;
+};
+
 export const EmailTokenLoginPage = ({ token, ...props }) => {
   const url = `/auth/email/${token}`;
   return <LoginPageContainer {...props} provider="Email" url={url} />;

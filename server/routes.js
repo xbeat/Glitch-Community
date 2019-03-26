@@ -85,6 +85,7 @@ module.exports = function(external) {
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || 'dev',
       CONSTANTS: constants,
+      RUNNING_ON: process.env.RUNNING_ON,
     });
   }
 
@@ -159,6 +160,7 @@ module.exports = function(external) {
     res.render('api-auth.ejs', {
       domain: domain,
       CONSTANTS: constants,
+      RUNNING_ON: process.env.RUNNING_ON,
     });
   });
 
