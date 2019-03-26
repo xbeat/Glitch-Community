@@ -1,4 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
+import { configure, addDecorator, addParameters } from '@storybook/react';
 import React from 'react';
 import { withInfo } from '@storybook/addon-info';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,6 +11,12 @@ addDecorator(
   }),
   enableLinks,
 );
+
+addParameters({
+  options: {
+    showPanel: false,
+  }
+});
 
 function loadStories() {
   require('../stories/index.js');
