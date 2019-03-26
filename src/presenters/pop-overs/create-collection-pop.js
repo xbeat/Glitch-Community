@@ -9,7 +9,7 @@ import { TrackClick } from '../analytics';
 import { getLink, createCollection } from '../../models/collection';
 import { useAPI } from '../../state/api';
 
-import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { AddProjectToCollectionMsg, useNotifications } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
@@ -117,7 +117,7 @@ class CreateCollectionPop extends React.Component {
 
   render() {
     const { error, query } = this.state;
-    const { collections } = this.props;
+    const { collections, createNotification } = this.props;
     const { teams } = this.props.currentUser;
     let queryError; // if user already has a collection with the specified name
 
@@ -137,56 +137,47 @@ class CreateCollectionPop extends React.Component {
     }
 
     return (
-      <NotificationConsumer>
-        {({ createNotification }) => (
-          <dialog className="pop-over create-collection-pop wide-pop">
-            <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
+      <dialog className="pop-over create-collection-pop wide-pop">
+        <NestedPopoverTitle>{`Add ${this.props.project.domain} to a new collection`}</NestedPopoverTitle>
 
-            <section className="pop-over-actions">
-              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
-                <PureEditableField
-                  className="pop-over-input create-input"
-                  value={query}
-                  update={this.handleChange}
-                  placeholder={placeholder}
-                  error={error || queryError}
-                  aria-label={placeholder}
-                />
+        <section className="pop-over-actions">
+          <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
+            <PureEditableField
+              className="pop-over-input create-input"
+              value={query}
+              update={this.handleChange}
+              placeholder={placeholder}
+              error={error || queryError}
+              aria-label={placeholder}
+            />
 
-                {teams && teams.length > 0 && (
-                  <div>
-                    {'for '}
-                    <Dropdown
-                      containerClass="user-or-team-toggle"
-                      options={this.options}
-                      selection={this.state.selection}
-                      onUpdate={this.setSelection}
-                    />
-                  </div>
-                )}
+            {teams && teams.length > 0 && (
+              <div>
+                {'for '}
+                <Dropdown containerClass="user-or-team-toggle" options={this.options} selection={this.state.selection} onUpdate={this.setSelection} />
+              </div>
+            )}
 
-                {!this.state.loading ? (
-                  <TrackClick
-                    name="Create Collection clicked"
-                    properties={(inherited) => ({
-                      ...inherited,
-                      origin: `${inherited.origin} project`,
-                    })}
-                  >
-                    <div className="button-wrap">
-                      <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
-                        Create
-                      </button>
-                    </div>
-                  </TrackClick>
-                ) : (
-                  <Loader />
-                )}
-              </form>
-            </section>
-          </dialog>
-        )}
-      </NotificationConsumer>
+            {!this.state.loading ? (
+              <TrackClick
+                name="Create Collection clicked"
+                properties={(inherited) => ({
+                  ...inherited,
+                  origin: `${inherited.origin} project`,
+                })}
+              >
+                <div className="button-wrap">
+                  <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
+                    Create
+                  </button>
+                </div>
+              </TrackClick>
+            ) : (
+              <Loader />
+            )}
+          </form>
+        </section>
+      </dialog>
     );
   }
 }
@@ -197,6 +188,7 @@ CreateCollectionPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
 };
 
 CreateCollectionPop.defaultProps = {
@@ -205,5 +197,6 @@ CreateCollectionPop.defaultProps = {
 
 export default (props) => {
   const api = useAPI();
-  return <CreateCollectionPop {...props} api={api} />;
+  const { createNotification } = useNotifications();
+  return <CreateCollectionPop {...props} api={api} createNotification={createNotification} />;
 };

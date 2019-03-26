@@ -66,7 +66,7 @@ class CollectionEditor extends React.Component {
     await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });
   }
 
-  addNoteField(projectId) {
+  displayNewNote(projectId) {
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
         if (project.id === projectId) {
@@ -96,7 +96,7 @@ class CollectionEditor extends React.Component {
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       updateOrAddNote: ({ note, projectId }) => this.updateOrAddNote({ note, projectId }),
-      addNoteField: (projectId) => this.addNoteField(projectId),
+      displayNewNote: (projectId) => this.displayNewNote(projectId),
       hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),

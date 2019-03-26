@@ -1,5 +1,5 @@
 const body =
-  '<p>How today’s tech from artificial intelligence to virtual reality is changing the way art is made.</p>';
+  '<p>How today’s tech, from artificial intelligence to virtual reality, is changing the way art is made.</p>';
 
 // make sure image urls use https
 export default {
