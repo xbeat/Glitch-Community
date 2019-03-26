@@ -12,8 +12,6 @@ import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
 import Markdown from '../components/text/markdown';
-import ProjectsLoader from './projects-loader';
-import { getSingleItem } from '../../shared/api';
 import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
@@ -23,6 +21,7 @@ import Heading from '../components/text/heading';
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
+  console.log(collection)
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -60,7 +59,6 @@ CollectionWide.propTypes = {
 
 const loadAllCollections = async (api, infos) => {
   const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name));
-  
   return Promise.all(promises).catch((error) => captureException(error));
 };
 
