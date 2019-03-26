@@ -65,16 +65,14 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 const TeamResults = ({ teams }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
-    <ul className="teams-container">{teams ? teams.map((team) => <li key={team.objectID}>{/*<TeamItem team={team} />*/}</li>) : <Loader />}</ul>
+    <ul className="teams-container">{teams ? teams.map((team) => <li key={team.id}><TeamItem team={team} /></li>) : <Loader />}</ul>
   </article>
 );
-
-const formatUser = (userResult) => ({ ...userResult, id: userResult.objectID)
 
 const UserResults = ({ users }) => (
   <article>
     <Heading tagName="h2">Users</Heading>
-    <ul className="users-container">{users ? users.map((user) => <li key={user.objectID}><UserItem user={user} /></li>) : <Loader />}</ul>
+    <ul className="users-container">{users ? users.map((user) => <li key={user.id}><UserItem user={user} /></li>) : <Loader />}</ul>
   </article>
 );
 
@@ -86,18 +84,17 @@ const ProjectResults = ({ projects }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
   const addProjectToCollection = () => {};
-  return 'Projects';
-  // return currentUser.login ? (
-  //   <ProjectsList
-  //     title="Projects"
-  //     projects={projects}
-  //     projectOptions={{
-  //       addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-  //     }}
-  //   />
-  // ) : (
-  //   <ProjectsList title="Projects" projects={projects} />
-  // );
+  return currentUser.login ? (
+    <ProjectsList
+      title="Projects"
+      projects={projects}
+      projectOptions={{
+        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+      }}
+    />
+  ) : (
+    <ProjectsList title="Projects" projects={projects} />
+  );
 };
 
 const emptyResults = { team: [], user: [], project: [] };
@@ -108,7 +105,6 @@ function SearchResults({ query }) {
   const noResults = hits.length === 0;
   const loaded = true;
   const grouped = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
-  console.log(hits, grouped);
 
   const filters = [
     { name: 'all', hits: hits.length },
