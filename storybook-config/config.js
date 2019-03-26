@@ -5,18 +5,18 @@ import { MemoryRouter } from 'react-router-dom';
 
 const enableLinks = (story) => <MemoryRouter>{story()}</MemoryRouter>;
 
-addDecorator(
-  withInfo({
-    header: false, // Global configuration for the info addon across all of your stories.
-  }),
-  enableLinks,
-);
-
 addParameters({
   options: {
     showPanel: false,
   }
 });
+
+addDecorator(
+  enableLinks, // make sure this comes first, otherwise some stories break.
+  withInfo({
+    header: false, // Global configuration for the info addon across all of your stories.
+  }),
+);
 
 function loadStories() {
   require('../stories/index.js');
