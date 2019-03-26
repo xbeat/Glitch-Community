@@ -22,10 +22,19 @@ function formatTeam (hit) {
     hasCoverImage: false,
     hasAvatarImage: false,
     isVerified: false,
-    url: hit.name, // this is wrong
-    users: [], // team item expects full users to be loaded
-    
+    url: '',
+    users: [],
     ...hit,
+  }
+}
+
+function formatProject (hit) {
+  return {
+    id: hit.objectID.split('-')[1],
+    users: [],
+    showAsGlitchTeam: false,
+    ...hit,
+    teams: [],
   }
 }
 
@@ -35,6 +44,8 @@ function formatHit(hit) {
       return formatUser(hit)
     case 'team':
       return formatTeam(hit)
+    case 'project':
+      return formatProject(hit)
     default:
       return hit
   }
@@ -44,7 +55,7 @@ function formatHit(hit) {
 export function useSearch(query) {
   const [results, setResults] = useState({ hits: [], nbHits: 0 });
   useEffect(() => {
-    searchIndex.search({ query, hitsPerPage: 100 }).then((res) => setResults(res));
+    searchIndex.search({ query, hitsPerPage: 500 }).then((res) => setResults(res));
   }, [query]);
   console.log(results.hits)
   return {

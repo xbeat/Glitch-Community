@@ -83,7 +83,6 @@ function addProjectToCollection(api, project, collection) {
 const ProjectResults = ({ projects }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
-  const addProjectToCollection = () => {};
   return currentUser.login ? (
     <ProjectsList
       title="Projects"
@@ -122,7 +121,7 @@ function SearchResults({ query }) {
       <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} loaded={loaded} />
       {showTeams && <TeamResults teams={grouped.team} />}
       {showUsers && <UserResults users={grouped.user} />}
-      {/*showProjects && <ProjectResults projects={grouped.project} />*/}
+      {showProjects && <ProjectResults projects={grouped.project} />}
       {noResults && <NotFound name="any results" />}
     </main>
   );
