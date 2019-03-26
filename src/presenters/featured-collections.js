@@ -21,7 +21,7 @@ import Heading from '../components/text/heading';
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
-  console.log(collection)
+
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -38,7 +38,7 @@ const CollectionWide = ({ collection }) => {
         </div>
       </header>
       <div className="collection-contents">
-        <ProjectsUL projects={sampleSize(collection.projects, 3)} />
+        <ProjectsUL projects={sampleSize(collection.projects, 3)} collection={collection} showProjectDescriptions={false} />
         <CollectionLink collection={collection} className="collection-view-all">
           View all <Pluralize count={collection.projects.length} singular="project" /> <span aria-hidden>→</span>
         </CollectionLink>

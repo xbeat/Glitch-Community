@@ -8,7 +8,7 @@ import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
-const ProjectItem = ({ project, collection, ...props }) => (
+const ProjectItem = ({ project, collection, showProjectDescriptions = true, ...props }) => (
   <li>
     <Note
       collection={collection}
@@ -26,9 +26,13 @@ const ProjectItem = ({ project, collection, ...props }) => (
             <span className="project-badge private-project-badge" aria-label="private" />
             <div className="project-name">{project.domain}</div>
           </ProjectLink>
-          <div className="description">
-            <Markdown length={80}>{project.description}</Markdown>
-          </div>
+          {
+            showProjectDescriptions && (
+              <div className="description">
+                <Markdown length={80}>{project.description}</Markdown>
+              </div>
+            )
+          }
           <div className="overflow-mask" />
         </div>
       </div>

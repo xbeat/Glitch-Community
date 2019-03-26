@@ -77,10 +77,10 @@ ExpandyProjects.defaultProps = {
   maxCollapsedProjects: 12,
 };
 
-export const ProjectsUL = ({ ...props }) => (
+export const ProjectsUL = ({ showProjectDescriptions = true, ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} {...{ project }} {...props} />
+      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
     ))}
   </ul>
 );
