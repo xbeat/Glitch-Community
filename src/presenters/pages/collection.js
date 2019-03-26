@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect } from 'react-router-dom';
@@ -34,33 +34,25 @@ function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
 }
 
-class DeleteCollectionBtn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      done: false,
-    };
+function DeleteCollectionBtn({ collection, deleteCollection }) {
+  const [done, setDone] = useState(false);
+  if (done) {
+    return <Redirect to={getOwnerLink(collection)} />;
   }
-
-  render() {
-    if (this.state.done) {
-      return <Redirect to={getOwnerLink(this.props.collection)} />;
-    }
-    return (
-      <button
-        className="button delete-collection button-tertiary"
-        onClick={() => {
-          if (!window.confirm('Are you sure you want to delete your collection?')) {
-            return;
-          }
-          this.props.deleteCollection();
-          this.setState({ done: true });
-        }}
-      >
-        Delete Collection
-      </button>
-    );
-  }
+  return (
+    <button
+      className="button delete-collection button-tertiary"
+      onClick={() => {
+        if (!window.confirm('Are you sure you want to delete your collection?')) {
+          return;
+        }
+        deleteCollection();
+        setDone(true);
+      }}
+    >
+      Delete Collection
+    </button>
+  );
 }
 
 DeleteCollectionBtn.propTypes = {
@@ -139,9 +131,7 @@ const CollectionPageContents = ({
             <>
               <div className="collection-contents">
                 <div className="collection-project-container-header">
-                  {currentUserIsAuthor && (
-                    <AddCollectionProject addProjectToCollection={addProjectToCollection} collection={collection} />
-                  )}
+                  {currentUserIsAuthor && <AddCollectionProject addProjectToCollection={addProjectToCollection} collection={collection} />}
                 </div>
                 {currentUserIsAuthor && (
                   <ProjectsUL

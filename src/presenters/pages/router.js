@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
 
@@ -27,48 +27,36 @@ const parse = (search, name) => {
   return params.get(name);
 };
 
-class ExternalPageReloader extends React.Component {
-  componentDidMount() {
+function ExternalPageReloader() {
+  useEffect(() => {
     window.location.reload();
-  }
-
-  render() {
-    return null;
-  }
+  }, []);
+  return null;
 }
 
-class PageChangeHandlerBase extends React.Component {
-  componentDidMount() {
-    this.track();
-  }
-
-  componentDidUpdate(prev) {
-    if (this.props.location.key !== prev.location.key) {
-      window.scrollTo(0, 0);
-      this.props.reloadCurrentUser();
-      this.track();
+function track() {
+  try {
+    const { analytics } = window;
+    if (analytics) {
+      analytics.page({}, { groupId: '0' });
     }
-  }
-
-  track = () => {
-    try {
-      const { analytics } = window;
-      if (analytics) {
-        analytics.page({}, { groupId: '0' });
-      }
-    } catch (ex) {
-      console.error('Error tracking page transition.', ex);
-    }
-  };
-
-  render() {
-    return null;
+  } catch (ex) {
+    console.error('Error tracking page transition.', ex);
   }
 }
 
 const PageChangeHandler = withRouter(({ location }) => {
   const { reload } = useCurrentUser();
-  return <PageChangeHandlerBase location={location} reloadCurrentUser={reload} />;
+  const isUpdate = useRef(false); 
+  useEffect(() => {
+    if (isUpdate.current) {
+      window.scrollTo(0, 0);
+      reload();
+    }
+    isUpdate.current = true;
+    track();
+  }, [location.key]);
+  return null;
 });
 
 const Router = () => (
@@ -93,9 +81,7 @@ const Router = () => (
       <Route
         path="/login/google"
         exact
-        render={({ location }) => (
-          <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />
-        )}
+        render={({ location }) => <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />}
       />
       <Route
         path="/login/email"
