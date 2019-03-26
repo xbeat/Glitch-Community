@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
 import Emoji from '../src/components/images/emoji';
@@ -148,16 +148,16 @@ storiesOf('Segmented-Buttons', module)
       buttons={[
         {
           contents: (
-            <Fragment>
+            <>
               <Badge>Normal</Badge> Badge
-            </Fragment>
+            </>
           ),
         },
         {
           contents: (
-            <Fragment>
+            <>
               <Badge type="error">Error</Badge> Badge
-            </Fragment>
+            </>
           ),
         },
       ]}
