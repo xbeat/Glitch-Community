@@ -141,12 +141,12 @@ storiesOf('Badge', module)
   .add('warning', () => <Badge type="warning">Warning</Badge>)
   .add('error', () => <Badge type="error">Error</Badge>);
 
-storiesOf('Segmented-Buttons', module)
-  .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]} />)
-  .add('jsx contents', () => <SegmentedButtons 
-                               buttons={[
-                                {contents:<><Badge>Normal</Badge> Badge</>}, 
-                                {contents:<><Badge type="error">Error</Badge> Badge</>}
-                                ]}
-                             />
-  );
+// storiesOf('Segmented-Buttons', module)
+//   .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]} />)
+//   .add('jsx contents', () => <SegmentedButtons 
+//                                buttons={[
+//                                 {contents:<><Badge>Normal</Badge> Badge</>}, 
+//                                 {contents:<><Badge type="error">Error</Badge> Badge</>}
+//                                 ]}
+//                              />
+//   );
