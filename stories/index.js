@@ -18,10 +18,8 @@ const helloAlert = () => {
 
 const withState = (initState, Component) => {
   const [state, setState] = useState(initState);
-  return (
-    <Component state={state} setState={setState} />
-  );
-}
+  return <Component state={state} setState={setState} />;
+};
 
 storiesOf('Button', module)
   .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
@@ -149,24 +147,40 @@ storiesOf('Badge', module)
   .add('error', () => <Badge type="error">Error</Badge>);
 
 storiesOf('Segmented-Buttons', module)
-  .add('regular', withState("a", ({ state, setState }) => 
-    <SegmentedButtons 
-      value={state} 
-      onChange={setState}
-      buttons={[
-        {name:"a", contents: 1}, 
-        {name:"b", contents: 2}, 
-        {name:"c", contents: 3},
-      ]} 
-    />
-  ))
-  .add('jsx contents', withState("a", ({ state, setState }) => 
-    <SegmentedButtons 
-      value={state} 
-      onChange={setState}
-      buttons={[
-        {name: "a", contents:<><Badge>Normal</Badge> Badge</>}, 
-        {name: "b", contents:<><Badge type="error">Error</Badge> Badge</>},
-      ]}
-    />
-  ));
+  .add(
+    'regular',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[{ name: 'a', contents: 1 }, { name: 'b', contents: 2 }, { name: 'c', contents: 3 }]}
+      />
+    )),
+  )
+  .add(
+    'jsx contents',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[
+          {
+            name: 'a',
+            contents: (
+              <>
+                <Badge>Normal</Badge> Badge
+              </>
+            ),
+          },
+          {
+            name: 'b',
+            contents: (
+              <>
+                <Badge type="error">Error</Badge> Badge
+              </>
+            ),
+          },
+        ]}
+      />
+    )),
+  );
