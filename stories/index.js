@@ -135,11 +135,11 @@ storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
   .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
 
-storiesOf('Badge', module)
-  .add('regular', () => <Badge>Regular</Badge>)
-  .add('success', () => <Badge type="success">Success</Badge>)
-  .add('warning', () => <Badge type="warning">Warning</Badge>)
-  .add('error', () => <Badge type="error">Error</Badge>);
+// storiesOf('Badge', module)
+//   .add('regular', () => <Badge>Regular</Badge>)
+//   .add('success', () => <Badge type="success">Success</Badge>)
+//   .add('warning', () => <Badge type="warning">Warning</Badge>)
+//   .add('error', () => <Badge type="error">Error</Badge>);
 
 // storiesOf('Segmented-Buttons', module)
 //   .add('regular', () => <SegmentedButtons buttons={[{contents: 1}, {contents: 2}, {contents: 3}]} />)
