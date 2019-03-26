@@ -49,8 +49,8 @@ function TeamWithProjects ({ teamID }) {
 // we don't want to set "stale" state, e.g. if the user clicks over to a different team's page
 // while the first team's data is still loading, we don't want to show the first team's data when it loads.
 // this should also avoid errors from setting state on an unmounted component.
-function useAsyncEffectState(initState, handler, args) {
-  const [state, setState] = useState(initState);
+function useAsyncEffectState(initialState, handler, asyncFuncArgs) {
+  const [state, setState] = useState(initialState);
   const versionRef = useRef(0);
   useEffect(() => {
     const versionWhenEffectStarted = versionRef.current;
@@ -63,7 +63,7 @@ function useAsyncEffectState(initState, handler, args) {
     return () => {
       versionRef.current += 1;
     };
-  }, args);
+  }, asyncFuncArgs);
   return state;
 }
 
@@ -72,14 +72,13 @@ export const createAPIHook = (asyncFunction) => (...args) => {
   const loading = { status: 'loading' };
   const result = useAsyncEffectState(
     loading,
-    (setResult, version) => {
+    async (setResult, version) => {
       // reset to 'loading' if the args change
       if (version > 0) {
         setResult(loading);
       }
-      asyncFunction(api, ...args).then((value) => {
-        setResult({ status: 'ready', value });
-      });
+      const value = await asyncFunction(api, ...args)
+      setResult({ status: 'ready', value });
     },
     args,
   );
