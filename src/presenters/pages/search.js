@@ -24,17 +24,16 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    if (filter.hits > 0 || filter.name === 'all') {
-      const button = {};
-      button.id = filter.name;
-      button.contents = (
-        <>
-          {capitalize(filter.name)}
-          {filter.hits && <Badge>{filter.hits}</Badge>}
-        </>
-      );
-      filterButtons.push(button);
-    }
+    const button = {};
+    button.id = filter.name;
+    button.contents = (
+      <>
+        {capitalize(filter.name)}
+        {filter.hits && <Badge>{filter.hits}</Badge>}
+      </>
+    );
+    button.display = filter.hits > 0 || filter.name === 'all';
+    filterButtons.push(button);
   });
   return filterButtons;
 }
@@ -65,6 +64,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 FilterContainer.propTypes = {
   filters: PropTypes.array.isRequired,
   setFilter: PropTypes.func.isRequired,
+  /* name of the activeFilter */
   activeFilter: PropTypes.string.isRequired,
   loaded: PropTypes.bool.isRequired,
 };
@@ -146,7 +146,6 @@ class SearchResults extends React.Component {
   }
 
   setFilter(index) {
-    console.log('set active filter to ', index);
     this.setState({ activeFilterIndex: index });
   }
 
@@ -197,9 +196,9 @@ class SearchResults extends React.Component {
     const activeFilter = filters[activeFilterIndex].name;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
 
-    const showTeams = ['all', 'teams'].includes(filters[activeFilter].name) && showResults(teams);
-    const showUsers = ['all', 'users'].includes(filters[activeFilter]) && showResults(users);
-    const showProjects = ['all', 'projects'].includes(filters[activeFilter]) && showResults(projects);
+    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
 
     const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
 
