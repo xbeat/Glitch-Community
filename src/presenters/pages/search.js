@@ -24,15 +24,17 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    const button = {};
-    button.id = filter.name;
-    button.contents = (
-      <>
-        {capitalize(filter.name)}
-        {filter.hits && <Badge>{filter.hits}</Badge>}
-      </>
-    );
-    filterButtons.push(button);
+    if (filter.hits > 0 || filter.name === 'all') {
+      const button = {};
+      button.name = filter.name;
+      button.contents = (
+        <>
+          {capitalize(filter.name)}
+          {filter.hits && <Badge>{filter.hits}</Badge>}
+        </>
+      );
+      filterButtons.push(button);
+    }
   });
   return filterButtons;
 }
@@ -63,6 +65,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 FilterContainer.propTypes = {
   filters: PropTypes.array.isRequired,
   setFilter: PropTypes.func.isRequired,
+  /* name of the activeFilter */
   activeFilter: PropTypes.string.isRequired,
   loaded: PropTypes.bool.isRequired,
 };
@@ -129,6 +132,7 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
+      /** default to the all filter */
       activeFilter: 'all',
       loadedResults: 0,
     };
@@ -143,8 +147,8 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
-  setFilter(id) {
-    this.setState({ activeFilter: id });
+  setFilter(name) {
+    this.setState({ activeFilter: name });
   }
 
   async searchTeams() {

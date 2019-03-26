@@ -152,9 +152,9 @@ storiesOf('Segmented-Buttons', module)
       value={state} 
       onChange={setState}
       buttons={[
-        {id:"a", contents: 1}, 
-        {id:"b", contents: 2}, 
-        {id:"c", contents: 3},
+        {name:"a", contents: 1}, 
+        {name:"b", contents: 2}, 
+        {name:"c", contents: 3},
       ]} 
     />
   ))
@@ -163,8 +163,8 @@ storiesOf('Segmented-Buttons', module)
       value={state} 
       onChange={setState}
       buttons={[
-        {id: "a", contents:<><Badge>Normal</Badge> Badge</>}, 
-        {id: "b", contents:<><Badge type="error">Error</Badge> Badge</>},
+        {name: "a", contents:<><Badge>Normal</Badge> Badge</>}, 
+        {name: "b", contents:<><Badge type="error">Error</Badge> Badge</>},
       ]}
     />
   ));
