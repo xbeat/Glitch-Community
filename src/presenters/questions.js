@@ -8,7 +8,7 @@ import ErrorBoundary from './includes/error-boundary';
 import { Link } from './includes/link';
 import QuestionItem from './question-item';
 import { captureException } from '../utils/sentry';
-import { useAPI, createAPIHook } from '../state/api';
+import { useAPI } from '../state/api';
 
 import Heading from '../components/text/heading';
 
@@ -29,35 +29,6 @@ QuestionTimer.propTypes = {
   callback: PropTypes.func.isRequired,
 };
 
-const useQuestionsAPI = createAPIHook(async (api, max) => {
-  try {
-    const { data } = await api.get('projects/questions');
-    const questions = data
-      .map((q) => JSON.parse(q.details))
-      .filter((q) => !!q)
-      .slice(0, max)
-      .map((question) => {
-        const [colorInner, colorOuter] = randomColor({
-          luminosity: 'light',
-          count: 2,
-        });
-        return { colorInner, colorOuter, ...question };
-      });
-    return {
-      kaomoji: sample(kaomojis),
-      questions,
-    };
-  } catch (error) {
-    console.error(error);
-    captureException(error);
-    return { kaomoji: sample(kaomojis), questions: [] };
-  }
-});
-
-function Questions({ max }) {
-  const { status  } = useQuestionsAPI(max);
-}
-
 class Questions extends React.Component {
   constructor(props) {
     super(props);
@@ -74,6 +45,28 @@ class Questions extends React.Component {
 
   async load() {
     this.setState({ loading: true });
+    try {
+      const { data } = await this.props.api.get('projects/questions');
+      const questions = data
+        .map((q) => JSON.parse(q.details))
+        .filter((q) => !!q)
+        .slice(0, this.props.max)
+        .map((question) => {
+          const [colorInner, colorOuter] = randomColor({
+            luminosity: 'light',
+            count: 2,
+          });
+          return { colorInner, colorOuter, ...question };
+        });
+      this.setState({
+        kaomoji: sample(kaomojis),
+        questions,
+      });
+    } catch (error) {
+      console.error(error);
+      captureException(error);
+    }
+    this.setState({ loading: false });
   }
 
   render() {
