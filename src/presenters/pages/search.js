@@ -9,7 +9,8 @@ import Layout from '../layout';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
-import Button from '../../components/buttons/button';
+import SegmentedButtons from '../../components/buttons/segmented-buttons';
+import Badge from '../../components/badges/badge';
 import Heading from '../../components/text/heading';
 
 import useErrorHandlers from '../error-handlers';
@@ -19,6 +20,22 @@ import NotFound from '../includes/not-found';
 import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
+
+function generateFilterButtons(filters) {
+  const filterButtons = [];
+  filters.forEach((filter) => {
+    const button = {};
+    button.id = filter.name;
+    button.contents = (
+      <>
+        {capitalize(filter.name)}
+        {filter.hits && <Badge>{filter.hits}</Badge>}
+      </>
+    );
+    filterButtons.push(button);
+  });
+  return filterButtons;
+}
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
   const totalHits = sum(filters.map((filter) => filter.hits));
@@ -37,23 +54,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      <div className="search-filters segmented-buttons">
-        {filters.map(
-          (filter) =>
-            (filter.hits === null || filter.hits > 0) && (
-              <Button
-                key={filter.name}
-                size="small"
-                type="tertiary"
-                active={activeFilter === filter.name.toLowerCase()}
-                onClick={() => setFilter(filter.name)}
-              >
-                {capitalize(filter.name)}
-                {filter.hits > 0 && <div className="status-badge">{filter.hits}</div>}
-              </Button>
-            ),
-        )}
-      </div>
+      <SegmentedButtons buttons={generateFilterButtons(filters)} onClick={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
@@ -117,8 +118,7 @@ const ProjectResults = ({ addProjectToCollection, projects, currentUser }) => {
   );
 };
 
-const MAX_PROJECT_RESULTS = 20;
-const MAX_USER_TEAM_RESULTS = 8;
+const MAX_RESULTS = 20;
 
 const showResults = (results) => !results || !!results.length;
 
@@ -129,7 +129,7 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
-      activeFilter: 'all',
+      activeFilterIndex: 0,
       loadedResults: 0,
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
@@ -143,15 +143,15 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
-  setFilter(filter) {
-    this.setState({ activeFilter: filter });
+  setFilter(index) {
+    this.setState({ activeFilterIndex: index });
   }
 
   async searchTeams() {
     const { api, query } = this.props;
     const { data } = await api.get(`teams/search?q=${query}`);
     this.setState((prevState) => ({
-      teams: data.slice(0, MAX_USER_TEAM_RESULTS),
+      teams: data.slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
@@ -160,7 +160,7 @@ class SearchResults extends React.Component {
     const { api, query } = this.props;
     const { data } = await api.get(`users/search?q=${query}`);
     this.setState((prevState) => ({
-      users: data.slice(0, MAX_USER_TEAM_RESULTS),
+      users: data.slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
@@ -169,7 +169,7 @@ class SearchResults extends React.Component {
     const { api, query } = this.props;
     const { data } = await api.get(`projects/search?q=${query}`);
     this.setState((prevState) => ({
-      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_PROJECT_RESULTS),
+      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
       loadedResults: prevState.loadedResults + 1,
     }));
   }
@@ -179,22 +179,24 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects, activeFilter } = this.state;
-    const noResults = [teams, users, projects].every((results) => !showResults(results));
-    // I'm sure there's a better way to do this
-    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
-    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
-    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
-
+    const { teams, users, projects, activeFilterIndex } = this.state;
     const teamHits = teams ? teams.length : 0;
     const userHits = users ? users.length : 0;
     const projectHits = projects ? projects.length : 0;
+
     const filters = [
       { name: 'all', hits: null },
       { name: 'teams', hits: teamHits },
       { name: 'users', hits: userHits },
       { name: 'projects', hits: projectHits },
     ];
+
+    const activeFilter = filters[activeFilterIndex].name;
+    const noResults = [teams, users, projects].every((results) => !showResults(results));
+
+    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
 
     const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
 
@@ -223,7 +225,7 @@ const SearchPage = ({ query }) => {
   const errorFuncs = useErrorHandlers();
   return (
     <Layout searchQuery={query}>
-      <Helmet>{!!query && <title>Search for {query}</title>}</Helmet>
+      {!!query && <Helmet title={`Search for ${query}`} />}
       {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>

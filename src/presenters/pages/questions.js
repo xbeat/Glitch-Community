@@ -8,9 +8,7 @@ import MoreIdeas from '../more-ideas';
 
 const QuestionsPage = () => (
   <Layout>
-    <Helmet>
-      <title>Questions</title>
-    </Helmet>
+    <Helmet title="Questions" />
     <main className="questions-page">
       <Questions max={12} />
       <MoreIdeas />
