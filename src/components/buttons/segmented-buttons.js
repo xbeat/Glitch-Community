@@ -42,7 +42,7 @@ SegmentedButtons.propTypes = {
       id: PropTypes.string.isRequired,
       contents: PropTypes.node.isRequired,
       /** whether or not to display the button */
-      display: PropTypes.bool.isRequired,
+      display: PropTypes.bool,
     }),
   ).isRequired,
   onClick: PropTypes.func.isRequired,
