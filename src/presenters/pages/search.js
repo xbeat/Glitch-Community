@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { capitalize } from 'lodash';
-import algoliasearch from 'algoliasearch';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
-import { useSearch, useLegacySearch } from '../../state/search';
-import useErrorHandlers from '../error-handlers';
+import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
+import useDevToggle from '../includes/dev-toggles';
 
 import Layout from '../layout';
 import { Loader } from '../includes/loader';
@@ -114,9 +113,8 @@ const ProjectResults = ({ projects }) => {
   );
 };
 
-function SearchResults({ query }) {
+function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const searchResults = useLegacySearch(query);
   const loaded = searchResults.status === 'ready';
   const noResults = loaded && searchResults.totalHits === 0;
 
@@ -150,13 +148,23 @@ function SearchResults({ query }) {
 }
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
-const AlgoliaSearchWrapper = ({ query }) => 
+const AlgoliaSearchWrapper = ({ query }) => {
+  const searchResults = useAlgoliaSearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
+};
+
+const LegacySearchWrapper = ({ query }) => {
+  const searchResults = useLegacySearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
+};
 
 const SearchPage = ({ query }) => {
+  const algoliaFlag = useDevToggle('Algolia Search');
+  const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchResults query={query} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );

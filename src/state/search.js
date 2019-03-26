@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { groupBy } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
+import useErrorHandlers from '../presenters/error-handlers';
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
@@ -96,6 +97,7 @@ async function searchProjects(api, query) {
 
 export function useLegacySearch(query) {
   const api = useAPI();
+  const { handleError } = useErrorHandlers();
   const [results, setResults] = useState(emptyResults);
   const [status, setStatus] = useState('init');
   useEffect(() => {
@@ -107,7 +109,7 @@ export function useLegacySearch(query) {
     }).then((res) => {
       setStatus('ready');
       setResults(res);
-    });
+    }).catch(handleError);
   }, [query]);
   return {
     status,

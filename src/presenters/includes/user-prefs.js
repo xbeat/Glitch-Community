@@ -20,4 +20,4 @@ const useUserPref = (name, defaultValue) => {
   return [value, setValue];
 };
 
-export default useUserPrefseUserPref;
+export default useUserPref;
