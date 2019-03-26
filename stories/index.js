@@ -17,7 +17,7 @@ const helloAlert = () => {
 };
 
 storiesOf('Button', module)
-  .add('regular', () => <Button onClick="hi">Hello Button</Button>)
+  .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
   .add('cta', () => (
     <Button type="cta" onClick={helloAlert}>
       CTA Button
