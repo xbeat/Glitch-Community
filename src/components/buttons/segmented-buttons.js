@@ -23,14 +23,17 @@ class SegmentedButtons extends React.Component {
 
     return (
       <div className={styles.segmentedButtons}>
-        {buttons.map(
-          (button, index) =>
-            button.display && (
-              <Button key={button.name} size="small" type="tertiary" active={index === this.state.activeFilter} onClick={() => this.setFilter(button.name)}>
-                {button.contents}
-              </Button>
-            ),
-        )}
+        {buttons.map((button) => (
+          <Button
+            key={button.name}
+            size="small"
+            type="tertiary"
+            active={button.name === this.state.activeFilter}
+            onClick={() => this.setFilter(button.name)}
+          >
+            {button.contents}
+          </Button>
+        ))}
       </div>
     );
   }

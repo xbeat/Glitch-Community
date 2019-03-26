@@ -24,7 +24,7 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    if(filter.hits > 0 || filter.name === 'all'){
+    if (filter.hits > 0 || filter.name === 'all') {
       const button = {};
       button.name = filter.name;
       button.contents = (
