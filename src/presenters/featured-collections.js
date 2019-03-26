@@ -21,7 +21,9 @@ import Heading from '../components/text/heading';
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
-
+  const projectsToFeature = sampleSize(collection.projects, 3);
+  const projectsFeaturedHaveNoNotes = projectsToFeature.filter((p) => !!p.note).length === 0;
+console.log(projectsFeaturedHaveNoNotes, projectsToFeature)
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -38,7 +40,7 @@ const CollectionWide = ({ collection }) => {
         </div>
       </header>
       <div className="collection-contents">
-        <ProjectsUL projects={sampleSize(collection.projects, 3)} collection={collection} showProjectDescriptions={false} />
+        <ProjectsUL projects={projectsToFeature} collection={collection} showProjectDescriptions={projectsFeaturedHaveNoNotes || false} />
         <CollectionLink collection={collection} className="collection-view-all">
           View all <Pluralize count={collection.projects.length} singular="project" /> <span aria-hidden>→</span>
         </CollectionLink>

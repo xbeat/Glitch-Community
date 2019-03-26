@@ -14,7 +14,6 @@ import { isDarkColor } from '../models/collection';
  * Note Component
  */
 const Note = ({ collection, project, update, hideNote }) => {
-  console.log("I'm in note", collection);
   function updateNoteVisibility(description) {
     description = _.trim(description);
     if (!description || description.length === 0) {
