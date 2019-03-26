@@ -8,7 +8,7 @@ import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
-const ProjectItem = ({ project, collection, showProjectDescriptions = true, ...props }) => (
+const ProjectItem = ({ project, collection, hideProjectDescriptions = false, ...props }) => (
   <li>
     <Note
       collection={collection}
@@ -19,7 +19,7 @@ const ProjectItem = ({ project, collection, showProjectDescriptions = true, ...p
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
-      <div className={['project', project.private ? 'private-project' : '', showProjectDescriptions ? '' : 'hide-description'].join(' ')} data-track="project" data-track-label={project.domain}>
+      <div className={['project', project.private ? 'private-project' : '', hideProjectDescriptions ? 'hide-description' : ''].join(' ')} data-track="project" data-track-label={project.domain}>
         <div className="project-container">
           <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
           <ProjectLink project={project} className="button">
@@ -27,7 +27,7 @@ const ProjectItem = ({ project, collection, showProjectDescriptions = true, ...p
             <div className="project-name">{project.domain}</div>
           </ProjectLink>
           {
-            showProjectDescriptions && (
+            !hideProjectDescriptions && (
               <div className="description">
                 <Markdown length={80}>{project.description}</Markdown>
               </div>
