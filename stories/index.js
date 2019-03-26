@@ -150,14 +150,14 @@ storiesOf('Segmented-Buttons', module)
           contents: (
             <Fragment>
               <Badge>Normal</Badge> Badge
-            <Fragment/>
+            </>
           ),
         },
         {
           contents: (
-            <Fragment>
+            <>
               <Badge type="error">Error</Badge> Badge
-            <Fragment/>
+            </>
           ),
         },
       ]}
