@@ -96,32 +96,30 @@ const ProjectResults = ({ projects }) => {
   );
 };
 
-const emptyResults = { team: [], user: [], project: [] };
-
 function SearchResults({ query }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const { hits } = useSearch(query);
-  const noResults = hits.length === 0;
-  const loaded = true;
-  const grouped = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
+  const searchResults = useSearch(query, activeFilter);
+  const noResults = searchResults.hits.length === 0;
+  const loaded = searchResults.status === 'ready';
+  
 
   const filters = [
-    { name: 'all', hits: hits.length },
-    { name: 'teams', hits: grouped.team.length },
-    { name: 'users', hits: grouped.user.length },
-    { name: 'projects', hits: grouped.project.length },
+    { name: 'all', hits: searchResults.hits.length },
+    { name: 'teams', hits: searchResults.team.length },
+    { name: 'users', hits: searchResults.user.length },
+    { name: 'projects', hits: searchResults.project.length },
   ];
 
-  const showTeams = ['all', 'teams'].includes(activeFilter) && !!grouped.team.length;
-  const showUsers = ['all', 'users'].includes(activeFilter) && !!grouped.user.length;
-  const showProjects = ['all', 'projects'].includes(activeFilter) && !!grouped.project.length;
+  const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
+  const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
+  const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
 
   return (
     <main className="search-results">
       <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} loaded={loaded} />
-      {showTeams && <TeamResults teams={grouped.team} />}
-      {showUsers && <UserResults users={grouped.user} />}
-      {showProjects && <ProjectResults projects={grouped.project} />}
+      {showTeams && <TeamResults teams={searchResults.team} />}
+      {showUsers && <UserResults users={searchResults.user} />}
+      {showProjects && <ProjectResults projects={searchResults.project} />}
       {noResults && <NotFound name="any results" />}
     </main>
   );
