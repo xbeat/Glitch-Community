@@ -77,7 +77,7 @@ export const createAPIHook = (asyncFunction) => (...args) => {
       if (version > 0) {
         setResult(loading);
       }
-      const value = await asyncFunction(api, ...args)
+      const value = await asyncFunction(api, ...args);
       setResult({ status: 'ready', value });
     },
     args,
