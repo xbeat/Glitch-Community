@@ -6,6 +6,8 @@ module.exports = async ({ config, mode }) => {
   // 'PRODUCTION' is used when building the static version of storybook.
 
   // Make whatever fine-grained changes you need
+  config.mode = 'development'
+  
   config.module.rules.push({
         test: /\.styl$/,
         use: [
