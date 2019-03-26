@@ -63,7 +63,7 @@ function useAsyncEffectState(initialState, handler, asyncFuncArgs) {
     return () => {
       versionRef.current += 1;
     };
-}, asyncFuncArgs);
+  }, asyncFuncArgs);
   return state;
 }
 

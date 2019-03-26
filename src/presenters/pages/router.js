@@ -47,7 +47,7 @@ function track() {
 
 const PageChangeHandler = withRouter(({ location }) => {
   const { reload } = useCurrentUser();
-  const isUpdate = useRef(false); 
+  const isUpdate = useRef(false);
   useEffect(() => {
     if (isUpdate.current) {
       window.scrollTo(0, 0);
