@@ -17,18 +17,17 @@ class Embed extends React.Component {
   // TODO(sheridan) make this more robust in future
   browserSatisfiesRequirements = () => {
     try {
-      /* eslint-disable */
-      new URLSearchParams();
-      /* eslint-enable */
-
+      if (URLSearchParams.name !== 'URLSearchParams') {
+        throw new Error('URLSearchParams is minified, so it must have been polyfilled');
+      }
       return true;
     } catch (error) {
       console.log(
         "Sorry, you don't have the necessary JavaScript features to run Glitch code editors. Try applying your latest system updates, or try again with a different web browser.",
         error,
       );
-      return false;
     }
+    return false;
   };
 
   render() {

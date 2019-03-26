@@ -50,7 +50,7 @@ const proxy = require('./proxy');
 const proxied = proxy(app);
 
 const logger = require('./logger');
-app.use(logger)
+app.use(logger);
 
 const router = require('./routes');
 app.use('/', router(['/edit', ...proxied]));

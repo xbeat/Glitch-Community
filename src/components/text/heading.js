@@ -15,12 +15,16 @@ const Heading = ({ children, tagName: TagName }) => {
     heading: true,
   };
   classNameObj[TagName] = true;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
   return <TagName className={cx(classNameObj)}>{children}</TagName>;
 };
 
 Heading.propTypes = {
-  /** element(s) to display in the button */
+  /** element(s) to display in the heading */
   children: PropTypes.node.isRequired,
   /** heading tag to be rendered */
   tagName: PropTypes.oneOf(TAGS).isRequired,

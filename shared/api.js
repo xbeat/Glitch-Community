@@ -2,7 +2,7 @@
 
 const joinIdsToQueryString = (ids) => {
   return ids.map((id) => `id=${id}`).join('&');
-}
+};
 
 const getFromApi = async (api, url) => {
   const { data } = await api.get(url);

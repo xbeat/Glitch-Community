@@ -37,6 +37,7 @@
 // .button-link
 //   color: primary
     
+<<<<<<< HEAD
 // .button-cta
 //   color: primary
 //   background-color: cta
@@ -64,6 +65,36 @@
 //   .status-badge
 //     display: inline
 //     margin-left: 1px
+=======
+.button-cta
+  color: primary
+  background-color: cta
+  box-shadow: 4px 4px 0 primary
+  margin-bottom: 2px
+  &:hover
+    background-color: cta
+    box-shadow: 2px 2px 0 primary
+  &:active
+    background-color: cta
+    box-shadow: none
+
+.button-small
+  font-size: 12px
+  padding: 3px 8px
+  padding-top: 5px
+  &.has-emoji
+    padding-top: 3px
+    padding-bottom: 3px
+    .status-badge
+      margin-right: 3px
+  .loader
+    width: 15px
+    height: 15px
+    margin-right: 0
+  .status-badge
+    display: inline
+    margin-left: 1px
+>>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 
 // .button-tertiary
 //   color: tertiary
@@ -117,6 +148,7 @@
 // button.link
 //   vertical-align: unset
 
+<<<<<<< HEAD
 // .button-checkbox
 //   width: auto
 //   margin-top: 2px
@@ -130,6 +162,15 @@
 // //   padding-right: 4px
 // //   padding-top: 3px
 // //   padding-bottom: 4px
+=======
+.button-checkbox
+  width: auto
+  margin-top: 2px
+  margin-right: 5px
+  margin-left: 0px
+  vertical-align: middle
+  display: inline-block
+>>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 
 // .button-area
 //   &:hover
@@ -145,6 +186,7 @@
 //   display: inline-block
 //   position: relative
 
+<<<<<<< HEAD
 // .segmented-buttons
 //   margin-bottom: 12px
 //   button
@@ -158,3 +200,26 @@
 //     &:not(:first-child):not(:last-child)
 //       border-radius: 0px
 //       border-left: 0
+=======
+.segmented-buttons
+  margin-bottom: 12px
+  button
+    margin: 0
+    &:first-child
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+    &:last-child
+      border-left: 0
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+    &:not(:first-child):not(:last-child)
+      border-radius: 0px
+      border-left: 0
+    &.active
+      background: secondary-background-active
+    &.active:hover
+      background-color: secondary-background-hover
+    &:focus
+      outline: none
+      background-color: secondary-background
+>>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16

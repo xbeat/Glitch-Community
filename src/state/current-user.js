@@ -1,11 +1,9 @@
-/* globals API_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
-import useLocalStorage from './includes/local-storage';
+import useLocalStorage from './local-storage';
+import { getAPIForToken } from './api';
 
 const Context = React.createContext();
 
@@ -163,18 +161,13 @@ class CurrentUserManager extends React.Component {
     }
   }
 
+  persistentToken() {
+    const { sharedUser } = this.props;
+    return sharedUser ? sharedUser.persistentToken : null;
+  }
+
   api() {
-    if (this.props.sharedUser) {
-      return axios.create({
-        baseURL: API_URL,
-        headers: {
-          Authorization: this.props.sharedUser.persistentToken,
-        },
-      });
-    }
-    return axios.create({
-      baseURL: API_URL,
-    });
+    return getAPIForToken(this.persistentToken());
   }
 
   async load() {
@@ -243,8 +236,8 @@ class CurrentUserManager extends React.Component {
   render() {
     const { children, sharedUser, cachedUser } = this.props;
     return children({
-      api: this.api(),
       currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
+      persistentToken: this.persistentToken(),
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: (user) => this.login(user),
@@ -273,19 +266,12 @@ export const CurrentUserProvider = ({ children }) => {
   const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   return (
     <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
-      {({ api, ...props }) => <Context.Provider value={props}>{children(api)}</Context.Provider>}
+      {(props) => <Context.Provider value={props}>{children}</Context.Provider>}
     </CurrentUserManager>
   );
 };
 CurrentUserProvider.propTypes = {
-  children: PropTypes.func.isRequired,
-};
-
-export const CurrentUserConsumer = (props) => (
-  <Context.Consumer>{({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}</Context.Consumer>
-);
-CurrentUserConsumer.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export const useCurrentUser = () => React.useContext(Context);

@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { sampleSize } from 'lodash';
+<<<<<<< HEAD
 import { getSingleItem, getAllPages, allByKeys } from 'Shared/api';
+=======
+import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
+import { createAPIHook } from '../../state/api';
+>>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 
 import CollectionItem from '../collection-item';
 
-const getIncludedCollections = async (api, projectId) => {
+const useIncludingCollections = createAPIHook(async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
-  const withData = await Promise.all(
-    collections.map(async (collection) => {
+  const selectedCollections = sampleSize(collections, 3);
+  return Promise.all(
+    selectedCollections.map(async (collection) => {
       const { projects, user, team } = await allByKeys({
         projects: getAllPages(api, `/v1/collections/by/id/projects?id=${collection.id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
         user: collection.user && getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id),
@@ -16,21 +22,15 @@ const getIncludedCollections = async (api, projectId) => {
       return { ...collection, projects, user, team };
     }),
   );
-  return sampleSize(withData, 3);
-};
+});
 
-const useAsync = (asyncFunction, ...args) => {
-  const [result, setResult] = useState(null);
-  useEffect(() => {
-    asyncFunction(...args).then(setResult);
-  }, args);
-  return result;
-};
-
-const IncludedInCollections = ({ api, projectId }) => {
-  const rawCollections = useAsync(getIncludedCollections, api, projectId);
-  const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
-  if (!collections || !collections.length) {
+const IncludedInCollections = ({ projectId }) => {
+  const { status, value: rawCollections } = useIncludingCollections(projectId);
+  if (status === 'loading') {
+    return null;
+  }
+  const collections = rawCollections.filter((c) => c.team || c.user);
+  if (!collections.length) {
     return null;
   }
   return (

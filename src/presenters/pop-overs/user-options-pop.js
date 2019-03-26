@@ -211,5 +211,4 @@ UserOptionsAndCreateTeamPopContainer.propTypes = {
     login: PropTypes.string,
     teams: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.func.isRequired,
 };

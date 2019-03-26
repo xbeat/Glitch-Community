@@ -10,7 +10,8 @@
           "ie": "11",
           "edge": "16"
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "corejs": 2
       }
     ]
   ],

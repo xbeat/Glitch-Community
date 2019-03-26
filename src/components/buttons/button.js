@@ -3,55 +3,50 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 import { Link } from '../../presenters/includes/link';
+import Emoji from '../images/emoji';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'link', 'dropDown'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
 export const SIZES = ['small'];
 
 /**
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, opaque, hover, children }) => {
+const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
     small: size === 'small' || type === 'dangerZone', // we want to demphasize dangerous actions, so we make them small
     tertiary: ['tertiary', 'dangerZone'].includes(type),
     dangerZone: type === 'dangerZone',
-    unstyled: ['link', 'dropDown'].includes(type),
-    link: type === 'link', // style this button to look like a link
-    hasEmoji: React.Children.toArray(children).some((child) => child.type && (child.type.name === 'Emoji' || 'Image')),
-    opaque,
+    unstyled: type === 'dropDown',
+    hasEmoji: React.Children.toArray(children).some((child) => child.type && child.type === Emoji),
+    matchBackground: matchBackground === true,
+    active,
     hover,
   });
 
-  const linkOrButton = () => {
-    if (onClick) {
-      return (
-        <button onClick={onClick} className={className} disabled={disabled}>
-          {children}
-        </button>
-      );
-    }
-    return (
-      <Link to={href} className={className}>
-        {children}
-      </Link>
-    );
-  };
-
-  return linkOrButton();
+  return href
+    ? <Link to={href} className={className}>{children}</Link>
+    : <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
 };
 
 Button.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
-  onClick(props, propName) {
-    if (props.href === false && (props[propName] === null || typeof props[propName] !== 'function')) {
-      return new Error('Please provide a href or an onClick function');
+  onClick: (props, propName, componentName) => {
+    if (!props.onClick && !props.href) {
+      return new Error(`One of props 'onClick' or 'href' was not specified in '${componentName}'.`);
+    }
+    return null;
+  },
+  /** OR link when button clicked */
+  href: (props, propName, componentName) => {
+    if (!props.onClick && !props.href) {
+      return new Error(`One of props 'href' or 'onClick' was not specified in '${componentName}'.`);
     }
     return null;
   },
@@ -63,26 +58,21 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
-  /** whether or not the button takes on the colour of the background */
-  transparent: PropTypes.bool,
-  /** link when button clicked */
-  href(props, propName) {
-    if (props.onClick === false && (props[propName] === null || typeof props[propName] !== 'string')) {
-      return new Error('Please provide a href or an onClick function');
-    }
-    return null;
-  },
+  /** whether or not the button should match its background */
+  matchBackground: PropTypes.bool,
+  /** whether the button is active or not */
+  active: PropTypes.bool,
 };
 
 Button.defaultProps = {
   onClick: null,
+  href: null,
   disabled: false,
   type: null,
   size: null,
   hover: false,
-  transparent: false,
-  href: null,
-  emoji: null,
+  matchBackground: false,
+  active: false,
 };
 
 export default Button;

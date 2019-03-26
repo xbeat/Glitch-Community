@@ -50,9 +50,7 @@ const Secret = ({ enabledToggles, toggleData, setEnabledToggles }) => {
   return (
     <section className="secretPage">
       <div className="filler" />
-      <Helmet>
-        <title>Glitch - It's a secret to everybody.</title>
-      </Helmet>
+      <Helmet title="Glitch - It's a secret to everybody." />
       <SecretEffectsOnMount />
       <ul>
         {toggleData.map(({ name, description }) => (
