@@ -19,7 +19,7 @@ const ProjectItem = ({ project, collection, showProjectDescriptions = true, ...p
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
-      <div className={['project', project.private ? 'private-project' : '', showProjectDescriptions ].join(' ')} data-track="project" data-track-label={project.domain}>
+      <div className={['project', project.private ? 'private-project' : '', showProjectDescriptions ? '' : 'hide-description'].join(' ')} data-track="project" data-track-label={project.domain}>
         <div className="project-container">
           <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
           <ProjectLink project={project} className="button">
