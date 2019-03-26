@@ -25,6 +25,8 @@ module.exports = async ({ config, mode }) => {
     ],
     include: path.resolve(__dirname, '../src/components'),
   });
+  
+  config.mode='development';
 
   // Return the altered config
   return config;
