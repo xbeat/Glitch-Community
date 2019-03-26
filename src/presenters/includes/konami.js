@@ -7,14 +7,14 @@ import ReactKonami from 'react-konami';
 //   Inner part will render once konami code is entered.
 // </Konami>
 
-export default function Konami ({ children }) {
-  const [active, setActive] = useState(false)
-    return (
-      <>
-        <ReactKonami easterEgg={() => this.setState({ active: true })} />
-        {!!active && children}
-      </>
-    );
+export default function Konami({ children }) {
+  const [active, setActive] = useState(false);
+  return (
+    <>
+      <ReactKonami easterEgg={() => setActive(true)} />
+      {!!active && children}
+    </>
+  );
 }
 
 Konami.propTypes = {
