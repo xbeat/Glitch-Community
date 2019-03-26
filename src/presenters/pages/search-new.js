@@ -65,34 +65,16 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 const TeamResults = ({ teams }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
-    <ul className="teams-container">
-      {teams ? (
-        teams.map((team) => (
-          <li key={team.id}>
-            <TeamItem team={team} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
-    </ul>
+    <ul className="teams-container">{teams ? teams.map((team) => <li key={team.objectID}>{/*<TeamItem team={team} />*/}</li>) : <Loader />}</ul>
   </article>
 );
+
+const formatUser = (userResult) => ({ ...userResult, id: userResult.objectID)
 
 const UserResults = ({ users }) => (
   <article>
     <Heading tagName="h2">Users</Heading>
-    <ul className="users-container">
-      {users ? (
-        users.map((user) => (
-          <li key={user.id}>
-            <UserItem user={user} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
-    </ul>
+    <ul className="users-container">{users ? users.map((user) => <li key={user.objectID}><UserItem user={user} /></li>) : <Loader />}</ul>
   </article>
 );
 
@@ -104,29 +86,21 @@ const ProjectResults = ({ projects }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
   const addProjectToCollection = () => {};
-  if (!projects) {
-    return (
-      <article>
-        <Heading tagName="h2">Projects</Heading>
-        <Loader />
-      </article>
-    );
-  }
-  const loggedInUserWithProjects = projects && currentUser.login;
-  return loggedInUserWithProjects ? (
-    <ProjectsList
-      title="Projects"
-      projects={projects}
-      projectOptions={{
-        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-      }}
-    />
-  ) : (
-    <ProjectsList title="Projects" projects={projects} />
-  );
+  return 'Projects';
+  // return currentUser.login ? (
+  //   <ProjectsList
+  //     title="Projects"
+  //     projects={projects}
+  //     projectOptions={{
+  //       addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+  //     }}
+  //   />
+  // ) : (
+  //   <ProjectsList title="Projects" projects={projects} />
+  // );
 };
 
-const emptyResults = { teams: [], users: [], projects: [] };
+const emptyResults = { team: [], user: [], project: [] };
 
 function SearchResults({ query }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -134,8 +108,7 @@ function SearchResults({ query }) {
   const noResults = hits.length === 0;
   const loaded = true;
   const grouped = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
-    console.log(hits, grouped);
-
+  console.log(hits, grouped);
 
   const filters = [
     { name: 'all', hits: hits.length },
@@ -144,17 +117,16 @@ function SearchResults({ query }) {
     { name: 'projects', hits: grouped.project.length },
   ];
 
-  const showTeams = ['all', 'teams'].includes(activeFilter) && grouped.teams.length;
-  const showUsers = ['all', 'users'].includes(activeFilter) && grouped.users.length;
-  const showProjects = ['all', 'projects'].includes(activeFilter) && grouped.projects.length;
-
+  const showTeams = ['all', 'teams'].includes(activeFilter) && !!grouped.team.length;
+  const showUsers = ['all', 'users'].includes(activeFilter) && !!grouped.user.length;
+  const showProjects = ['all', 'projects'].includes(activeFilter) && !!grouped.project.length;
 
   return (
     <main className="search-results">
       <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} loaded={loaded} />
-      {showTeams && <TeamResults teams={grouped.teams} />}
-      {showUsers && <UserResults users={grouped.users} />}
-      {showProjects && <ProjectResults projects={grouped.projects} />}
+      {showTeams && <TeamResults teams={grouped.team} />}
+      {showUsers && <UserResults users={grouped.user} />}
+      {showProjects && <ProjectResults projects={grouped.project} />}
       {noResults && <NotFound name="any results" />}
     </main>
   );
