@@ -6,8 +6,7 @@ const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd191
 
 const searchIndex = searchClient.initIndex('search');
 
-// TODO: all this data really ought to be in the raw data
-
+// TODO: all this really ought to be in the raw data
 function formatUser (hit) {
   return {
     id: Number(hit.objectID.split('-')[1]),
@@ -17,10 +16,25 @@ function formatUser (hit) {
   }
 }
 
+function formatTeam (hit) {
+  return {
+    id: Number(hit.objectID.split('-')[1]),
+    hasCoverImage: false,
+    hasAvatarImage: false,
+    isVerified: false,
+    url: hit.name, // this is wrong
+    users: [], // team item expects full users to be loaded
+    
+    ...hit,
+  }
+}
+
 function formatHit(hit) {
   switch (hit.type) {
     case 'user':
       return formatUser(hit)
+    case 'team':
+      return formatTeam(hit)
     default:
       return hit
   }

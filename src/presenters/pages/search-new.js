@@ -122,7 +122,7 @@ function SearchResults({ query }) {
       <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} loaded={loaded} />
       {showTeams && <TeamResults teams={grouped.team} />}
       {showUsers && <UserResults users={grouped.user} />}
-      {showProjects && <ProjectResults projects={grouped.project} />}
+      {/*showProjects && <ProjectResults projects={grouped.project} />*/}
       {noResults && <NotFound name="any results" />}
     </main>
   );

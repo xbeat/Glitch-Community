@@ -21,9 +21,7 @@ export default function TeamItem({ team }) {
         <div className="content">
           <img className="avatar" src={getAvatarUrl(team)} alt="" />
           <div className="information">
-            <TeamLink team={team}>
-              <Button>{team.name}</Button>
-            </TeamLink>
+            <Button href={getLink(team)}>{team.name}</Button>
             {!!team.isVerified && <VerifiedBadge />}
             <UsersList users={team.users} />
             {!!team.description && (
