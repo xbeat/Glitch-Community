@@ -18,7 +18,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorEndpoint = `${authorType}s`;
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
 
-  // get all collections from the author
+  // get up to 10 collections from the author
   let moreCollectionsFromAuthor = await getSingleItem(api, `v1/${authorEndpoint}/${authorId}/collections?limit=10&orderKey=createdAt&orderDirection=DESC`, 'items');
 
   // filter out the current collection
@@ -33,7 +33,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   // filter out empty collections that don't have projects
   moreCollectionsWithProjects = moreCollectionsWithProjects.filter((c) => c.projects && c.projects.length > 0);
 
-  // pick 3 collections
+  // pick up to 3 collections to show
   moreCollectionsWithProjects = sampleSize(moreCollectionsWithProjects, 3);
 
   return moreCollectionsWithProjects;
