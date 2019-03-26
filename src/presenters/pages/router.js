@@ -94,7 +94,7 @@ const Router = () => (
         path="/login/google"
         exact
         render={({ location }) => (
-          <GoogleLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />
+          <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />
         )}
       />
       <Route
