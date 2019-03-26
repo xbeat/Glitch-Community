@@ -1,16 +1,20 @@
 import { configure, addDecorator } from '@storybook/react';
 import React from 'react';
+import { withInfo } from '@storybook/addon-info';
 import { MemoryRouter } from 'react-router-dom';
 
-const enableLinks = (story) => <MemoryRouter>{story()}</MemoryRouter>
+const enableLinks = (story) => <MemoryRouter>{story()}</MemoryRouter>;
 
 addDecorator(
-  enableLinks
+  withInfo({
+    header: false, // Global configuration for the info addon across all of your stories.
+  }),
+  enableLinks,
 );
 
 function loadStories() {
   require('../stories/index.js');
-  
+
   // You can require as many stories as you need.
 }
 
