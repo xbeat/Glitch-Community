@@ -1,4 +1,5 @@
 import { configure, addDecorator } from '@storybook/react';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
 const enableLinks = (story) => <MemoryRouter>{story()}</MemoryRouter>
