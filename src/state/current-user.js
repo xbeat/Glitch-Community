@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage } from './local-storage';
 import { getAPIForToken } from './api';
-import { useSelector, useActions, after, matchAlways, matchTypes } from './utils';
+import { useSelector, useActions, afterReducer, matchAlways, matchTypes } from './utils';
 
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
@@ -210,7 +211,7 @@ const { slice, reducer, actions } = createSlice({
 
 const selectCurrentUser = (state) => state.currentUser;
 
-const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
+const handleLoadRequest = afterReducer(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
   const prevUser = selectCurrentUser(prevState);
   // prevent multiple 'load's from running
   if (prevUser.loadStatus === 'loading') return;
@@ -219,7 +220,7 @@ const handleLoadRequest = after(matchTypes(actions.requestedLoad), async (store,
   store.dispatch(actions.loaded(result));
 });
 
-const trackUserChanges = after(matchTypes(actions.loaded), (store, action, prevState) => {
+const trackUserChanges = afterReducer(matchTypes(actions.loaded), (store, action, prevState) => {
   const prevUser = selectCurrentUser(prevState);
   const { cachedUser } = selectCurrentUser(store.getState());
   if (!usersMatch(prevUser.cachedUser, cachedUser)) {
@@ -227,7 +228,7 @@ const trackUserChanges = after(matchTypes(actions.loaded), (store, action, prevS
   }
 });
 
-const persistToStorage = after(matchAlways, (store, action, prevState) => {
+const persistToStorage = afterReducer(matchAlways, (store, action, prevState) => {
   const prevUser = selectCurrentUser(prevState);
   const { sharedUser, cachedUser } = selectCurrentUser(store.getState());
   if (prevUser.sharedUser !== sharedUser || prevUser.cachedUser !== cachedUser) {
@@ -254,6 +255,13 @@ export function useCurrentUser() {
     update: boundActions.updated,
     clear: boundActions.loggedOut,
   };
+}
+
+export function useCurrentUserInit() {
+  const { requestedLoad } = useActions(actions);
+  useEffect(() => {
+    requestedLoad();
+  }, []);
 }
 
 export function normalizeUser(user, currentUser) {

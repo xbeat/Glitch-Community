@@ -42,18 +42,11 @@ export function createStoreFromSlices(slices) {
   });
 }
 
-// helpers for making middleware, after redux-aop
-
-export function once(middleware) {
-  return (store) => {
-    middleware(store);
-    return (next) => (action) => next(action);
-  };
-}
+// helpers for making middleware
 
 // run _before_ the reducer gets the action.
 // useful for middleware that transform actions (e.g. running Promises).
-export function before(matcher, middleware) {
+export function beforeReducer(matcher, middleware) {
   return (store) => (next) => (action) => {
     if (!matcher(action)) {
       return next(action);
@@ -68,7 +61,7 @@ export function before(matcher, middleware) {
 
 // run _after_ the reducer gets the action.
 // useful for middleware that perform side effects (logging, dispatching other actions)
-export function after(matcher, middleware) {
+export function afterReducer(matcher, middleware) {
   return (store) => (next) => (action) => {
     const prevState = store.getState();
     const result = next(action);
@@ -86,13 +79,4 @@ export const matchTypes = (...actionsOrTypes) => {
   // coerce to strings, to use with redux-starter-kit action creators
   const types = actionsOrTypes.map(String);
   return (action) => action && types.includes(action.type);
-};
-
-let didFire = false;
-export const matchOnce = () => {
-  if (didFire) {
-    return false;
-  }
-  didFire = true;
-  return true;
 };
