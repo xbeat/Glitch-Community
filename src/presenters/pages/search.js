@@ -24,15 +24,17 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    const button = {};
-    button.id = filter.name;
-    button.contents = (
-      <>
-        {capitalize(filter.name)}
-        {filter.hits && <Badge>{filter.hits}</Badge>}
-      </>
-    );
-    filterButtons.push(button);
+    if (filter.hits > 0 || filter.name === 'all') {
+      const button = {};
+      button.name = filter.name;
+      button.contents = (
+        <>
+          {capitalize(filter.name)}
+          {filter.hits && <Badge>{filter.hits}</Badge>}
+        </>
+      );
+      filterButtons.push(button);
+    }
   });
   return filterButtons;
 }
@@ -63,6 +65,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 FilterContainer.propTypes = {
   filters: PropTypes.array.isRequired,
   setFilter: PropTypes.func.isRequired,
+  /* name of the activeFilter */
   activeFilter: PropTypes.string.isRequired,
   loaded: PropTypes.bool.isRequired,
 };
@@ -129,7 +132,8 @@ class SearchResults extends React.Component {
       teams: null,
       users: null,
       projects: null,
-      activeFilterIndex: 0,
+      /** default to the all filter */
+      activeFilter: 'all',
       loadedResults: 0,
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
@@ -143,8 +147,8 @@ class SearchResults extends React.Component {
     this.searchProjects().catch(handleError);
   }
 
-  setFilter(index) {
-    this.setState({ activeFilterIndex: index });
+  setFilter(name) {
+    this.setState({ activeFilter: name });
   }
 
   async searchTeams() {
@@ -179,7 +183,7 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects, activeFilterIndex } = this.state;
+    const { teams, users, projects, activeFilter } = this.state;
     const teamHits = teams ? teams.length : 0;
     const userHits = users ? users.length : 0;
     const projectHits = projects ? projects.length : 0;
@@ -191,7 +195,6 @@ class SearchResults extends React.Component {
       { name: 'projects', hits: projectHits },
     ];
 
-    const activeFilter = filters[activeFilterIndex].name;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
 
     const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
