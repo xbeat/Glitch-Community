@@ -1,3 +1,4 @@
+/* eslint-disable prefer-default-export */
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
 
