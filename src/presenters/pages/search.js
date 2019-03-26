@@ -24,7 +24,7 @@ import UserItem from '../user-item';
 function generateFilterButtons(filters) {
   const filterButtons = [];
   filters.forEach((filter) => {
-    if (filter.hits > 0 || filter.hits === null) {
+    if (filter.hits > 0 || filter.name === 'all') {
       const button = {};
       button.id = filter.name;
       button.contents = (
@@ -146,6 +146,7 @@ class SearchResults extends React.Component {
   }
 
   setFilter(index) {
+    console.log('set active filter to ', index);
     this.setState({ activeFilterIndex: index });
   }
 
@@ -196,9 +197,9 @@ class SearchResults extends React.Component {
     const activeFilter = filters[activeFilterIndex].name;
     const noResults = [teams, users, projects].every((results) => !showResults(results));
 
-    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
-    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
-    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
+    const showTeams = ['all', 'teams'].includes(filters[activeFilter].name) && showResults(teams);
+    const showUsers = ['all', 'users'].includes(filters[activeFilter]) && showResults(users);
+    const showProjects = ['all', 'projects'].includes(filters[activeFilter]) && showResults(projects);
 
     const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
 
