@@ -20,7 +20,7 @@ const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   let moreCollections;
 
   // get all collections from the author
-  moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections`, 'items');
+  moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections?limit=10&orderKey=createdAt&orderDirection=DSC`, 'items');
 
   // filter out the current collection
   moreCollections = moreCollections.filter((c) => c.id !== collection.id);
