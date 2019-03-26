@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { capitalize, sum, groupBy } from 'lodash';
+import { capitalize } from 'lodash';
 import algoliasearch from 'algoliasearch';
 
 import { useAPI } from '../../state/api';
@@ -39,9 +39,7 @@ const generateFilterButtons = (filters) =>
     })
     .filter(Boolean);
 
-const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
-  const totalHits = sum(filters, (filter) => filter.hits);
-
+const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
   if (!loaded) {
     return (
       <>
@@ -65,14 +63,34 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 const TeamResults = ({ teams }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
-    <ul className="teams-container">{teams ? teams.map((team) => <li key={team.id}><TeamItem team={team} /></li>) : <Loader />}</ul>
+    <ul className="teams-container">
+      {teams ? (
+        teams.map((team) => (
+          <li key={team.id}>
+            <TeamItem team={team} />
+          </li>
+        ))
+      ) : (
+        <Loader />
+      )}
+    </ul>
   </article>
 );
 
 const UserResults = ({ users }) => (
   <article>
     <Heading tagName="h2">Users</Heading>
-    <ul className="users-container">{users ? users.map((user) => <li key={user.id}><UserItem user={user} /></li>) : <Loader />}</ul>
+    <ul className="users-container">
+      {users ? (
+        users.map((user) => (
+          <li key={user.id}>
+            <UserItem user={user} />
+          </li>
+        ))
+      ) : (
+        <Loader />
+      )}
+    </ul>
   </article>
 );
 
@@ -99,12 +117,11 @@ const ProjectResults = ({ projects }) => {
 function SearchResults({ query }) {
   const [activeFilter, setActiveFilter] = useState('all');
   const searchResults = useSearch(query, activeFilter);
-  const noResults = searchResults.hits.length === 0;
+  const noResults = searchResults.totalHits === 0;
   const loaded = searchResults.status === 'ready';
-  
 
   const filters = [
-    { name: 'all', hits: searchResults.hits.length },
+    { name: 'all', hits: searchResults.totalHits },
     { name: 'teams', hits: searchResults.team.length },
     { name: 'users', hits: searchResults.user.length },
     { name: 'projects', hits: searchResults.project.length },
@@ -116,7 +133,14 @@ function SearchResults({ query }) {
 
   return (
     <main className="search-results">
-      <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} loaded={loaded} />
+      <FilterContainer
+        totalHits={searchResults.totalHits}
+        filters={filters}
+        setFilter={setActiveFilter}
+        activeFilter={activeFilter}
+        query={query}
+        loaded={loaded}
+      />
       {showTeams && <TeamResults teams={searchResults.team} />}
       {showUsers && <UserResults users={searchResults.user} />}
       {showProjects && <ProjectResults projects={searchResults.project} />}

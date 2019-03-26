@@ -2,6 +2,8 @@
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
 import { groupBy } from 'lodash';
+import { useAPI } from './api';
+import { allByKeys } from '../../shared/api'
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
@@ -72,7 +74,7 @@ export function useSearch(query) {
   return {
     ...emptyResults,
     status: query ? 'ready' : 'init',
-    hits,
+    totalHits: hits.length,
     ...groupBy(hits, (hit) => hit.type),
   };
 }
@@ -82,24 +84,34 @@ async function searchTeams(api, query) {
   return data.slice(0, MAX_RESULTS)
 }
 
-async function searchUsers() {
-  const { api, query } = this.props;
+async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  this.setState((prevState) => ({
-    users: data.slice(0, MAX_RESULTS),
-    loadedResults: prevState.loadedResults + 1,
-  }));
+  return data.slice(0, MAX_RESULTS)
 }
 
-async function searchProjects() {
-  const { api, query } = this.props;
+async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  this.setState((prevState) => ({
-    projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
-    loadedResults: prevState.loadedResults + 1,
-  }));
+  return data.slice(0, MAX_RESULTS)
 }
 
 export function useLegacySearch(query) {
-
+  const api = useAPI()
+  const [results, setResults] = useState(emptyResults)
+  const [status, setStatus] = useState('init')
+  useEffect(() => {
+    setStatus('loading')
+    allByKeys({
+      team: searchTeams(api, query),
+      user: searchTeams(api, query),
+      project: searchTeams(api, query),
+    }).then((res) => {
+      setStatus('ready')
+      setResults(res)
+    })
+  }, [query])
+  return {
+    status,
+    totalHits: results.team.length + results.user.length + results.project.length,
+    ...results,
+  }
 }
