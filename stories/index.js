@@ -147,10 +147,18 @@ storiesOf('Segmented-Buttons', module)
     <SegmentedButtons
       buttons={[
         {
-          contents: <Badge>Normal</Badge>,
+          contents: (
+            <>
+              <Badge>Normal</Badge> Badge
+            </>
+          ),
         },
         {
-          contents: <Badge type="error">Error</Badge>,
+          contents: (
+            <>
+              <Badge type="error">Error</Badge> Badge
+            </>
+          ),
         },
       ]}
     />
