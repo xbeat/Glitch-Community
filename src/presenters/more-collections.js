@@ -15,36 +15,28 @@ import CollectionItem from './collection-item';
 
 const loadMoreCollectionsFromAuthor = async ({ api, collection }) => {
   const authorType = collection.teamId === -1 ? 'user' : 'team';
+  const authorEndpoint = `${authorType}s`;
   const authorId = authorType === 'user' ? collection.userId : collection.teamId;
 
-  let moreCollections;
-
   // get all collections from the author
-  moreCollections = await getSingleItem(api, `v1/${authorType}s/${authorId}/collections?limit=10&orderKey=createdAt&orderDirection=DESC`, 'items');
+  let moreCollectionsFromAuthor = await getSingleItem(api, `v1/${authorEndpoint}/${authorId}/collections?limit=10&orderKey=createdAt&orderDirection=DESC`, 'items');
 
   // filter out the current collection
-  moreCollections = moreCollections.filter((c) => c.id !== collection.id);
+  moreCollectionsFromAuthor = moreCollectionsFromAuthor.filter((c) => c.id !== collection.id);
 
   // get project details for each collection
-  moreCollections = await Promise.all(moreCollections.map(async (c) => {
+  let moreCollectionsWithProjects = await Promise.all(moreCollectionsFromAuthor.map(async (c) => {
     c.projects = await getSingleItem(api, `/v1/collections/by/id/projects?id=${c.id}`, 'items');
     return c;
   }));
 
-  // filter out collections that don't have projects
-  moreCollections = moreCollections.filter((c) => c.projects && c.projects.length > 0);
+  // filter out empty collections that don't have projects
+  moreCollectionsWithProjects = moreCollectionsWithProjects.filter((c) => c.projects && c.projects.length > 0);
 
   // pick 3 collections
-  moreCollections = sampleSize(moreCollections, 3);
+  moreCollectionsWithProjects = sampleSize(moreCollectionsWithProjects, 3);
 
-  // get author details and attach to each collection
-  const authorDetails = await getSingleItem(api, `v1/${authorType}s/by/id/?id=${authorId}`, authorId);
-  moreCollections = moreCollections.map((c) => {
-    c[authorType] = authorDetails;
-    return c;
-  });
-
-  return moreCollections;
+  return moreCollectionsWithProjects;
 };
 
 
