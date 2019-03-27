@@ -2,12 +2,9 @@
 
 // What collections to show in the expanded area on the homepage
 export const featuredCollections = [
-  { owner: 'glitch', name: 'make-me-multilingual' },
-  { owner: 'glitch', name: 'code-with-comics' },
-  { owner: 'glitch', name: 'sketch-with-p-5' },
-  { owner: 'clever-assembly-test', name: 'forest-melange' },
-  { owner: 'empty-team', name: 'markdown-overflow-testing' },
-  { owner: 'internet-two-dot-zero', name: 'discord-bots' }
+  { owner: 'glitch', name: 'draw-with-music' },
+  { owner: 'glitch', name: 'this-week-on-glitch-mar-27-2019' },
+  { owner: 'glitch', name: 'glitch-flix' },
 ];
 
 // More ideas is populated from this team
