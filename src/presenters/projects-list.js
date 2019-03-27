@@ -58,9 +58,12 @@ class ExpandyProjects extends React.Component {
       <ExpanderContainer
         expanded={!shouldShowButton}
         controlArea={
-          <button className="button-tertiary" onClick={this.handleClick} type="button">
-            Show all<Badge>{hiddenProjects}</Badge>
-          </button>
+          <div>
+            <button>Paginate</button>
+            <button className="button-tertiary" onClick={this.handleClick} type="button">
+              Show all<Badge>{hiddenProjects}</Badge>
+            </button>
+          </div>
         }
       >
         <ProjectsUL projects={projects} {...props} />
