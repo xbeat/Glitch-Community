@@ -217,7 +217,7 @@ async function loadCollection(api, ownerName, collectionName) {
       console.log(projectsWithUsers);
       collection.projects = projectsWithUsers;
     }
-
+    console.log(collection);
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
