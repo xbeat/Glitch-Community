@@ -70,7 +70,6 @@ const loadCollection = async (api, { owner, name }) => {
     const uniqueUserIds = uniq(flatMap(collection.projects, ({ permissions }) => permissions.map(({ userId }) => userId)));
     // Load all of the users for this set of projects
     const allUsers = await getFromApi(api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
-    console.log({ allUsers });
     // Go back over the projects and pick users out of the array by ID based on permissions
     collection.projects = collection.projects.map((project) => ({
       ...project,
