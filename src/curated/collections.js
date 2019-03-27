@@ -6,7 +6,8 @@ export const featuredCollections = [
   { owner: 'glitch', name: 'code-with-comics' },
   { owner: 'glitch', name: 'sketch-with-p-5' },
   { owner: 'clever-assembly-test', name: 'forest-melange' },
-  { owner: 'empty-team', name: 'markdown-overflow-testing' }
+  { owner: 'empty-team', name: 'markdown-overflow-testing' },
+  { owner: 'oliviacpu', name: 'bot-babies' }
 ];
 
 // More ideas is populated from this team

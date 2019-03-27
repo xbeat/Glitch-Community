@@ -21,7 +21,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
     <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
       <div
-        className={['project', project.private ? 'private-project' : '', hideProjectDescriptions ? 'hide-description' : ''].join(' ')}
+        className={classnames('project', { 'private-project': project.private, 'hide-description': hideProjectDescriptions })}
         data-track="project"
         data-track-label={project.domain}
       >
