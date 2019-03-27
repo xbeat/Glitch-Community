@@ -12,7 +12,7 @@ export const TYPES = ['success', 'warning', 'error'];
  * Badge Component
  */
 const Badge = ({ type, children }) => {
-  const className = cx({ badge: true, type });
+  const className = cx({ badge: true, [type]: true });
   return <div className={className}>{children}</div>;
 };
 

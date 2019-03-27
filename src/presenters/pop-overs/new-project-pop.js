@@ -6,7 +6,7 @@ import { Loader } from '../includes/loader';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
 
-import { useAPI } from '../../state/api';
+import { createAPIHook } from '../../state/api';
 import { getRemixUrl } from '../../models/project';
 
 const importGitRepo = () => {
@@ -70,46 +70,30 @@ NewProjectPop.propTypes = {
   ).isRequired,
 };
 
-class NewProjectPopButton extends React.Component {
-  constructor(props) {
-    super(props);
+const useNewProjectAPI = createAPIHook(async (api) => {
+  const projectIds = [
+    'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
+    'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
+    '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
+  ];
+  // always request against the production API, with no token
+  const { data } = await api.get(`https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`, {
+    headers: {
+      Authorization: '',
+    },
+  });
+  return data;
+});
 
-    this.state = { projects: [] };
-  }
+function NewProjectPopButton() {
+  const { value } = useNewProjectAPI();
+  const projects = value || [];
 
-  componentDidMount() {
-    this.load();
-  }
-
-  async load() {
-    const projectIds = [
-      'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
-      'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
-      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-    ];
-    // always request against the production API, with no token
-    const { data } = await this.props.api.get(`https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`, {
-      headers: {
-        Authorization: '',
-      },
-    });
-    this.setState({ projects: data });
-  }
-
-  render() {
-    return (
-      <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
-        {() => <NewProjectPop projects={this.state.projects} />}
-      </PopoverWithButton>
-    );
-  }
+  return (
+    <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
+      {() => <NewProjectPop projects={projects} />}
+    </PopoverWithButton>
+  );
 }
 
-NewProjectPopButton.propTypes = {
-  api: PropTypes.any.isRequired,
-};
-
-export default (props) => {
-  const api = useAPI();
-  return <NewProjectPopButton {...props} api={api} />;
-};
+export default NewProjectPopButton;

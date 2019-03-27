@@ -53,7 +53,7 @@ const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, l
 
   return (
     <>
-      <SegmentedButtons buttons={generateFilterButtons(filters)} onClick={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onChange={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );

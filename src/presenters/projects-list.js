@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 import ExpanderContainer from '../components/containers/expander';
@@ -27,45 +27,33 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-class ExpandyProjects extends React.Component {
-  constructor(props) {
-    super(props);
+function ExpandyProjects(props) {
+  const [expanded, setExpanded] = useState(false);
+  const handleClick = () => setExpanded(true);
 
-    this.state = { expanded: false };
-    this.handleClick = this.handleClick.bind(this);
+  const maxProjects = props.maxCollapsedProjects;
+  const totalProjects = props.projects.length;
+  const hiddenProjects = totalProjects - maxProjects;
+
+  let shouldShowButton = false;
+  let visibleProjects = props.projects;
+  if (!expanded) {
+    shouldShowButton = hiddenProjects > 0;
+    visibleProjects = props.projects.slice(0, maxProjects);
   }
 
-  handleClick() {
-    this.setState({ expanded: true });
-  }
-
-  render() {
-    const maxProjects = this.props.maxCollapsedProjects;
-    const totalProjects = this.props.projects.length;
-    const hiddenProjects = totalProjects - maxProjects;
-
-    // props needs to exclude projects, so can't be declared on a separate line as const
-    let { projects, ...props } = this.props; // eslint-disable-line prefer-const
-
-    let shouldShowButton = false;
-    if (!this.state.expanded) {
-      shouldShowButton = hiddenProjects > 0;
-      projects = projects.slice(0, maxProjects);
-    }
-
-    return (
-      <ExpanderContainer
-        expanded={!shouldShowButton}
-        controlArea={
-          <button className="button-tertiary" onClick={this.handleClick} type="button">
-            Show {hiddenProjects} More
-          </button>
-        }
-      >
-        <ProjectsUL projects={projects} {...props} />
-      </ExpanderContainer>
-    );
-  }
+  return (
+    <ExpanderContainer
+      expanded={!shouldShowButton}
+      controlArea={
+        <button className="button-tertiary" onClick={handleClick} type="button">
+          Show {hiddenProjects} More
+        </button>
+      }
+    >
+      <ProjectsUL {...props} projects={visibleProjects} />
+    </ExpanderContainer>
+  );
 }
 
 ExpandyProjects.propTypes = {
