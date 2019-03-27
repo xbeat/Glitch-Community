@@ -210,6 +210,7 @@ async function loadCollection(api, ownerName, collectionName) {
           return project;
         }),
       );
+      console.log(projectsWithUsers);
       collection.projects = projectsWithUsers;
     }
 
