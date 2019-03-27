@@ -69,6 +69,7 @@ const loadCollection = async (api, { owner, name }) => {
       ...p,
       users: p.users || [],
     }));
+    console.log(collection)
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
