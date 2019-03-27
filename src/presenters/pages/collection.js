@@ -194,10 +194,28 @@ CollectionPageContents.defaultProps = {
   hideNote: null,
 };
 
+async function loadCollectionRefactored(api, ownerName, collectionName) {
+  try {
+    const { data: collection } = await api.get(`v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
+    const { data: collectionProjects } = await api.get(`v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}`);
+
+    // fetch projects in depth
+    if (collectionProjects.items.length) {
+      collection.projects = collectionProjects.items;
+    }
+    return collection;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+}
+
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(`collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
-    const { data: collection } = await api.get(`collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
+    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
+    const { data: collection } = await api.get(`collections/${collectionId}`);
 
     // fetch projects in depth
     if (collection.projects.length) {
@@ -212,6 +230,7 @@ async function loadCollection(api, ownerName, collectionName) {
         return project;
       });
     }
+    console.log(collection);
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
