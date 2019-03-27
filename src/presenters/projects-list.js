@@ -87,6 +87,11 @@ export const ProjectsUL = ({ showProjectDescriptions = true, ...props }) => (
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
+  showProjectDescriptions: PropTypes.bool,
+};
+
+ProjectsUL.defaultProps = {
+  showProjectDescriptions: true,
 };
 
 export default ProjectsList;
