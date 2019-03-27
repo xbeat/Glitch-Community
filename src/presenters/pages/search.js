@@ -15,6 +15,7 @@ import NotFound from '../includes/not-found';
 import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
+import CollectionItem from '../collection-item';
 
 import SegmentedButtons from '../../components/buttons/segmented-buttons';
 import Badge from '../../components/badges/badge';
@@ -93,6 +94,22 @@ const UserResults = ({ users }) => (
   </article>
 );
 
+const CollectionResults = ({ collections }) => (
+  <article>
+    <Heading tagName="h2">Collections</Heading>
+    <ul className="collections-container">
+      {collections ? (
+        collections.map((coll) => (
+          <CollectionItem key={coll.id} collection={coll} />
+        ))
+      ) : (
+        <Loader />
+      )}
+    </ul>
+  </article>
+);
+
+
 function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
@@ -123,11 +140,13 @@ function SearchResults({ query, searchResults }) {
     { name: 'teams', hits: searchResults.team.length },
     { name: 'users', hits: searchResults.user.length },
     { name: 'projects', hits: searchResults.project.length },
+    { name: 'collections', hits: searchResults.collection.length },
   ];
 
   const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
   const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
   const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
+  const showCollections = ['all', 'collections'].includes(activeFilter) && !!searchResults.collection.length;
 
   return (
     <main className="search-results">
@@ -142,6 +161,7 @@ function SearchResults({ query, searchResults }) {
       {showTeams && <TeamResults teams={searchResults.team} />}
       {showUsers && <UserResults users={searchResults.user} />}
       {showProjects && <ProjectResults projects={searchResults.project} />}
+      {showCollections && <CollectionResults collections={searchResults.collection} />}
       {noResults && <NotFound name="any results" />}
     </main>
   );

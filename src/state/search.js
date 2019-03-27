@@ -56,7 +56,7 @@ function formatHit(hit) {
   }
 }
 
-const emptyResults = { team: [], user: [], project: [] };
+const emptyResults = { team: [], user: [], project: [], collection: [] };
 
 const MAX_RESULTS = 20;
 
@@ -94,6 +94,15 @@ async function searchProjects(api, query) {
   return data.slice(0, MAX_RESULTS);
 }
 
+async function searchCollections(api, query) {
+  const { data } = await api.get(`collections/search?q=${query}`);
+  return data.slice(0, MAX_RESULTS).map((coll) => ({
+    ...coll,
+    team: coll.teamId > 0 ? { id: coll.teamId } : null,
+    user: coll.userId > 0 ? { id: coll.userId } : null,
+  }));
+}
+
 export function useLegacySearch(query) {
   const api = useAPI();
   const { handleError } = useErrorHandlers();
@@ -105,6 +114,7 @@ export function useLegacySearch(query) {
       team: searchTeams(api, query),
       user: searchUsers(api, query),
       project: searchProjects(api, query),
+      collection: searchCollections(api, query),
     })
       .then((res) => {
         setStatus('ready');
@@ -114,7 +124,7 @@ export function useLegacySearch(query) {
   }, [query]);
   return {
     status,
-    totalHits: results.team.length + results.user.length + results.project.length,
+    totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
     ...results,
   };
 }
