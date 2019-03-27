@@ -165,7 +165,7 @@ const UserPage = ({
 
       {/* Recent Projects */}
       <EntityPageProjects
-        projects={recentProjects}
+        projects={recentProjects.slice(0, 10)}
         isAuthorized={isAuthorized}
         addPin={addPin}
         projectOptions={{
