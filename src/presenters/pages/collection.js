@@ -209,7 +209,7 @@ async function loadCollection(api, ownerName, collectionName) {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     }
 
-    // fetch projects in depth
+    // fetch users for each project
     if (collectionProjects) {
       const projectsWithUsers = await Promise.all(
         collectionProjects.map(async (project) => {
