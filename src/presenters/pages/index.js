@@ -5,7 +5,7 @@ import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -14,6 +14,10 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Image from '../../components/image/image';
+import Text from '../../components/text/text';
+
+import Heading from '../../components/text/heading';
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -24,7 +28,7 @@ function loadScript(src) {
 
 const Callout = ({ classes, imgUrl, title, description }) => (
   <div className={`callout ${classes}`}>
-    <img className="badge" src={imgUrl} alt={title} />
+    <Image className="badge" src={imgUrl} width="114" height="115" alt={title} />
     <div className="window">
       <div className="title">{title}</div>
       <div className="description">{description}</div>
@@ -63,14 +67,13 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <h1>
-              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
-              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
-            </h1>
+            <Heading tagName="h1">
+              <Image src={witchSmall} srcSet={[`${witchLarge} 1000w`]} alt={whatsGlitchAlt} width="100%" />
+            </Heading>
 
             <OverlayVideo>
               <div className="button video">
-                <img className="play-button" src={play} alt="How it works" />
+                <Image src={play} className="play-button" alt="How it works" width="" height="" />
                 <span>How it works</span>
               </div>
             </OverlayVideo>
@@ -94,21 +97,21 @@ class WhatIsGlitch extends React.Component {
 
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
-    <p>Of course, this site was made on Glitch too</p>
+    <Text>Of course, this site was made on Glitch too</Text>
     <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer" />
     </Link>
   </section>
 );
 
-const IndexPage = ({ api, user }) => (
+const IndexPage = ({ user }) => (
   <main>
     {!user.login && <WhatIsGlitch />}
 
-    {!!user.projects.length && <RecentProjects api={api} />}
-    {!!user.login && <Questions api={api} />}
-    <Featured isAuthorized={!!user.login} api={api} />
-    <MoreIdeas api={api} />
+    {!!user.projects.length && <RecentProjects />}
+    {!!user.login && <Questions />}
+    <Featured isAuthorized={!!user.login} />
+    <MoreIdeas />
     <MadeInGlitch />
     <ReportButton reportedType="home" />
   </main>
@@ -118,23 +121,17 @@ IndexPage.propTypes = {
     id: PropTypes.number,
     login: PropTypes.string,
   }).isRequired,
-  api: PropTypes.any,
 };
 
-IndexPage.defaultProps = {
-  api: null,
+const IndexPageContainer = () => {
+  const { currentUser } = useCurrentUser();
+  return (
+    <Layout>
+      <AnalyticsContext properties={{ origin: 'index' }}>
+        <IndexPage user={currentUser} />
+      </AnalyticsContext>
+    </Layout>
+  );
 };
-
-const IndexPageContainer = ({ api }) => (
-  <Layout api={api}>
-    <AnalyticsContext properties={{ origin: 'index' }}>
-      <CurrentUserConsumer>{(user) => <IndexPage api={api} user={user} />}</CurrentUserConsumer>
-    </AnalyticsContext>
-  </Layout>
-);
 
 export default IndexPageContainer;
-
-IndexPageContainer.defaultProps = {
-  api: PropTypes.any,
-};

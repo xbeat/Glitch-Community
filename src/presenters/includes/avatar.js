@@ -29,16 +29,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
   );
 
   if (!hideTooltip) {
-    return (
-      <TooltipContainer
-        tooltip={name}
-        target={contents}
-        type="action"
-        id={`avatar-tooltip-${name}`}
-        align={['left']}
-        fallback={withinButton}
-      />
-    );
+    return <TooltipContainer tooltip={name} target={contents} type="action" id={`avatar-tooltip-${name}`} align={['left']} fallback={withinButton} />;
   }
   return contents;
 };
@@ -80,9 +71,7 @@ TeamAvatar.defaultProps = {
   hideTooltip: false,
 };
 
-export const UserAvatar = ({
-  user, suffix = '', hideTooltip, withinButton,
-}) => (
+export const UserAvatar = ({ user, suffix = '', hideTooltip, withinButton }) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}

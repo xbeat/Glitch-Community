@@ -9,6 +9,7 @@ import { DataLoader } from './loader';
 import { CoverContainer } from './profile';
 import { TeamLink, UserLink } from './link';
 import { ProjectsUL } from '../projects-list';
+import { useAPI } from '../../state/api';
 
 const PROJECT_COUNT = 3;
 
@@ -101,7 +102,7 @@ class RelatedProjects extends React.Component {
   }
 }
 RelatedProjects.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.func.isRequired,
   ignoreProjectId: PropTypes.string.isRequired,
   teams: PropTypes.array,
   users: PropTypes.array,
@@ -112,4 +113,7 @@ RelatedProjects.defaultProps = {
   users: [],
 };
 
-export default RelatedProjects;
+export default (props) => {
+  const api = useAPI();
+  return <RelatedProjects {...props} api={api} />;
+};

@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+import useDevToggle from '../includes/dev-toggles';
 import { Link } from '../includes/link';
-import useLocalStorage from '../includes/local-storage';
+import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { useCurrentUser } from '../current-user';
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
-/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
+/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL, API_URL */
 
 function githubAuthLink() {
   const params = new URLSearchParams();
@@ -26,6 +28,13 @@ function facebookAuthLink() {
   params.append('scope', 'email');
   params.append('redirect_uri', `${APP_URL}/login/facebook`);
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
+}
+
+function googleAuthLink() {
+  const params = new URLSearchParams();
+  const callbackURL = `${APP_URL}/login/google`;
+  params.append('callbackURL', callbackURL);
+  return `${API_URL}/auth/google?${params}`;
 }
 
 const SignInPopButton = (props) => (
@@ -213,8 +222,16 @@ EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const NewUserInfoSection = () => (
+  <section className="pop-over-info">
+    <span>
+      <span className="emoji carp_streamer" /> New to Glitch? Create an account by signing in.
+    </span>
+  </section>
+);
+
 const SignInCodeSection = ({ onClick }) => (
-  <section className="pop-over-actions last-section pop-over-info">
+  <section className="pop-over-actions last-section pop-over-info first-section">
     <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
       <span>Use a sign in code</span>
     </button>
@@ -226,6 +243,7 @@ SignInCodeSection.propTypes = {
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api, location, hash } = props;
+  const googleAuthEnabled = useDevToggle('Google Auth');
   const [, setDestination] = useLocalStorage('destinationAfterAuth');
   const onClick = () =>
     setDestination({
@@ -245,10 +263,12 @@ const SignInPopWithoutRouter = (props) => {
           {(showCodeLogin) => (
             <div className="pop-over sign-in-pop">
               {header}
-              <section className="pop-over-actions first-section">
+              <NewUserInfoSection />
+              <section className="pop-over-actions">
                 {prompt}
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
+                {googleAuthEnabled && <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />}
                 <EmailSignInButton
                   onClick={() => {
                     onClick();
@@ -272,16 +292,18 @@ const SignInPopWithoutRouter = (props) => {
 
 export const SignInPopBase = withRouter(SignInPopWithoutRouter);
 SignInPopBase.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   header: PropTypes.node,
   prompt: PropTypes.node,
   hash: PropTypes.string,
 };
 
-const SignInPopContainer = (props) => (
-  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
-    <SignInPopBase {...props} />
-  </PopoverWithButton>
-);
-
+const SignInPopContainer = (props) => {
+  const api = useAPI();
+  return (
+    <PopoverWithButton buttonClass="button button-small" buttonText="Sign in">
+      {({ togglePopover }) => <SignInPopBase {...props} api={api} togglePopover={togglePopover} />}
+    </PopoverWithButton>
+  );
+};
 export default SignInPopContainer;

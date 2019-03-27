@@ -1,6 +1,5 @@
 /* globals EDITOR_URL */
 
-// Import Sentry early to help it initialize.
 import './polyfills';
 
 // Init our dayjs plugins
@@ -23,7 +22,6 @@ window.bootstrap = () => {
     window.location.replace(EDITOR_URL + window.location.hash);
     return;
   }
-
   // Mark that bootstrapping has occurred,
   // ..and more importantly, use this as an excuse
   // to call into Sentry so that its initialization

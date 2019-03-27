@@ -35,7 +35,7 @@ export function getOwnerLink(collection) {
   if (collection.user) {
     return getUserLink(collection.user);
   }
-  throw new Error('This collection has no team or user field!');
+  throw new Error(`Collection ${collection.id} has no team or user field!`);
 }
 
 export function getLink(collection) {

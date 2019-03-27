@@ -15,22 +15,17 @@ const DeleteTeam = ({ ...props }) => (
           <span className="emoji bomb" role="img" aria-label="" />
         </>
       }
-      passToggleToPop
     >
-      <DeleteTeamPop {...props} />
+      {({ togglePopover }) => <DeleteTeamPop {...props} togglePopover={togglePopover} />}
     </PopoverWithButton>
   </section>
 );
 
 DeleteTeam.propTypes = {
-  api: PropTypes.func,
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
   teamAdmins: PropTypes.array.isRequired,
-};
-DeleteTeam.defaultProps = {
-  api: null,
 };
 
 export default DeleteTeam;

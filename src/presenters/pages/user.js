@@ -6,7 +6,7 @@ import { orderBy, partition } from 'lodash';
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { AuthDescription } from '../includes/description-field';
 import EditableField from '../includes/editable-field';
 import UserEditor from '../user-editor';
@@ -75,7 +75,6 @@ const UserPage = ({
     featuredProjectId,
     ...user
   },
-  api,
   isAuthorized,
   maybeCurrentUser,
   updateDescription,
@@ -131,7 +130,6 @@ const UserPage = ({
       {featuredProject && (
         <EntityPageFeaturedProject
           featuredProject={featuredProject}
-          api={api}
           isAuthorized={isAuthorized}
           unfeatureProject={unfeatureProject}
           addProjectToCollection={addProjectToCollection}
@@ -143,7 +141,6 @@ const UserPage = ({
       <EntityPageProjects
         projects={pinnedProjects}
         isAuthorized={isAuthorized}
-        api={api}
         removePin={removePin}
         projectOptions={{
           featureProject,
@@ -161,7 +158,6 @@ const UserPage = ({
             ...collection,
             user,
           }))}
-          api={api}
           isAuthorized={isAuthorized}
           maybeCurrentUser={maybeCurrentUser}
         />
@@ -171,7 +167,6 @@ const UserPage = ({
       <EntityPageProjects
         projects={recentProjects}
         isAuthorized={isAuthorized}
-        api={api}
         addPin={addPin}
         projectOptions={{
           featureProject,
@@ -181,9 +176,7 @@ const UserPage = ({
         }}
         currentUser={maybeCurrentUser}
       />
-      {isAuthorized && (
-        <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />
-      )}
+      {isAuthorized && <DeletedProjects setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
     </main>
   );
@@ -218,26 +211,21 @@ UserPage.propTypes = {
   unfeatureProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({ api, user }) => (
-  <AnalyticsContext properties={{ origin: 'user' }}>
-    <UserEditor api={api} initialUser={user}>
-      {(userFromEditor, funcs, isAuthorized) => (
-        <>
-          <Helmet>
-            <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
-          </Helmet>
-
-          <CurrentUserConsumer>
-            {(maybeCurrentUser) => (
-              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
-                {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
-              </ProjectsLoader>
-            )}
-          </CurrentUserConsumer>
-        </>
-      )}
-    </UserEditor>
-  </AnalyticsContext>
-);
-
+const UserPageContainer = ({ user }) => {
+  const { currentUser: maybeCurrentUser } = useCurrentUser();
+  return (
+    <AnalyticsContext properties={{ origin: 'user' }}>
+      <UserEditor initialUser={user}>
+        {(userFromEditor, funcs, isAuthorized) => (
+          <>
+            <Helmet title={userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)} />
+            <ProjectsLoader projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
+              {(projects) => <UserPage {...{ isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
+            </ProjectsLoader>
+          </>
+        )}
+      </UserEditor>
+    </AnalyticsContext>
+  );
+};
 export default UserPageContainer;

@@ -8,33 +8,33 @@ import { TrackClick } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
+import { useAPI } from '../../state/api';
 
-import { NotificationConsumer, AddProjectToCollectionMsg } from '../notifications';
+import { useNotifications, AddProjectToCollectionMsg } from '../notifications';
 
-const ProjectResultsUL = ({ projects, collection, onClick }) => (
-  <ul className="results">
-    {projects.map((project) => (
-      <NotificationConsumer key={project.id}>
-        {({ createNotification }) => (
-          <li>
-            <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
-              <ProjectResultItem
-                domain={project.domain}
-                description={project.description}
-                users={project.users}
-                id={project.id}
-                isActive={false}
-                collection={collection}
-                onClick={() => onClick(project, collection, createNotification)}
-                isPrivate={project.private}
-              />
-            </TrackClick>
-          </li>
-        )}
-      </NotificationConsumer>
-    ))}
-  </ul>
-);
+const ProjectResultsUL = ({ projects, collection, onClick }) => {
+  const { createNotification } = useNotifications();
+  return (
+    <ul className="results">
+      {projects.map((project) => (
+        <li key={project.id}>
+          <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
+            <ProjectResultItem
+              domain={project.domain}
+              description={project.description}
+              users={project.users}
+              id={project.id}
+              isActive={false}
+              collection={collection}
+              onClick={() => onClick(project, collection, createNotification)}
+              isPrivate={project.private}
+            />
+          </TrackClick>
+        </li>
+      ))}
+    </ul>
+  );
+};
 ProjectResultsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   collection: PropTypes.object.isRequired,
@@ -246,7 +246,7 @@ class AddCollectionProjectPop extends React.Component {
             {isLoading && <Loader />}
 
             {!!results && (
-              <ProjectsLoader api={this.props.api} projects={results}>
+              <ProjectsLoader projects={results}>
                 {(projects) => (
                   <ProjectSearchResults
                     projects={projects}
@@ -266,7 +266,7 @@ class AddCollectionProjectPop extends React.Component {
 }
 
 AddCollectionProjectPop.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   collection: PropTypes.object.isRequired,
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
@@ -275,7 +275,9 @@ AddCollectionProjectPop.propTypes = {
 
 AddCollectionProjectPop.defaultProps = {
   togglePopover: null,
-  api: null,
 };
 
-export default AddCollectionProjectPop;
+export default (props) => {
+  const api = useAPI();
+  return <AddCollectionProjectPop {...props} api={api} />;
+};
