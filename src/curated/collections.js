@@ -2,7 +2,7 @@
 
 // What collections to show in the expanded area on the homepage
 export const featuredCollections = [
-  { owner: 'glitch', name: 'draw-with-music' },
+  { owner: 'glitch', name: 'discover-modern-art' },
   { owner: 'glitch', name: 'this-week-on-glitch-mar-27-2019' },
   { owner: 'glitch', name: 'glitch-flix' },
 ];
