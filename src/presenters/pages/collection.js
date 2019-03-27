@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
-import _ from 'lodash';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
@@ -196,52 +195,27 @@ CollectionPageContents.defaultProps = {
   hideNote: null,
 };
 
-async function loadCollectionRefactored(api, ownerName, collectionName) {
-  try {
-    const { data: collectionResponse } = await api.get(`v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
-    const { data: collectionProjects } = await api.get(`v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}`);
-
-    const collection = collectionResponse[`${ownerName}/${collectionName}`];
-    const { data: fullUserInfo } = await api.get(`v1/users/by/id?id=${collection.user.id}`);
-    collection.user = fullUserInfo[collection.user.id];
-    
-    // fetch projects in depth
-    if (collectionProjects.items.length) {
-      const projectsWithUsers = collectionProjects.items.map(async (project) => {
-        const { data: projectUsers } = await api.get(`v1/projects/by/id/users?id=${project.id}`);
-        project.users = projectUsers.items;
-        return project
-      });
-    }
-    
-    console.log(collection);
-    return collection;
-  } catch (error) {
-    if (error && error.response && error.response.status === 404) {
-      return null;
-    }
-    throw error;
-  }
-}
-
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
-    const { data: collection } = await api.get(`collections/${collectionId}`);
+    const { data: collectionResponse } = getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
+    const { data: collectionProjects } = getAllPages(api, `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&limit=100`);
+
+    const collection = collectionResponse[`${ownerName}/${collectionName}`];
+    const { data: fullUserInfo } = getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`);
+    collection.user = fullUserInfo[collection.user.id];
 
     // fetch projects in depth
-    if (collection.projects.length) {
-      const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
-      collection.projects = projects.map((project) => {
-        const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
-        if (collectionProject && collectionProject.annotation && _.trim(collectionProject.annotation)) {
-          project.note = _.trim(collectionProject.annotation);
-          project.isAddingANewNote = true;
-        }
-        project.collectionCoverColor = collection.coverColor;
-        return project;
-      });
+    if (collectionProjects.items.length) {
+      const projectsWithUsers = await Promise.all(
+        collectionProjects.items.map(async (project) => {
+          const { data: projectUsers } = getSingleItem(api, `v1/projects/by/id/users?id=${project.id}`);
+          project.users = projectUsers.items;
+          return project;
+        }),
+      );
+      collection.projects = projectsWithUsers;
     }
+
     console.log(collection);
     return collection;
   } catch (error) {
@@ -257,7 +231,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
   const { currentUser } = useCurrentUser();
   return (
     <Layout>
-      <DataLoader get={() => loadCollectionRefactored(api, ownerName, name)}>
+      <DataLoader get={() => loadCollection(api, ownerName, name)}>
         {(collection) =>
           collection ? (
             <AnalyticsContext
