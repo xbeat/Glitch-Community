@@ -6,13 +6,7 @@ import Button from './button';
 const SegmentedButtons = ({ value, buttons, onClick }) => (
   <div className={styles.segmentedButtons}>
     {buttons.map((button) => (
-      <Button 
-        key={button.name} 
-        size="small" 
-        type="tertiary" 
-        active={button.name === value} 
-        onClick={() => onClick(button.name)}
-      >
+      <Button key={button.name} size="small" type="tertiary" active={button.name === value} onClick={() => onClick(button.name)}>
         {button.contents}
       </Button>
     ))}
