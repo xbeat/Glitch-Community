@@ -108,6 +108,9 @@ async function searchProjects(api, query) {
   return data.slice(0, MAX_RESULTS);
 }
 
+// This API is slow and is missing important data (so its unfit for production)
+// But its still useful for comparing against Algolia
+// eslint-disable-next-line no-unused-vars
 async function searchCollections(api, query) {
   const { data } = await api.get(`collections/search?q=${query}`);
   // NOTE: collection URLs don't work correctly with these
@@ -129,7 +132,8 @@ export function useLegacySearch(query) {
       team: searchTeams(api, query),
       user: searchUsers(api, query),
       project: searchProjects(api, query),
-      collection: searchCollections(api, query),
+      // collection: searchCollections(api, query),
+      collection: Promise.resolve([]),
     })
       .then((res) => {
         setStatus('ready');
@@ -138,6 +142,7 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
   return {
+    ...emptyResults,
     status,
     totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
     ...results,
