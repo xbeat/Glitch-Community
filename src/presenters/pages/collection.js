@@ -30,6 +30,8 @@ import { useCurrentUser } from '../../state/current-user';
 import MoreCollectionsContainer from '../more-collections';
 import Text from '../../components/text/text';
 
+import { getSingleItem, getAllPages } from '../../../shared/api';
+
 function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
 }
@@ -247,7 +249,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
   const { currentUser } = useCurrentUser();
   return (
     <Layout>
-      <DataLoader get={() => loadCollectionRefactored(api, ownerName, name)}>
+      <DataLoader get={() => loadCollection(api, ownerName, name)}>
         {(collection) =>
           collection ? (
             <AnalyticsContext
