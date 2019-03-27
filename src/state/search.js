@@ -34,7 +34,7 @@ function formatTeam(hit) {
 
 function formatProject(hit) {
   return {
-    id: hit.objectID.replace('project-',''),
+    id: hit.objectID.replace('project-', ''),
     description: '',
     users: [],
     showAsGlitchTeam: false,
@@ -70,7 +70,7 @@ export function useAlgoliaSearch(query) {
       })
       .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
-  
+
   return {
     ...emptyResults,
     status: 'ready',
@@ -105,10 +105,12 @@ export function useLegacySearch(query) {
       team: searchTeams(api, query),
       user: searchUsers(api, query),
       project: searchProjects(api, query),
-    }).then((res) => {
-      setStatus('ready');
-      setResults(res);
-    }).catch(handleError);
+    })
+      .then((res) => {
+        setStatus('ready');
+        setResults(res);
+      })
+      .catch(handleError);
   }, [query]);
   return {
     status,
