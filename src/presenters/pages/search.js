@@ -20,7 +20,7 @@ import SegmentedButtons from '../../components/buttons/segmented-buttons';
 import Badge from '../../components/badges/badge';
 import Heading from '../../components/text/heading';
 
-const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
+const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
     name: filter.id,
     contents: (
@@ -107,41 +107,27 @@ const showGroup = (id, searchResults, activeFilter) => (activeFilter === 'all' |
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const loaded = searchResults.status === 'ready';
-  const noResults = loaded && searchResults.totalHits === 0;
+  const ready = searchResults.status === 'ready';
+  const noResults = ready && searchResults.totalHits === 0;
 
   const filters = [
     { id: 'all', label: 'All' },
     ...groups.map((group) => ({ ...group, hits: searchResults[group.id].length })).filter((group) => group.hits > 0),
   ];
 
-  if (!loaded) {
-    return ;
-  }
-  if (loaded && totalHits === 0) {
-    return null;
-  }
-
-  
-  
   return (
     <main className="search-results">
-      {!loaded && (
+      {searchResults.status === 'loading' && (
         <>
           <Loader />
           <h1>All results for {query}</h1>
         </>
-      )
-      <FilterContainer
-        totalHits={searchResults.totalHits}
-        filters={filters}
-        setFilter={setActiveFilter}
-        activeFilter={activeFilter}
-        query={query}
-        loaded={loaded}
-      />
+      )}
+      {ready && searchResults.totalHits > 0 && (
+        <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
+      )}
       {groups.map(({ id, ResultsComponent }) =>
-        showGroup(id, searchResults, activeFilter) ? <ResultsComponent results={searchResults[id]} /> : null,
+        showGroup(id, searchResults, activeFilter) ? <ResultsComponent key={id} results={searchResults[id]} /> : null,
       )}
       {noResults && <NotFound name="any results" />}
     </main>

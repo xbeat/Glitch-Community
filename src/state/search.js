@@ -96,6 +96,7 @@ async function searchProjects(api, query) {
 
 async function searchCollections(api, query) {
   const { data } = await api.get(`collections/search?q=${query}`);
+  // NOTE: collection URLs don't work correctly with these
   return data.slice(0, MAX_RESULTS).map((coll) => ({
     ...coll,
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
