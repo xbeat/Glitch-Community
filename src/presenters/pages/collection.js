@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
-import _ from 'lodash';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
@@ -29,6 +28,8 @@ import { useCurrentUser } from '../../state/current-user';
 
 import MoreCollectionsContainer from '../more-collections';
 import Text from '../../components/text/text';
+
+import { getSingleItem, getAllPages } from '../../../shared/api';
 
 function syncPageToUrl(collection, url) {
   history.replaceState(null, null, getLink({ ...collection, url }));
@@ -196,21 +197,27 @@ CollectionPageContents.defaultProps = {
 
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
-    const { data: collection } = await api.get(`collections/${collectionId}`);
+    const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
+    const collectionProjects = await getAllPages(
+      api,
+      `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=updatedAt&orderDirection=ASC&limit=100`,
+    );
 
-    // fetch projects in depth
-    if (collection.projects.length) {
-      const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
-      collection.projects = projects.map((project) => {
-        const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
-        if (collectionProject && collectionProject.annotation && _.trim(collectionProject.annotation)) {
-          project.note = _.trim(collectionProject.annotation);
-          project.isAddingANewNote = true;
-        }
-        project.collectionCoverColor = collection.coverColor;
-        return project;
-      });
+    if (collection.user) {
+      collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id);
+    } else {
+      collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    }
+
+    // fetch users for each project
+    if (collectionProjects) {
+      const projectsWithUsers = await Promise.all(
+        collectionProjects.map(async (project) => {
+          project.users = await getAllPages(api, `v1/projects/by/id/users?id=${project.id}&orderKey=createdAt&orderDirection=ASC&limit=100`);
+          return project;
+        }),
+      );
+      collection.projects = projectsWithUsers;
     }
     return collection;
   } catch (error) {
