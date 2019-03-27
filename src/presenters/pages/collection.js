@@ -202,10 +202,18 @@ async function loadCollectionRefactored(api, ownerName, collectionName) {
     const { data: collectionProjects } = await api.get(`v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}`);
 
     const collection = collectionResponse[`${ownerName}/${collectionName}`];
+    const { data: fullUserInfo } = await api.get(`v1/users/by/id?id=${collection.user.id}`);
+    collection.user = fullUserInfo[collection.user.id];
+    
     // fetch projects in depth
     if (collectionProjects.items.length) {
-      collection.projects = collectionProjects.items;
+      const projectsWithUsers = collectionProjects.items.map(async (project) => {
+        const { data: projectUsers } = await api.get(`v1/projects/by/id/users?id=${project.id}`);
+        project.users = projectUsers.items;
+        return project
+      });
     }
+    
     console.log(collection);
     return collection;
   } catch (error) {
@@ -249,7 +257,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
   const { currentUser } = useCurrentUser();
   return (
     <Layout>
-      <DataLoader get={() => loadCollection(api, ownerName, name)}>
+      <DataLoader get={() => loadCollectionRefactored(api, ownerName, name)}>
         {(collection) =>
           collection ? (
             <AnalyticsContext
