@@ -119,7 +119,7 @@ function SearchResults({ query, searchResults }) {
   const noResults = loaded && searchResults.totalHits === 0;
 
   const filters = [
-    { name: 'all', hits: searchResults.totalHits },
+    { name: 'all' },
     { name: 'teams', hits: searchResults.team.length },
     { name: 'users', hits: searchResults.user.length },
     { name: 'projects', hits: searchResults.project.length },

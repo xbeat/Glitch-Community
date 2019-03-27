@@ -72,6 +72,8 @@ export function useAlgoliaSearch(query) {
       .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
 
+  console.log(hits);
+  
   return {
     ...emptyResults,
     status: 'ready',
