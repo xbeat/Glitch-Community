@@ -196,8 +196,8 @@ CollectionPageContents.defaultProps = {
 
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
-    const { data: collection } = await api.get(`collections/${collectionId}`);
+    const { data: collectionId } = await api.get(`collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
+    const { data: collection } = await api.get(`collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
 
     // fetch projects in depth
     if (collection.projects.length) {
