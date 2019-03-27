@@ -34,7 +34,8 @@ function formatTeam(hit) {
 
 function formatProject(hit) {
   return {
-    id: hit.objectID.split('-')[1],
+    id: hit.objectID.replace('project-',''),
+    description: '',
     users: [],
     showAsGlitchTeam: false,
     ...hit,
@@ -66,13 +67,9 @@ export function useAlgoliaSearch(query) {
       .search({
         query,
         hitsPerPage: 500,
-        // TODO: remove this line, add collections to search
-        filters: 'type:"user" OR type:"project" OR type:"team"',
       })
       .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
-
-  console.log(hits);
   
   return {
     ...emptyResults,
