@@ -13,33 +13,45 @@ const searchIndex = searchClient.initIndex('search');
 // TODO: all this really ought to be in the raw data
 function formatUser(hit) {
   return {
+    ...hit,
     id: Number(hit.objectID.split('-')[1]),
     thanksCount: hit.thanks,
     hasCoverImage: false,
-    ...hit,
   };
 }
 
 function formatTeam(hit) {
   return {
+    ...hit,
     id: Number(hit.objectID.split('-')[1]),
     hasCoverImage: false,
     hasAvatarImage: false,
     isVerified: false,
     url: '',
     users: [],
-    ...hit,
   };
 }
 
 function formatProject(hit) {
   return {
+    ...hit,
     id: hit.objectID.replace('project-', ''),
     description: '',
     users: [],
     showAsGlitchTeam: false,
-    ...hit,
     teams: [],
+  };
+}
+
+function formatCollection(hit) {
+  return {
+    ...hit,
+    id: Number(hit.objectID.split('-')[1]),
+    coverColor: '#ccc',
+    projects: [],
+    url: '',
+    team: hit.team > 0 ? { id: hit.team, url: '' } : null,
+    user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };
 }
 
@@ -51,6 +63,8 @@ function formatHit(hit) {
       return formatTeam(hit);
     case 'project':
       return formatProject(hit);
+    case 'collection':
+      return formatCollection(hit);
     default:
       return hit;
   }
