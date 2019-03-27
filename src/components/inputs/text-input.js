@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
-import useUniqueId from './use-unique-id';
+import useUniqueId from '../../hooks/use-unique-id';
 
 import styles from './text-input.styl';
 
