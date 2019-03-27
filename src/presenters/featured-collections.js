@@ -7,7 +7,7 @@ import { captureException } from '../utils/sentry';
 import { featuredCollections } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
 
-import { loadCollection } from './pages/collection';
+import { getSingleItem } from '../../shared/api';
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
@@ -59,9 +59,30 @@ CollectionWide.propTypes = {
   }).isRequired,
 };
 
+const loadCollection = async (api, { owner, name }) => {
+  try {
+    const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
+    collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
+    collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    collection.projectCount = collection.projects.length;
+    collection.projects = sampleSize(collection.projects, 3).map((p) => ({
+      ...p,
+      users: p.users || [],
+    }));
+    return collection;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
+    }
+    captureException(error);
+  }
+  return null;
+};
+
 const loadAllCollections = async (api, infos) => {
-  const promises = infos.map(({ owner, name }) => loadCollection(api, owner, name));
-  return Promise.all(promises).catch((error) => captureException(error));
+  // don't await until every request is sent so they can all run at once
+  const promises = infos.map((info) => loadCollection(api, info));
+  return Promise.all(promises);
 };
 
 export const FeaturedCollections = () => {
