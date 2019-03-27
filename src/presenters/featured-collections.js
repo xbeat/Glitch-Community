@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
-import { sampleSize } from 'lodash';
+import { sampleSize, flatMap, uniq } from 'lodash';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
 
-import { getSingleItem } from '../../shared/api';
+import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/api';
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
@@ -65,11 +65,17 @@ const loadCollection = async (api, { owner, name }) => {
     collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
     collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     collection.projectCount = collection.projects.length;
-    collection.projects = sampleSize(collection.projects, 3).map((p) => ({
-      ...p,
-      users: p.users || [],
+    collection.projects = sampleSize(collection.projects, 3);
+    // Gather unique user IDs for all of the projects being loaded, based on permissions
+    const uniqueUserIds = uniq(flatMap(collection.projects, ({ permissions }) => permissions.map(({ userId }) => userId)));
+    // Load all of the users for this set of projects
+    const allUsers = await getFromApi(api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
+    console.log({ allUsers });
+    // Go back over the projects and pick users out of the array by ID based on permissions
+    collection.projects = collection.projects.map((project) => ({
+      ...project,
+      users: project.permissions.map(({ userId }) => allUsers[userId]),
     }));
-    console.log(collection)
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
