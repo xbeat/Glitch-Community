@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 import ExpanderContainer from '../components/containers/expander';
+import Badge from '../components/badges/badge';
 
 import Heading from '../components/text/heading';
 
@@ -58,7 +59,7 @@ class ExpandyProjects extends React.Component {
         expanded={!shouldShowButton}
         controlArea={
           <button className="button-tertiary" onClick={this.handleClick} type="button">
-            Show all <div className="badge">{hiddenProjects}</div>
+            Show all<Badge>{hiddenProjects}</Badge>
           </button>
         }
       >
