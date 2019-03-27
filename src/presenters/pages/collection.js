@@ -196,13 +196,15 @@ CollectionPageContents.defaultProps = {
 
 async function loadCollectionRefactored(api, ownerName, collectionName) {
   try {
-    const { data: collection } = await api.get(`v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
+    const { data: collectionResponse } = await api.get(`v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`);
     const { data: collectionProjects } = await api.get(`v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}`);
 
+    const collection = collectionResponse[`${ownerName}/${collectionName}`];
     // fetch projects in depth
     if (collectionProjects.items.length) {
       collection.projects = collectionProjects.items;
     }
+    console.log(collection);
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
@@ -245,7 +247,7 @@ const CollectionPage = ({ ownerName, name, ...props }) => {
   const { currentUser } = useCurrentUser();
   return (
     <Layout>
-      <DataLoader get={() => loadCollection(api, ownerName, name)}>
+      <DataLoader get={() => loadCollectionRefactored(api, ownerName, name)}>
         {(collection) =>
           collection ? (
             <AnalyticsContext
