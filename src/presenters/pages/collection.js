@@ -198,22 +198,21 @@ CollectionPageContents.defaultProps = {
 async function loadCollection(api, ownerName, collectionName) {
   try {
     const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
-    const { data: collectionProjects } = await api.get(`v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}`);
+    const collectionProjects = await getAllPages(api, `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&limit=100`);
 
     collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id);
 
     // fetch projects in depth
-    if (collectionProjects.items.length) {
+    if (collectionProjects.length) {
       const projectsWithUsers = await Promise.all(
-        collectionProjects.items.map(async (project) => {
-          project.users =  await getSingleItem(api, `v1/projects/by/id/users?id=${project.id}`, project.id).items;
+        collectionProjects.map(async (project) => {
+          project.users = await getAllPages(api, `v1/projects/by/id/users?id=${project.id}&limit=100`);
           return project;
         }),
       );
       collection.projects = projectsWithUsers;
     }
 
-    console.log(collection);
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
