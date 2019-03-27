@@ -198,18 +198,19 @@ CollectionPageContents.defaultProps = {
 async function loadCollection(api, ownerName, collectionName) {
   try {
     const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
-    const collectionProjects = await getAllPages(api, `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&limit=100`);
+    const collectionProjects = await getAllPages(api, `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=projectOrder&orderDirection=ASC&limit=100`);
 
-    if (collection.user)
-      ? collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id)
-      : collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    if (collection.user) {
+      collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id);
+    } else {
+      collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    }
 
-    console.log(collectionProjects);
     // fetch projects in depth
     if (collectionProjects) {
       const projectsWithUsers = await Promise.all(
         collectionProjects.map(async (project) => {
-          project.users = await getAllPages(api, `v1/projects/by/id/users?id=${project.id}&limit=100`);
+          project.users = await getAllPages(api, `v1/projects/by/id/users?id=${project.id}&orderKey=createdAt&orderDirection=ASC&limit=100`);
           return project;
         }),
       );
