@@ -24,10 +24,10 @@ const toggleData = [
     description: 'Sign in with your google account!',
   },
   {
-    name: 'Inflatable Crocodiles',
-    description: "I don't think this does anything yet.",
+    name: 'Algolia Search',
+    description: 'Use the new Algolia-powered search API.',
   },
-].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
+].slice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
 //

@@ -25,9 +25,7 @@ export default function UserItem({ user }) {
           <div className="information">
             {user.name ? (
               <>
-                <UserLink user={user}>
-                  <Button>{user.name}</Button>
-                </UserLink>
+                <Button href={getLink(user)}>{user.name}</Button>
                 <p className="name">@{user.login}</p>
               </>
             ) : (
