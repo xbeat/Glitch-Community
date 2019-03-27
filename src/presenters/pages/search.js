@@ -64,15 +64,11 @@ const TeamResults = ({ teams }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
     <ul className="teams-container">
-      {teams ? (
-        teams.map((team) => (
-          <li key={team.id}>
-            <TeamItem team={team} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
+      {teams.map((team) => (
+        <li key={team.id}>
+          <TeamItem team={team} />
+        </li>
+      ))}
     </ul>
   </article>
 );
@@ -81,15 +77,11 @@ const UserResults = ({ users }) => (
   <article>
     <Heading tagName="h2">Users</Heading>
     <ul className="users-container">
-      {users ? (
-        users.map((user) => (
-          <li key={user.id}>
-            <UserItem user={user} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
+      {users.map((user) => (
+        <li key={user.id}>
+          <UserItem user={user} />
+        </li>
+      ))}
     </ul>
   </article>
 );
@@ -98,17 +90,12 @@ const CollectionResults = ({ collections }) => (
   <article>
     <Heading tagName="h2">Collections</Heading>
     <ul className="collections-container">
-      {collections ? (
-        collections.map((coll) => (
-          <CollectionItem key={coll.id} collection={coll} />
-        ))
-      ) : (
-        <Loader />
-      )}
+      {collections.map((coll) => (
+        <CollectionItem key={coll.id} collection={coll} />
+      ))}
     </ul>
   </article>
 );
-
 
 function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
@@ -129,6 +116,14 @@ const ProjectResults = ({ projects }) => {
     <ProjectsList title="Projects" projects={projects} />
   );
 };
+
+const groups = [
+  { id: 'team', label: 'Teams', render: TeamResults },
+  { id: 'user', label: 'Users', render: UserResults },
+  { id: 'project', label: 'Projects', render: ProjectResults },
+  { id: 'collection', label: 'Collections', render: CollectionResults },
+]
+
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
