@@ -198,7 +198,10 @@ CollectionPageContents.defaultProps = {
 async function loadCollection(api, ownerName, collectionName) {
   try {
     const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
-    const collectionProjects = await getAllPages(api, `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=projectOrder&orderDirection=ASC&limit=100`);
+    const collectionProjects = await getAllPages(
+      api,
+      `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=projectOrder&orderDirection=ASC&limit=100`,
+    );
 
     if (collection.user) {
       collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id);
@@ -214,10 +217,8 @@ async function loadCollection(api, ownerName, collectionName) {
           return project;
         }),
       );
-      console.log(projectsWithUsers);
       collection.projects = projectsWithUsers;
     }
-    console.log(collection);
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
