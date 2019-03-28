@@ -42,25 +42,33 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
+/*
 function ExpandyProjects(props) {
   const [expanded, setExpanded] = useState(false);
+  const [visibleProjects, setVisibleProjects] = useState(null);
+  const [shouldShowButton, setShouldShowButton] = useState(false);
+
+  const maxProjects = props.maxCollapsedProjects;
+  const totalProjects = props.projects.length;
+  const hiddenProjects = totalProjects - maxProjects;
+  
+  useEffect(() => {
+    if (!visibleProjects) {
+      if (!expanded) {
+        setShouldShowButton(hiddenProjects > 0);
+        setVisibleProjects(props.projects.slice(0, maxProjects));
+      } else {
+        setVisibleProjects(props.projects);
+      }
+    }
+  });
 
   function handleClick() {
     setExpanded(true);
   }
-  const maxProjects = props.maxCollapsedProjects;
-  const totalProjects = props.projects.length;
-  const hiddenProjects = totalProjects - maxProjects;
 
   // props needs to exclude projects, so can't be declared on a separate line as const
-  let { projects } = props; // eslint-disable-line prefer-const
-  let visibleProjects = projects;
-
-  let shouldShowButton = false;
-  if (!expanded) {
-    shouldShowButton = hiddenProjects > 0;
-    visibleProjects = projects.slice(0, maxProjects);
-  }
+  // let { projects } = props; // eslint-disable-line prefer-const
 
   return (
     <ExpanderContainer
@@ -78,6 +86,7 @@ function ExpandyProjects(props) {
     </ExpanderContainer>
   );
 }
+*/
 
 /*
 class ExpandyProjects extends React.Component {
@@ -124,6 +133,18 @@ class ExpandyProjects extends React.Component {
   }
 }
 */
+
+function PaginatedProjects(props) {
+  const [page, setPage] = useState(1);
+  
+  function handleClickNext() {
+    setPage(page + 1);
+  }
+  
+  function handleClickPrevious() {
+    setPage(page - 1);
+  }
+}
 
 ExpandyProjects.propTypes = {
   projects: PropTypes.array.isRequired,
