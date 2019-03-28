@@ -13,7 +13,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      <ExpandyProjects {...props} />
+      <PaginatedProjects {...props } />
     </article>
   );
 }
@@ -136,24 +136,45 @@ class ExpandyProjects extends React.Component {
 
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
-  
+
   function handleClickNext() {
     setPage(page + 1);
   }
-  
+
   function handleClickPrevious() {
     setPage(page - 1);
   }
+
+  const projectsPerPage = 12; //props.projectsPerPage; // todo use maxCollapsedProjects
+  const totalProjectsCount = props.projects.length;
+  const shouldPaginate = totalProjectsCount <= projectsPerPage ? false : true;
+  const totalPages = Math.ceil(props.projects.length / projectsPerPage);
+
+  return (
+    <>
+      <div>projectsPerPage: {projectsPerPage}</div>
+      <div>totalProjectsCount: {totalProjectsCount}</div>
+      {shouldPaginate ?
+        <div>
+          <Button
+            key="previous"
+            type="tertiary"
+            onClick={() => setPage(page - 1)}
+          >&larr; Previous
+          <button className="
+        </div>
+    </>
+  );
 }
 
-ExpandyProjects.propTypes = {
-  projects: PropTypes.array.isRequired,
-  maxCollapsedProjects: PropTypes.number,
-};
+// ExpandyProjects.propTypes = {
+//   projects: PropTypes.array.isRequired,
+//   maxCollapsedProjects: PropTypes.number,
+// };
 
-ExpandyProjects.defaultProps = {
-  maxCollapsedProjects: 12,
-};
+// ExpandyProjects.defaultProps = {
+//   maxCollapsedProjects: 12,
+// };
 
 export const ProjectsUL = ({ ...props }) => (
   <ul className="projects-container">
