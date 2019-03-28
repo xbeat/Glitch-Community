@@ -1,12 +1,10 @@
-/* global EXTERNAL_ROUTES */
-import React from 'react';
-import MemoryRouter from 'react-router';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
 import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
-import TextInput from 'Components/fields/text-input';
-import TextArea from '../src/components/fields/text-area';
+import TextInput from '../src/components/inputs/text-input';
+import TextArea from '../src/components/inputs/text-area';
 import Image from '../src/components/image/image';
 import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
@@ -18,6 +16,10 @@ const helloAlert = () => {
   alert('hello');
 };
 
+const withState = (initState, Component) => {
+  const [state, setState] = useState(initState);
+  return <Component state={state} setState={setState} />;
+};
 
 storiesOf('Button', module)
   .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
@@ -145,24 +147,40 @@ storiesOf('Badge', module)
   .add('error', () => <Badge type="error">Error</Badge>);
 
 storiesOf('Segmented-Buttons', module)
-  .add('regular', () => <SegmentedButtons buttons={[{ contents: 1 }, { contents: 2 }, { contents: 3 }]} />)
-  .add('jsx contents', () => (
-    <SegmentedButtons
-      buttons={[
-        {
-          contents: (
-            <>
-              <Badge>Normal</Badge> Badge
-            </>
-          ),
-        },
-        {
-          contents: (
-            <>
-              <Badge type="error">Error</Badge> Badge
-            </>
-          ),
-        },
-      ]}
-    />
-  ));
+  .add(
+    'regular',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[{ name: 'a', contents: 1 }, { name: 'b', contents: 2 }, { name: 'c', contents: 3 }]}
+      />
+    )),
+  )
+  .add(
+    'jsx contents',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[
+          {
+            name: 'a',
+            contents: (
+              <>
+                <Badge>Normal</Badge> Badge
+              </>
+            ),
+          },
+          {
+            name: 'b',
+            contents: (
+              <>
+                <Badge type="error">Error</Badge> Badge
+              </>
+            ),
+          },
+        ]}
+      />
+    )),
+  );

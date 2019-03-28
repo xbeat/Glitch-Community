@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './input-error-message.styl';
 
-const InputErrorMessage = ({ children }) => <div className={styles.errorMessage}>{children}</div>;
+const InputErrorMessage = ({ children }) => <span className={styles.errorMessage}>{children}</span>;
 
 InputErrorMessage.propTypes = {
   children: PropTypes.node.isRequired,

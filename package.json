@@ -18,6 +18,7 @@
     "@sentry/node": "^4.4.1",
     "@storybook/addon-info": "^5.0.0",
     "@storybook/react": "^5.0.0",
+    "algoliasearch": "^3.32.1",
     "autoprefixer-stylus": "^0.14.0",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
@@ -81,8 +82,8 @@
     "url-join": "^4.0.0",
     "url-search-params-polyfill": "^5.0.0",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.2",
-    "webpack-dev-middleware": "^3.5.2",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-middleware": "^3.6.1",
     "winston": "^3.2.1"
   },
   "engines": {
