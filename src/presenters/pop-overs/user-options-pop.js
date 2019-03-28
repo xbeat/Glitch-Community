@@ -10,7 +10,6 @@ import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
-import Button from '../../components/buttons/button';
 
 // Create Team button
 
@@ -19,7 +18,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     return (
       <>
         <p className="description action-description">
-          <button onClick={showCreateTeam} className="button-unstyled link" type="button">	
+          <button onClick={showCreateTeam} className="button-unstyled link" type="button">
             Sign in
           </button>{' '}
           to create teams

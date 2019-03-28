@@ -13,27 +13,22 @@ module.exports = async ({ config, mode }) => {
     use: [
       'style-loader',
       {
-        test: /\.styl$/,
-        use: [
-          {
-            loader: 'css-loader?modules',
-            options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-            },
-          },
-          {
-            loader: 'stylus-loader',
-          },
-        ],
-        // resolve: {
-        //   extensions: ['.js'],
-        //   alias: appConfig.resolve.alias,
-        // },
-        include: path.resolve(__dirname, '../src/components'),
+        loader: 'css-loader?modules',
+        options: {
+          sourceMap: true,
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
+        },
+      },
+      {
+        loader: 'stylus-loader',
       },
     ],
+    // resolve: {
+    //   extensions: ['.js'],
+    //   alias: appConfig.resolve.alias,
+    // },
+    include: path.resolve(__dirname, '../src/components'),
   });
 
   config.mode = 'development';
