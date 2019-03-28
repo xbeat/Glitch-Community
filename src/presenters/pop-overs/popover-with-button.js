@@ -24,16 +24,9 @@ PopoverWithButton.propTypes = {
 };
 
 PopoverWithButton.defaultProps = {
-<<<<<<< HEAD
-  buttonClass: null,
-  containerClass: null,
-  dataTrack: null,
-  passToggleToPop: false,
-=======
   buttonClass: '',
   containerClass: '',
   dataTrack: '',
->>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 };
 
 export default PopoverWithButton;

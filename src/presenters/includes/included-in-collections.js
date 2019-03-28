@@ -1,11 +1,7 @@
 import React from 'react';
 import { sampleSize } from 'lodash';
-<<<<<<< HEAD
-import { getSingleItem, getAllPages, allByKeys } from 'Shared/api';
-=======
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 import { createAPIHook } from '../../state/api';
->>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 
 import CollectionItem from '../collection-item';
 

@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-<<<<<<< HEAD
-import { getShowUrl, getEditorUrl, getRemixUrl } from 'Models/project';
-import Button, { SIZES } from 'Components/buttons/button';
-import Emoji from 'Components/images/emoji';
-=======
 import { getShowUrl, getEditorUrl, getRemixUrl } from '../../models/project';
 import Button, { SIZES } from '../../components/buttons/button';
 import Emoji from '../../components/images/emoji';
->>>>>>> e10be3f50f3fc226556adbfd862a7daa6f27be16
 
 export const ShowButton = ({ name, size }) => (
   <Button href={getShowUrl(name)} size={size}>
