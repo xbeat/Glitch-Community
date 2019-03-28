@@ -137,30 +137,17 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
-  const projectsPerPage = props.maxCollapsedProjects
-  const numProjects = props.projects.length;
-  const numPages = Math.ceil(props.projects.length / projectsPerPage);
-  const hiddenProjects = numProjects - projectsPerPage;
+  let {projects, projectsPerPage} = props; // TODO update where this is passed in
 
+  const numProjects = projects.length;
+  const numPages = Math.ceil(projects.length / projectsPerPage);
+  const hiddenProjects = numProjects - projectsPerPage;
   const shouldPaginate = !expanded && projectsPerPage < numProjects;
 
-  let { projects } = props;
   if (shouldPaginate && !expanded) {
     const startIdx = (page - 1) * projectsPerPage;
     projects = projects.slice(startIdx, startIdx + projectsPerPage);
   }
-  /*
-  useEffect(
-    () => {
-      if (shouldPaginate && !expanded) {
-        setCurrentProjects(props.projects.slice(page - 1, projectsPerPage));
-      } else {
-        setCurrentProjects(props.projects);
-      }
-    },
-    [expanded, props.projects],
-  );
-  */
 
   const PaginationControls = () => (
     <div>
@@ -185,12 +172,24 @@ function PaginatedProjects(props) {
   return (
     <>
       <ProjectsUL {...props} projects={projects} />
-      {shouldPaginate ? <div>PaginationControls /> : null}
-        {shouldShowExpandButton && <ExpandButton />}
-      </div>
+      {shouldPaginate ? (
+        <div>
+          <PaginationControls />
+          <ExpandButton />
+        </div>
+      ) : null}
     </>
   );
 }
+
+PaginatedProjects.propTypes = {
+  projects: PropTypes.array.isRequired,
+  projectsPerPage: PropTypes.number,
+};
+
+PaginatedProjects.defaultProps = {
+  projectsPerPage: 12,
+};
 
 // ExpandyProjects.propTypes = {
 //   projects: PropTypes.array.isRequired,
