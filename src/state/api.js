@@ -112,7 +112,25 @@ const schema = {
 // query('user', 'login', 'modernserf', 'emails')
 
 function query (resource, key, value, children) {
-  return ()
+  const request = { type: 'request', payload: [resource, key, value, children] }
+  
+  return (db) => {
+    const table = db.tables[resource]
+    
+    let id
+    if (key === id) {
+      id = value
+    } else {  
+      // get ID from secondary key
+      id = table.index[key][value]
+      // if not in index, need to fetch
+      if (!id) return request
+    }
+
+    const entity = table.data[id]
+    if (!entity) return request
+    
+  }
 }
 
 function createResourceManager ({ version, schema, urlBase }) {
