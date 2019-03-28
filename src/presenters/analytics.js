@@ -85,7 +85,13 @@ TrackClick.defaultProps = {
   context: {},
 };
 
-
+export const useTrackedFunc = (func, ...trackArgs) => {
+  const track = useAnalyticsTracker();
+  return function trackedFunc(...funcArgs) {
+    track(name, ...trackArgs);
+    return func(...funcArgs);
+  };
+};
 
 // this uses segment's trackLink, which stalls the page load until the analytics request is done
 // it forces a full page load at the end, so don't use it for links within the community site

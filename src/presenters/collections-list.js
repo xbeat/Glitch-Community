@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { orderBy } from 'lodash';
-import { TrackClick } from './analytics';
+import { useTrackedFunc } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
@@ -74,6 +74,7 @@ function CreateCollectionButton({ maybeTeam }) {
   const { currentUser } = useCurrentUser();
   const { createNotification } = useNotifications();
   const [state, setState] = useState(collectionStates.ready());
+  const onClick = useTrackedFunc(createCollectionOnClick, "Create Collection clicked");
 
   async function createCollectionOnClick() {
     setState(collectionStates.loading());
@@ -93,6 +94,7 @@ function CreateCollectionButton({ maybeTeam }) {
       setState(collectionStates.ready());
     }
   }
+  
 
   if (state.type === 'newCollection') {
     return <Redirect to={state.value} push />;
@@ -107,11 +109,9 @@ function CreateCollectionButton({ maybeTeam }) {
 
   return (
     <div id="create-collection-container">
-      <TrackClick name="Create Collection clicked">
-        <button className="button" id="create-collection" onClick={createCollectionOnClick}>
-          Create Collection
-        </button>
-      </TrackClick>
+      <button className="button" id="create-collection" onClick={onClick}>
+        Create Collection
+      </button>
     </div>
   );
 }
