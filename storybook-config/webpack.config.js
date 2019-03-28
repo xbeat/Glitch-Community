@@ -28,17 +28,14 @@ module.exports = async ({ config, mode }) => {
   });
   
   config.resolve = {
-      extensions: ['.js'],
+      extensions: appConfig.resolve.extensions,
       alias: {
         ...appConfig.resolve.alias,
         ...config.resolve.alias,
       },
     },
   
-  config.context = path.resolve(__dirname, '..');
-  
-  console.log('context: '+config.context);
-  console.log('alias' + JSON.stringify(config.resolve.alias, null, 2));
+  config.context = appConfig.context;
 
   config.mode = 'development';
 

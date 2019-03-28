@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from 'Components/buttons/button';
-import Emoji from '../src/components/images/emoji';
-import TooltipContainer from '../src/components/tooltips/tooltip-container';
-import TextInput from '../src/components/inputs/text-input';
-import TextArea from '../src/components/inputs/text-area';
-import Image from '../src/components/images/image';
-import Text from '../src/components/text/text';
-import Heading from '../src/components/text/heading';
-import Markdown from '../src/components/text/markdown';
-import Badge from '../src/components/badges/badge';
-import SegmentedButtons from '../src/components/buttons/segmented-buttons';
+import Emoji from 'Components/images/emoji';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
+import TextInput from 'Components/inputs/text-input';
+import TextArea from 'Components/inputs/text-area';
+import Image from 'Components/images/image';
+import Text from 'Components/text/text';
+import Heading from 'Components/text/heading';
+import Markdown from 'Components/text/markdown';
+import Badge from 'Components/badges/badge';
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
 
 const helloAlert = () => {
   alert('hello');
