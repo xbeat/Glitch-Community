@@ -59,6 +59,7 @@ module.exports = smp.wrap({
     minimizer: [new TerserPlugin({ terserOptions: { safari10: true }, sourceMap: true })],
     noEmitOnErrors: true,
   },
+  context: path.resolve(__dirname),
   resolve: {
     extensions: [".js"],
     alias: {

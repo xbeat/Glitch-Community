@@ -27,14 +27,7 @@ module.exports = async ({ config, mode }) => {
     ],
     resolve: {
       extensions: ['.js'],
-      alias: {
-        ...appConfig.resolve.alias,
-        Components: path.resolve(__dirname, '../src/components'),
-        Utils: path.resolve(__dirname, '../src/utils'),
-        Curated: path.resolve(__dirname, '../src/curated'),
-        Models: path.resolve(__dirname, '../src/models'),
-        Shared: path.resolve(__dirname, '../shared'),
-      },
+      alias: appConfig.resolve.alias,
     },
     include: path.resolve(__dirname, '..'),
   });
