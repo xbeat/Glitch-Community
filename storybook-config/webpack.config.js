@@ -1,7 +1,5 @@
 const path = require('path');
-
-
-
+const appConfig = require('../webpack.config.js');
 console.log('alias' + JSON.stringify(appConfig.resolve.alias, null, 2));
 
 module.exports = async ({ config, mode }) => {
@@ -30,14 +28,15 @@ module.exports = async ({ config, mode }) => {
     resolve: {
       extensions: ['.js'],
       alias: {
-      'Components': CSS_MODULES,
-      'Utils': path.resolve(__dirname, "src/utils"),
-      'Curated': path.resolve(__dirname, "src/curated"),
-      'Models': path.resolve(__dirname, "src/models"),
-      'Shared': SHARED,
+        ...appConfig.resolve.alias,
+        Components: path.resolve(__dirname, '../src/components'),
+        Utils: path.resolve(__dirname, '../src/utils'),
+        Curated: path.resolve(__dirname, '../src/curated'),
+        Models: path.resolve(__dirname, '../src/models'),
+        Shared: path.resolve(__dirname, '../shared'),
+      },
     },
-    },
-    include: path.resolve(__dirname, '../src/components'),
+    include: path.resolve(__dirname, '..'),
   });
 
   config.mode = 'development';

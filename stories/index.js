@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from '/app/src/components/buttons/button';
+import Button from 'Components/buttons/button';
 import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/inputs/text-input';
