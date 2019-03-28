@@ -9,15 +9,15 @@ import TextInput from '../components/fields/text-input';
 import Heading from '../components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...props }) {
-  const [filterQuery, setFilterQuery] = useState(null);
+  const [filterQuery, setFilterQuery] = useState('');
   
   let { projects } = props;
   useEffect(() => {
-    if (filterQuery) {
+    if (filterQuery.length) {
       projects = projects.filter(p => {
-        if (p.title.toLowerCase().contains(filterQuery)) {
+        if (p.domain.includes(filterQuery)) {
           return p;
-        } else if (p.description.toLowerCase().contains(filterQuery)) {
+        } else if (p.description.toLowerCase().includes(filterQuery)) {
           return p;
         }
         return null;
@@ -30,13 +30,13 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
       <div>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={e => setFilterQuery(e.target.value.toLowerCase())} opaque placeholder="find a project" type="search" value={filterQuery} />
+          <TextInput className="header-search" name="q" onChange={setFilterQuery} opaque placeholder="find a project" type="search" value={filterQuery} />
         ) : null}
       </div>
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      <PaginatedProjects {...props} />
+      <PaginatedProjects {...props} projects={projects} />
     </article>
   );
 }
