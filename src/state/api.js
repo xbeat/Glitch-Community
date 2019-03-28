@@ -109,15 +109,12 @@ const schema = {
   },
 };
 
+// query('user', 'login', 'modernserf', 'emails')
+
+function query (resource, key, value, children) {
+  return ()
+}
+
 function createResourceManager ({ version, schema, urlBase }) {
-  const initialState = {}
-  for (const [resourceName, params] of Object.entries(schema)) {
-    const { secondaryKeys = [], references = [], referencedAs = [], belongsTo = [], subresources = [] } = params
-    
-    const resourceData = { id: {} }
-    for (const key of secondaryKeys) {
-      resourceData[key] = {}
-    }
-    
-  } 
+  
 }
