@@ -1,7 +1,7 @@
 /* globals API_URL */
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { memoize } from 'lodash';
+import { memoize, groupBy } from 'lodash';
 import { useCurrentUser } from './current-user';
 
 export const getAPIForToken = memoize((persistentToken) => {
@@ -146,5 +146,16 @@ function query(db, resource, key, value, children) {
   if (!result) return [request];
   return [{ type: 'result', result }];
 }
+
+const getAPIPath = ({ resource, key, children }) => 
+  children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`
+
+// requests for multiple resources of the same type can be turned into 
+function joinRequests (requests) {
+  const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
+  const groups = groupBy(requests, getAPIPath)
+  return Object.entries(groups, ([apiPath, requests]) =>
+}
+
 
 function createResourceManager({ version, schema, urlBase }) {}
