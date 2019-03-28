@@ -146,16 +146,21 @@ storiesOf('Badge', module)
   .add('warning', () => <Badge type="warning">Warning</Badge>)
   .add('error', () => <Badge type="error">Error</Badge>);
 
+// const withState = (initState, Component) => {
+//   const [state, setState] = useState(initState);
+//   return <Component state={state} setState={setState} />;
+// };
+
 storiesOf('Segmented-Buttons', module)
   .add(
     'regular',
-    withState('a', ({ state, setState }) => (
+    withState('a', 
       <SegmentedButtons
         value={state}
         onChange={setState}
         buttons={[{ name: 'a', contents: 1 }, { name: 'b', contents: 2 }, { name: 'c', contents: 3 }]}
       />
-    )),
+    ),
   )
   .add(
     'jsx contents',
