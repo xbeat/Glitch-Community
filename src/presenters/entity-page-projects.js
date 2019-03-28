@@ -10,8 +10,8 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
       <span className="emoji pushpin emoji-in-title" />
     </>
   );
-
   const recentTitle = 'Recent Projects';
+  
   let projectOptionsToPass = {};
   if (isAuthorized) {
     projectOptionsToPass = { addPin, removePin, ...projectOptions };

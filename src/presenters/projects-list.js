@@ -22,6 +22,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
         }
         return null;
       });
+      
     }
   });   
   
