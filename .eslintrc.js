@@ -1,3 +1,7 @@
+const appConfig = require('./webpack.config.js');
+
+appConfig.module
+
 module.exports = {
   settings: {
     'import/resolver': {
