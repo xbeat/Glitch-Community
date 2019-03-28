@@ -127,11 +127,20 @@ const getSingleItem = (db, request) => {
 const getChildren = (db, request) => {
   // check if the childIDs are stored under this index
   let childIDs = db.index[getAPIPath(request)][request.value];
+  
   // check if the parent exists and other indices can be checked
   if (!childIDs) {
-    const parent = 
+    const parent = getSingleItem(db, { ...request, parent: null })
+    if (!parent) return null
+    const { secondaryKeys = [] } = db.schema[request.resource]
+    const keys = ['id', ...secondaryKeys]
+    for (const key of keys) {
+      childIDs = db.index[getAPIPath({ ...request, key })][parent[key]];
+      if (childIDs) break
+    }
   }
-
+  if (!childIDs) return null
+  
   const childTable = getTable(db, request.children);
   return childIDs.map((id) => childTable.data[id]);
 };
@@ -214,19 +223,15 @@ function buildIndexes (db, resource, response) {
 }
 
 function insertResponseIntoDB(db, { resource, response, parent }) {
-  // - insert items into the tables
+  // insert items into the tables
   const table = getTable(db, resource)
   for (const item of response) {
     table[item.id] = ready(item)
   }
-  // - synchronize references
-  //   e.g. if we have user/by/id/projects for this user, copy that over to user/by/login/projects for this user's login
-  
-  
-  
   // - if items has a parent, insert the ids into the references
-  // - if items has a parent AND it is already loaded, synchronize _those_ references
-  //   e.g. if these are the projects for user/by/id/projects, and we know the user's login, copy the IDs to user/by/login/projects
+  if (parent) {
+    const index = getAPIPath
+  }
 }
 
 // request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
