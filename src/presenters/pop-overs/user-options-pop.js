@@ -14,6 +14,7 @@ import TooltipContainer from '../../components/tooltips/tooltip-container';
 // Create Team button
 
 const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
+  const onClickCreateTeam = useTrackedFunc(showCreateTeam, 'Create Team clicked');
   if (userIsAnon) {
     return (
       <>
@@ -30,11 +31,9 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     );
   }
   return (
-    <TrackClick name="Create Team clicked">
-      <button type="button" onClick={showCreateTeam} className="button button-small has-emoji">
-        Create Team <span className="emoji herb" />
-      </button>
-    </TrackClick>
+    <button type="button" onClick={onClickCreateTeam} className="button button-small has-emoji">
+      Create Team <span className="emoji herb" />
+    </button>
   );
 };
 
