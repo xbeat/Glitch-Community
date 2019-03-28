@@ -149,7 +149,7 @@ function PaginatedProjects(props) {
   useEffect(
     () => {
       console.log('useEffect');
-      console.log({shouldPaginate, expanded})
+      console.log({shouldPaginate, expanded, numProjects})
       // if (currentProjects === null) {
       // console.log('currentProjects === null');
 
@@ -184,10 +184,12 @@ function PaginatedProjects(props) {
       Show all<Badge>{hiddenProjects}</Badge>
     </Button>
   );
+  
+  console.log('rendering', currentProjects ? currentProjects.length : null)
 
   return (
     <>
-      <ProjectsUL projects={shouldPaginate && !expanded ? props.projects.slice(page - 1, projectsPerPage) : props.projects} {...props} />
+      <ProjectsUL {...props} projects={currentProjects || []} />
       {shouldPaginate ? <PaginationControls /> : null}
       {shouldShowExpandButton && <ExpandButton />}
     </>
