@@ -31,8 +31,8 @@ const getChildren = (db, request) => {
   return indices.find(({ value, index }) => db.index[index][value]);
 };
 
-// request = { resource, key, value, children? }
-// maps to url `/:resource/by/:key/:children`
+// request = { resource, key, value, childResource? }
+// maps to url `/:resource/by/:key/:childResource?:key=:value`
 
 const status = {
   loading: { status: 'loading' },
@@ -79,7 +79,7 @@ function getAPICallsForRequests(api, urlBase, requests) {
 }
 
 function insertLoadingStatusIntoDB(db, request) {
-  if (request.children) {
+  if (request.childResource) {
     for (const { index, value } of getIndices(db, request)) {
       db.index[index][value] = status.loading;
     }
@@ -117,13 +117,13 @@ function createDB(schema) {
     const { secondaryKeys = [], references = [], referencedAs = [] } = params;
     db.tables[resource] = {};
 
-    for (const children of references) {
-      db.index[getAPIPath({ resource, key: 'id', children })] = {};
+    for (const childResource of references) {
+      db.index[getAPIPath({ resource, key: 'id', childResource })] = {};
     }
     for (const key of secondaryKeys) {
       db.index[getAPIPath({ resource, key })] = {};
-      for (const children of references) {
-        db.index[getAPIPath({ resource, key, children })] = {};
+      for (const childResource of references) {
+        db.index[getAPIPath({ resource, key, childResource })] = {};
       }
     }
 
@@ -166,16 +166,23 @@ const reducer = (state, action) => {
   }
 };
 
-function flushBatchesAtInterval (interval) {
-  return ({ dispatch }) => {
-    setInterval(() => {
-      dispatch(actions.batchesFlushed);
-    }, interval)
-  }
+function flushBatchesAtInterval (api, store, interval) {
+  setInterval(() => {
+    const { requests, urlBase } = store.getState();
+    store.dispatch(actions.batchesFlushed());
+    getAPICallsForRequests(api, urlBase, requests).forEach(async (responsePromise) => {
+      const response = await responsePromise
+      store.dispatch(resp
+    }) 
+  }, interval)
 }
 
 function query (api, store, request) {
-  const maybeResult = 
+  const result = checkDBForFulfillableRequests(store.getState().db, request)
+  if (result) return result
+  
+  store.dispatch(actions.requestQueued(request))
+  return status.loading
 }
 
 function createResourceManager({ schema, urlBase }) {
