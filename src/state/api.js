@@ -154,21 +154,28 @@ const getAPIPath = ({ resource, key, children }) =>
 function getAPICallsForRequests (api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
   
-  // TODO: make pagination part of request  
-  const childRequests = withChildren.map(async req => {
-    const results = getAllPages(api, `${urlBase}/${getAPIPath(req)}?${req.key}=${req.value}`)
-    
+  // TODO: make pagination, sort etc part of request  
+  const childRequests = withChildren.map(async request => {
+    const response = getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`)
+    return { type: 'response', request, response }
   })
   
   // join mergable requests
   const joinedRequests = Object.entries(groupBy(withoutChildren, getAPIPath))
-    .map(([apiPath, requests]) => {
-      const key = requests[0].key
-      const values = requests.map(req => req.value)
-      const url = 
+    .map(async ([apiPath, requests]) => {
+      const query = requests.map(req => `${req.key}=${req.value}`).join(',')
+      const url = `${urlBase}/${apiPath}?${query}`
+      const response = 
     })
   
 }
 
+function flushPendingRequests () {
+      
+}
 
-function createResourceManager({ version, schema, urlBase }) {}
+function createResourceManager({ version, schema, urlBase }) {
+  const db = createDatabase(schema)
+  const reducer = createResourceReducer(db)
+  const useResource = createResourceMiddleware(
+}
