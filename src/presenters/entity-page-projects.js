@@ -21,7 +21,7 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
   return (
     <>
       {projects.length > 0 && (
-        <ProjectsList title={removePin ? pinnedTitle : recentTitle} enableFiltering projects={projects} projectOptions={projectOptionsToPass} />
+        <ProjectsList title={removePin ? pinnedTitle : recentTitle} enableFiltering={removePin ? false : true} projects={projects} projectOptions={projectOptionsToPass} />
       )}
     </>
   );

@@ -12,6 +12,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
   const [filterQuery, setFilterQuery] = useState('');
   
   let { projects } = props;
+  
   useEffect(() => {
     if (filterQuery.length) {
       projects = projects.filter(p => {
@@ -22,8 +23,8 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
         }
         return null;
       });
-      
     }
+    console.log(projects);
   });   
   
   return (
