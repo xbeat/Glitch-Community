@@ -8,10 +8,21 @@ import TextInput from '../components/fields/text-input';
 
 import Heading from '../components/text/heading';
 
-function ProjectsList({ title, placeholder, extraClasses, ...props }) {
+function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...props }) {
+  const [filterQuery, setFilterQuery] = useState(null);
+  
+  function onChangeFilter(e) {
+    setFilterQuery(e.target.value);
+  }
+  
   return (
     <article className={`projects ${extraClasses}`}>
-      <Heading tagName="h2">{title}</Heading>
+      <div>
+        <Heading tagName="h2">{title}</Heading>
+        {enableFiltering ? (
+          <TextInput className="header-search" name="q" onChange={onChangeFilter} opaque placeholder="find a project" type="search" value={filterQuery} />
+        ) : null}
+      </div>
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
@@ -138,7 +149,7 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
-  let {projects, projectsPerPage} = props; // TODO update where this is passed in
+  let { projects, projectsPerPage } = props; // TODO update where this is passed in
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
