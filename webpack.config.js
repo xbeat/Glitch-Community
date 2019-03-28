@@ -25,6 +25,10 @@ console.log(`Starting Webpack in ${mode} mode.`);
 
 module.exports = smp.wrap({
   mode,
+  devServer: {
+    lazy: true,
+    filename: '[name].js?[contenthash]',
+  },
   entry: {
     client: `${SRC}/client.js`,
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
