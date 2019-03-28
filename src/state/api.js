@@ -110,9 +110,7 @@ const schema = {
   },
 };
 
-// query('user', 'login', 'modernserf', 'emails')
-
-const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referecedAs[tableName]];
+const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referencedAs[tableName]];
 
 const getPrimaryKey = (table, key, value) => {
   if (key === 'id') return value;
@@ -120,35 +118,43 @@ const getPrimaryKey = (table, key, value) => {
   return table.index[key][value];
 };
 
-const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
+function createDB (schema) {
+  const db = { tables: {}, index: {}, referencedAs: {} }
+  for (const table in schema) {
+  }
+  
+}
+
+
+const data = {
+  request: (resource, key, value, children) => ({ type: 'request', resource, key, value, children }),
+  result: (result) => ({ type: 'result', result })
+}
+
+const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
 // db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
   const { resource, key, value, children } = request;
 
   if (children) {
+    const childIDs = db.tables[getAPIPath(request)][value]
+    if (!childIDs) return req;
+
     const childTable = getTable(db, children);
-    
-    const childIDs = db.tables[getAPIPath(request)][
-    
-    if (!childIDs) return request;
     const result = childIDs.map((id) => childTable.data[id]);
-    return { type: 'result', result }
-    
-    
-    return flatMap(childID, (id) => checkDBForFulfillableRequests(db, childTable.id, 'id', id));
+    return data.result(result)
   }
 
   const table = getTable(db, resource);
+
   const id = getPrimaryKey(table, key, value);
   if (!id) return request;
 
   const result = table.data[id];
   if (!result) return request;
-  return { type: 'result', result };
+  return data.result(result)
 }
-
-const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
 // api, urlBase, [request] -> [response]
 function getAPICallsForRequests(api, urlBase, requests) {
@@ -180,7 +186,6 @@ const ready = (value) => ({ status: 'ready', value });
 function insertResponseIntoDB(db, { resource, response, parent }) {
   const changes = [];
   const table = getTable(db, resource);
-  const parentTable = parent ? getTable(db, parent.resource) : null
   for (const item of response) {
     changes.push([table.id, 'data', item.id, ready(item)]);
     // add links to secondary keys
