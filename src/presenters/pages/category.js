@@ -11,11 +11,11 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
-import Image from '../../components/images/image';
+import Image from 'Components/images/image';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
-import Heading from '../../components/text/heading';
+import Heading from 'Components/text/heading';
 
 const CategoryPageWrap = ({ addProjectToCollection, category, currentUser, ...props }) => (
   <>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
-import Markdown from '../components/text/markdown';
+import Markdown from 'Components/text/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 import Note from './note';

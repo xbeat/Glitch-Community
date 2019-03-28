@@ -5,7 +5,7 @@ import { getAvatarStyle, getProfileStyle } from '../models/user';
 import { useCurrentUser } from '../state/current-user';
 import { UserLink } from './includes/link';
 
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 import { CoverContainer } from './includes/profile';
 import { Loader } from './includes/loader';

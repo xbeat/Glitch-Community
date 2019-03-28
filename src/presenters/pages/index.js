@@ -14,10 +14,10 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
-import Image from '../../components/images/image';
-import Text from '../../components/text/text';
+import Image from 'Components/images/image';
+import Text from 'Components/text/text';
 
-import Heading from '../../components/text/heading';
+import Heading from 'Components/text/heading';
 
 function loadScript(src) {
   const script = document.createElement('script');

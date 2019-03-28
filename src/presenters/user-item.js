@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { UserLink } from './includes/link';
-import Markdown from '../components/text/markdown';
+import Markdown from 'Components/text/markdown';
 import { Thanks } from './includes/thanks';
 
 import WrappingLink from './includes/wrapping-link';
-import Button from '../components/buttons/button';
+import Button from 'Components/buttons/button';
 
 import { ANON_AVATAR_URL, getAvatarUrl, getLink, getProfileStyle } from '../models/user';
 

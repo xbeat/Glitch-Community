@@ -3,12 +3,12 @@ import React from 'react';
 
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
-import Markdown from '../components/text/markdown';
+import Markdown from 'Components/text/markdown';
 import { Thanks } from './includes/thanks';
 import UsersList from './users-list';
 import WrappingLink from './includes/wrapping-link';
 import { VerifiedBadge } from './includes/team-elements';
-import Button from '../components/buttons/button';
+import Button from 'Components/buttons/button';
 
 export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });

@@ -9,7 +9,7 @@ import { TrackClick } from './analytics';
 import { Loader } from './includes/loader';
 
 import { useAPI } from '../state/api';
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');

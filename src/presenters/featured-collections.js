@@ -11,13 +11,13 @@ import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/ap
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import Markdown from '../components/text/markdown';
+import Markdown from 'Components/text/markdown';
 import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
 
 import { useAPI } from '../state/api';
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';

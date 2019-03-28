@@ -8,11 +8,11 @@ import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
 import { AnalyticsContext } from '../analytics';
-import TooltipContainer from '../../components/tooltips/tooltip-container';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
-import Heading from '../../components/text/heading';
-import Markdown from '../../components/text/markdown';
+import Heading from 'Components/text/heading';
+import Markdown from 'Components/text/markdown';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
 import EditableField from '../includes/editable-field';

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from '../includes/link';
-import Markdown from '../../components/text/markdown';
+import Markdown from 'Components/text/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
-import TooltipContainer from '../../components/tooltips/tooltip-container';
-import Text from '../../components/text/text';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
+import Text from 'Components/text/text';
 
 import newStuffLog from '../../curated/new-stuff-log';
 

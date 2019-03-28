@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 import { ProjectLink } from './link';
 import { Loader } from './loader';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
-import TooltipContainer from '../../components/tooltips/tooltip-container';
-import Text from '../../components/text/text';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
+import Text from 'Components/text/text';
 import { useAPI } from '../../state/api';
 
 const RECENT_REMIXES_COUNT = 100;

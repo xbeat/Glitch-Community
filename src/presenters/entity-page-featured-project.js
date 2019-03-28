@@ -8,7 +8,7 @@ import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
 import { TrackClick } from './analytics';
 
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (

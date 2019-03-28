@@ -16,9 +16,9 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-import SegmentedButtons from '../../components/buttons/segmented-buttons';
-import Badge from '../../components/badges/badge';
-import Heading from '../../components/text/heading';
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import Badge from 'Components/badges/badge';
+import Heading from 'Components/text/heading';
 
 const generateFilterButtons = (filters) =>
   filters

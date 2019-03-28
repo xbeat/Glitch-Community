@@ -27,7 +27,7 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import MoreCollectionsContainer from '../more-collections';
-import Text from '../../components/text/text';
+import Text from 'Components/text/text';
 
 import { getSingleItem, getAllPages } from '../../../shared/api';
 

@@ -10,7 +10,7 @@ import { getAbuseReportTitle, getAbuseReportBody } from '../../utils/abuse-repor
 import { Loader } from '../includes/loader';
 
 import { useCurrentUser } from '../../state/current-user';
-import TextArea from '../../components/inputs/text-area';
+import TextArea from 'Components/inputs/text-area';
 
 class ReportAbusePop extends React.Component {
   constructor(props) {

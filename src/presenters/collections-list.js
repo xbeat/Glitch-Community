@@ -11,7 +11,7 @@ import { useNotifications } from './notifications';
 import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeTeam }) {
   const api = useAPI();

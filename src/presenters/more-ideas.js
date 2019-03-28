@@ -9,7 +9,7 @@ import { CollectionLink, Link } from './includes/link';
 import { DataLoader } from './includes/loader';
 
 import { useAPI } from '../state/api';
-import Heading from '../components/text/heading';
+import Heading from 'Components/text/heading';
 
 const MoreIdeasCollectionsDisplay = ({ collections }) => (
   <section className="more-ideas">

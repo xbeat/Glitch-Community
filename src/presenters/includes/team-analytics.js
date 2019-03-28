@@ -14,7 +14,7 @@ import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
 import { useAPI } from '../../state/api';
-import Text from '../../components/text/text';
+import Text from 'Components/text/text';
 
 const dateFromTime = (newTime) => {
   const timeMap = {
