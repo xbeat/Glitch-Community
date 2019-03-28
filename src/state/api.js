@@ -151,18 +151,20 @@ function getAPICallsForRequests(api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children);
 
   // TODO: make pagination, sort etc part of request
+  // comes in an array of values  
   const childResponses = withChildren.map(async (request) => {
     const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`);
-    const { resource, key, children } = request;
-    return { type: 'response', resource, key, children, response };
+    return { type: 'response', resource: request.children, response, parent: request };
   });
 
   // join mergable requests
+  // comes in a { key: value } format, but only the values are needed  
   const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath)).map(async ([apiPath, requests]) => {
     const { resource, key } = requests[0];
     const query = requests.map((req) => `${req.key}=${req.value}`).join(',');
     const response = await api.get(`${urlBase}/${apiPath}?${query}`);
-    return { type: 'response', resource, key, response };
+    
+    return { type: 'response', resource, response: Object.values(response) };
   });
   return [...childResponses, ...joinedResponses];
 }
@@ -171,22 +173,15 @@ const loading = { status: 'loading' }
 const ready = (value) => ({ status: 'ready', value })
 
 // returns a set of changes to minimize the ammount of copying that is done
-function insertResponseIntoDB (db, { resource, key, value, children }, response) {
+function insertResponseIntoDB (db, { resource, response, parent }) {
   const changes = []
-  if (children) {
-    const childTable = getTable(db, children);
-    const parentTable = getTable(db, resource);
-    
-    
-  } else {
-    const table = getTable(db, resource)
-    const id = getPrimaryKey(table, key, value)
-    for (const 
-    changes.push([table.id, 'data', ready(response)])
-
-    // if using a secondary key, add reference to primary key
-    if (key !== 'id') {
-      changes.push([table.id, 'index', response.value])
+  const table = getTable(db, resource)
+    for (const entity of response) {
+      changes.push([table.id, 'data', value.id, ready(response)])  
+      for (const secondaryKey of db.schema[table.id].secondaryKeys) {
+        changes.push([table.id, 'index', value[secondaryKey], value.id])
+      }
+      
     }
   }
   return changes
