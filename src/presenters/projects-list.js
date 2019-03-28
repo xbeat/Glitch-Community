@@ -4,6 +4,7 @@ import ProjectItem from './project-item';
 import ExpanderContainer from '../components/containers/expander';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
+import TextInput from '../components/fields/text-input';
 
 import Heading from '../components/text/heading';
 
