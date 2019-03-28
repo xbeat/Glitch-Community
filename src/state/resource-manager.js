@@ -1,6 +1,8 @@
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { groupBy, partition } from 'lodash';
 import produce from 'immer';
 import { getAllPages } from '../../shared/api';
+import { useAPI } from './api';
 
 const getTable = (db, resource) => db.tables[resource] || db.tables[db.referencedAs[resource]];
 const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
@@ -185,8 +187,8 @@ function flushBatchesAtInterval(api, urlBase, store, interval) {
       store.dispatch(actions.responseQueued(response));
     });
   }, interval);
-  
-  return () => clearInterval(handle)
+
+  return () => clearInterval(handle);
 }
 
 function query(store, request) {
@@ -201,16 +203,36 @@ function query(store, request) {
   return status.loading;
 }
 
-function ResourceProvider ({ urlBase, schema, interval }) {
-  const api = useAPI()
-  
-  let store = useRef(() 
-  
-  useEffect(() => {
-    store = createStore(reducer, getInitialState(schema))
-    
-    flushBatchesAtInterval(api, urlBase, store, interval)
-    
-  }, [api, urlBase, schema, interval])
-  
+export function createStore(schema) {
+  let state = getInitialState(schema);
+  const subscriptions = [];
+  const dispatch = (action) => {
+    state = reducer(state, action);
+    subscriptions.forEach((sub) => sub());
+    return action;
+  };
+  const subscribe = (callback) => {
+    subscriptions.push(callback);
+    return () => {
+      subscriptions.splice(subscriptions.indexOf(callback), 1);
+    };
+  };
+  return {
+    getState: () => state,
+    dispatch,
+    subscribe,
+  };
+}
+
+const Context = createContext()
+export function ResourceProvider({ urlBase, store, interval, children }) {
+  const api = useAPI();
+
+  useEffect(() => flushBatchesAtInterval(api, urlBase, store, interval), [api, urlBase, store, interval]);
+  return <Context.Provider value={store}>{children}</Context.Provider>
+}
+
+export function useResources(resource, key, value, childResource) {
+  const store = useContext(Context)
+  const [state, setState] =
 }
