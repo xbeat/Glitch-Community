@@ -177,7 +177,7 @@ const reducer = (state, action) => {
 };
 
 function flushBatchesAtInterval(api, urlBase, store, interval) {
-  setInterval(() => {
+  const handle = setInterval(() => {
     const { requests } = store.getState();
     store.dispatch(actions.batchesFlushed());
     getAPICallsForRequests(api, urlBase, requests).forEach(async (responsePromise) => {
@@ -185,6 +185,8 @@ function flushBatchesAtInterval(api, urlBase, store, interval) {
       store.dispatch(actions.responseQueued(response));
     });
   }, interval);
+  
+  return () => clearInterval(handle)
 }
 
 function query(store, request) {
@@ -199,4 +201,16 @@ function query(store, request) {
   return status.loading;
 }
 
-function ResourceProvider ({ })
+function ResourceProvider ({ urlBase, schema, interval }) {
+  const api = useAPI()
+  
+  let store = useRef(() 
+  
+  useEffect(() => {
+    store = createStore(reducer, getInitialState(schema))
+    
+    flushBatchesAtInterval(api, urlBase, store, interval)
+    
+  }, [api, urlBase, schema, interval])
+  
+}
