@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import useDevToggle from '../includes/dev-toggles';
 import { Link } from '../includes/link';
 import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
@@ -243,7 +242,6 @@ SignInCodeSection.propTypes = {
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api, location, hash } = props;
-  const googleAuthEnabled = useDevToggle('Google Auth');
   const [, setDestination] = useLocalStorage('destinationAfterAuth');
   const onClick = () =>
     setDestination({
@@ -268,7 +266,7 @@ const SignInPopWithoutRouter = (props) => {
                 {prompt}
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
-                {googleAuthEnabled && <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />}
+                <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />
                 <EmailSignInButton
                   onClick={() => {
                     onClick();
