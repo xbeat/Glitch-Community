@@ -111,40 +111,43 @@ const schema = {
 
 // query('user', 'login', 'modernserf', 'emails')
 
-const getTable = (db, tableName) => 
-  db.tables[tableName] || db.tables[db.referecedAs[tableName]]
+const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referecedAs[tableName]];
 
 const getPrimaryKey = (table, key, value) => {
-  if (key === 'id') return value
+  if (key === 'id') return value;
   // get ID from secondary key
-  return table.index[key][value]
-}
+  return table.index[key][value];
+};
 
-const getChildIDs = (childTable, parentTable, parentID) =>
-  childTable.index[parentTable.id][parentID]
+const getChildIDs = (childTable, parentTable, parentID) => childTable.index[parentTable.id][parentID];
 
-function query (resource, key, value, children) {
-  const request = { type: 'request', payload: [resource, key, value, children] }
-  
+const getRequest = (resource, key, value, children) =>
+  ({ type: 'request', payload: [resource, key, value, children] })
+
+function query(resource, key, value, children) {
+  const request = getRequest(resource, key, value, children)
+
   return (db) => {
     if (children) {
-      const table = getTable(db, children)
-      const parentTable = getTable(db, resource)
-      const parentID = getPrimaryKey(parentTable, key, value)
-      table.index[parentTable.id][
+      const table = getTable(db, children);
+      const parentTable = getTable(db, resource);
+      const parentID = getPrimaryKey(parentTable, key, value);
+      // if cant find parent, request both parent and children 
+      if (!parentID) return [request, getRequest(resource, key, value)]
+      
+      const childIDs = getChildIDs(table, parentTable, parentID);
+      if (!childIDs) return [request];
       
     }
-    
-    const table = getTable(db, resource)
-    const id = getPrimaryKey(table, key, value)
-    if (!id) return [request]
 
-    const entity = table.data[id]
-    if (!entity) return [request]
-    return [{ type: 'result', payload: entity }]
-  }
+    const table = getTable(db, resource);
+    const id = getPrimaryKey(table, key, value);
+    if (!id) return [request];
+
+    const entity = table.data[id];
+    if (!entity) return [request];
+    return [{ type: 'result', payload: entity }];
+  };
 }
 
-function createResourceManager ({ version, schema, urlBase }) {
-  
-}
+function createResourceManager({ version, schema, urlBase }) {}
