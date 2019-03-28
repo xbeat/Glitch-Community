@@ -136,10 +136,30 @@ function createDB(schema) {
   return db;
 }
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    // if a request cannot be fulfilled immediately, it is added to the queue
+    case 'requestQueued':
+      return produce(state, draft => 
+      return { ...state, requests: state.requests.concat(action.payload) }
+    // every second the request queue is flushed and the data is fetched from the API,
+    // and the requests are set to 'loading'
+    case 'requestsFlushed':
+      return produce(state, draft => {
+        draft.requests = []
+        state.requests.forEach((request) => insertLoadingStatusIntoDB(draft.db, request))
+      })
+    // responses
+    case 'responsesQueued':
+      
+  }
+}
+
 function createResourceManager ({ schema, urlBase }) {
   const state = {
     db: createDB(schema),
     requests: [],
+    responses: [],
   }
   
   
