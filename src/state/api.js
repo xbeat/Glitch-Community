@@ -172,8 +172,11 @@ function getAPICallsForRequests(api, urlBase, requests) {
   return [...childResponses, ...joinedResponses];
 }
 
+const loading = { status: 'loading' }
+const ready = (value) => ({ status: 'ready', value })
+
 // returns a set of changes to minimize the ammount of copying that is done
-function insertIntoDB (db, { resource, key, value, children }, insertion) {
+function insertResponseIntoDB (db, { resource, key, value, children }, response) {
   const changes = []
   if (children) {
     const childTable = getTable(db, children);
@@ -183,15 +186,17 @@ function insertIntoDB (db, { resource, key, value, children }, insertion) {
   } else {
     const table = getTable(db, resource)
     const id = getPrimaryKey(table, key, value)
-    changes.push([table.id, 'data', insertion])
+    changes.push([table.id, 'data', ready(response)])
 
     // if using a secondary key, add reference to primary key
-    if (key !== 'id' && insertion.value) {
-      changes.push([table.id, 'index', insertion.value.id])
+    if (key !== 'id') {
+      changes.push([table.id, 'index', response.value])
     }
   }
   return changes
 }
 
 
+// request -> check db - request -> 
+//                     - result -> render
 function createResourceManager({ version, schema, urlBase }) {}
