@@ -138,11 +138,17 @@ function PaginatedProjects(props) {
   const [expanded, setExpanded] = useState(false);
 
   const projectsPerPage = 12; //props.projectsPerPage; // todo use maxCollapsedProjects
-  const totalProjectsCount = props.projects.length;
+  const numProjects = props.projects.length;
   const numPages = Math.ceil(props.projects.length / projectsPerPage); // todo confirm this
+  const hiddenProjects = numProjects - projectsPerPage;
   
-  const shouldPaginate = projectsPerPage < totalProjectsCount; // todo confirm this
-  const shouldShowExpandButton = !expanded && (projectsPerPage < totalProjectsCount);
+  const shouldPaginate = projectsPerPage < numProjects; // todo confirm this
+  const shouldShowExpandButton = !expanded && (projectsPerPage < numProjects);
+  
+  let currentProjects = props.projects;
+  if (shouldPaginate && !expanded) {
+    currentProjects = 
+  }
 
   const PaginationControls = () => (
     <div>
@@ -157,11 +163,18 @@ function PaginatedProjects(props) {
       </Button>
     </div>
   );
+  
+  const ExpandButton = () => (
+    <Button type="tertiary" onClick={() => setExpanded(true)}>
+      Show all<Badge>{hiddenProjects}</Badge>
+    </Button>
+  )
 
   return (
     <>
+      <ProjectsUL projects={projects
       {shouldPaginate ? <PaginationControls /> : null}
-      {
+      {shouldShowExpandButton && <ExpandButton />}
     </>
   );
 }
