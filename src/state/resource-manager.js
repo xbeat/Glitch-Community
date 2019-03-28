@@ -31,41 +31,39 @@ const getChildren = (db, request) => {
   return indices.find(({ value, index }) => db.index[index][value]);
 };
 
-const data = {
-  request: (resource, key, value, children) => ({ type: 'request', resource, key, value, children }),
-  result: (result) => ({ type: 'result', result }),
-};
+// request = { resource, key, value, children? }
+// maps to url `/:resource/by/:key/:children`
 
 const status = {
   loading: { status: 'loading' },
   ready: (value) => ({ status: 'ready', value }),
 };
 
-// db, request -> result | request
+// db, request -> result?
 function checkDBForFulfillableRequests(db, request) {
-  if (request.children) {
+  if (request.childResource) {
     const childIDsResult = getChildren(db, request);
-    if (!childIDsResult) return request;
+    if (!childIDsResult) return null;
     if (childIDsResult.status === 'loading') return childIDsResult;
 
-    const childTable = getTable(db, request.children);
+    const childTable = getTable(db, request.childResource);
     return data.result(childIDsResult.value.map((id) => childTable.data[id]));
   }
 
   const result = getSingleItem(db, request);
-  if (!result) return request;
+  if (!result) return null;
   return data.result(result);
 }
 
 // api, urlBase, [request] -> [Promise response]
 function getAPICallsForRequests(api, urlBase, requests) {
-  const [withChildren, withoutChildren] = partition(requests, (req) => req.children);
+  const [withChildren, withoutChildren] = partition(requests, (req) => req.childResource);
 
   // TODO: make pagination, sort etc part of request
   // comes in an array of values
   const childResponses = withChildren.map(async (request) => {
     const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`);
-    return { type: 'response', resource: request.children, response, parent: request };
+    return { type: 'response', resource: request.childResource, response, parent: request };
   });
 
   // join mergable requests
@@ -136,31 +134,55 @@ function createDB(schema) {
   return db;
 }
 
+const actions = {
+  requestQueued: (payload) => ({ type: 'requestQueued', payload }),
+  responseQueued: (payload) => ({ type: 'responseQueued', payload }),
+  batchesFlushed: () => ({ type: 'batchesFlushed' })
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
-    // if a request cannot be fulfilled immediately, it is added to the queue
+    // if a request cannot be fulfilled immediately, it is added to the requests batch.
     case 'requestQueued':
-      return produce(state, draft => 
-      return { ...state, requests: state.requests.concat(action.payload) }
-    // every second the request queue is flushed and the data is fetched from the API,
-    // and the requests are set to 'loading'
-    case 'requestsFlushed':
-      return produce(state, draft => {
-        draft.requests = []
-        state.requests.forEach((request) => insertLoadingStatusIntoDB(draft.db, request))
-      })
-    // responses
-    case 'responsesQueued':
-      
+      return produce(state, (draft) => {
+        draft.requests.push(action.payload);
+      });
+    // responses are also batched.
+    case 'responseQueued':
+      return produce(state, (draft) => {
+        draft.responses.push(action.payload);
+      });
+    // every second the batches are flushed:
+    // requests are fetched from the API, and responses are written to the DB.
+    case 'batchesFlushed':
+      return produce(state, (draft) => {
+        draft.requests = [];
+        draft.responses = [];
+        state.requests.forEach((request) => insertLoadingStatusIntoDB(draft.db, request));
+        state.responses.forEach((response) => insertResponseIntoDB(draft.db, response));
+      });
+    default:
+      return state;
+  }
+};
+
+function flushBatchesAtInterval (interval) {
+  return ({ dispatch }) => {
+    setInterval(() => {
+      dispatch(actions.batchesFlushed);
+    }, interval)
   }
 }
 
-function createResourceManager ({ schema, urlBase }) {
+function query (api, store, request) {
+  const maybeResult = 
+}
+
+function createResourceManager({ schema, urlBase }) {
   const state = {
     db: createDB(schema),
     requests: [],
     responses: [],
-  }
-  
-  
+    urlBase,
+  };
 }
