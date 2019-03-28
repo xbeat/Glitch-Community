@@ -122,26 +122,30 @@ const getPrimaryKey = (table, key, value) => {
 
 const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
-// db, request -> [result|request]
+// db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
   const { resource, key, value, children } = request;
 
   if (children) {
     const childTable = getTable(db, children);
     const parentTable = getTable(db, resource);
-    // e.g. teams.index.user.id.modernserf = [ ... ]    
-    const childIDs = childTable.index[parentTable][key][value]
-    if (!childIDs) return [request];
-    return childIDs.map((id) => checkDBForFulfillableRequests(db, childTable.id, 'id', id));
+    // e.g. teams.index.user.login.modernserf = [ ... ]
+    const childIDs = childTable.index[parentTable][key][value];
+    if (!childIDs) return request;
+    const result = childIDs.map((id) => childTable.data[id]);
+    return { type: 'result', result }
+    
+    
+    return flatMap(childID, (id) => checkDBForFulfillableRequests(db, childTable.id, 'id', id));
   }
 
   const table = getTable(db, resource);
   const id = getPrimaryKey(table, key, value);
-  if (!id) return [request];
+  if (!id) return request;
 
   const result = table.data[id];
-  if (!result) return [request];
-  return [{ type: 'result', result }];
+  if (!result) return request;
+  return { type: 'result', result };
 }
 
 const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
@@ -151,42 +155,49 @@ function getAPICallsForRequests(api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children);
 
   // TODO: make pagination, sort etc part of request
-  // comes in an array of values  
+  // comes in an array of values
   const childResponses = withChildren.map(async (request) => {
     const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`);
     return { type: 'response', resource: request.children, response, parent: request };
   });
 
   // join mergable requests
-  // comes in a { key: value } format, but only the values are needed  
+  // comes in a { key: value } format, but only the values are needed
   const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath)).map(async ([apiPath, requests]) => {
     const { resource, key } = requests[0];
     const query = requests.map((req) => `${req.key}=${req.value}`).join(',');
     const response = await api.get(`${urlBase}/${apiPath}?${query}`);
-    
+
     return { type: 'response', resource, response: Object.values(response) };
   });
   return [...childResponses, ...joinedResponses];
 }
 
-const loading = { status: 'loading' }
-const ready = (value) => ({ status: 'ready', value })
+const loading = { status: 'loading' };
+const ready = (value) => ({ status: 'ready', value });
 
 // returns a set of changes to minimize the ammount of copying that is done
-function insertResponseIntoDB (db, { resource, response, parent }) {
-  const changes = []
-  const table = getTable(db, resource)
-    for (const entity of response) {
-      changes.push([table.id, 'data', value.id, ready(response)])  
-      for (const secondaryKey of db.schema[table.id].secondaryKeys) {
-        changes.push([table.id, 'index', value[secondaryKey], value.id])
-      }
-      
+function insertResponseIntoDB(db, { resource, response, parent }) {
+  const changes = [];
+  const table = getTable(db, resource);
+  const parentTable = parent ? getTable(db, parent.resource) : null
+  for (const item of response) {
+    changes.push([table.id, 'data', item.id, ready(item)]);
+    // add links to secondary keys
+    for (const secondaryKey of db.schema[table.id].secondaryKeys) {
+      changes.push([table.id, 'index', item[secondaryKey], item.id]);
     }
   }
-  return changes
-}
 
+  // add relationships  
+  if (parentTable) {
+    changes.push([table.id, 'index', parentTable.id, parent.key, item.id])
+    changes.push([parentTable.id, 'index', 
+  }
+
+  
+  return changes;
+}
 
 // request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
 //                     - result  -> .
