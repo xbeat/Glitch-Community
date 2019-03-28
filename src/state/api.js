@@ -124,19 +124,20 @@ const getChildIDs = (childTable, parentTable, parentID) => childTable.index[pare
 
 const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
-function checkDBForFulfillableRequests (db, request) {
+// db, request -> [result|request]
+function checkDBForFulfillableRequests(db, request) {
   const { resource, key, value, children } = request;
 
   if (children) {
     const childTable = getTable(db, children);
     const parentTable = getTable(db, resource);
     const parentID = getPrimaryKey(parentTable, key, value);
-    // if cant find parent, request both parent and children
+    // if can't find parent, request both parent and children
     if (!parentID) return [request, getRequest(resource, key, value)];
 
     const childIDs = getChildIDs(childTable, parentTable, parentID);
     if (!childIDs) return [request];
-    return childIDs.map((id) => query(db, childTable.id, 'id', id));
+    return childIDs.map((id) => checkDBForFulfillableRequests(db, childTable.id, 'id', id));
   }
 
   const table = getTable(db, resource);
@@ -148,36 +149,38 @@ function checkDBForFulfillableRequests (db, request) {
   return [{ type: 'result', result }];
 }
 
-const getAPIPath = ({ resource, key, children }) => 
-  children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`
+const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
-function getAPICallsForRequests (api, urlBase, requests) {
-  const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
-  
-  // TODO: make pagination, sort etc part of request  
-  const childResponses = withChildren.map(async request => {
-    const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`)
-    const { resource, key, children } = request
-    return { type: 'response', resource, key, children, response }
-  })
-  
+// api, urlBase, [request] -> [response]
+function getAPICallsForRequests(api, urlBase, requests) {
+  const [withChildren, withoutChildren] = partition(requests, (req) => req.children);
+
+  // TODO: make pagination, sort etc part of request
+  const childResponses = withChildren.map(async (request) => {
+    const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`);
+    const { resource, key, children } = request;
+    return { type: 'response', resource, key, children, response };
+  });
+
   // join mergable requests
-  const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath))
-    .map(async ([apiPath, requests]) => {
-      const { resource, key } = requests[0]
-      const query = requests.map(req => `${req.key}=${req.value}`).join(',')
-      const response = await api.get(`${urlBase}/${apiPath}?${query}`)
-      return { type: 'response', resource, key, response }
-    })
-  return [...childResponses, 
+  const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath)).map(async ([apiPath, requests]) => {
+    const { resource, key } = requests[0];
+    const query = requests.map((req) => `${req.key}=${req.value}`).join(',');
+    const response = await api.get(`${urlBase}/${apiPath}?${query}`);
+    return { type: 'response', resource, key, response };
+  });
+  return [...childResponses, ...joinedResponses];
 }
 
-function flushPendingRequests () {
-      
+function insertIntoDB (db, { resource, key, value, children }, insertion) {
+  const table = getTable(db, resource)
+  const id = getPrimaryKey(table, key, value)
+  table.data[id] = insertion
+  
+  if (key !== 'id' && insertion.status === 'ready') {
+    table.index[key] = insertion.id
+  }
 }
 
-function createResourceManager({ version, schema, urlBase }) {
-  const db = createDatabase(schema)
-  const reducer = createResourceReducer(db)
-  const useResource = createResourceMiddleware(
-}
+
+function createResourceManager({ version, schema, urlBase }) {}
