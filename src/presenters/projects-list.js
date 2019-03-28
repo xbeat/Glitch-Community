@@ -143,12 +143,13 @@ function PaginatedProjects(props) {
   const numPages = Math.ceil(props.projects.length / projectsPerPage); // todo confirm this
   const hiddenProjects = numProjects - projectsPerPage;
 
-  const shouldPaginate = projectsPerPage < numProjects; // todo confirm this
+  const shouldPaginate = !expanded && projectsPerPage < numProjects; // todo confirm this
   const shouldShowExpandButton = !expanded && projectsPerPage < numProjects;
 
   let { projects } = props;
   if (shouldPaginate && !expanded) {
-    projects = projects.slice(page - 1, projectsPerPage);
+    const startIdx = (page - 1) * projectsPerPage;
+    projects = projects.slice(startIdx, startIdx + projectsPerPage);
   }
   /*
   useEffect(
@@ -185,8 +186,8 @@ function PaginatedProjects(props) {
 
   return (
     <>
-      <ProjectsUL {...props} projects={projects || []} />
-      <div style={{float: 'left'}}>
+      <ProjectsUL {...props} projects={projects} />
+      <div style={{width: '100%'}}>
         {shouldPaginate ? <PaginationControls /> : null}
         {shouldShowExpandButton && <ExpandButton />}
       </div>
