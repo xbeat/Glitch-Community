@@ -48,21 +48,21 @@ function ExpandyProjects(props) {
   function handleClick() {
     setExpanded(true);
   }
+  const maxProjects = props.maxCollapsedProjects;
+  const totalProjects = props.projects.length;
+  const hiddenProjects = totalProjects - maxProjects;
 
-  return {
-    const maxProjects = this.props.maxCollapsedProjects;
-    const totalProjects = this.props.projects.length;
-    const hiddenProjects = totalProjects - maxProjects;
+  // props needs to exclude projects, so can't be declared on a separate line as const
+  let { projects } = props; // eslint-disable-line prefer-const
+  let visibleProjects = projects;
 
-    // props needs to exclude projects, so can't be declared on a separate line as const
-    let { projects, ...props } = this.props; // eslint-disable-line prefer-const
+  let shouldShowButton = false;
+  if (!expanded) {
+    shouldShowButton = hiddenProjects > 0;
+    visibleProjects = projects.slice(0, maxProjects);
+  }
 
-    let shouldShowButton = false;
-    if (!this.state.expanded) {
-      shouldShowButton = hiddenProjects > 0;
-      projects = projects.slice(0, maxProjects);
-    }
-    (
+  return (
     <ExpanderContainer
       expanded={!shouldShowButton}
       controlArea={
@@ -74,7 +74,7 @@ function ExpandyProjects(props) {
         </div>
       }
     >
-      <ProjectsUL projects={projects} {...props} />
+      <ProjectsUL projects={visibleProjects} {...props} />
     </ExpanderContainer>
   );
 }
