@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import { sample } from 'lodash';
 
+import Heading from 'Components/text/heading';
 import ErrorBoundary from './includes/error-boundary';
 import { Link } from './includes/link';
 import QuestionItem from './question-item';
 import { captureException } from '../utils/sentry';
 import { useAPI } from '../state/api';
 
-import Heading from 'Components/text/heading';
 
 const kaomojis = ['八(＾□＾*)', '(ノ^_^)ノ', 'ヽ(*ﾟｰﾟ*)ﾉ', '♪(┌・。・)┌', 'ヽ(๏∀๏ )ﾉ', 'ヽ(^。^)丿'];
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Heading from 'Components/text/heading';
 import categories from '../curated/categories';
 import { moreIdeasTeam } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
@@ -9,7 +10,6 @@ import { CollectionLink, Link } from './includes/link';
 import { DataLoader } from './includes/loader';
 
 import { useAPI } from '../state/api';
-import Heading from 'Components/text/heading';
 
 const MoreIdeasCollectionsDisplay = ({ collections }) => (
   <section className="more-ideas">

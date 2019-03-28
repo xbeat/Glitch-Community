@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect } from 'react-router-dom';
+import TextInput from 'Components/inputs/text-input';
 import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
-import TextInput from 'Components/inputs/text-input';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';

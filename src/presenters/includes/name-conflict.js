@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import Text from 'Components/text/text';
 import { useCurrentUser } from '../../state/current-user';
 import { Link } from './link';
 import { useNotifications } from '../notifications';
-import Text from 'Components/text/text';
 
 const NameConflictWarning = ({ id }) => (
   <>

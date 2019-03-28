@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'Components/buttons/button';
 import { TrackClick } from '../analytics';
 import TeamsList from '../teams-list';
-import Button from 'Components/buttons/button';
 
 // Image Buttons
 

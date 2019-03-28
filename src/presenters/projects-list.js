@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Heading from 'Components/text/heading';
 import ProjectItem from './project-item';
 import ExpanderContainer from 'Components/containers/expander';
 
-import Heading from 'Components/text/heading';
 
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>

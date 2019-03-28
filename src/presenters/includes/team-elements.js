@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { debounce } from 'lodash';
-import { Link } from './link';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
+import { Link } from './link';
 import Text from 'Components/text/text';
 
 export const TeamMarketing = () => {
