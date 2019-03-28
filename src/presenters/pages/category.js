@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import Image from 'Components/images/image';
+import Heading from 'Components/text/heading';
 import Layout from '../layout';
 
 import { AnalyticsContext } from '../analytics';
@@ -11,11 +13,9 @@ import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 
 import CollectionEditor from '../collection-editor';
-import Image from 'Components/images/image';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
-import Heading from 'Components/text/heading';
 
 const CategoryPageWrap = ({ addProjectToCollection, category, currentUser, ...props }) => (
   <>

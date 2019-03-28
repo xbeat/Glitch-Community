@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
+import TextInput from 'Components/inputs/text-input';
 import { TrackClick } from '../analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -10,7 +11,6 @@ import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
-import TextInput from 'Components/inputs/text-input';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿

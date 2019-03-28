@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Heading from 'Components/text/heading';
 import { Link } from './includes/link';
 import Embed from './includes/embed';
 
-import Heading from 'Components/text/heading';
 
 const FeaturedEmbed = ({ image, mask, title, appDomain, blogUrl, body, color }) => (
   <div className="featured-embed">

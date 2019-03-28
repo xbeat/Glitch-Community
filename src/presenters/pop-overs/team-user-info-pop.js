@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
-import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';

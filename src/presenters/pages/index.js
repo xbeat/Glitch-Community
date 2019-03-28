@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Image from 'Components/images/image';
+import Text from 'Components/text/text';
+import Heading from 'Components/text/heading';
 import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
@@ -14,10 +17,7 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
-import Image from 'Components/images/image';
-import Text from 'Components/text/text';
 
-import Heading from 'Components/text/heading';
 
 function loadScript(src) {
   const script = document.createElement('script');

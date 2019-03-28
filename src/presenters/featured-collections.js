@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 import { sampleSize, flatMap, uniq } from 'lodash';
+import Markdown from 'Components/text/markdown';
+import Heading from 'Components/text/heading';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
@@ -11,13 +13,11 @@ import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/ap
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import Markdown from 'Components/text/markdown';
 import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
 
 import { useAPI } from '../state/api';
-import Heading from 'Components/text/heading';
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
