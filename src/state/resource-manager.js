@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { groupBy, partition } from 'lodash';
 import produce from 'immer';
 import { getAllPages } from '../../shared/api';
@@ -191,18 +191,6 @@ function flushBatchesAtInterval(api, urlBase, store, interval) {
   return () => clearInterval(handle);
 }
 
-function query(store, request) {
-  const result = checkDBForFulfillableRequests(store.getState().db, request);
-  if (result) return result;
-
-  // don't dispatch in the middle of a render
-  setTimeout(() => {
-    store.dispatch(actions.requestQueued(request));
-  }, 1);
-
-  return status.loading;
-}
-
 export function createStore(schema) {
   let state = getInitialState(schema);
   const subscriptions = [];
@@ -224,15 +212,25 @@ export function createStore(schema) {
   };
 }
 
-const Context = createContext()
+const Context = createContext();
 export function ResourceProvider({ urlBase, store, interval, children }) {
   const api = useAPI();
 
   useEffect(() => flushBatchesAtInterval(api, urlBase, store, interval), [api, urlBase, store, interval]);
-  return <Context.Provider value={store}>{children}</Context.Provider>
+  return <Context.Provider value={store}>{children}</Context.Provider>;
 }
 
-export function useResources(resource, key, value, childResource) {
-  const store = useContext(Context)
-  const [state, setState] =
+export function useResource(resource, key, value, childResource) {
+  const store = useContext(Context);
+  const request = { resource, key, value, childResource };
+  const [state, setState] = useState(() => checkDBForFulfillableRequests(store.getState().db, request));
+  useEffect(() => {
+    if (!state) {
+      store.dispatch(actions.requestQueued(request));
+    }
+    return store.subscribe(() => {
+      const nextResult = checkDBForFulfillableRequests(store.getState().db, request);
+      if (nextResult) setState(nextResult);
+    });
+  }, [store, resource, key, value, childResource]);
 }
