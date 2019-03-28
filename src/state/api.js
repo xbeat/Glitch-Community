@@ -121,33 +121,30 @@ const getPrimaryKey = (table, key, value) => {
 
 const getChildIDs = (childTable, parentTable, parentID) => childTable.index[parentTable.id][parentID];
 
-const getRequest = (resource, key, value, children) =>
-  ({ type: 'request', payload: [resource, key, value, children] })
+const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
-function query(resource, key, value, children) {
-  const request = getRequest(resource, key, value, children)
+function query(db, resource, key, value, children) {
+  const request = getRequest(resource, key, value, children);
 
-  return (db) => {
-    if (children) {
-      const table = getTable(db, children);
-      const parentTable = getTable(db, resource);
-      const parentID = getPrimaryKey(parentTable, key, value);
-      // if cant find parent, request both parent and children 
-      if (!parentID) return [request, getRequest(resource, key, value)]
-      
-      const childIDs = getChildIDs(table, parentTable, parentID);
-      if (!childIDs) return [request];
-      
-    }
+  if (children) {
+    const childTable = getTable(db, children);
+    const parentTable = getTable(db, resource);
+    const parentID = getPrimaryKey(parentTable, key, value);
+    // if cant find parent, request both parent and children
+    if (!parentID) return [request, getRequest(resource, key, value)];
 
-    const table = getTable(db, resource);
-    const id = getPrimaryKey(table, key, value);
-    if (!id) return [request];
+    const childIDs = getChildIDs(childTable, parentTable, parentID);
+    if (!childIDs) return [request];
+    return childIDs.map((id) => query(db, childTable.id, 'id', id));
+  }
 
-    const entity = table.data[id];
-    if (!entity) return [request];
-    return [{ type: 'result', payload: entity }];
-  };
+  const table = getTable(db, resource);
+  const id = getPrimaryKey(table, key, value);
+  if (!id) return [request];
+
+  const result = table.data[id];
+  if (!result) return [request];
+  return [{ type: 'result', result }];
 }
 
 function createResourceManager({ version, schema, urlBase }) {}
