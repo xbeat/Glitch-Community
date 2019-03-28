@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { memoize, groupBy, partition } from 'lodash';
 import { useCurrentUser } from './current-user';
+import { getAllPages } from '../../shared/api';
 
 export const getAPIForToken = memoize((persistentToken) => {
   if (persistentToken) {
@@ -123,7 +124,7 @@ const getChildIDs = (childTable, parentTable, parentID) => childTable.index[pare
 
 const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
-function processRequest(db, request) {
+function checkDBForFulfillableRequests (db, request) {
   const { resource, key, value, children } = request;
 
   if (children) {
@@ -150,9 +151,16 @@ function processRequest(db, request) {
 const getAPIPath = ({ resource, key, children }) => 
   children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`
 
-function joinRequests (api, urlBase, requests) {
+function getAPICallsForRequests (api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
-  // merge 
+  
+  // TODO: make pagination part of request  
+  const childRequests = withChildren.map(async req => {
+    const results = getAllPages(api, `${urlBase}/${getAPIPath(req)}?${req.key}=${req.value}`)
+    
+  })
+  
+  // join mergable requests
   const joinedRequests = Object.entries(groupBy(withoutChildren, getAPIPath))
     .map(([apiPath, requests]) => {
       const key = requests[0].key
