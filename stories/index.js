@@ -17,8 +17,11 @@ const helloAlert = () => {
 };
 
 const withState = (initState, Component) => {
-  const [state, setState] = useState(initState);
-  return <Component state={state} setState={setState} />;
+  const WrappedComponent = () => {
+    const [state, setState] = useState(initState);
+    return <Component state={state} setState={setState} />;
+  }
+  return () => <WrappedComponent />;
 };
 
 storiesOf('Button', module)
