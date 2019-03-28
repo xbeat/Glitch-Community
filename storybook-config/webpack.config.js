@@ -1,6 +1,5 @@
 const path = require('path');
 const appConfig = require('../webpack.config.js');
-console.log('alias' + JSON.stringify(appConfig.resolve.alias, null, 2));
 
 module.exports = async ({ config, mode }) => {
   // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -25,12 +24,21 @@ module.exports = async ({ config, mode }) => {
         loader: 'stylus-loader',
       },
     ],
-    resolve: {
-      extensions: ['.js'],
-      alias: appConfig.resolve.alias,
-    },
     include: path.resolve(__dirname, '..'),
   });
+  
+  config.resolve = {
+      extensions: ['.js'],
+      alias: {
+        ...appConfig.resolve.alias,
+        ...config.resolve.alias,
+      },
+    },
+  
+  config.context = path.resolve(__dirname, '..');
+  
+  console.log('context: '+config.context);
+  console.log('alias' + JSON.stringify(config.resolve.alias, null, 2));
 
   config.mode = 'development';
 

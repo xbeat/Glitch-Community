@@ -14,7 +14,7 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
-import Image from '../../components/image/image';
+import Image from '../../components/images/image';
 import Text from '../../components/text/text';
 
 import Heading from '../../components/text/heading';

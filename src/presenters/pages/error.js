@@ -9,7 +9,7 @@ import { getShowUrl } from '../../models/project';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import NotFound from '../includes/not-found';
-import Image from '../../components/image/image';
+import Image from '../../components/images/image';
 
 import Text from '../../components/text/text';
 import Heading from '../../components/text/heading';
