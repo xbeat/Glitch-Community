@@ -11,6 +11,15 @@ import Heading from '../components/text/heading';
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
 
+  let { projects } = props;
+  useEffect(() => {
+    if (filter.length) {
+      projects = projects.filter((p) => {
+        return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
+      });
+    }
+  });
+
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
@@ -20,13 +29,12 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
         ) : null}
       </div>
 
-      {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
+      {!!(placeholder && !projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      {enablePagination ? (
-        <PaginatedProjects {...props} projects={props.projects} />
-      ) : (
-        <ProjectsUL {...props} projects={props.projects} />
-      )}
+      {enablePagination
+        ? <PaginatedProjects {...props} projects={projects} />
+        : <ProjectsUL {...props} projects={projects} />
+      }
     </article>
   );
 }
@@ -114,22 +122,16 @@ function PaginatedProjects(props) {
     </div>
   );
 
-  const ShowAllButton = () => (
-    <Button type="tertiary" onClick={() => setExpanded(true)}>
-      Show all<Badge>{hiddenProjects}</Badge>
-    </Button>
-  );
-
   return (
     <>
       <ProjectsUL {...props} projects={projects} />
+
       {canPaginate ? (
         <div>
           <PaginationControls />
           <Button type="tertiary" onClick={() => setExpanded(true)}>
-            
+            Show all<Badge>{hiddenProjects}</Badge>
           </Button>
-          <ShowAllButton />
         </div>
       ) : null}
     </>
