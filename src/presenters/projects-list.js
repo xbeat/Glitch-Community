@@ -148,19 +148,11 @@ function PaginatedProjects(props) {
 
   useEffect(
     () => {
-      console.log('useEffect');
-      console.log({shouldPaginate, expanded, numProjects})
-      // if (currentProjects === null) {
-      // console.log('currentProjects === null');
-
       if (shouldPaginate && !expanded) {
         setCurrentProjects(props.projects.slice(page - 1, projectsPerPage));
-        console.log('(shouldPaginate && !expanded) currentProjects', currentProjects);
       } else {
         setCurrentProjects(props.projects);
-        console.log('setting to all');
       }
-      // }
     },
     [props.projects],
   );
@@ -184,8 +176,8 @@ function PaginatedProjects(props) {
       Show all<Badge>{hiddenProjects}</Badge>
     </Button>
   );
-  
-  console.log('rendering', currentProjects ? currentProjects.length : null)
+
+  console.log('rendering', currentProjects ? currentProjects.length : null);
 
   return (
     <>
