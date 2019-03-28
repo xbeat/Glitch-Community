@@ -105,8 +105,8 @@ const schema = {
   users: {
     secondaryKeys: ['login'],
     references: ['collections', 'projects', 'teams', 'deletedProjects', 'pinnedProjects'],
-//     
-    //subresources: ['emails'],
+    // TODO: handle user.emails?
+    // subresources: ['emails'],
     referencedAs: ['user'],
   },
 };
@@ -114,54 +114,60 @@ const schema = {
 const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referencedAs[tableName]];
 const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
-const getPrimaryKey = (resource, key, value) => {
-  if (key === 'id') return value;
+const getItem = (db, request) => {
+  const table = getTable(db, request.resource);
+  if (request.key === 'id') return table[request.value];
+
   // get ID from secondary key
-  return table.index[key][value];
+  const id = db.index[getAPIPath(request)];
+  if (!id) return null;
+  return table[id];
 };
 
-function createDB (schema) {
-  const db = { 
+function createDB(schema) {
+  const db = {
     tables: {}, // resource -> id -> item
     index: {}, // apiPath -> key -> id | [id]
-    referencedAs: {} // ref -> resource
+    referencedAs: {}, // ref -> resource
+  };
+  for (const [resource, params] of Object.entries(schema)) {
+    const { secondaryKeys = [], references = [], referencedAs = [] } = params;
+    db.tables[resource] = {};
+    for (const children of references) {
+      db.index[getAPIPath({ resource, key: 'id', children })] = {};
+    }
+    for (const key of secondaryKeys) {
+      db.index[getAPIPath({ resource, key })] = {};
+      for (const children of references) {
+        db.index[getAPIPath({ resource, key, children })] = {};
+      }
+    }
   }
-  for (const [table, params] of Object.entries(schema)) {
-    const { secondaryKeys = [], references = [], subresources = [], 
-    db.tables[table] = {}
-    for (const key of 
-  }
-  
 }
-
 
 const data = {
   request: (resource, key, value, children) => ({ type: 'request', resource, key, value, children }),
-  result: (result) => ({ type: 'result', result })
-}
-
+  result: (result) => ({ type: 'result', result }),
+};
 
 // db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
   const { resource, key, value, children } = request;
 
   if (children) {
-    const childIDs = db.tables[getAPIPath(request)][value]
-    if (!childIDs) return req;
+    const childIDs = db.index[getAPIPath(request)][value];
+    if (!childIDs) return request;
 
     const childTable = getTable(db, children);
     const result = childIDs.map((id) => childTable.data[id]);
-    return data.result(result)
+    return data.result(result);
   }
 
   const table = getTable(db, resource);
 
-  const id = getPrimaryKey(table, key, value);
-  if (!id) return request;
-
-  const result = table.data[id];
+  const result = getItem(db, request);
   if (!result) return request;
-  return data.result(result)
+  return data.result(result);
 }
 
 // api, urlBase, [request] -> [response]
@@ -190,27 +196,7 @@ function getAPICallsForRequests(api, urlBase, requests) {
 const loading = { status: 'loading' };
 const ready = (value) => ({ status: 'ready', value });
 
-// returns a set of changes to minimize the ammount of copying that is done
-function insertResponseIntoDB(db, { resource, response, parent }) {
-  const changes = [];
-  const table = getTable(db, resource);
-  for (const item of response) {
-    changes.push([table.id, 'data', item.id, ready(item)]);
-    // add links to secondary keys
-    for (const secondaryKey of db.schema[table.id].secondaryKeys) {
-      changes.push([table.id, 'index', item[secondaryKey], item.id]);
-    }
-  }
-
-  // add relationships  
-  if (parent) {
-    changes.push([table.id, 'index', parentTable.id, parent.key, item.id])
-    changes.push([parentTable.id, 'index', 
-  }
-
-  
-  return changes;
-}
+function insertResponseIntoDB(db, { resource, response, parent }) {}
 
 // request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
 //                     - result  -> .
