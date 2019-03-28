@@ -89,6 +89,7 @@ const schema = {
   collections: {
     secondaryKeys: ['fullUrl'],
     references: ['projects'],
+    belongsTo: [{ id: 'team', resource: 'teams' }, { id: 'user', resource: '],
   },
   projects: {
     secondaryKeys: ['domain'],
@@ -100,7 +101,11 @@ const schema = {
   },
   users: {
     secondaryKeys: ['login'],
-    references: ['collections', 'projects', 'teams', { id: 'deletedProjects' 
+    references: ['collections', 'projects', 'teams', { id: 'deletedProjects', resource: 'projects' }, { id: 'pinnedProjects', resource: 'projects' }],
     includes: ['emails'],
-  }
+  },
+};
+
+function createResourceManager ({ version, schema, urlBase }) {
+  
 }
