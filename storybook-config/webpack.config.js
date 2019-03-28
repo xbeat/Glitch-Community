@@ -1,5 +1,8 @@
 const path = require('path');
-// const appConfig = require('../webpack.config.js');
+
+
+
+console.log('alias' + JSON.stringify(appConfig.resolve.alias, null, 2));
 
 module.exports = async ({ config, mode }) => {
   // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -24,10 +27,16 @@ module.exports = async ({ config, mode }) => {
         loader: 'stylus-loader',
       },
     ],
-    // resolve: {
-    //   extensions: ['.js'],
-    //   alias: appConfig.resolve.alias,
-    // },
+    resolve: {
+      extensions: ['.js'],
+      alias: {
+      'Components': CSS_MODULES,
+      'Utils': path.resolve(__dirname, "src/utils"),
+      'Curated': path.resolve(__dirname, "src/curated"),
+      'Models': path.resolve(__dirname, "src/models"),
+      'Shared': SHARED,
+    },
+    },
     include: path.resolve(__dirname, '../src/components'),
   });
 

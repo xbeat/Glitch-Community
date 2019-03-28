@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from 'Components/buttons/button';
+import Button from '/app/src/components/buttons/button';
 import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/inputs/text-input';
 import TextArea from '../src/components/inputs/text-area';
-import Image from '../src/components/image/image';
+import Image from '../src/components/images/image';
 import Text from '../src/components/text/text';
 import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
