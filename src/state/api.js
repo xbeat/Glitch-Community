@@ -111,10 +111,10 @@ const schema = {
   },
 };
 
-const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referencedAs[tableName]];
+const getTable = (db, resource) => db.tables[resource] || db.tables[db.referencedAs[resource]];
 const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
-const getItem = (db, request) => {
+const getSingleItem = (db, request) => {
   const table = getTable(db, request.resource);
   if (request.key === 'id') return table[request.value];
 
@@ -124,8 +124,17 @@ const getItem = (db, request) => {
   return table[id];
 };
 
+const getChildren = (db, request) => {
+  const childIDs = db.index[getAPIPath(request)][request.value];
+  if (!childIDs) return null;
+
+  const childTable = getTable(db, request.children);
+  return childIDs.map((id) => childTable.data[id]);
+};
+
 function createDB(schema) {
   const db = {
+    schema,
     tables: {}, // resource -> id -> item
     index: {}, // apiPath -> key -> id | [id]
     referencedAs: {}, // ref -> resource
@@ -142,7 +151,11 @@ function createDB(schema) {
         db.index[getAPIPath({ resource, key, children })] = {};
       }
     }
+    for (const ref of referencedAs) {
+      db.referencedAs[ref] = resource
+    }
   }
+  return db
 }
 
 const data = {
@@ -152,20 +165,7 @@ const data = {
 
 // db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
-  const { resource, key, value, children } = request;
-
-  if (children) {
-    const childIDs = db.index[getAPIPath(request)][value];
-    if (!childIDs) return request;
-
-    const childTable = getTable(db, children);
-    const result = childIDs.map((id) => childTable.data[id]);
-    return data.result(result);
-  }
-
-  const table = getTable(db, resource);
-
-  const result = getItem(db, request);
+  const result = request.children ? getChildren(db, request) : getSingleItem(db, request);
   if (!result) return request;
   return data.result(result);
 }
@@ -196,7 +196,13 @@ function getAPICallsForRequests(api, urlBase, requests) {
 const loading = { status: 'loading' };
 const ready = (value) => ({ status: 'ready', value });
 
-function insertResponseIntoDB(db, { resource, response, parent }) {}
+function insertResponseIntoDB(db, { resource, response, parent }) {
+  // - insert items into the tables
+  // - if item has children associated with it under one key, copy those over to the other key
+  
+
+
+}
 
 // request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
 //                     - result  -> .
