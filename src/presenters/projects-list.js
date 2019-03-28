@@ -11,16 +11,26 @@ import Heading from '../components/text/heading';
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...props }) {
   const [filterQuery, setFilterQuery] = useState(null);
   
-  function onChangeFilter(e) {
-    setFilterQuery(e.target.value);
-  }
+  let { projects } = props;
+  useEffect(() => {
+    if (filterQuery) {
+      projects = projects.filter(p => {
+        if (p.title.toLowerCase().contains(filterQuery)) {
+          return p;
+        } else if (p.description.toLowerCase().contains(filterQuery)) {
+          return p;
+        }
+        return null;
+      });
+    }
+  });   
   
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={onChangeFilter} opaque placeholder="find a project" type="search" value={filterQuery} />
+          <TextInput className="header-search" name="q" onChange={e => setFilterQuery(e.target.value.toLowerCase())} opaque placeholder="find a project" type="search" value={filterQuery} />
         ) : null}
       </div>
 
@@ -200,7 +210,7 @@ PaginatedProjects.propTypes = {
 };
 
 PaginatedProjects.defaultProps = {
-  projectsPerPage: 12,
+  projectsPerPage: 6,
 };
 
 // ExpandyProjects.propTypes = {
