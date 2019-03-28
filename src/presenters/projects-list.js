@@ -9,10 +9,11 @@ import TextInput from '../components/fields/text-input';
 import Heading from '../components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...props }) {
-  const [filterQuery, setFilterQuery] = useState('');
+  const [filter, setFilter] = useState('');
   
   let { projects } = props;
   
+  /*
   useEffect(() => {
     if (filterQuery.length) {
       projects = projects.filter(p => {
@@ -25,20 +26,21 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
       });
     }
     console.log(projects);
-  });   
+  });
+  */
   
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={setFilterQuery} opaque placeholder="find a project" type="search" value={filterQuery} />
+          <TextInput className="header-search" name="q" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      <PaginatedProjects {...props} projects={projects} />
+      <PaginatedProjects {...props} projects={projects} filter={filter} />
     </article>
   );
 }
@@ -161,14 +163,18 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
-  let { projects, projectsPerPage } = props; // TODO update where this is passed in
+  let { projects, projectsPerPage, filter } = props; // TODO update where this is passed in
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
   const hiddenProjects = numProjects - projectsPerPage;
-  const shouldPaginate = !expanded && projectsPerPage < numProjects;
+  const shouldPaginate = !filter && !expanded && projectsPerPage < numProjects;
 
-  if (shouldPaginate && !expanded) {
+  if (filter) {
+    projects = projects.filter(p => {
+      return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
+    });
+  } else if (shouldPaginate && !expanded) {
     const startIdx = (page - 1) * projectsPerPage;
     projects = projects.slice(startIdx, startIdx + projectsPerPage);
   }
@@ -212,7 +218,7 @@ PaginatedProjects.propTypes = {
 };
 
 PaginatedProjects.defaultProps = {
-  projectsPerPage: 6,
+  projectsPerPage: 3,
 };
 
 // ExpandyProjects.propTypes = {
