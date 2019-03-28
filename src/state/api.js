@@ -128,9 +128,9 @@ function checkDBForFulfillableRequests(db, request) {
 
   if (children) {
     const childTable = getTable(db, children);
-    const parentTable = getTable(db, resource);
-    // e.g. teams.index.user.login.modernserf = [ ... ]
-    const childIDs = childTable.index[parentTable][key][value];
+    
+    const childIDs = db.tables[getAPIPath(request)][
+    
     if (!childIDs) return request;
     const result = childIDs.map((id) => childTable.data[id]);
     return { type: 'result', result }
@@ -190,7 +190,7 @@ function insertResponseIntoDB(db, { resource, response, parent }) {
   }
 
   // add relationships  
-  if (parentTable) {
+  if (parent) {
     changes.push([table.id, 'index', parentTable.id, parent.key, item.id])
     changes.push([parentTable.id, 'index', 
   }
