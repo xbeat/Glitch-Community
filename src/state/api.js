@@ -198,10 +198,18 @@ const ready = (value) => ({ status: 'ready', value });
 
 function insertResponseIntoDB(db, { resource, response, parent }) {
   // - insert items into the tables
-  // - if item has children associated with it under one key, copy those over to the other key
+  const table = getTable(db, resource)
+  for (const item of response) {
+    table[item.id] = ready(item)
+  }  
+  // - synchronize references
+  //   e.g. if we have user/by/id/projects for this user, copy that over to user/by/login/projects for this user's login
   
-
-
+  
+  
+  // - if items has a parent, insert the ids into the references
+  // - if items has a parent AND it is already loaded, synchronize _those_ references
+  //   e.g. if these are the projects for user/by/id/projects, and we know the user's login, copy the IDs to user/by/login/projects
 }
 
 // request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
