@@ -105,22 +105,31 @@ const schema = {
   users: {
     secondaryKeys: ['login'],
     references: ['collections', 'projects', 'teams', 'deletedProjects', 'pinnedProjects'],
-    subresources: ['emails'],
+//     
+    //subresources: ['emails'],
     referencedAs: ['user'],
   },
 };
 
 const getTable = (db, tableName) => db.tables[tableName] || db.tables[db.referencedAs[tableName]];
+const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
-const getPrimaryKey = (table, key, value) => {
+const getPrimaryKey = (resource, key, value) => {
   if (key === 'id') return value;
   // get ID from secondary key
   return table.index[key][value];
 };
 
 function createDB (schema) {
-  const db = { tables: {}, index: {}, referencedAs: {} }
-  for (const table in schema) {
+  const db = { 
+    tables: {}, // resource -> id -> item
+    index: {}, // apiPath -> key -> id | [id]
+    referencedAs: {} // ref -> resource
+  }
+  for (const [table, params] of Object.entries(schema)) {
+    const { secondaryKeys = [], references = [], subresources = [], 
+    db.tables[table] = {}
+    for (const key of 
   }
   
 }
@@ -131,7 +140,6 @@ const data = {
   result: (result) => ({ type: 'result', result })
 }
 
-const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
 
 // db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
