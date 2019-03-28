@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list';
 
-const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions, enableFiltering, enablePagination }) => {
+const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions, ...props }) => {
   const pinnedTitle = (
     <>
       Pinned Projects
@@ -22,11 +22,10 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
     <>
       {projects.length > 0 && (
         <ProjectsList
+          {...props}
           title={removePin ? pinnedTitle : recentTitle}
           projects={projects}
           projectOptions={projectOptionsToPass}
-          enableFiltering={enableFiltering}
-          enablePagination={enablePagination}
         />
       )}
     </>

@@ -10,9 +10,7 @@ import Heading from '../components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
-  
-  let { projects } = props;
-  
+
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
@@ -23,9 +21,12 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
       </div>
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
-  
-      {enablePagination ? <PaginatedProjects {...props} projects={projects} filter={filter} /> :
-      <ProjectsUL {...props} projects={projects} filter={filter} />}
+
+      {enablePagination ? (
+        <PaginatedProjects {...props} projects={props.projects} />
+      ) : (
+        <ProjectsUL {...props} projects={props.projects} />
+      )}
     </article>
   );
 }
@@ -43,7 +44,6 @@ ProjectsList.defaultProps = {
   placeholder: null,
   extraClasses: '',
 };
-
 
 class ExpandyProjects extends React.Component {
   constructor(props) {
@@ -93,21 +93,12 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
-  let { projects, projectsPerPage, filter } = props; // TODO update where this is passed in
+  let { projects, projectsPerPage } = props; // TODO update where this is passed in
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
   const hiddenProjects = numProjects - projectsPerPage;
-  const shouldPaginate = !filter && !expanded && projectsPerPage < numProjects;
-
-  if (filter) {
-    projects = projects.filter(p => {
-      return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
-    });
-  } else if (shouldPaginate && !expanded) {
-    const startIdx = (page - 1) * projectsPerPage;
-    projects = projects.slice(startIdx, startIdx + projectsPerPage);
-  }
+  const canPaginate = !expanded && projectsPerPage < numProjects;
 
   const PaginationControls = () => (
     <div>
@@ -123,7 +114,7 @@ function PaginatedProjects(props) {
     </div>
   );
 
-  const ExpandButton = () => (
+  const ShowAllButton = () => (
     <Button type="tertiary" onClick={() => setExpanded(true)}>
       Show all<Badge>{hiddenProjects}</Badge>
     </Button>
@@ -132,10 +123,13 @@ function PaginatedProjects(props) {
   return (
     <>
       <ProjectsUL {...props} projects={projects} />
-      {shouldPaginate ? (
+      {canPaginate ? (
         <div>
           <PaginationControls />
-          <ExpandButton />
+          <Button type="tertiary" onClick={() => setExpanded(true)}>
+            
+          </Button>
+          <ShowAllButton />
         </div>
       ) : null}
     </>
@@ -148,7 +142,7 @@ PaginatedProjects.propTypes = {
 };
 
 PaginatedProjects.defaultProps = {
-  projectsPerPage: 3,
+  projectsPerPage: 6,
 };
 
 // ExpandyProjects.propTypes = {
