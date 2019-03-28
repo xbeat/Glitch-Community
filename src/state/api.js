@@ -120,8 +120,6 @@ const getPrimaryKey = (table, key, value) => {
   return table.index[key][value];
 };
 
-const getChildIDs = (childTable, parentTable, parentID) => childTable.index[parentTable.id][parentID];
-
 const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
 // db, request -> [result|request]
@@ -131,11 +129,8 @@ function checkDBForFulfillableRequests(db, request) {
   if (children) {
     const childTable = getTable(db, children);
     const parentTable = getTable(db, resource);
-    const parentID = getPrimaryKey(parentTable, key, value);
-    // if can't find parent, request both parent and children
-    if (!parentID) return [request, getRequest(resource, key, value)];
-
-    const childIDs = getChildIDs(childTable, parentTable, parentID);
+    // e.g. teams.index.user.id.modernserf = [ ... ]    
+    const childIDs = childTable.index[parentTable][key][value]
     if (!childIDs) return [request];
     return childIDs.map((id) => checkDBForFulfillableRequests(db, childTable.id, 'id', id));
   }
@@ -186,6 +181,7 @@ function insertResponseIntoDB (db, { resource, key, value, children }, response)
   } else {
     const table = getTable(db, resource)
     const id = getPrimaryKey(table, key, value)
+    for (const 
     changes.push([table.id, 'data', ready(response)])
 
     // if using a secondary key, add reference to primary key
@@ -197,6 +193,6 @@ function insertResponseIntoDB (db, { resource, key, value, children }, response)
 }
 
 
-// request -> check db - request -> 
-//                     - result -> render
+// request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
+//                     - result  -> .
 function createResourceManager({ version, schema, urlBase }) {}
