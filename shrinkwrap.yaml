@@ -43,6 +43,7 @@ dependencies:
   group-by-time: 1.0.0
   helmet: 3.16.0
   html-truncate: 1.2.2
+  immer: 2.1.4
   lodash: 4.17.11
   lodash-webpack-plugin: 0.11.5
   markdown-it: 8.4.2
@@ -7018,6 +7019,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3fmKM6ovaqDt0CdC9daXpNi5x/YCYS3i4cwLdTVkhJdk5jrDXoPs7lCm3IqM3yhfSnz4tjjxbRG2CziQ7m8ztg==
+  /immer/2.1.4:
+    dev: false
+    resolution:
+      integrity: sha512-6UPbG/DIXFSWp10oJJaCPl5/lp5GhGEscDH0QGYKc5EMT5PLZ9+L8hhyc44zRHksI7CQXJp8r6nlDR3n09X6SA==
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -12099,6 +12104,7 @@ specifiers:
   group-by-time: ^1.0.0
   helmet: ^3.16.0
   html-truncate: ^1.2.2
+  immer: ^2.1.4
   lodash: ^4.17.11
   lodash-webpack-plugin: ^0.11.5
   markdown-it: ^8.4.2

@@ -1,4 +1,5 @@
 import { groupBy, partition } from 'lodash';
+import produce from 'immer';
 import { getAllPages } from '../../shared/api';
 
 const getTable = (db, resource) => db.tables[resource] || db.tables[db.referencedAs[resource]];
@@ -133,4 +134,13 @@ function createDB(schema) {
     }
   }
   return db;
+}
+
+function createResourceManager ({ schema, urlBase }) {
+  const state = {
+    db: createDB(schema),
+    requests: [],
+  }
+  
+  
 }
