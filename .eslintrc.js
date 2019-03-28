@@ -1,17 +1,15 @@
-const appConfig = require('./webpack.config.js');
+const aliases = require('./webpack.config.js').resolve.alias;
 
-appConfig.module
+const mappings = Object.keys(aliases).map((alias) => {
+  return [`${alias}`, `${aliases[alias]}`];
+})
+
+console.log(`${mappings[4]}`);
 
 module.exports = {
   settings: {
     'import/resolver': {
-      alias: [
-        ['Components', './src/components'],
-        ['Utils', './src/utils'],
-        ['Curated', './src/curated'],
-        ['Models', './src/models'],
-        ['Shared', './shared'],
-      ]
+      alias: mappings,
     }
   }
 };
