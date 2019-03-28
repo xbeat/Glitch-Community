@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
+import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
-import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { useNotifications } from '../notifications';
 import TeamUserRemovePop from './team-user-remove-pop';
 import { useAPI } from '../../state/api';
