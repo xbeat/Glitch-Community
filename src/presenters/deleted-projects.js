@@ -20,7 +20,7 @@ function clickUndelete(event, callback) {
 const DeletedProject = ({ id, domain, onClick }) => {
   const onClickUndelete = (evt) => clickUndelete(evt, onClick);
   const onClickTracked = useTrackedFunc(onClickUndelete, "Undelete clicked");
-  <TrackClick name="Undelete clicked">
+  return (
     <button className="button-unstyled" onClick={onClickTracked}>
       <div className="deleted-project">
         <img className="avatar" src={getAvatarUrl(id)} alt="" />
@@ -28,7 +28,8 @@ const DeletedProject = ({ id, domain, onClick }) => {
         <div className="button button-small">Undelete</div>
       </div>
     </button>
-);
+  );
+};
 DeletedProject.propTypes = {
   id: PropTypes.string.isRequired,
   domain: PropTypes.string.isRequired,

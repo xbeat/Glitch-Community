@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { orderBy, remove } from 'lodash';
 import { captureException } from '../../utils/sentry';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../analytics';
 import { getAvatarUrl } from '../../models/project';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -48,6 +48,8 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   // filter out collections that already contain the selected project
   renderCollectionsThatDontHaveProject(collection) {
+    const onClick = useTrackedFunc(this.props.addProjectToCollection, "Project Added to Collection", {}, 
+                                   
     if (!collection.projects) {
       return null;
     }
@@ -60,7 +62,7 @@ class AddProjectToCollectionPopContents extends React.Component {
     return (
       <li key={collection.id}>
         <TrackClick
-          name="Project Added to Collection"
+          name=
           context={{
             groupId: collection.team ? collection.team.id : 0,
           }}

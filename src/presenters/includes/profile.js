@@ -1,30 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../analytics';
 import TeamsList from '../teams-list';
 import Button from '../../components/buttons/button';
 
 // Image Buttons
 
-export const ImageButtons = ({ name, uploadImage, clearImage }) => (
-  <div className="upload-image-buttons">
-    {!!uploadImage && (
-      <TrackClick name={`Upload ${name}`}>
-        <Button size="small" type="tertiary" onClick={uploadImage}>
+export const ImageButtons = ({ name, uploadImage, clearImage }) => {
+  const onClickUpload = useTrackedFunc(uploadImage, `Upload ${name}`);
+  const onClickClear = useTrackedFunc(clearImage, `Clear ${name}`);
+  return (
+    <div className="upload-image-buttons">
+      {!!uploadImage && (
+        <Button size="small" type="tertiary" onClick={onClickUpload}>
           Upload {name}
         </Button>
-      </TrackClick>
-    )}
-    {!!clearImage && (
-      <TrackClick name={`Clear ${name}`}>
-        <Button size="small" type="tertiary" onClick={clearImage}>
+      )}
+      {!!clearImage && (
+        <Button size="small" type="tertiary" onClick={onClickClear}>
           Clear {name}
         </Button>
-      </TrackClick>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
+};
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 import { debounce } from 'lodash';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../analytics';
 import { Loader } from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
@@ -14,22 +14,21 @@ import { useNotifications, AddProjectToCollectionMsg } from '../notifications';
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => {
   const { createNotification } = useNotifications();
+  const onClickTracked = useTrackedFunc(onClick, "Project Added to Collection", { origin: 'Add Project collection' });
   return (
     <ul className="results">
       {projects.map((project) => (
         <li key={project.id}>
-          <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
-            <ProjectResultItem
-              domain={project.domain}
-              description={project.description}
-              users={project.users}
-              id={project.id}
-              isActive={false}
-              collection={collection}
-              onClick={() => onClick(project, collection, createNotification)}
-              isPrivate={project.private}
-            />
-          </TrackClick>
+          <ProjectResultItem
+            domain={project.domain}
+            description={project.description}
+            users={project.users}
+            id={project.id}
+            isActive={false}
+            collection={collection}
+            onClick={() => onClickTracked(project, collection, createNotification)}
+            isPrivate={project.private}
+          />
         </li>
       ))}
     </ul>
