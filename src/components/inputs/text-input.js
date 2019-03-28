@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
-import useUniqueId from './use-unique-id';
+import useUniqueId from '../../hooks/use-unique-id';
 
 import styles from './text-input.styl';
 
@@ -24,7 +24,7 @@ const TextInput = ({ autoFocus, className, disabled, error, maxLength, name, onC
   });
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
-      <div className={borderClassName}>
+      <span className={borderClassName}>
         {!!prefix && <InputPart>{prefix}</InputPart>}
         <input
           autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
@@ -44,7 +44,7 @@ const TextInput = ({ autoFocus, className, disabled, error, maxLength, name, onC
           </InputPart>
         )}
         {!!postfix && <InputPart>{postfix}</InputPart>}
-      </div>
+      </span>
       {!!error && <InputErrorMessage>{error}</InputErrorMessage>}
     </label>
   );
