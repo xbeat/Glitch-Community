@@ -78,6 +78,8 @@ function getAPICallsForRequests(api, urlBase, requests) {
   return [...childResponses, ...joinedResponses];
 }
 
+// these look like they're mutating, but they're really using `immer`
+// see https://github.com/mweststrate/immer
 function insertLoadingStatusIntoDB(db, request) {
   if (request.childResource) {
     for (const { index, value } of getIndices(db, request)) {
@@ -137,8 +139,8 @@ function createDB(schema) {
 const actions = {
   requestQueued: (payload) => ({ type: 'requestQueued', payload }),
   responseQueued: (payload) => ({ type: 'responseQueued', payload }),
-  batchesFlushed: () => ({ type: 'batchesFlushed' })
-}
+  batchesFlushed: () => ({ type: 'batchesFlushed' }),
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -152,7 +154,7 @@ const reducer = (state, action) => {
       return produce(state, (draft) => {
         draft.responses.push(action.payload);
       });
-    // every second the batches are flushed:
+    // periodically the batches are flushed:
     // requests are fetched from the API, and responses are written to the DB.
     case 'batchesFlushed':
       return produce(state, (draft) => {
@@ -166,23 +168,23 @@ const reducer = (state, action) => {
   }
 };
 
-function flushBatchesAtInterval (api, store, interval) {
+function flushBatchesAtInterval(api, store, interval) {
   setInterval(() => {
     const { requests, urlBase } = store.getState();
     store.dispatch(actions.batchesFlushed());
     getAPICallsForRequests(api, urlBase, requests).forEach(async (responsePromise) => {
-      const response = await responsePromise
-      store.dispatch(resp
-    }) 
-  }, interval)
+      const response = await responsePromise;
+      store.dispatch(actions.responseQueued(response));
+    });
+  }, interval);
 }
 
-function query (api, store, request) {
-  const result = checkDBForFulfillableRequests(store.getState().db, request)
-  if (result) return result
-  
-  store.dispatch(actions.requestQueued(request))
-  return status.loading
+function query(api, store, request) {
+  const result = checkDBForFulfillableRequests(store.getState().db, request);
+  if (result) return result;
+
+  store.dispatch(actions.requestQueued(request));
+  return status.loading;
 }
 
 function createResourceManager({ schema, urlBase }) {
