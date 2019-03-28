@@ -137,20 +137,22 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
   const [currentProjects, setCurrentProjects] = useState(null);
-  
+
   const projectsPerPage = 12; //props.projectsPerPage; // todo use maxCollapsedProjects
   const numProjects = props.projects.length;
   const numPages = Math.ceil(props.projects.length / projectsPerPage); // todo confirm this
   const hiddenProjects = numProjects - projectsPerPage;
-  
+
   const shouldPaginate = projectsPerPage < numProjects; // todo confirm this
-  const shouldShowExpandButton = !expanded && (projectsPerPage < numProjects);
-  
-  useEffect(() => {
-    console.log('useEffect');
-    // if (currentProjects === null) {
-      console.log('currentProjects === null');
-      
+  const shouldShowExpandButton = !expanded && projectsPerPage < numProjects;
+
+  useEffect(
+    () => {
+      console.log('useEffect');
+      console.log({shouldPaginate, expanded})
+      // if (currentProjects === null) {
+      // console.log('currentProjects === null');
+
       if (shouldPaginate && !expanded) {
         setCurrentProjects(props.projects.slice(page - 1, projectsPerPage));
         console.log('(shouldPaginate && !expanded) currentProjects', currentProjects);
@@ -158,8 +160,10 @@ function PaginatedProjects(props) {
         setCurrentProjects(props.projects);
         console.log('setting to all');
       }
-    // }
-  }, [props.projects])
+      // }
+    },
+    [props.projects],
+  );
 
   const PaginationControls = () => (
     <div>
@@ -174,16 +178,16 @@ function PaginatedProjects(props) {
       </Button>
     </div>
   );
-  
+
   const ExpandButton = () => (
     <Button type="tertiary" onClick={() => setExpanded(true)}>
       Show all<Badge>{hiddenProjects}</Badge>
     </Button>
-  )
+  );
 
   return (
     <>
-      <ProjectsUL projects={currentProjects} {...props} />
+      <ProjectsUL projects={shouldPaginate && !expanded ? props.projects.slice(page - 1, projectsPerPage) : props.projects} {...props} />
       {shouldPaginate ? <PaginationControls /> : null}
       {shouldShowExpandButton && <ExpandButton />}
     </>
