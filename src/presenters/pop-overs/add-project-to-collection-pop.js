@@ -48,7 +48,9 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   // filter out collections that already contain the selected project
   renderCollectionsThatDontHaveProject(collection) {
-    const onClick = useTrackedFunc(this.props.addProjectToCollection, "Project Added to Collection", {}, 
+    const onClick = useTrackedFunc(this.props.addProjectToCollection, "Project Added to Collection", {}, {
+      groupId: collection.team ? collection.team.id : 0,
+    });
                                    
     if (!collection.projects) {
       return null;
@@ -61,20 +63,13 @@ class AddProjectToCollectionPopContents extends React.Component {
 
     return (
       <li key={collection.id}>
-        <TrackClick
-          name=
-          context={{
-            groupId: collection.team ? collection.team.id : 0,
-          }}
-        >
-          <CollectionResultItem
-            onClick={this.props.addProjectToCollection}
-            project={this.props.project}
-            collection={collection}
-            togglePopover={this.props.togglePopover}
-            currentUser={this.props.currentUser}
-          />
-        </TrackClick>
+        <CollectionResultItem
+          onClick={onClick}
+          project={this.props.project}
+          collection={collection}
+          togglePopover={this.props.togglePopover}
+          currentUser={this.props.currentUser}
+        />
       </li>
     );
   }
