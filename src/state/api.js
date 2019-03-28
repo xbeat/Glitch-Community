@@ -124,7 +124,23 @@ const getSingleItem = (db, request) => {
   return table[id];
 };
 
+const getIndices = (db, request) => {
+  // check if the parent exists and all indices can be used
+  const parent = getSingleItem(db, { ...request, parent: null });
+  // if not, just use index derivable from request
+  if (!parent) return [getAPIPath(request)];
+  
+  const { secondaryKeys = [] } = db.schema[request.resource];
+  const keys = ['id', ...secondaryKeys];
+  return keys.map(key => getAPIPath({ ...request, key }))
+}
+
 const getChildren = (db, request) => {
+
+  const indices = getIndices(db, request)
+  let childIDs
+  for 
+  
   // check if the childIDs are stored under this index
   let childIDs = db.index[getAPIPath(request)][request.value];
 
@@ -196,7 +212,7 @@ function checkDBForFulfillableRequests(db, request) {
   return data.result(result);
 }
 
-// api, urlBase, [request] -> [response]
+// api, urlBase, [request] -> [Promise response]
 function getAPICallsForRequests(api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children);
 
@@ -219,14 +235,9 @@ function getAPICallsForRequests(api, urlBase, requests) {
   return [...childResponses, ...joinedResponses];
 }
 
-function buildIndexes(db, resource, response) {
-  const { secondaryKeys, references } = db.schema[resource] || db.schema[db.referencedAs[resource]];
-  const keys = ['id', ...secondaryKeys];
-  for (const ref of references) {
-    for (const key of keys) {
-      for (const item of response) {
-      }
-    }
+function insertLoadingStatusIntoDB(db, request) {
+  if (request.children) {
+    
   }
 }
 
