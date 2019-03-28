@@ -155,19 +155,21 @@ function getAPICallsForRequests (api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
   
   // TODO: make pagination, sort etc part of request  
-  const childRequests = withChildren.map(async request => {
-    const response = getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`)
-    return { type: 'response', request, response }
+  const childResponses = withChildren.map(async request => {
+    const response = await getAllPages(api, `${urlBase}/${getAPIPath(request)}?${request.key}=${request.value}`)
+    const { resource, key, children } = request
+    return { type: 'response', resource, key, children, response }
   })
   
   // join mergable requests
-  const joinedRequests = Object.entries(groupBy(withoutChildren, getAPIPath))
+  const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath))
     .map(async ([apiPath, requests]) => {
+      const { resource, key } = requests[0]
       const query = requests.map(req => `${req.key}=${req.value}`).join(',')
-      const url = `${urlBase}/${apiPath}?${query}`
-      const response = 
+      const response = await api.get(`${urlBase}/${apiPath}?${query}`)
+      return { type: 'response', resource, key, response }
     })
-  
+  return [...childResponses, 
 }
 
 function flushPendingRequests () {
