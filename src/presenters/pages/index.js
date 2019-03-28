@@ -5,7 +5,7 @@ import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
 import { AnalyticsContext, TrackClick } from '../analytics';
-import { useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../../state/current-user';
 import { Link } from '../includes/link';
 
 import Featured from '../featured';
@@ -14,6 +14,10 @@ import OverlayVideo from '../overlays/overlay-video';
 import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
+import Image from '../../components/image/image';
+import Text from '../../components/text/text';
+
+import Heading from '../../components/text/heading';
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -24,7 +28,7 @@ function loadScript(src) {
 
 const Callout = ({ classes, imgUrl, title, description }) => (
   <div className={`callout ${classes}`}>
-    <img className="badge" src={imgUrl} alt={title} />
+    <Image className="badge" src={imgUrl} width="114" height="115" alt={title} />
     <div className="window">
       <div className="title">{title}</div>
       <div className="description">{description}</div>
@@ -63,15 +67,14 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <h1>
-              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
-              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
-            </h1>
+            <Heading tagName="h1">
+              <Image src={witchSmall} srcSet={[`${witchLarge} 1000w`]} alt={whatsGlitchAlt} width="100%" />
+            </Heading>
 
             <OverlayVideo>
               <TrackClick name="How it works clicked">
                 <div className="button video">
-                  <img className="play-button" src={play} alt="How it works" />
+                  <Image src={play} className="play-button" alt="How it works" width="" height="" />
                   <span>How it works</span>
                 </div>
               </TrackClick>
@@ -96,33 +99,30 @@ class WhatIsGlitch extends React.Component {
 
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
-    <p>Of course, this site was made on Glitch too</p>
+    <Text>Of course, this site was made on Glitch too</Text>
     <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer" />
     </Link>
   </section>
 );
 
-const IndexPage = ({ api }) => {
+const IndexPage = () => {
   const { currentUser } = useCurrentUser();
   return (
-    <Layout api={api}>
+    <Layout>
       <AnalyticsContext properties={{ origin: 'index' }}>
         <main>
           {!currentUser.login && <WhatIsGlitch />}
-          {!!currentUser.projects.length && <RecentProjects api={api} />}
-          {!!currentUser.login && <Questions api={api} />}
-          <Featured isAuthorized={!!currentUser.login} api={api} />
-          <MoreIdeas api={api} />
+          {!!currentUser.projects.length && <RecentProjects />}
+          {!!currentUser.login && <Questions />}
+          <Featured isAuthorized={!!currentUser.login} />
+          <MoreIdeas />
           <MadeInGlitch />
           <ReportButton reportedType="home" />
         </main>
       </AnalyticsContext>
     </Layout>
   );
-};
-IndexPage.propTypes = {
-  api: PropTypes.any.isRequired,
 };
 
 export default IndexPage;

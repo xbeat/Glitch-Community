@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
+import ExpanderContainer from '../components/containers/expander';
+
+import Heading from '../components/text/heading';
 
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
-    <h2>{title}</h2>
+    <Heading tagName="h2">{title}</Heading>
 
     {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
@@ -24,43 +27,33 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-class ExpandyProjects extends React.Component {
-  constructor(props) {
-    super(props);
+function ExpandyProjects(props) {
+  const [expanded, setExpanded] = useState(false);
+  const handleClick = () => setExpanded(true);
 
-    this.state = { expanded: false };
-    this.handleClick = this.handleClick.bind(this);
+  const maxProjects = props.maxCollapsedProjects;
+  const totalProjects = props.projects.length;
+  const hiddenProjects = totalProjects - maxProjects;
+
+  let shouldShowButton = false;
+  let visibleProjects = props.projects;
+  if (!expanded) {
+    shouldShowButton = hiddenProjects > 0;
+    visibleProjects = props.projects.slice(0, maxProjects);
   }
 
-  handleClick() {
-    this.setState({ expanded: true });
-  }
-
-  render() {
-    const maxProjects = this.props.maxCollapsedProjects;
-    const totalProjects = this.props.projects.length;
-    const hiddenProjects = totalProjects - maxProjects;
-
-    // props needs to exclude projects, so can't be declared on a separate line as const
-    let { projects, ...props } = this.props; // eslint-disable-line prefer-const
-
-    let shouldShowButton = false;
-    if (!this.state.expanded) {
-      shouldShowButton = hiddenProjects > 0;
-      projects = projects.slice(0, maxProjects);
-    }
-
-    return (
-      <>
-        <ProjectsUL projects={projects} {...props} />
-        {shouldShowButton && (
-          <button className="button-tertiary" onClick={this.handleClick} type="button">
-            Show {hiddenProjects} More
-          </button>
-        )}
-      </>
-    );
-  }
+  return (
+    <ExpanderContainer
+      expanded={!shouldShowButton}
+      controlArea={
+        <button className="button-tertiary" onClick={handleClick} type="button">
+          Show {hiddenProjects} More
+        </button>
+      }
+    >
+      <ProjectsUL {...props} projects={visibleProjects} />
+    </ExpanderContainer>
+  );
 }
 
 ExpandyProjects.propTypes = {
@@ -72,16 +65,21 @@ ExpandyProjects.defaultProps = {
   maxCollapsedProjects: 12,
 };
 
-export const ProjectsUL = ({ ...props }) => (
+export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} {...{ project }} {...props} />
+      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
     ))}
   </ul>
 );
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
+  showProjectDescriptions: PropTypes.bool,
+};
+
+ProjectsUL.defaultProps = {
+  showProjectDescriptions: true,
 };
 
 export default ProjectsList;

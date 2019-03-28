@@ -5,17 +5,14 @@ import PropTypes from 'prop-types';
 
 import { TrackClick } from '../analytics';
 import { Loader } from '../includes/loader';
-import { NotificationConsumer } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 import { getAvatarUrl as getProjectAvatarUrl } from '../../models/project';
 
-class TeamUserRemovePopBase extends React.Component {
+class TeamUserRemovePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gettingUser: true,
-      userTeamProjects: [],
       selectedProjects: new Set(),
     };
     this.selectAllProjects = this.selectAllProjects.bind(this);
@@ -24,28 +21,16 @@ class TeamUserRemovePopBase extends React.Component {
     this.removeUser = this.removeUser.bind(this);
   }
 
-  componentDidMount() {
-    this.getUserWithProjects();
-  }
-
-  async getUserWithProjects() {
-    const { data } = await this.props.api.get(`users/${this.props.user.id}`);
-    this.setState({
-      userTeamProjects: data.projects.filter((userProj) => this.props.team.projects.some((teamProj) => teamProj.id === userProj.id)),
-      gettingUser: false,
-    });
-  }
-
   removeUser() {
     this.props.togglePopover();
-    this.props.createNotification(`${getDisplayName(this.props.user)} removed from Team`);
-    this.props.removeUserFromTeam(this.props.user.id, Array.from(this.state.selectedProjects));
+    this.props.removeUser(Array.from(this.state.selectedProjects));
   }
 
   selectAllProjects() {
-    this.setState(({ userTeamProjects }) => ({
+    const userTeamProjects = this.props.userTeamProjects.data || [];
+    this.setState({
       selectedProjects: new Set(userTeamProjects.map((p) => p.id)),
-    }));
+    });
   }
 
   unselectAllProjects() {
@@ -68,18 +53,19 @@ class TeamUserRemovePopBase extends React.Component {
   }
 
   render() {
-    const allProjectsSelected = this.state.userTeamProjects.every((p) => this.state.selectedProjects.has(p.id));
+    const userTeamProjects = this.props.userTeamProjects.data || [];
+    const allProjectsSelected = userTeamProjects.every((p) => this.state.selectedProjects.has(p.id));
     const userAvatarStyle = { backgroundColor: this.props.user.color };
 
     let projects = null;
-    if (this.state.gettingUser) {
+    if (this.props.userTeamProjects.status === 'loading') {
       projects = <Loader />;
-    } else if (this.state.userTeamProjects.length > 0) {
+    } else if (userTeamProjects.length > 0) {
       projects = (
         <>
           <p className="action-description">Also remove them from these projects</p>
           <div className="projects-list">
-            {this.state.userTeamProjects.map((project) => (
+            {userTeamProjects.map((project) => (
               <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
                 <input
                   className="checkbox-project"
@@ -94,7 +80,7 @@ class TeamUserRemovePopBase extends React.Component {
               </label>
             ))}
           </div>
-          {this.state.userTeamProjects.length > 1 && (
+          {userTeamProjects.length > 1 && (
             <button className="button-small" type="button" onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}>
               {allProjectsSelected ? 'Unselect All' : 'Select All'}
             </button>
@@ -107,9 +93,11 @@ class TeamUserRemovePopBase extends React.Component {
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <NestedPopoverTitle>Remove {getDisplayName(this.props.user)}</NestedPopoverTitle>
 
-        <section className="pop-over-actions" id="user-team-projects">
-          {projects || <p className="action-description">{getDisplayName(this.props.user)} is not a member of any projects</p>}
-        </section>
+        {projects && (
+          <section className="pop-over-actions" id="user-team-projects">
+            {projects}
+          </section>
+        )}
 
         <section className="pop-over-actions danger-zone">
           <TrackClick name="Remove from Team submitted">
@@ -122,8 +110,7 @@ class TeamUserRemovePopBase extends React.Component {
     );
   }
 }
-TeamUserRemovePopBase.propTypes = {
-  api: PropTypes.func.isRequired,
+TeamUserRemovePop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -131,15 +118,14 @@ TeamUserRemovePopBase.propTypes = {
     isOnTeam: PropTypes.bool,
     color: PropTypes.string,
   }).isRequired,
+  userTeamProjects: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    data: PropTypes.array,
+  }).isRequired,
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-  createNotification: PropTypes.func.isRequired,
+  removeUser: PropTypes.func.isRequired,
 };
-
-const TeamUserRemovePop = (props) => (
-  <NotificationConsumer>{(notifyFuncs) => <TeamUserRemovePopBase {...notifyFuncs} {...props} />}</NotificationConsumer>
-);
 
 export default TeamUserRemovePop;

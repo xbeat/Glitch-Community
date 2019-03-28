@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TextAreaAutosize from 'react-textarea-autosize';
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
-import useUniqueId from './use-unique-id';
+import useUniqueId from '../../hooks/use-unique-id';
 
 import styles from './text-area.styl';
 

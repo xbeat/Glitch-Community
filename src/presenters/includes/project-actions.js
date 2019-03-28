@@ -2,67 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getShowUrl, getEditorUrl, getRemixUrl } from '../../models/project';
-import { Link } from './link';
+import Button, { SIZES } from '../../components/buttons/button';
+import Emoji from '../../components/images/emoji';
 
-const showIcon = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg';
-
-const ButtonLink = ({ href, children, className, ...props }) => (
-  <Link to={href} className={`button button-link ${className}`} {...props}>
-    {children}
-  </Link>
-);
-ButtonLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-ButtonLink.defaultProps = {
-  className: '',
-};
-
-export const ShowButton = ({ name, className, ...props }) => (
-  <ButtonLink href={getShowUrl(name)} className={`has-emoji ${className}`} {...props}>
-    <img src={showIcon} alt="" /> Show
-  </ButtonLink>
+export const ShowButton = ({ name, size }) => (
+  <Button href={getShowUrl(name)} size={size}>
+    <Emoji name="sunglasses" /> Show
+  </Button>
 );
 ShowButton.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };
 
-ShowButton.defaultProps = {
-  className: '',
-};
-
-export const EditButton = ({ name, isMember, ...props }) => (
-  <ButtonLink href={getEditorUrl(name)} {...props}>
+export const EditButton = ({ name, isMember, size }) => (
+  <Button href={getEditorUrl(name)} size={size}>
     {isMember ? 'Edit Project' : 'View Source'}
-  </ButtonLink>
+  </Button>
 );
 EditButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
-  className: PropTypes.string,
+  size: PropTypes.oneOf(SIZES),
 };
 
 EditButton.defaultProps = {
   isMember: false,
-  className: '',
+  size: null,
 };
 
-export const RemixButton = ({ name, isMember, className, ...props }) => (
-  <ButtonLink href={getRemixUrl(name)} className={`has-emoji ${className}`} {...props}>
-    {isMember ? 'Remix This' : 'Remix your own'} <span className="emoji microphone" role="presentation" />
-  </ButtonLink>
+export const RemixButton = ({ name, isMember }) => (
+  <Button href={getRemixUrl(name)} size="small">
+    {isMember ? 'Remix This' : 'Remix your own'} <Emoji name="microphone" />
+  </Button>
 );
 RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 RemixButton.defaultProps = {
   isMember: false,
-  className: '',
 };

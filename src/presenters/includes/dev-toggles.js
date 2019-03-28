@@ -19,12 +19,15 @@ const toggleData = [
     name: 'Email Invites',
     description: 'Enables invite-by-email behavior on the team page.',
   },
-  { name: 'Everybody Dance!', description: 'Placeholder for a new toggle.' },
   {
-    name: 'Inflatable Crocodiles',
-    description: "I don't think this does anything yet.",
+    name: 'Google Auth',
+    description: 'Sign in with your google account!',
   },
-].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
+  {
+    name: 'Algolia Search',
+    description: 'Use the new Algolia-powered search API.',
+  },
+].slice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
 //

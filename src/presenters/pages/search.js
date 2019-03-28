@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Helmet from 'react-helmet';
+import { capitalize } from 'lodash';
+
+import { useAPI } from '../../state/api';
+import { useCurrentUser } from '../../state/current-user';
+import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
+import useDevToggle from '../includes/dev-toggles';
+
 import Layout from '../layout';
-
-import { useCurrentUser } from '../current-user';
-
-import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
@@ -14,9 +16,52 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
+import SegmentedButtons from '../../components/buttons/segmented-buttons';
+import Badge from '../../components/badges/badge';
+import Heading from '../../components/text/heading';
+
+const generateFilterButtons = (filters) =>
+  filters
+    .map((filter) => {
+      if (filter.hits > 0 || filter.name === 'all') {
+        return {
+          name: filter.name,
+          contents: (
+            <>
+              {capitalize(filter.name)}
+              {filter.hits && <Badge>{filter.hits}</Badge>}
+            </>
+          ),
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
+  if (!loaded) {
+    return (
+      <>
+        <Loader />
+        <h1>All results for {query}</h1>
+      </>
+    );
+  }
+  if (loaded && totalHits === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onChange={setFilter} />
+      {activeFilter === 'all' && <h1>All results for {query}</h1>}
+    </>
+  );
+};
+
 const TeamResults = ({ teams }) => (
   <article>
-    <h2>Teams</h2>
+    <Heading tagName="h2">Teams</Heading>
     <ul className="teams-container">
       {teams ? (
         teams.map((team) => (
@@ -33,7 +78,7 @@ const TeamResults = ({ teams }) => (
 
 const UserResults = ({ users }) => (
   <article>
-    <h2>Users</h2>
+    <Heading tagName="h2">Users</Heading>
     <ul className="users-container">
       {users ? (
         users.map((user) => (
@@ -48,115 +93,83 @@ const UserResults = ({ users }) => (
   </article>
 );
 
-const ProjectResults = ({ addProjectToCollection, api, projects, currentUser }) => {
-  if (!projects) {
-    return (
-      <article>
-        <h2>Projects</h2>
-        <Loader />
-      </article>
-    );
-  }
-  const loggedInUserWithProjects = projects && currentUser.login;
-  return loggedInUserWithProjects ? (
-    <ProjectsList title="Projects" projects={projects} api={api} projectOptions={{ addProjectToCollection }} />
+function addProjectToCollection(api, project, collection) {
+  return api.patch(`collections/${collection.id}/add/${project.id}`);
+}
+
+const ProjectResults = ({ projects }) => {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return currentUser.login ? (
+    <ProjectsList
+      title="Projects"
+      projects={projects}
+      projectOptions={{
+        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+      }}
+    />
   ) : (
-    <ProjectsList title="Projects" projects={projects} api={api} />
+    <ProjectsList title="Projects" projects={projects} />
   );
 };
 
-const MAX_RESULTS = 20;
-const showResults = (results) => !results || !!results.length;
+function SearchResults({ query, searchResults }) {
+  const [activeFilter, setActiveFilter] = useState('all');
+  const loaded = searchResults.status === 'ready';
+  const noResults = loaded && searchResults.totalHits === 0;
 
-class SearchResults extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      teams: null,
-      users: null,
-      projects: null,
-    };
-    this.addProjectToCollection = this.addProjectToCollection.bind(this);
-  }
+  const filters = [
+    { name: 'all' },
+    { name: 'teams', hits: searchResults.team.length },
+    { name: 'users', hits: searchResults.user.length },
+    { name: 'projects', hits: searchResults.project.length },
+  ];
 
-  componentDidMount() {
-    const { handleError } = this.props;
-    this.searchTeams().catch(handleError);
-    this.searchUsers().catch(handleError);
-    this.searchProjects().catch(handleError);
-  }
+  const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
+  const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
+  const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
 
-  async searchTeams() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`teams/search?q=${query}`);
-    this.setState({
-      teams: data.slice(0, MAX_RESULTS),
-    });
-  }
-
-  async searchUsers() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`users/search?q=${query}`);
-    this.setState({
-      users: data.slice(0, MAX_RESULTS),
-    });
-  }
-
-  async searchProjects() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`projects/search?q=${query}`);
-    this.setState({
-      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
-    });
-  }
-
-  async addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-  }
-
-  render() {
-    const { teams, users, projects } = this.state;
-    const noResults = [teams, users, projects].every((results) => !showResults(results));
-    return (
-      <main className="search-results">
-        {showResults(teams) && <TeamResults teams={teams} />}
-        {showResults(users) && <UserResults users={users} />}
-        {showResults(projects) && (
-          <ProjectResults
-            projects={projects}
-            currentUser={this.props.currentUser}
-            api={this.props.api}
-            addProjectToCollection={this.addProjectToCollection}
-          />
-        )}
-        {noResults && <NotFound name="any results" />}
-      </main>
-    );
-  }
-}
-SearchResults.propTypes = {
-  api: PropTypes.any,
-  query: PropTypes.string.isRequired,
-  currentUser: PropTypes.object.isRequired,
-};
-
-SearchResults.defaultProps = {
-  api: null,
-};
-
-const SearchPage = ({ api, query }) => {
-  const { currentUser } = useCurrentUser();
-  const errorFuncs = useErrorHandlers();
   return (
-    <Layout api={api} searchQuery={query}>
-      <Helmet>{!!query && <title>Search for {query}</title>}</Helmet>
-      {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
-      <MoreIdeas api={api} />
+    <main className="search-results">
+      <FilterContainer
+        totalHits={searchResults.totalHits}
+        filters={filters}
+        setFilter={setActiveFilter}
+        activeFilter={activeFilter}
+        query={query}
+        loaded={loaded}
+      />
+      {showTeams && <TeamResults teams={searchResults.team} />}
+      {showUsers && <UserResults users={searchResults.user} />}
+      {showProjects && <ProjectResults projects={searchResults.project} />}
+      {noResults && <NotFound name="any results" />}
+    </main>
+  );
+}
+
+// Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
+const AlgoliaSearchWrapper = ({ query }) => {
+  const searchResults = useAlgoliaSearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
+};
+
+const LegacySearchWrapper = ({ query }) => {
+  const searchResults = useLegacySearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
+};
+
+const SearchPage = ({ query }) => {
+  const algoliaFlag = useDevToggle('Algolia Search');
+  const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
+  return (
+    <Layout searchQuery={query}>
+      {!!query && <Helmet title={`Search for ${query}`} />}
+      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
+      <MoreIdeas />
     </Layout>
   );
 };
 SearchPage.propTypes = {
-  api: PropTypes.any.isRequired,
   query: PropTypes.string,
 };
 SearchPage.defaultProps = {

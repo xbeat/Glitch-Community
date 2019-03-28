@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
+import { useAPI } from '../../state/api';
 
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
@@ -14,12 +15,6 @@ const mergeUserData = (data) => {
   return { ...user, ...rest };
 };
 
-// TODOs:
-// this works pretty well, even for users with lots of projects,
-// but we should consider pushing the API calls down to the individiual components,
-// instead of handling them at the page level.
-// none of them _have to_ load in any particular order,
-// and pagination needs to be closely integrated with the UI anyways.
 const getUserById = async (api, id) => {
   const data = await allByKeys({
     user: getSingleItem(api, `v1/users/by/id?id=${id}`, id),
@@ -68,64 +63,53 @@ const getTeam = async (api, name) => {
   return team && parseTeam(team);
 };
 
-const TeamPageLoader = ({ api, id, name, ...props }) => (
-  <DataLoader get={() => getTeam(api, name)}>
-    {(team) => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
-  </DataLoader>
-);
+const TeamPageLoader = ({ id, name, ...props }) => {
+  const api = useAPI();
+  return <DataLoader get={() => getTeam(api, name)}>{(team) => (team ? <TeamPage team={team} {...props} /> : <NotFound name={name} />)}</DataLoader>;
+};
 TeamPageLoader.propTypes = {
-  api: PropTypes.any,
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-TeamPageLoader.defaultProps = {
-  api: null,
+const UserPageLoader = ({ id, name, ...props }) => {
+  const api = useAPI();
+  return (
+    <DataLoader get={() => getUserById(api, id)}>{(user) => (user ? <UserPage user={user} {...props} /> : <NotFound name={name} />)}</DataLoader>
+  );
 };
-
-const UserPageLoader = ({ api, id, name, ...props }) => (
-  <DataLoader get={() => getUserById(api, id)}>
-    {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
-  </DataLoader>
-);
 UserPageLoader.propTypes = {
-  api: PropTypes.any,
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
-UserPageLoader.defaultProps = {
-  api: null,
-};
 
-const TeamOrUserPageLoader = ({ api, name, ...props }) => (
-  <DataLoader get={() => getTeam(api, name)}>
-    {(team) =>
-      team ? (
-        <TeamPage api={api} team={team} {...props} />
-      ) : (
-        <DataLoader get={() => getUserByLogin(api, name)}>
-          {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
-        </DataLoader>
-      )
-    }
-  </DataLoader>
-);
+const TeamOrUserPageLoader = ({ name, ...props }) => {
+  const api = useAPI();
+  return (
+    <DataLoader get={() => getTeam(api, name)}>
+      {(team) =>
+        team ? (
+          <TeamPage team={team} {...props} />
+        ) : (
+          <DataLoader get={() => getUserByLogin(api, name)}>
+            {(user) => (user ? <UserPage user={user} {...props} /> : <NotFound name={name} />)}
+          </DataLoader>
+        )
+      }
+    </DataLoader>
+  );
+};
 TeamOrUserPageLoader.propTypes = {
-  api: PropTypes.any,
   name: PropTypes.string.isRequired,
 };
 
-TeamOrUserPageLoader.defaultProps = {
-  api: null,
-};
-
-const Presenter = (api, Loader, args) => (
-  <Layout api={api}>
-    <Loader api={api} {...args} />
+const withLayout = (Loader) => (props) => (
+  <Layout>
+    <Loader {...props} />
   </Layout>
 );
 
-const TeamPagePresenter = ({ api, id, name }) => Presenter(api, TeamPageLoader, { id, name });
-const UserPagePresenter = ({ api, id, name }) => Presenter(api, UserPageLoader, { id, name });
-const TeamOrUserPagePresenter = ({ api, name }) => Presenter(api, TeamOrUserPageLoader, { name });
+const TeamPagePresenter = withLayout(TeamPageLoader);
+const UserPagePresenter = withLayout(UserPageLoader);
+const TeamOrUserPagePresenter = withLayout(TeamOrUserPageLoader);
 export { TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage };
