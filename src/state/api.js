@@ -125,8 +125,12 @@ const getSingleItem = (db, request) => {
 };
 
 const getChildren = (db, request) => {
-  const childIDs = db.index[getAPIPath(request)][request.value];
-  if (!childIDs) return null;
+  // check if the childIDs are stored under this index
+  let childIDs = db.index[getAPIPath(request)][request.value];
+  // check if the parent exists and other indices can be checked
+  if (!childIDs) {
+    const parent = 
+  }
 
   const childTable = getTable(db, request.children);
   return childIDs.map((id) => childTable.data[id]);
@@ -196,12 +200,25 @@ function getAPICallsForRequests(api, urlBase, requests) {
 const loading = { status: 'loading' };
 const ready = (value) => ({ status: 'ready', value });
 
+function buildIndexes (db, resource, response) {
+  const { secondaryKeys, references } = (db.schema[resource] || db.schema[db.referencedAs[resource]])
+  const keys = ['id', ...secondaryKeys]
+  for (const ref of references) {
+    for (const key of keys) {
+      for (const item of response) {
+        
+      }
+    }
+  }
+  
+}
+
 function insertResponseIntoDB(db, { resource, response, parent }) {
   // - insert items into the tables
   const table = getTable(db, resource)
   for (const item of response) {
     table[item.id] = ready(item)
-  }  
+  }
   // - synchronize references
   //   e.g. if we have user/by/id/projects for this user, copy that over to user/by/login/projects for this user's login
   
