@@ -19,9 +19,9 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     return (
       <>
         <p className="description action-description">
-          <Button onClick={showCreateTeam} type="link">
+          <button onClick={showCreateTeam} className="button-unstyled link" type="button">	
             Sign in
-          </Button>{' '}
+          </button>{' '}
           to create teams
         </p>
         <button className="button button-small has-emoji" disabled type="button">
