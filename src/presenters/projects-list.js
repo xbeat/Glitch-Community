@@ -136,7 +136,8 @@ class ExpandyProjects extends React.Component {
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
-
+  const [currentProjects, setCurrentProjects] = useState(null);
+  
   const projectsPerPage = 12; //props.projectsPerPage; // todo use maxCollapsedProjects
   const numProjects = props.projects.length;
   const numPages = Math.ceil(props.projects.length / projectsPerPage); // todo confirm this
@@ -145,10 +146,20 @@ function PaginatedProjects(props) {
   const shouldPaginate = projectsPerPage < numProjects; // todo confirm this
   const shouldShowExpandButton = !expanded && (projectsPerPage < numProjects);
   
-  let currentProjects = props.projects;
-  if (shouldPaginate && !expanded) {
-    currentProjects = 
-  }
+  useEffect(() => {
+    console.log('useEffect');
+    // if (currentProjects === null) {
+      console.log('currentProjects === null');
+      
+      if (shouldPaginate && !expanded) {
+        setCurrentProjects(props.projects.slice(page - 1, projectsPerPage));
+        console.log('(shouldPaginate && !expanded) currentProjects', currentProjects);
+      } else {
+        setCurrentProjects(props.projects);
+        console.log('setting to all');
+      }
+    // }
+  }, [props.projects])
 
   const PaginationControls = () => (
     <div>
@@ -172,7 +183,7 @@ function PaginatedProjects(props) {
 
   return (
     <>
-      <ProjectsUL projects={projects
+      <ProjectsUL projects={currentProjects} {...props} />
       {shouldPaginate ? <PaginationControls /> : null}
       {shouldShowExpandButton && <ExpandButton />}
     </>
