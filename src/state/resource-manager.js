@@ -47,12 +47,10 @@ function checkDBForFulfillableRequests(db, request) {
     if (childIDsResult.status === 'loading') return childIDsResult;
 
     const childTable = getTable(db, request.childResource);
-    return data.result(childIDsResult.value.map((id) => childTable.data[id]));
+    return childIDsResult.value.map((id) => childTable.data[id]);
   }
 
-  const result = getSingleItem(db, request);
-  if (!result) return null;
-  return data.result(result);
+  return getSingleItem(db, request);
 }
 
 // api, urlBase, [request] -> [Promise response]
@@ -145,9 +143,10 @@ const actions = {
 const reducer = (state, action) => {
   switch (action.type) {
     // if a request cannot be fulfilled immediately, it is added to the requests batch.
+    // requests are deduped 
     case 'requestQueued':
       return produce(state, (draft) => {
-        draft.requests.push(action.payload);
+        draft.requests[`${getAPIPath(action.payload)}?${action.payload.value}`] = actionpayload
       });
     // responses are also batched.
     case 'responseQueued':
@@ -158,9 +157,9 @@ const reducer = (state, action) => {
     // requests are fetched from the API, and responses are written to the DB.
     case 'batchesFlushed':
       return produce(state, (draft) => {
-        draft.requests = [];
+        draft.requests = {};
         draft.responses = [];
-        state.requests.forEach((request) => insertLoadingStatusIntoDB(draft.db, request));
+        Object.values(state.requests).forEach((request) => insertLoadingStatusIntoDB(draft.db, request));
         state.responses.forEach((response) => insertResponseIntoDB(draft.db, response));
       });
     default:
@@ -183,14 +182,18 @@ function query(api, store, request) {
   const result = checkDBForFulfillableRequests(store.getState().db, request);
   if (result) return result;
 
-  store.dispatch(actions.requestQueued(request));
+  // don't dispatch in the middle of a render
+  setTimeout(() => {
+    store.dispatch(actions.requestQueued(request));
+  }, 1)
+  
   return status.loading;
 }
 
 function createResourceManager({ schema, urlBase }) {
   const state = {
     db: createDB(schema),
-    requests: [],
+    requests: {},
     responses: [],
     urlBase,
   };
