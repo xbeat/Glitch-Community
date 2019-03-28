@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { orderBy } from 'lodash';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../analytics';
 import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
-import { AnalyticsContext, useTracker } from '../analytics';
+import { AnalyticsContext } from '../analytics';
 import { useCurrentUser } from '../../state/current-user';
 import { Link } from '../includes/link';
 
@@ -62,8 +62,6 @@ const WhatIsGlitch = () => {
   const play = 'https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg';
   const whatsGlitchAlt = "Glitch is the friendly community where you'll find the app of your dreams";
 
-  const onClickVideo = useTracker('How it works clicked');
-
   return (
     <section className="what-is-glitch">
       <span>
@@ -73,7 +71,7 @@ const WhatIsGlitch = () => {
           </Heading>
 
           <OverlayVideo>
-            <div className="button video" onClick={onClickVideo}>
+            <div className="button video">
               <Image src={play} className="play-button" alt="How it works" width="" height="" />
               <span>How it works</span>
             </div>
