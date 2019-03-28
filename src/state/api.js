@@ -89,23 +89,35 @@ const schema = {
   collections: {
     secondaryKeys: ['fullUrl'],
     references: ['projects'],
-    belongsTo: [{ id: 'team', resource: 'teams' }, { id: 'user', resource: '],
+    belongsTo: ['team', 'user'],
   },
   projects: {
     secondaryKeys: ['domain'],
     references: ['collections', 'teams', 'users'],
+    referencedAs: ['pinnedProjects', 'deletedProjects'],
   },
   teams: {
     secondaryKeys: ['url'],
-    references: ['collections', 'projects', 'users', { id: 'pinnedProjects', resource: 'projects' }],
+    references: ['collections', 'projects', 'users', 'pinnedProjects'],
+    referencedAs: ['team'],
   },
   users: {
     secondaryKeys: ['login'],
-    references: ['collections', 'projects', 'teams', { id: 'deletedProjects', resource: 'projects' }, { id: 'pinnedProjects', resource: 'projects' }],
-    includes: ['emails'],
+    references: ['collections', 'projects', 'teams', 'deletedProjects', 'pinnedProjects'],
+    subresources: ['emails'],
+    referencedAs: ['user'],
   },
 };
 
 function createResourceManager ({ version, schema, urlBase }) {
-  
+  const initialState = {}
+  for (const [resourceName, params] of Object.entries(schema)) {
+    const { secondaryKeys = [], references = [], referencedAs = [], belongsTo = [], subresources = [] } = params
+    
+    const resourceData = { id: {} }
+    for (const key of secondaryKeys) {
+      resourceData[key] = {}
+    }
+    
+  } 
 }
