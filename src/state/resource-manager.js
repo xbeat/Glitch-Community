@@ -4,6 +4,8 @@ import { getAllPages } from '../../shared/api';
 
 const getTable = (db, resource) => db.tables[resource] || db.tables[db.referencedAs[resource]];
 const getAPIPath = ({ resource, key, children }) => (children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`);
+// shamefully, javascript does not have any native support for structural equality.
+const getRequestHashcode = (request) => `${getAPIPath(request)}?${request.value}`;
 
 const getSingleItem = (db, request) => {
   const table = getTable(db, request.resource);
@@ -140,15 +142,22 @@ const actions = {
   batchesFlushed: () => ({ type: 'batchesFlushed' }),
 };
 
+const getInitialState = (schema) => ({
+  db: createDB(schema),
+  requests: {},
+  responses: [],
+});
+
 const reducer = (state, action) => {
   switch (action.type) {
     // if a request cannot be fulfilled immediately, it is added to the requests batch.
-    // requests are deduped 
+    // requests are deduped.
     case 'requestQueued':
       return produce(state, (draft) => {
-        draft.requests[`${getAPIPath(action.payload)}?${action.payload.value}`] = actionpayload
+        const request = action.payload;
+        draft.requests[getRequestHashcode(request)] = request;
       });
-    // responses are also batched.
+    // responses are also batched, and do not need to be deduped.
     case 'responseQueued':
       return produce(state, (draft) => {
         draft.responses.push(action.payload);
@@ -167,9 +176,9 @@ const reducer = (state, action) => {
   }
 };
 
-function flushBatchesAtInterval(api, store, interval) {
+function flushBatchesAtInterval(api, urlBase, store, interval) {
   setInterval(() => {
-    const { requests, urlBase } = store.getState();
+    const { requests } = store.getState();
     store.dispatch(actions.batchesFlushed());
     getAPICallsForRequests(api, urlBase, requests).forEach(async (responsePromise) => {
       const response = await responsePromise;
@@ -178,23 +187,16 @@ function flushBatchesAtInterval(api, store, interval) {
   }, interval);
 }
 
-function query(api, store, request) {
+function query(store, request) {
   const result = checkDBForFulfillableRequests(store.getState().db, request);
   if (result) return result;
 
   // don't dispatch in the middle of a render
   setTimeout(() => {
     store.dispatch(actions.requestQueued(request));
-  }, 1)
-  
+  }, 1);
+
   return status.loading;
 }
 
-function createResourceManager({ schema, urlBase }) {
-  const state = {
-    db: createDB(schema),
-    requests: {},
-    responses: [],
-    urlBase,
-  };
-}
+function ResourceProvider ({ })
