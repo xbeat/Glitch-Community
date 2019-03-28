@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from '../src/components/buttons/button';
+import Button from 'Components/buttons/button';
 import Emoji from '../src/components/images/emoji';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/inputs/text-input';
@@ -17,8 +17,11 @@ const helloAlert = () => {
 };
 
 const withState = (initState, Component) => {
-  const [state, setState] = useState(initState);
-  return <Component state={state} setState={setState} />;
+  const WrappedComponent = () => {
+    const [state, setState] = useState(initState);
+    return <Component state={state} setState={setState} />;
+  }
+  return () => <WrappedComponent />;
 };
 
 storiesOf('Button', module)
