@@ -12,20 +12,24 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   const [filter, setFilter] = useState('');
 
   let { projects } = props;
-  useEffect(() => {
-    if (filter.length) {
-      projects = projects.filter((p) => {
-        return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
-      });
-    }
-  });
+  // useEffect(() => {
+  //   console.log('useEffect');
+  //   if (filter.length) {
+  //     projects = projects.filter((p) => {
+  //       return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
+  //     });
+  //   }
+  // });
+  function setFilterz(value) {
+    setFilter(value);
+  }
 
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
+          <TextInput className="header-search" name="q" onChange={setFilterz} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
