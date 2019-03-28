@@ -84,3 +84,23 @@ export const createAPIHook = (asyncFunction) => (...args) => {
   );
   return result;
 };
+
+const schema = {
+  collections: {
+    secondaryKeys: ['fullUrl'],
+    references: ['projects'],
+  },
+  projects: {
+    secondaryKeys: ['domain'],
+    references: ['collections', 'teams', 'users'],
+  },
+  teams: {
+    secondaryKeys: ['url'],
+    references: ['collections', 'projects', 'users', { id: 'pinnedProjects', resource: 'projects' }],
+  },
+  users: {
+    secondaryKeys: ['login'],
+    references: ['collections', 'projects', 'teams', { id: 'deletedProjects' 
+    includes: ['emails'],
+  }
+}
