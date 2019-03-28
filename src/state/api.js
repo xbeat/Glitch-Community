@@ -172,14 +172,25 @@ function getAPICallsForRequests(api, urlBase, requests) {
   return [...childResponses, ...joinedResponses];
 }
 
+// returns a set of changes to minimize the ammount of copying that is done
 function insertIntoDB (db, { resource, key, value, children }, insertion) {
-  const table = getTable(db, resource)
-  const id = getPrimaryKey(table, key, value)
-  table.data[id] = insertion
-  
-  if (key !== 'id' && insertion.status === 'ready') {
-    table.index[key] = insertion.id
+  const changes = []
+  if (children) {
+    const childTable = getTable(db, children);
+    const parentTable = getTable(db, resource);
+    
+    
+  } else {
+    const table = getTable(db, resource)
+    const id = getPrimaryKey(table, key, value)
+    changes.push([table.id, 'data', insertion])
+
+    // if using a secondary key, add reference to primary key
+    if (key !== 'id' && insertion.value) {
+      changes.push([table.id, 'index', insertion.value.id])
+    }
   }
+  return changes
 }
 
 
