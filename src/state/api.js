@@ -1,7 +1,7 @@
 /* globals API_URL */
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { memoize, groupBy } from 'lodash';
+import { memoize, groupBy, partition } from 'lodash';
 import { useCurrentUser } from './current-user';
 
 export const getAPIForToken = memoize((persistentToken) => {
@@ -123,8 +123,8 @@ const getChildIDs = (childTable, parentTable, parentID) => childTable.index[pare
 
 const getRequest = (resource, key, value, children) => ({ type: 'request', resource, key, value, children });
 
-function query(db, resource, key, value, children) {
-  const request = getRequest(resource, key, value, children);
+function processRequest(db, request) {
+  const { resource, key, value, children } = request;
 
   if (children) {
     const childTable = getTable(db, children);
@@ -150,11 +150,16 @@ function query(db, resource, key, value, children) {
 const getAPIPath = ({ resource, key, children }) => 
   children ? `${resource}/by/${key}/${children}` : `${resource}/by/${key}`
 
-// requests for multiple resources of the same type can be turned into 
-function joinRequests (requests) {
+function joinRequests (api, urlBase, requests) {
   const [withChildren, withoutChildren] = partition(requests, (req) => req.children)
-  const groups = groupBy(requests, getAPIPath)
-  return Object.entries(groups, ([apiPath, requests]) =>
+  // merge 
+  const joinedRequests = Object.entries(groupBy(withoutChildren, getAPIPath))
+    .map(([apiPath, requests]) => {
+      const key = requests[0].key
+      const values = requests.map(req => req.value)
+      const url = 
+    })
+  
 }
 
 
