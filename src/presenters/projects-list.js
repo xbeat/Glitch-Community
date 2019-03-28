@@ -8,26 +8,10 @@ import TextInput from '../components/fields/text-input';
 
 import Heading from '../components/text/heading';
 
-function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...props }) {
+function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
   
   let { projects } = props;
-  
-  /*
-  useEffect(() => {
-    if (filterQuery.length) {
-      projects = projects.filter(p => {
-        if (p.domain.includes(filterQuery)) {
-          return p;
-        } else if (p.description.toLowerCase().includes(filterQuery)) {
-          return p;
-        }
-        return null;
-      });
-    }
-    console.log(projects);
-  });
-  */
   
   return (
     <article className={`projects ${extraClasses}`}>
@@ -39,29 +23,20 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, ...pr
       </div>
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
-
-      <PaginatedProjects {...props} projects={projects} filter={filter} />
+  
+      {enablePagination ? <PaginatedProjects {...props} projects={projects} filter={filter} /> :
+      <ProjectsUL {...props} projects={projects} filter={filter} />}
     </article>
   );
 }
-
-/*
-const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
-  <article className={`projects ${extraClasses}`}>
-    <Heading tagName="h2">{title}</Heading>
-
-    {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
-
-    <ExpandyProjects {...props} />
-  </article>
-);
-*/
 
 ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
   extraClasses: PropTypes.string,
+  enableFiltering: PropTypes.bool,
+  enablePagination: PropTypes.bool,
 };
 
 ProjectsList.defaultProps = {
@@ -69,51 +44,7 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-function ExpandyProjects(props) {
-  const [expanded, setExpanded] = useState(false);
-  const [visibleProjects, setVisibleProjects] = useState(null);
-  const [shouldShowButton, setShouldShowButton] = useState(false);
 
-  const maxProjects = props.maxCollapsedProjects;
-  const totalProjects = props.projects.length;
-  const hiddenProjects = totalProjects - maxProjects;
-
-  useEffect(() => {
-    if (!visibleProjects) {
-      if (!expanded) {
-        setShouldShowButton(hiddenProjects > 0);
-        setVisibleProjects(props.projects.slice(0, maxProjects));
-      } else {
-        setVisibleProjects(props.projects);
-      }
-    }
-  });
-
-  function handleClick() {
-    setExpanded(true);
-  }
-
-  // props needs to exclude projects, so can't be declared on a separate line as const
-  // let { projects } = props; // eslint-disable-line prefer-const
-
-  return (
-    <ExpanderContainer
-      expanded={expanded}
-      controlArea={
-        <div>
-          <button>Paginate</button>
-          <button className="button-tertiary" onClick={handleClick} type="button">
-            Show all<Badge>{hiddenProjects}</Badge>
-          </button>
-        </div>
-      }
-    >
-      <ProjectsUL projects={visibleProjects} {...props} />
-    </ExpanderContainer>
-  );
-}
-
-/*
 class ExpandyProjects extends React.Component {
   constructor(props) {
     super(props);
@@ -157,7 +88,6 @@ class ExpandyProjects extends React.Component {
     );
   }
 }
-*/
 
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);

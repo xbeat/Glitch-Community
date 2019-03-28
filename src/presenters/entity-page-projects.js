@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list';
 
-const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions }) => {
+const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions, enableFiltering, enablePagination }) => {
   const pinnedTitle = (
     <>
       Pinned Projects
@@ -11,7 +11,7 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
     </>
   );
   const recentTitle = 'Recent Projects';
-  
+
   let projectOptionsToPass = {};
   if (isAuthorized) {
     projectOptionsToPass = { addPin, removePin, ...projectOptions };
@@ -21,7 +21,13 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
   return (
     <>
       {projects.length > 0 && (
-        <ProjectsList title={removePin ? pinnedTitle : recentTitle} enableFiltering={removePin ? false : true} projects={projects} projectOptions={projectOptionsToPass} />
+        <ProjectsList
+          title={removePin ? pinnedTitle : recentTitle}
+          projects={projects}
+          projectOptions={projectOptionsToPass}
+          enableFiltering={enableFiltering}
+          enablePagination={enablePagination}
+        />
       )}
     </>
   );
@@ -33,6 +39,8 @@ EntityPageProjects.propTypes = {
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   projectOptions: PropTypes.object,
+  enableFiltering: PropTypes.bool,
+  enablePagination: PropTypes.bool,
 };
 
 EntityPageProjects.defaultProps = {
