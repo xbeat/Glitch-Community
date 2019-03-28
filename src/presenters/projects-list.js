@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 import ExpanderContainer from '../components/containers/expander';
+import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
 
 import Heading from '../components/text/heading';
@@ -13,7 +14,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
       {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      <PaginatedProjects {...props } />
+      <PaginatedProjects {...props} />
     </article>
   );
 }
@@ -42,7 +43,6 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-/*
 function ExpandyProjects(props) {
   const [expanded, setExpanded] = useState(false);
   const [visibleProjects, setVisibleProjects] = useState(null);
@@ -51,7 +51,7 @@ function ExpandyProjects(props) {
   const maxProjects = props.maxCollapsedProjects;
   const totalProjects = props.projects.length;
   const hiddenProjects = totalProjects - maxProjects;
-  
+
   useEffect(() => {
     if (!visibleProjects) {
       if (!expanded) {
@@ -72,7 +72,7 @@ function ExpandyProjects(props) {
 
   return (
     <ExpanderContainer
-      expanded={!shouldShowButton}
+      expanded={expanded}
       controlArea={
         <div>
           <button>Paginate</button>
@@ -86,7 +86,6 @@ function ExpandyProjects(props) {
     </ExpanderContainer>
   );
 }
-*/
 
 /*
 class ExpandyProjects extends React.Component {
@@ -137,32 +136,30 @@ class ExpandyProjects extends React.Component {
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
 
-  function handleClickNext() {
-    setPage(page + 1);
-  }
-
-  function handleClickPrevious() {
-    setPage(page - 1);
-  }
-
   const projectsPerPage = 12; //props.projectsPerPage; // todo use maxCollapsedProjects
   const totalProjectsCount = props.projects.length;
-  const shouldPaginate = totalProjectsCount <= projectsPerPage ? false : true;
-  const totalPages = Math.ceil(props.projects.length / projectsPerPage);
+  const shouldPaginate = totalProjectsCount <= projectsPerPage; // todo confirm this
+  const numPages = Math.ceil(props.projects.length / projectsPerPage); // todo confirm this
+  
+  const paginationControls = (
+      <div>
+          <Button type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
+            &larr; Previous
+          </Button>
+          <span>
+            {page} / {numPages}
+          </span>
+          <Button type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
+            Next &rarr;
+          </Button>
+        </div>
+      ) : null}
+  );
 
   return (
     <>
-      <div>projectsPerPage: {projectsPerPage}</div>
-      <div>totalProjectsCount: {totalProjectsCount}</div>
-      {shouldPaginate ?
-        <div>
-          <Button
-            key="previous"
-            type="tertiary"
-            onClick={() => setPage(page - 1)}
-          >&larr; Previous
-          <button className="
-        </div>
+      {shouldPaginate ? (
+      
     </>
   );
 }
