@@ -127,22 +127,19 @@ const getSingleItem = (db, request) => {
 const getChildren = (db, request) => {
   // check if the childIDs are stored under this index
   let childIDs = db.index[getAPIPath(request)][request.value];
-  
+
   // check if the parent exists and other indices can be checked
   if (!childIDs) {
-    const parent = getSingleItem(db, { ...request, parent: null })
-    if (!parent) return null
-    const { secondaryKeys = [] } = db.schema[request.resource]
-    const keys = ['id', ...secondaryKeys]
+    const parent = getSingleItem(db, { ...request, parent: null });
+    if (!parent) return null;
+    const { secondaryKeys = [] } = db.schema[request.resource];
+    const keys = ['id', ...secondaryKeys];
     for (const key of keys) {
       childIDs = db.index[getAPIPath({ ...request, key })][parent[key]];
-      if (childIDs) break
+      if (childIDs) break;
     }
   }
-  if (!childIDs) return null
-  
-  const childTable = getTable(db, request.children);
-  return childIDs.map((id) => childTable.data[id]);
+  return childIDs;
 };
 
 function createDB(schema) {
@@ -155,6 +152,7 @@ function createDB(schema) {
   for (const [resource, params] of Object.entries(schema)) {
     const { secondaryKeys = [], references = [], referencedAs = [] } = params;
     db.tables[resource] = {};
+
     for (const children of references) {
       db.index[getAPIPath({ resource, key: 'id', children })] = {};
     }
@@ -164,11 +162,12 @@ function createDB(schema) {
         db.index[getAPIPath({ resource, key, children })] = {};
       }
     }
+
     for (const ref of referencedAs) {
-      db.referencedAs[ref] = resource
+      db.referencedAs[ref] = resource;
     }
   }
-  return db
+  return db;
 }
 
 const data = {
@@ -176,9 +175,23 @@ const data = {
   result: (result) => ({ type: 'result', result }),
 };
 
+const status = {
+  loading: { status: 'loading' },
+  ready: (value) => ({ status: 'ready', value }),
+};
+
 // db, request -> result | request
 function checkDBForFulfillableRequests(db, request) {
-  const result = request.children ? getChildren(db, request) : getSingleItem(db, request);
+  if (request.children) {
+    const childIDsResult = getChildren(db, request);
+    if (!childIDsResult) return request;
+    if (childIDsResult.status === 'loading') return childIDsResult;
+
+    const childTable = getTable(db, request.children);
+    return data.result(childIDsResult.value.map((id) => childTable.data[id]));
+  }
+
+  const result = getSingleItem(db, request);
   if (!result) return request;
   return data.result(result);
 }
@@ -206,31 +219,26 @@ function getAPICallsForRequests(api, urlBase, requests) {
   return [...childResponses, ...joinedResponses];
 }
 
-const loading = { status: 'loading' };
-const ready = (value) => ({ status: 'ready', value });
-
-function buildIndexes (db, resource, response) {
-  const { secondaryKeys, references } = (db.schema[resource] || db.schema[db.referencedAs[resource]])
-  const keys = ['id', ...secondaryKeys]
+function buildIndexes(db, resource, response) {
+  const { secondaryKeys, references } = db.schema[resource] || db.schema[db.referencedAs[resource]];
+  const keys = ['id', ...secondaryKeys];
   for (const ref of references) {
     for (const key of keys) {
       for (const item of response) {
-        
       }
     }
   }
-  
 }
 
 function insertResponseIntoDB(db, { resource, response, parent }) {
   // insert items into the tables
-  const table = getTable(db, resource)
+  const table = getTable(db, resource);
   for (const item of response) {
-    table[item.id] = ready(item)
+    table[item.id] = status.ready(item);
   }
   // - if items has a parent, insert the ids into the references
   if (parent) {
-    const index = getAPIPath
+    db.index[getAPIPath(parent)] = status.ready(response.map((item) => item.id));
   }
 }
 
