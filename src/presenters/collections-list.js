@@ -74,7 +74,6 @@ function CreateCollectionButton({ maybeTeam }) {
   const { currentUser } = useCurrentUser();
   const { createNotification } = useNotifications();
   const [state, setState] = useState(collectionStates.ready());
-  const onClick = useTrackedFunc(createCollectionOnClick, "Create Collection clicked");
 
   async function createCollectionOnClick() {
     setState(collectionStates.loading());
@@ -94,7 +93,7 @@ function CreateCollectionButton({ maybeTeam }) {
       setState(collectionStates.ready());
     }
   }
-  
+  const onClick = useTrackedFunc(createCollectionOnClick, 'Create Collection clicked');
 
   if (state.type === 'newCollection') {
     return <Redirect to={state.value} push />;

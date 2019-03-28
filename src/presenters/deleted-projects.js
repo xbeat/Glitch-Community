@@ -19,7 +19,7 @@ function clickUndelete(event, callback) {
 
 const DeletedProject = ({ id, domain, onClick }) => {
   const onClickUndelete = (evt) => clickUndelete(evt, onClick);
-  const onClickTracked = useTrackedFunc(onClickUndelete, "Undelete clicked");
+  const onClickTracked = useTrackedFunc(onClickUndelete, 'Undelete clicked');
   return (
     <button className="button-unstyled" onClick={onClickTracked}>
       <div className="deleted-project">

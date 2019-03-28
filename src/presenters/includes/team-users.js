@@ -174,7 +174,7 @@ export class AddTeamUser extends React.Component {
     return (
       <PopoverContainer>
         {({ visible, togglePopover }) => {
-          const onClickToggle = useTrackedFunc(togglePopover, "Add to Team clicked");
+          const onClickToggle = useTrackedFunc(togglePopover, 'Add to Team clicked');
           return (
             <span className="add-user-container">
               {alreadyInvitedAndNewInvited.length > 0 && <UsersList users={alreadyInvitedAndNewInvited} />}

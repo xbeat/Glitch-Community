@@ -9,5 +9,5 @@ export default {
   appDomain: 'orbit',
   blogUrl: '/art-meets-algorithm/',
   body,
-  color: '#f5f5f5'
+  color: '#f5f5f5',
 };

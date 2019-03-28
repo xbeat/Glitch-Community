@@ -29,6 +29,8 @@ AddProjectPopoverTitle.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
+
+
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
@@ -48,10 +50,10 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   // filter out collections that already contain the selected project
   renderCollectionsThatDontHaveProject(collection) {
-    const onClick = useTrackedFunc(this.props.addProjectToCollection, "Project Added to Collection", {}, {
+    const onClick = useTrackedFunc(this.props.addProjectToCollection, 'Project Added to Collection', {}, {
       groupId: collection.team ? collection.team.id : 0,
     });
-                                   
+
     if (!collection.projects) {
       return null;
     }

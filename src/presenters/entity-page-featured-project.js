@@ -6,16 +6,16 @@ import { EditButton, RemixButton } from './includes/project-actions';
 import Embed from './includes/embed';
 import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
-import { useAnalyticsTracker } from './analytics';
+import { useTracker } from './analytics';
 
 import Heading from '../components/text/heading';
 
 const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
-  const onClickRemix = useAnalyticsTracker("Click Remix", {
+  const onClickRemix = useTracker('Click Remix', {
     baseProjectId: featuredProject.id,
     baseDomain: featuredProject.domain,
   });
-  
+
   const reportBtn = (
     <div className="buttons buttons-left">
       <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />

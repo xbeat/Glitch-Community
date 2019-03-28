@@ -26,6 +26,6 @@ export default [
   {
     title: 'List Your Fave Pokémon',
     img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpoke.jpg?1553509760546',
-    link: 'https://favorite-pokemon.glitch.me/',  
-  }
+    link: 'https://favorite-pokemon.glitch.me/',
+  },
 ];

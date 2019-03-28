@@ -14,7 +14,7 @@ import { useNotifications, AddProjectToCollectionMsg } from '../notifications';
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => {
   const { createNotification } = useNotifications();
-  const onClickTracked = useTrackedFunc(onClick, "Project Added to Collection", { origin: 'Add Project collection' });
+  const onClickTracked = useTrackedFunc(onClick, 'Project Added to Collection', { origin: 'Add Project collection' });
   return (
     <ul className="results">
       {projects.map((project) => (

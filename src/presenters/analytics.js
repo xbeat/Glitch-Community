@@ -85,10 +85,15 @@ TrackClick.defaultProps = {
   context: {},
 };
 
-export const useTrackedFunc = (func, ...trackArgs) => {
+export const useTracker = (...trackArgs) => {
   const track = useAnalyticsTracker();
-  return function trackedFunc(...funcArgs) {
-    track(name, ...trackArgs);
+  return () => track(...trackArgs);
+};
+
+export const useTrackedFunc = (func, ...trackArgs) => {
+  const track = useTracker(...trackArgs);
+  return (...funcArgs) => {
+    track();
     return func(...funcArgs);
   };
 };
