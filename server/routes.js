@@ -101,7 +101,7 @@ module.exports = function(external) {
   );
   
   app.use(function(req, res, next) {
-    res.header('Cache-Control', 'public, maxAge=1');
+    res.header('Cache-Control', 'public, max-age=1');
     return next();
   });
 
