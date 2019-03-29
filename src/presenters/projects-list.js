@@ -1,34 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
+
 import ProjectItem from './project-item';
-import { Loader } from './includes/loader';
-import ExpanderContainer from '../components/containers/expander';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
 import TextInput from '../components/fields/text-input';
 import Heading from '../components/text/heading';
-import { debounce } from 'lodash';
 
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [debouncedFilter, setDebouncedFilter] = useState(null);
   const [isDoneFiltering, setIsDoneFiltering] = useState(false);
-  
+
   const validFilter = filter.length > 1;
 
   let { projects } = props;
 
   function filterProjects() {
     setIsDoneFiltering(false);
-    
+
     if (validFilter) {
-      setFilteredProjects(props.projects.filter((p) => {
-        return (
-          p.domain.includes(filter) ||
-          p.description.toLowerCase().includes(filter)
-        );
-      }));
+      setFilteredProjects(
+        props.projects.filter((p) => {
+          return (
+            p.domain.includes(filter) ||
+            p.description.toLowerCase().includes(filter)
+          );
+        }),
+      );
       setIsDoneFiltering(true);
     } else {
       setFilteredProjects([]);
@@ -37,29 +38,28 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      var debounced = debounce(filterProjects, 300);
-      setDebouncedFilter(debounced);
-      debounced();
+      setDebouncedFilter(debounce(filterProjects, 300));
+      debouncedFilter();
     },
     [filter],
   );
-  
+
   let projectsEl;
   if (isDoneFiltering && validFilter(filter)) {
     if (filteredProjects.length) {
-      projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
+      projectsEl = <ProjectsUL {...props} projects={filteredProjects} />;
     } else {
-      projectsEl = 'No results'
+      projectsEl = 'No results';
     }
   } else {
-    projectsEl = <PaginatedProjects {...props} projects={projects} />
+    projectsEl = <PaginatedProjects {...props} projects={projects} />;
   }
 
   return (
     <article className={`projects ${extraClasses}`}>
       <div className="header">
         <Heading tagName="h2">{title}</Heading>
-        {isDoneFiltering ? "Done!" : "not done"}
+        {isDoneFiltering ? 'Done!' : 'not done'}
         {props.enableFiltering ? (
           <TextInput
             className="header-search"
@@ -96,54 +96,6 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-class ExpandyProjects extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { expanded: false };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.setState({ expanded: true });
-  }
-
-  render() {
-    const maxProjects = this.props.maxCollapsedProjects;
-    const totalProjects = this.props.projects.length;
-    const hiddenProjects = totalProjects - maxProjects;
-
-    // props needs to exclude projects, so can't be declared on a separate line as const
-    let { projects, ...props } = this.props; // eslint-disable-line prefer-const
-
-    let shouldShowButton = false;
-    if (!this.state.expanded) {
-      shouldShowButton = hiddenProjects > 0;
-      projects = projects.slice(0, maxProjects);
-    }
-
-    return (
-      <ExpanderContainer
-        expanded={!shouldShowButton}
-        controlArea={
-          <div>
-            <button>Paginate</button>
-            <button
-              className="button-tertiary"
-              onClick={this.handleClick}
-              type="button"
-            >
-              Show all<Badge>{hiddenProjects}</Badge>
-            </button>
-          </div>
-        }
-      >
-        <ProjectsUL projects={projects} {...props} />
-      </ExpanderContainer>
-    );
-  }
-}
-
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
@@ -167,7 +119,11 @@ function PaginatedProjects(props) {
         disabled={page === 1}
         onClick={() => setPage(page - 1)}
       >
-        <img alt="" className="arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img
+          alt=""
+          className="arrow"
+          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
+        />
       </Button>
       <div className="pages">
         {page} / {numPages}
@@ -177,7 +133,11 @@ function PaginatedProjects(props) {
         disabled={page === numPages}
         onClick={() => setPage(page + 1)}
       >
-        <img alt="" className="arrow next-arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img
+          alt=""
+          className="arrow next-arrow"
+          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
+        />
       </Button>
     </div>
   );
@@ -206,15 +166,6 @@ PaginatedProjects.propTypes = {
 PaginatedProjects.defaultProps = {
   projectsPerPage: 6,
 };
-
-// ExpandyProjects.propTypes = {
-//   projects: PropTypes.array.isRequired,
-//   maxCollapsedProjects: PropTypes.number,
-// };
-
-// ExpandyProjects.defaultProps = {
-//   maxCollapsedProjects: 12,
-// };
 
 export const ProjectsUL = ({ ...props }) => {
   return (
