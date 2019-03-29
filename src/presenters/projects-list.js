@@ -14,19 +14,23 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [debouncedFilter, setDebouncedFilter] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
+  
+  const isValidFilter = filter.length > 2;
 
   let { projects } = props;
 
   function filterProjects() {
-    setIsFiltering(true);
-
-    if (filter.length) {
+    if (isValidFilter) {
+      setIsFiltering(true);
+      
       setFilteredProjects(props.projects.filter((p) => {
         return (
           p.domain.includes(filter) ||
           p.description.toLowerCase().includes(filter)
         );
       }));
+      
+      setIsFiltering(false);
     } else {
       setFilteredProjects([]);
     }
@@ -42,9 +46,13 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  if (filter.length && filteredProjects.length) {
+  const noResults = isValidFilter && !(filteredProjects.length || isFiltering);
+  
+  if (noResults) {
+    projectsEl = 'placeholder';
+  } else if (isValidFilter && filteredProjects.length) {
     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
-  } else if (filter.length) {
+  } else if (isFiltering) {
     projectsEl = <Loader />
   } else {
     projectsEl = <PaginatedProjects {...props} projects={projects} />
