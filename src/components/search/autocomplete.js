@@ -63,9 +63,9 @@ const SeeAllResults = ({ query }) => (
 );
 
 const resultGroups = [
-  { id: 'team', label: 'Team Results', Component: TeamResult },
-  { id: 'user', label: 'User Results', Component: UserResult },
-  { id: 'project', label: 'Project Results', Component: ProjectResult },
+  { id: 'team', label: 'Teams', Component: TeamResult },
+  { id: 'user', label: 'Users', Component: UserResult },
+  { id: 'project', label: 'Projects', Component: ProjectResult },
   // TODO: enable after merging collections PR
   // { id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
