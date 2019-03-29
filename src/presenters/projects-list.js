@@ -10,24 +10,24 @@ import { debounce } from 'lodash';
 
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
-  const [filterTimeout, setFilterTimeout] = useState(null);
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
-  // let { projects } = props;
-  let projects = props.projects;
+  let { projects } = props;
 
   function filterProjects() {
     if (filter.length) {
-      projects = props.projects.filter((p) => {
+      setFilteredProjects(props.projects.filter((p) => {
         return (
           p.domain.includes(filter) ||
           p.description.toLowerCase().includes(filter)
         );
-      });
+      }));
     } else {
-      projects = props.projects;
+      setFilteredProjects([]);
     }
     console.log('filtering', projects.length);
   }
+  console.log('filtered', projects.length);
 
   useEffect(
     () => {
@@ -61,7 +61,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       {!filter && props.enablePagination ? (
         <PaginatedProjects {...props} projects={projects} />
       ) : (
-        <ProjectsUL {...props} projects={projects} />
+        <ProjectsUL {...props} projects={filter ? filteredProjects : projects} />
       )}
     </article>
   );
@@ -132,16 +132,16 @@ class ExpandyProjects extends React.Component {
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
-  
+
   let { projects, projectsPerPage } = props; // TODO update where this is passed in
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
   const hiddenProjects = numProjects - projectsPerPage;
   const canPaginate = !expanded && projectsPerPage < numProjects;
-  
+
   if (!expanded && canPaginate) {
-    const startIdx = (page - 1) * projectsPerPage
+    const startIdx = (page - 1) * projectsPerPage;
     projects = projects.slice(startIdx, startIdx + projectsPerPage);
   }
 
@@ -204,11 +204,12 @@ PaginatedProjects.defaultProps = {
 export const ProjectsUL = ({ ...props }) => {
   console.log(props.projects.length);
   return (
-  <ul className="projects-container">
-    {props.projects.map((project) => (
-      <ProjectItem key={project.id} {...{ project }} {...props} />
-    ))}
-  </ul>);
+    <ul className="projects-container">
+      {props.projects.map((project) => (
+        <ProjectItem key={project.id} {...{ project }} {...props} />
+      ))}
+    </ul>
+  );
 };
 
 ProjectsUL.propTypes = {
