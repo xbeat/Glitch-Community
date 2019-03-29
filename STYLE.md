@@ -31,7 +31,7 @@ We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react
 
 ### Make use of the absolute path aliases
 
-We have aliases available on the server and client side, defined in the [shared aliases file](https://glitch.com/edit/#!/wax-snowstorm?path=shared/aliases.js:8:28). You can make use of those to remove the need for relative path imports. 
+We have aliases available on the server and client side, defined in the [shared aliases file](https://glitch.com/edit/#!/community?path=shared/aliases.js:8:28). You can make use of those to remove the need for relative path imports. 
 
 ### Prefer Dependency Injection
 
