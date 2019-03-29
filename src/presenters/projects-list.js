@@ -12,15 +12,15 @@ import { debounce } from 'lodash';
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [isFiltering, setIsFiltering] = useState(false);
   const [debouncedFilter, setDebouncedFilter] = useState([]);
+  const [isDoneFiltering, setIsDoneFiltering] = useState(false);
   
   const isValidFilter = filter.length > 1;
 
   let { projects } = props;
 
-  function filterProjects() {    
-    setIsFiltering(true);
+  function filterProjects() {
+    setIsDoneFiltering(false);
     
     if (isValidFilter) {
       setFilteredProjects(props.projects.filter((p) => {
@@ -29,6 +29,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
           p.description.toLowerCase().includes(filter)
         );
       }));
+      setIsDoneFiltering(true);
     } else {
       setFilteredProjects([]);
     }
@@ -54,6 +55,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     <article className={`projects ${extraClasses}`}>
       <div className="header">
         <Heading tagName="h2">{title}</Heading>
+        {isDoneFiltering ? "Done!" : "not done"}
         {props.enableFiltering ? (
           <TextInput
             className="header-search"
