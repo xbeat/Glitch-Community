@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import sampleAnalytics, { sampleAnalyticsTime } from '../../curated/sample-analytics';
+import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
+import Text from 'Components/text/text';
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
@@ -14,7 +15,6 @@ import TeamAnalyticsReferrers from './team-analytics-referrers';
 import TeamAnalyticsProjectDetails from './team-analytics-project-details';
 
 import { useAPI } from '../../state/api';
-import Text from '../../components/text/text';
 
 const dateFromTime = (newTime) => {
   const timeMap = {

@@ -18,6 +18,7 @@
     "@sentry/node": "^4.4.1",
     "@storybook/addon-info": "^5.0.0",
     "@storybook/react": "^5.0.0",
+    "algoliasearch": "^3.32.1",
     "autoprefixer-stylus": "^0.14.0",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
@@ -38,6 +39,7 @@
     "email-addresses": "^3.0.3",
     "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -46,8 +48,10 @@
     "eslint-scope": "^4.0.1",
     "express": "^4.16.4",
     "express-http-proxy": "^1.5.1",
+    "express-sslify": "^1.2.0",
     "express-winston": "^3.1.0",
     "group-by-time": "^1.0.0",
+    "helmet": "^3.16.0",
     "html-truncate": "^1.2.2",
     "lodash": "^4.17.11",
     "lodash-webpack-plugin": "^0.11.5",
@@ -56,6 +60,7 @@
     "markdown-it-sanitizer": "^0.4.3",
     "memory-cache": "^0.2.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "module-alias": "^2.2.0",
     "nodemon": "^1.18.10",
     "prop-types": "^15.6.2",
     "quantize": "^1.0.2",
@@ -78,12 +83,9 @@
     "url-join": "^4.0.0",
     "url-search-params-polyfill": "^5.1.0",
     "webpack": "^4.29.3",
-    "helmet": "^3.16.0",
-    "express-sslify": "^1.2.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-middleware": "^3.6.1",
-    "winston": "^3.2.1",
-    "algoliasearch": "^3.32.1"
+    "winston": "^3.2.1"
   },
   "engines": {
     "node": "10.x"

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
+import Text from 'Components/text/text';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
@@ -27,7 +28,6 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import MoreCollectionsContainer from '../more-collections';
-import Text from '../../components/text/text';
 
 import { getSingleItem, getAllPages } from '../../../shared/api';
 

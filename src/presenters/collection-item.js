@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
-import Markdown from '../components/text/markdown';
-import Text from '../components/text/text';
+import Markdown from 'Components/text/markdown';
+import Text from 'Components/text/text';
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
 import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
 import { Loader } from './includes/loader';

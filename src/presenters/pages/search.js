@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { capitalize } from 'lodash';
 
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import Badge from 'Components/badges/badge';
+import Heading from 'Components/text/heading';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -16,9 +19,6 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-import SegmentedButtons from '../../components/buttons/segmented-buttons';
-import Badge from '../../components/badges/badge';
-import Heading from '../../components/text/heading';
 
 const generateFilterButtons = (filters) =>
   filters
