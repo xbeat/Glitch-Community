@@ -61,7 +61,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       {!filter && props.enablePagination ? (
         <PaginatedProjects {...props} projects={projects} />
       ) : (
-        <ProjectsUL {...props} projects={filter ? filteredProjects : projects} />
+        <ProjectsUL {...props} projects={filter.length ? filteredProjects : projects} />
       )}
     </article>
   );
