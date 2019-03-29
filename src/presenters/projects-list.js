@@ -45,8 +45,12 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  if (isValidFilter && filteredProjects.length) {
-    projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
+  if (isDoneFiltering && isValidFilter) {
+    if (filteredProjects.length) {
+      projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
+    } else {
+      projectsEl = 'No results'
+    }
   } else {
     projectsEl = <PaginatedProjects {...props} projects={projects} />
   }
