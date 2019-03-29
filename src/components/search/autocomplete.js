@@ -7,7 +7,6 @@ import Markdown from '../text/markdown';
 import { useAlgoliaSearch } from '../../state/search';
 import styles from './autocomplete.styl';
 
-
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
@@ -60,10 +59,11 @@ const CollectionResult = ({ value: collection }) => (
   </CollectionLink>
 );
 
-const SeeAllResults = ({ query }) => 
+const SeeAllResults = ({ query }) => (
   <Link to={`/search?q=${query}`} className={styles.seeAllResults}>
     See all results →
   </Link>
+);
 
 const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
@@ -96,7 +96,7 @@ export const AutocompleteResults = ({ query, results }) => {
 const AutocompleteSearch = ({ query }) => {
   const results = useAlgoliaSearch(query);
   if (results.totalResults > 0 && results.status === 'ready') {
-    return <AutocompleteResults query={query} results={results} />
+    return <AutocompleteResults query={query} results={results} />;
   }
   return null;
 };

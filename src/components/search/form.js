@@ -20,7 +20,7 @@ function SearchForm({ defaultValue }) {
     <form action="/search" method="get" role="search" onSubmit={onSubmit}>
       <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
       {submitted && <Redirect to={`/search?q=${value}`} push />}
-      {algoliaFlag && <AutocompleteSearch query={value}/>} 
+      {algoliaFlag && <AutocompleteSearch query={value} />}
     </form>
   );
 }
@@ -32,4 +32,4 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-export default SearchForm
+export default SearchForm;
