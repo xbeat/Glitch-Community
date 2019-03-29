@@ -164,17 +164,17 @@ function PaginatedProjects(props) {
         disabled={page === 1}
         onClick={() => setPage(page - 1)}
       >
-        &larr; Previous
+        <img alt="" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
-      <span>
+      <div className="pages">
         {page} / {numPages}
-      </span>
+      </div>
       <Button
         type="tertiary"
         disabled={page === numPages}
         onClick={() => setPage(page + 1)}
       >
-        Next &rarr;
+        <img alt="" className="next-arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
@@ -184,7 +184,7 @@ function PaginatedProjects(props) {
       <ProjectsUL {...props} projects={projects} />
 
       {canPaginate ? (
-        <div>
+        <div className="view-controls">
           <PaginationControls />
           <Button type="tertiary" onClick={() => setExpanded(true)}>
             Show all<Badge>{hiddenProjects}</Badge>

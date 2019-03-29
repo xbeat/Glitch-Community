@@ -59,9 +59,15 @@
     .slide-down
       animation: slideDown 0.1s ease-out
       animation-fill-mode: forwards
-  .pagination-controls
+  .view-controls
     display: flex
     justify-content: space-between
+    .next-arrow
+      transform: rotate(180deg)
+    .pages
+      // needs to be static width so 
+      width: 100px
+      
   
 .user-page
   .profile-info
