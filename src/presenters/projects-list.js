@@ -10,27 +10,28 @@ import { debounce } from 'lodash';
 
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
+  const [filterTimeout, setFilterTimeout] = useState(null);
 
-  let { projects } = props;
-  
-  const debouncedFilter = useRef(debounce((filter) => console.log('filter'), 1000))
-
+  // let { projects } = props;
+  let projects = props.projects;
   useEffect(() => {
-    console.log('useEffect');
+    filterProjects();
+
     const filterProjects = () => {
       console.log('filtering');
+      
       if (filter.length) {
-        projects = projects.filter((p) => {
+        projects = props.projects.filter((p) => {
           return (
             p.domain.includes(filter) ||
             p.description.toLowerCase().includes(filter)
           );
         });
+      } else {
+        projects = props.projects;
       }
     };
-
-    debounce(filterProjects, 200);
-  });
+  }, [filter]);
 
   return (
     <article className={`projects ${extraClasses}`}>
