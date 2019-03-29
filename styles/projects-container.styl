@@ -1,0 +1,25 @@
+.user-page,
+.team-page,
+  .projects-container,
+  .collections-container
+    display: grid
+    grid-template-columns: 1fr
+    list-style-type: none
+
+    @media (min-width: mediumViewport)
+      grid-template-columns: 1fr 1fr 1fr
+
+    li
+      margin-top: 2px
+
+// permit a 2-column layout on user and team pages
+// in-between mediumViewport and largeViewport
+.user-page,
+.team-page
+  .projects-container,
+  .collections-container
+    @media (min-width: mediumViewport)
+      grid-template-columns: 1fr 1fr
+
+    @media (max-width: largeViewport)
+      grid-template-columns: 1fr 1fr 1fr
