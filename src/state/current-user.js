@@ -201,6 +201,10 @@ const { slice, reducer, actions } = createSlice({
         ...payload,
       },
     }),
+    storageChanged: (state, { payload }) => ({
+      ...state,
+      ...payload,
+    }), 
     loggedOut: (state) => ({
       ...state,
       sharedUser: null,
@@ -238,8 +242,8 @@ const persistToStorage = afterReducer(matchAlways, (store, action, prevState) =>
 });
 
 const updateUserOnStorageChange = (store) => {
-  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.updated({ sharedUser })));
-  subscribeToStorageChanges('community-cachedUser', (cachedUser) => store.dispatch(actions.updated({ cachedUser })));
+  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.storageChanged({ sharedUser })));
+  subscribeToStorageChanges('community-cachedUser', (cachedUser) => store.dispatch(actions.storageChanged({ cachedUser })));
   return (next) => (action) => next(action);
 };
 
