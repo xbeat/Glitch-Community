@@ -1,16 +1,16 @@
-.user-page,
-.team-page,
-  .projects-container,
-  .collections-container
-    display: grid
-    grid-template-columns: 1fr
-    list-style-type: none
+.projects-container,
+.collections-container
+  display: grid
+  grid-template-columns: 1fr
+  grid-gap: 10px
+  list-style-type: none
+  // todo bottom margin?
 
-    @media (min-width: mediumViewport)
-      grid-template-columns: 1fr 1fr 1fr
+  @media (min-width: mediumViewport)
+    grid-template-columns: 1fr 1fr 1fr
 
-    li
-      margin-top: 2px
+  li
+    margin-top: 2px
 
 // permit a 2-column layout on user and team pages
 // in-between mediumViewport and largeViewport
@@ -23,3 +23,12 @@
 
     @media (max-width: largeViewport)
       grid-template-columns: 1fr 1fr 1fr
+
+// use a bigger grid gap on collection pages
+.collection-full, .collection-wide
+  .projects-container
+    margin: 10px
+    grid-gap: 15px
+    > li
+      align-self: end
+      margin-bottom: 20px
