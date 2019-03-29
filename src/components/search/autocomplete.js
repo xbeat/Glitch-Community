@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
+import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
@@ -59,7 +58,10 @@ const CollectionResult = ({ value: collection }) => (
   </CollectionLink>
 );
 
-const SeeAllResults = ()
+const SeeAllResults = ({ query }) => 
+  <Link to={`/search?q=${query}`} className={styles.seeAllResults}>
+    See all results →
+  </Link>
 
 const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
@@ -68,10 +70,10 @@ const resultGroups = [
   { id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
-const AutocompleteResults = ({ query, results }) => {
+export const AutocompleteResults = ({ query, results }) => {
   const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id] })).filter((group) => group.items.length > 0);
   return (
-    <ul>
+    <ul className={styles.container}>
       {resultGroupsWithItems.map(({ id, label, Component, items }) => (
         <li key={id}>
           <header className={styles.resultGroupHeader}>{label}</header>
@@ -84,9 +86,11 @@ const AutocompleteResults = ({ query, results }) => {
           </ul>
         </li>
       ))}
-      {<SeeAllResults query={query} />
+      <SeeAllResults query={query} />
     </ul>
   );
 };
 
-export const AutocompleteResults;
+export default ({ query }) => {
+  const results 
+};
