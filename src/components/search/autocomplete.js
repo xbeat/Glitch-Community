@@ -38,7 +38,7 @@ const ProjectResult = ({ value: project }) => (
       <ProjectAvatar {...project} />
     </div>
     <div className={styles.infoContainer}>
-      <div className={styles.infoPrimary}>{project.name}</div>
+      <div className={styles.infoPrimary}>{project.domain}</div>
       <div className={styles.infoSecondary}>
         <Markdown truncate={20}>{project.description}</Markdown>
       </div>
@@ -75,7 +75,8 @@ const resultGroups = [
 export const AutocompleteResults = ({ query, results }) => {
   const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id].slice(0, 5) })).filter((group) => group.items.length > 0);
   return (
-    <ul className={styles.container}>
+    <div className={styles.container}>
+    <ul>
       {resultGroupsWithItems.map(({ id, label, Component, items }) => (
         <li key={id}>
           <header className={styles.resultGroupHeader}>{label}</header>
@@ -90,6 +91,7 @@ export const AutocompleteResults = ({ query, results }) => {
       ))}
       <SeeAllResults query={query} />
     </ul>
+    </div>
   );
 };
 

@@ -1,14 +1,27 @@
 .container
   font-size: 14px
+  border: 1px solid #ccc
+  background-color: white
+  text-align: left
+  ul
+    margin: 0
+    padding: 0
+    list-style-type: none
+  a
+    color: inherit;
 
 .popOver
   position: absolute
+  overflow: hidden
+  width: 100%
+  z-index: 2
   
 .resultGroupHeader
   background-color: #eee
   font-weight: bold
   border-bottom: 1px solid #ccc
   padding: 4px 10px
+  margin: 0 auto
   
 .resultItem
   border-bottom: 1px solid #ccc
@@ -20,7 +33,7 @@
   align-items: center
 
 .avatarContainer
-  flex: 0 0 100px
+  flex: 0 0 40px
   padding-right: 4px
 
 .infoContainer
@@ -30,7 +43,7 @@
   font-weight: bold
 
 .memberContainer
-  flex: 0 0 200px
+  flex: 0 0 100px
   padding-left: 4px
 
 .seeAllResults
