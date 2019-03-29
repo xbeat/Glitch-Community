@@ -62,12 +62,16 @@
   .view-controls
     display: flex
     justify-content: space-between
+    .arrow
+      margin-bottom: 2px
     .next-arrow
       transform: rotate(180deg)
     .pages
-      // needs to be static width to so buttons
-      width: 100px
-      
+      // needs to be static width to so next button doesn't jump around when page changes
+      width: 70px
+      display: inline-block
+      text-align: center
+      color: tertiary
   
 .user-page
   .profile-info
