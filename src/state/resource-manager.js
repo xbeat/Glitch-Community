@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { groupBy, partition } from 'lodash';
-import produce from 'immer';
+import immer from 'immer';
 import { getAllPages } from '../../shared/api';
 import { useAPI } from './api';
 
@@ -20,7 +20,7 @@ const getSingleItem = (db, request) => {
 };
 
 const getIndices = (db, request) => {
-  // check if the parent exists and all indices can be used
+  // check if the parent exists and all indices can be use
   const parent = getSingleItem(db, { ...request, parent: null });
   // if not, just use index derivable from request
   if (!parent) return [{ value: request.value, index: getAPIPath(request) }];
@@ -70,9 +70,9 @@ function getAPICallsForRequests(api, urlBase, requests) {
 
   // join mergable requests
   // comes in a { key: value } format, but only the values are needed
-  const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath)).map(async ([apiPath, requests]) => {
-    const { resource, key } = requests[0];
-    const query = requests.map((req) => `${req.key}=${req.value}`).join(',');
+  const joinedResponses = Object.entries(groupBy(withoutChildren, getAPIPath)).map(async ([apiPath, requestGroup]) => {
+    const { resource } = requestGroup[0];
+    const query = requestGroup.map((req) => `${req.key}=${req.value}`).join(',');
     const response = await api.get(`${urlBase}/${apiPath}?${query}`);
 
     return { type: 'response', resource, response: Object.values(response) };
@@ -155,19 +155,19 @@ const reducer = (state, action) => {
     // if a request cannot be fulfilled immediately, it is added to the requests batch.
     // requests are deduped.
     case 'requestQueued':
-      return produce(state, (draft) => {
+      return immer(state, (draft) => {
         const request = action.payload;
         draft.requests[getRequestHashcode(request)] = request;
       });
     // responses are also batched, and do not need to be deduped.
     case 'responseQueued':
-      return produce(state, (draft) => {
+      return immer(state, (draft) => {
         draft.responses.push(action.payload);
       });
     // periodically the batches are flushed:
     // requests are fetched from the API, and responses are written to the DB.
     case 'batchesFlushed':
-      return produce(state, (draft) => {
+      return immer(state, (draft) => {
         draft.requests = {};
         draft.responses = [];
         Object.values(state.requests).forEach((request) => insertLoadingStatusIntoDB(draft.db, request));
@@ -213,10 +213,10 @@ export function createStore(schema) {
 }
 
 const Context = createContext();
-export function ResourceProvider({ urlBase, store, interval, children }) {
+export function ResourceProvider({ urlBase, store, flushInterval, children }) {
   const api = useAPI();
 
-  useEffect(() => flushBatchesAtInterval(api, urlBase, store, interval), [api, urlBase, store, interval]);
+  useEffect(() => flushBatchesAtInterval(api, urlBase, store, flushInterval), [api, urlBase, store, flushInterval]);
   return <Context.Provider value={store}>{children}</Context.Provider>;
 }
 
@@ -225,11 +225,11 @@ export function useResource(resource, key, value, childResource) {
   const request = { resource, key, value, childResource };
   const [state, setState] = useState(() => checkDBForFulfillableRequests(store.getState().db, request));
   useEffect(() => {
-    // dispatch a request if there's no result initially    
+    // dispatch a request if there's no result initially
     if (!state) {
       store.dispatch(actions.requestQueued(request));
     }
-    // when store updates, update the state    
+    // when store updates, update the state
     return store.subscribe(() => {
       const nextResult = checkDBForFulfillableRequests(store.getState().db, request);
       if (nextResult) setState(nextResult);

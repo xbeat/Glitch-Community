@@ -1,8 +1,9 @@
 /* globals API_URL */
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { memoize, groupBy, partition } from 'lodash';
+import { memoize } from 'lodash';
 import { useCurrentUser } from './current-user';
+import { createStore, ResourceProvider } from './resource-manager';
 
 export const getAPIForToken = memoize((persistentToken) => {
   if (persistentToken) {
@@ -85,11 +86,11 @@ export const createAPIHook = (asyncFunction) => (...args) => {
   return result;
 };
 
-const schema = {
+const apiStore = createStore({
   collections: {
     secondaryKeys: ['fullUrl'],
     references: ['projects'],
-    // belongsTo: ['team', 'user'], // TODO
+    // TODO: is there anything useful to do with collection.team / collection.user?
   },
   projects: {
     secondaryKeys: ['domain'],
@@ -104,13 +105,13 @@ const schema = {
   users: {
     secondaryKeys: ['login'],
     references: ['collections', 'projects', 'teams', 'deletedProjects', 'pinnedProjects'],
-    // TODO: handle user.emails?
-    // subresources: ['emails'],
     referencedAs: ['user'],
+    // TODO: do something with user/emails?
   },
-};
+});
 
-
-// request -> check db - request -> set 'loading' in db -> call api - response -> set 'ready' in db .
-//                     - result  -> .
-function createResourceManager({ version, schema, urlBase }) {}
+export const APIResourceProvider = ({ children }) => (
+  <ResourceProvider store={apiStore} urlBase="v1/" flushInterval={1000}>
+    {children}
+  </ResourceProvider>
+);
