@@ -11,7 +11,7 @@ import { debounce } from 'lodash';
 
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
-  const [filteredProjects, setFilteredProjects] = useState(null);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [debouncedFilter, setDebouncedFilter] = useState([]);
   
@@ -36,7 +36,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      var debounced = debounce(filterProjects, 250);
+      var debounced = debounce(filterProjects, 300);
       setDebouncedFilter(debounced);
       debounced();
     },
@@ -44,10 +44,8 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  if (isValidFilter && filteredProjects && filteredProjects.length) {
+  if (isValidFilter && filteredProjects.length) {
     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
-  } else if (isValidFilter && filteredProjects) {
-    projectsEl = <p>No results</p>
   } else {
     projectsEl = <PaginatedProjects {...props} projects={projects} />
   }
