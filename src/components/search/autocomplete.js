@@ -5,8 +5,7 @@ import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import Markdown from '../text/markdown';
-
-const styles = {};
+import styles from './autocomplete.styl';
 
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
@@ -60,6 +59,8 @@ const CollectionResult = ({ value: collection }) => (
   </CollectionLink>
 );
 
+const SeeAllResults = ()
+
 const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
   { id: 'user', label: 'User Results', Component: UserResult },
@@ -68,16 +69,24 @@ const resultGroups = [
 ];
 
 const AutocompleteResults = ({ query, results }) => {
-  const resultsWithItems = resultGroups.map(group => ({ ...group, items: results[group.id] }))
-    .filter(group => group.items.length > 0)
-  return <ul>
-    {resultsWithItems.map(({ id, label, Component, items }) => (
-      <li st key={id}>
-        <header style={styles.resultGroup}></header>
-      </li>
-    ))}
-  </ul>
-  
-  
-  
+  const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id] })).filter((group) => group.items.length > 0);
+  return (
+    <ul>
+      {resultGroupsWithItems.map(({ id, label, Component, items }) => (
+        <li key={id}>
+          <header className={styles.resultGroupHeader}>{label}</header>
+          <ul>
+            {items.map((item) => (
+              <li key={item.id} className={styles.resultItem}>
+                <Component value={item} />
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+      {<SeeAllResults query={query} />
+    </ul>
+  );
 };
+
+export const AutocompleteResults;
