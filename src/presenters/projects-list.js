@@ -20,9 +20,9 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   let { projects } = props;
 
   function filterProjects() {
-    if (isValidFilter) {
-      setIsFiltering(true);
-      
+    setIsFiltering(true);
+
+    if (isValidFilter) {      
       setFilteredProjects(props.projects.filter((p) => {
         return (
           p.domain.includes(filter) ||
@@ -32,6 +32,8 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     } else {
       setFilteredProjects([]);
     }
+    
+    setIsFiltering(false);
   }
 
   useEffect(
@@ -44,14 +46,14 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  const noResults = isValidFilter && isFiltering
+  const noResults = isValidFilter && !filteredProjects.length && !isFiltering 
   
-  if (noResults) {
-    projectsEl = 'placeholder';
-  } else if (isValidFilter && filteredProjects.length) {
+  if (isValidFilter && filteredProjects.length) {
     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
   } else if (isFiltering) {
     projectsEl = <Loader />
+  } else if (noResults) {
+    projectsEl = 'No results';
   } else {
     projectsEl = <PaginatedProjects {...props} projects={projects} />
   }
