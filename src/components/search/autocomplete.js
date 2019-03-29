@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TeamLink, UserLink } from '../../presenters/includes/link';
+import { TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
+import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import Markdown from '../text/markdown';
 
 const styles = {};
@@ -46,16 +47,37 @@ const ProjectResult = ({ value: project }) => (
   </ProjectLink>
 );
 
+const CollectionResult = ({ value: collection }) => (
+  <CollectionLink collection={collection} className={styles.resultContainer}>
+    <div className={styles.avatarContainer}>
+      <CollectionAvatar {...collection} />
+    </div>
+    <div className={styles.infoContainer}>
+      <div className={styles.infoPrimary}>{collection.name}</div>
+      <div className={styles.infoSecondary}>@{collection.fullUrl}</div>
+    </div>
+    <div className={styles.memberContainer}>TODO: project avatars</div>
+  </CollectionLink>
+);
+
 const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
   { id: 'user', label: 'User Results', Component: UserResult },
   { id: 'project', label: 'Project Results', Component: ProjectResult },
-  { id: 'collection', label: 'Collection Results' },
+  { id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
 const AutocompleteResults = ({ query, results }) => {
-  const { status, totalHits } = results;
-  if (status === 'loading') {
-    return <Loading />;
-  }
+  const resultsWithItems = resultGroups.map(group => ({ ...group, items: results[group.id] }))
+    .filter(group => group.items.length > 0)
+  return <ul>
+    {resultsWithItems.map(({ id, label, Component, items }) => (
+      <li st key={id}>
+        <header style={styles.resultGroup}></header>
+      </li>
+    ))}
+  </ul>
+  
+  
+  
 };
