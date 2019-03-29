@@ -1,13 +1,13 @@
 .user-page, .team-page
-  // tbv
-//   .projects-container > li, .collections-container > li
-//     // Permit a 2-column layout on the user-page
-//     // in between mediumViewport and largeViewport
-//     @media (max-width: largeViewport)
-//       width: 48%
+  // permit a 2-column layout on user and team pages
+  // in-between mediumViewport and largeViewport
+  .projects-container,
+  .collections-container
+    @media (min-width: mediumViewport)
+      grid-template-columns: 1fr 1fr
 
-//     @media (max-width: mediumViewport)
-//       width: 100%
+    @media (max-width: largeViewport)
+      grid-template-columns: 1fr 1fr 1fr
   
   #featured-project-embed
     position: relative
