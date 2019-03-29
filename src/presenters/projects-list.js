@@ -11,10 +11,12 @@ import { debounce } from 'lodash';
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [debouncedFilter, setDebouncedFilter] = useState([]);
 
   let { projects } = props;
 
   function filterProjects() {
+    console.log('hit')
     if (filter.length) {
       setFilteredProjects(props.projects.filter((p) => {
         return (
@@ -31,8 +33,9 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      // debounce(filterProjects, 300);
-      filterProjects();
+      var debounced = debounce(filterProjects, 600);
+      setDebouncedFilter(debounced);
+      debounced();
     },
     [filter],
   );
@@ -61,7 +64,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       {!filter && props.enablePagination ? (
         <PaginatedProjects {...props} projects={projects} />
       ) : (
-        <ProjectsUL {...props} projects={filter.length ? filteredProjects : projects} />
+        <ProjectsUL {...props} projects={filter.length && filteredProjects.length ? filteredProjects : projects} />
       )}
     </article>
   );
