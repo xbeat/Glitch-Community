@@ -76,7 +76,7 @@
     "stylus-loader": "^3.0.2",
     "terser-webpack-plugin": "^1.2.3",
     "url-join": "^4.0.0",
-    "url-search-params-polyfill": "^5.0.0",
+    "url-search-params-polyfill": "^5.1.0",
     "webpack": "^4.29.3",
     "helmet": "^3.16.0",
     "express-sslify": "^1.2.0",
