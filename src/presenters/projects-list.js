@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 import ExpanderContainer from '../components/containers/expander';
@@ -12,13 +12,24 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
 
   let { projects } = props;
+  
+  const debouncedFilter = useRef(debounce((filter) => console.log('filter'), 1000))
+
   useEffect(() => {
     console.log('useEffect');
-    if (filter.length) {
-      projects = projects.filter((p) => {
-        return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
-      });
-    }
+    const filterProjects = () => {
+      console.log('filtering');
+      if (filter.length) {
+        projects = projects.filter((p) => {
+          return (
+            p.domain.includes(filter) ||
+            p.description.toLowerCase().includes(filter)
+          );
+        });
+      }
+    };
+
+    debounce(filterProjects, 200);
   });
 
   return (
@@ -26,16 +37,27 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       <div>
         <Heading tagName="h2">{title}</Heading>
         {props.enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={debounce(setFilter, 500)} opaque placeholder="find a project" type="search" value={filter} />
+          <TextInput
+            className="header-search"
+            name="q"
+            onChange={setFilter}
+            opaque
+            placeholder="find a project"
+            type="search"
+            value={filter}
+          />
         ) : null}
       </div>
 
-      {!!(placeholder && !projects.length) && <div className="placeholder">{placeholder}</div>}
+      {!!(placeholder && !projects.length) && (
+        <div className="placeholder">{placeholder}</div>
+      )}
 
-      {props.enablePagination
-        ? <PaginatedProjects {...props} projects={projects} />
-        : <ProjectsUL {...props} projects={projects} />
-      }
+      {props.enablePagination ? (
+        <PaginatedProjects {...props} projects={projects} />
+      ) : (
+        <ProjectsUL {...props} projects={projects} />
+      )}
     </article>
   );
 }
@@ -86,7 +108,11 @@ class ExpandyProjects extends React.Component {
         controlArea={
           <div>
             <button>Paginate</button>
-            <button className="button-tertiary" onClick={this.handleClick} type="button">
+            <button
+              className="button-tertiary"
+              onClick={this.handleClick}
+              type="button"
+            >
               Show all<Badge>{hiddenProjects}</Badge>
             </button>
           </div>
@@ -111,13 +137,21 @@ function PaginatedProjects(props) {
 
   const PaginationControls = () => (
     <div>
-      <Button type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
+      <Button
+        type="tertiary"
+        disabled={page === 1}
+        onClick={() => setPage(page - 1)}
+      >
         &larr; Previous
       </Button>
       <span>
         {page} / {numPages}
       </span>
-      <Button type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
+      <Button
+        type="tertiary"
+        disabled={page === numPages}
+        onClick={() => setPage(page + 1)}
+      >
         Next &rarr;
       </Button>
     </div>
