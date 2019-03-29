@@ -16,8 +16,6 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   let projects = props.projects;
 
   function filterProjects() {
-    console.log('filtering');
-
     if (filter.length) {
       projects = props.projects.filter((p) => {
         return (
@@ -28,7 +26,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     } else {
       projects = props.projects;
     }
-    console.log(projects.length);
+    console.log('filtering', projects.length);
   }
 
   useEffect(
@@ -203,13 +201,15 @@ PaginatedProjects.defaultProps = {
 //   maxCollapsedProjects: 12,
 // };
 
-export const ProjectsUL = ({ ...props }) => (
+export const ProjectsUL = ({ ...props }) => {
+  console.log(props.projects.length);
+  return (
   <ul className="projects-container">
     {props.projects.map((project) => (
       <ProjectItem key={project.id} {...{ project }} {...props} />
     ))}
-  </ul>
-);
+  </ul>);
+};
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
