@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const AutoprefixerStylus = require('autoprefixer-stylus');
 const StatsPlugin = require('stats-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const aliases = require('./shared/aliases');
 
 const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
@@ -61,14 +62,8 @@ module.exports = smp.wrap({
   },
   context: path.resolve(__dirname),
   resolve: {
-    extensions: [".js"],
-    alias: {
-      'Components': CSS_MODULES,
-      'Utils': path.resolve(__dirname, "src/utils"),
-      'Curated': path.resolve(__dirname, "src/curated"),
-      'Models': path.resolve(__dirname, "src/models"),
-      'Shared': SHARED,
-    },
+    extensions: ['.js'],
+    alias: aliases,
   },
   module: {
     rules: [

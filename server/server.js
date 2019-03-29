@@ -3,7 +3,7 @@ const compression = require('compression');
 const constants = require('./constants');
 const moduleAlias = require('module-alias');
 
-moduleAlias.addAliases(require('../webpack.config.js').resolve.alias);
+moduleAlias.addAliases(require('../shared/aliases'));
 
 const sentryHelpers = require('Shared/sentryHelpers');
 
