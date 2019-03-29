@@ -15,7 +15,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [debouncedFilter, setDebouncedFilter] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
   
-  const isValidFilter = filter.length > 2;
+  const isValidFilter = filter.length > 1;
 
   let { projects } = props;
 
@@ -29,8 +29,6 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
           p.description.toLowerCase().includes(filter)
         );
       }));
-      
-      setIsFiltering(false);
     } else {
       setFilteredProjects([]);
     }
@@ -38,7 +36,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      var debounced = debounce(filterProjects, 600);
+      var debounced = debounce(filterProjects, 500);
       setDebouncedFilter(debounced);
       debounced();
     },
@@ -46,7 +44,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  const noResults = isValidFilter && !(filteredProjects.length || isFiltering);
+  const noResults = isValidFilter && isFiltering
   
   if (noResults) {
     projectsEl = 'placeholder';
