@@ -24,9 +24,9 @@ function SearchForm({ defaultValue }) {
       role="search"
       onSubmit={onSubmit}
       autoComplete={algoliaFlag ? 'off' : 'on'}
-      onFocus={() => console.log(' setFocused(true)}
-      onBlur={() => {
-        setTimeout(() => setFocused(false), 100);
+      onFocus={(e) => setFocused(true)}
+      onBlur={(e) => {
+        console.log(e, e.target)
       }}
     >
       <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
