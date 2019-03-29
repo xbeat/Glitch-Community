@@ -4,7 +4,9 @@ import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import Markdown from '../text/markdown';
+import { useAlgoliaSearch } from '../../state/search';
 import styles from './autocomplete.styl';
+
 
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
@@ -91,6 +93,12 @@ export const AutocompleteResults = ({ query, results }) => {
   );
 };
 
-export default ({ query }) => {
-  const results 
+const AutocompleteSearch = ({ query }) => {
+  const results = useAlgoliaSearch(query);
+  if (results.totalResults > 0 && results.status === 'ready') {
+    return <AutocompleteResults query={query} results={results} />
+  }
+  return null;
 };
+
+export default AutocompleteSearch;
