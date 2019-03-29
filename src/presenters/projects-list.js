@@ -12,17 +12,17 @@ import { debounce } from 'lodash';
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [debouncedFilter, setDebouncedFilter] = useState([]);
+  const [debouncedFilter, setDebouncedFilter] = useState(null);
   const [isDoneFiltering, setIsDoneFiltering] = useState(false);
   
-  const isValidFilter = filter.length > 1;
+  const validFilter = filter.length > 1;
 
   let { projects } = props;
 
   function filterProjects() {
     setIsDoneFiltering(false);
     
-    if (isValidFilter) {
+    if (validFilter) {
       setFilteredProjects(props.projects.filter((p) => {
         return (
           p.domain.includes(filter) ||
@@ -45,7 +45,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  if (isDoneFiltering && isValidFilter) {
+  if (isDoneFiltering && validFilter(filter)) {
     if (filteredProjects.length) {
       projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
     } else {
