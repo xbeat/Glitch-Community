@@ -45,7 +45,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   
   let projectsEl;
   
-  } else if (isValidFilter && filteredProjects.length) {
+  if (isValidFilter && filteredProjects.length) {
     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
   } else if (isFiltering && isValidFilter && !filteredProjects.length) {
     projectsEl = 'No results';
