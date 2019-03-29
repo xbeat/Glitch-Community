@@ -225,9 +225,11 @@ export function useResource(resource, key, value, childResource) {
   const request = { resource, key, value, childResource };
   const [state, setState] = useState(() => checkDBForFulfillableRequests(store.getState().db, request));
   useEffect(() => {
+    // dispatch a request if there's no result initially    
     if (!state) {
       store.dispatch(actions.requestQueued(request));
     }
+    // when store updates, update the state    
     return store.subscribe(() => {
       const nextResult = checkDBForFulfillableRequests(store.getState().db, request);
       if (nextResult) setState(nextResult);
