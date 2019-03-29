@@ -36,6 +36,13 @@ function googleAuthLink() {
   return `${API_URL}/auth/google?${params}`;
 }
 
+function slackAuthLink() {
+  const params = new URLSearchParams();
+  const callbackURL = `${APP_URL}/login/slack`;
+  params.append('callbackURL', callbackURL);
+  return `${API_URL}/auth/slack?${params}`;
+}
+
 const SignInPopButton = (props) => (
   <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
     Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
@@ -267,6 +274,7 @@ const SignInPopWithoutRouter = (props) => {
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
                 <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />
+                <SignInPopButton href={slackAuthLink()} company="Slack" emoji="slack" onClick={onClick} />
                 <EmailSignInButton
                   onClick={() => {
                     onClick();

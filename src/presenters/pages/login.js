@@ -130,6 +130,12 @@ export const GoogleLoginPage = ({ code, ...props }) => {
   return <LoginPageContainer {...props} provider="Google" url={url} />;
 };
 
+export const SlackLoginPage = ({ code, ...props }) => {
+  const callbackUrl = `${APP_URL}/login/slack`;
+  const url = `/auth/slack/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
+  return <LoginPageContainer {...props} provider="Slack" url={url} />;
+};
+
 export const EmailTokenLoginPage = ({ token, ...props }) => {
   const url = `/auth/email/${token}`;
   return <LoginPageContainer {...props} provider="Email" url={url} />;
