@@ -1,19 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Helmet from 'react-helmet';
-import { capitalize, sum } from 'lodash';
-
-import Layout from '../layout';
+import { capitalize } from 'lodash';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
+import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
+import useDevToggle from '../includes/dev-toggles';
 
-import SegmentedButtons from '../../components/buttons/segmented-buttons';
-import Badge from '../../components/badges/badge';
-import Heading from '../../components/text/heading';
-
-import useErrorHandlers from '../error-handlers';
+import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
@@ -21,25 +16,29 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-function generateFilterButtons(filters) {
-  const filterButtons = [];
-  filters.forEach((filter) => {
-    const button = {};
-    button.id = filter.name;
-    button.contents = (
-      <>
-        {capitalize(filter.name)}
-        {filter.hits && <Badge>{filter.hits}</Badge>}
-      </>
-    );
-    filterButtons.push(button);
-  });
-  return filterButtons;
-}
+import SegmentedButtons from '../../components/buttons/segmented-buttons';
+import Badge from '../../components/badges/badge';
+import Heading from '../../components/text/heading';
 
-const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) => {
-  const totalHits = sum(filters.map((filter) => filter.hits));
+const generateFilterButtons = (filters) =>
+  filters
+    .map((filter) => {
+      if (filter.hits > 0 || filter.name === 'all') {
+        return {
+          name: filter.name,
+          contents: (
+            <>
+              {capitalize(filter.name)}
+              {filter.hits && <Badge>{filter.hits}</Badge>}
+            </>
+          ),
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
 
+const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
   if (!loaded) {
     return (
       <>
@@ -54,17 +53,10 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query, loaded }) =>
 
   return (
     <>
-      <SegmentedButtons buttons={generateFilterButtons(filters)} onClick={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onChange={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
-};
-
-FilterContainer.propTypes = {
-  filters: PropTypes.array.isRequired,
-  setFilter: PropTypes.func.isRequired,
-  activeFilter: PropTypes.string.isRequired,
-  loaded: PropTypes.bool.isRequired,
 };
 
 const TeamResults = ({ teams }) => (
@@ -101,132 +93,78 @@ const UserResults = ({ users }) => (
   </article>
 );
 
-const ProjectResults = ({ addProjectToCollection, projects, currentUser }) => {
-  if (!projects) {
-    return (
-      <article>
-        <Heading tagName="h2">Projects</Heading>
-        <Loader />
-      </article>
-    );
-  }
-  const loggedInUserWithProjects = projects && currentUser.login;
-  return loggedInUserWithProjects ? (
-    <ProjectsList title="Projects" projects={projects} projectOptions={{ addProjectToCollection }} />
+function addProjectToCollection(api, project, collection) {
+  return api.patch(`collections/${collection.id}/add/${project.id}`);
+}
+
+const ProjectResults = ({ projects }) => {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return currentUser.login ? (
+    <ProjectsList
+      title="Projects"
+      projects={projects}
+      projectOptions={{
+        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+      }}
+    />
   ) : (
     <ProjectsList title="Projects" projects={projects} />
   );
 };
 
-const MAX_RESULTS = 20;
+function SearchResults({ query, searchResults }) {
+  const [activeFilter, setActiveFilter] = useState('all');
+  const loaded = searchResults.status === 'ready';
+  const noResults = loaded && searchResults.totalHits === 0;
 
-const showResults = (results) => !results || !!results.length;
+  const filters = [
+    { name: 'all' },
+    { name: 'teams', hits: searchResults.team.length },
+    { name: 'users', hits: searchResults.user.length },
+    { name: 'projects', hits: searchResults.project.length },
+  ];
 
-class SearchResults extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      teams: null,
-      users: null,
-      projects: null,
-      activeFilterIndex: 0,
-      loadedResults: 0,
-    };
-    this.addProjectToCollection = this.addProjectToCollection.bind(this);
-    this.setFilter = this.setFilter.bind(this);
-  }
+  const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
+  const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
+  const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
 
-  componentDidMount() {
-    const { handleError } = this.props;
-    this.searchTeams().catch(handleError);
-    this.searchUsers().catch(handleError);
-    this.searchProjects().catch(handleError);
-  }
-
-  setFilter(index) {
-    this.setState({ activeFilterIndex: index });
-  }
-
-  async searchTeams() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`teams/search?q=${query}`);
-    this.setState((prevState) => ({
-      teams: data.slice(0, MAX_RESULTS),
-      loadedResults: prevState.loadedResults + 1,
-    }));
-  }
-
-  async searchUsers() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`users/search?q=${query}`);
-    this.setState((prevState) => ({
-      users: data.slice(0, MAX_RESULTS),
-      loadedResults: prevState.loadedResults + 1,
-    }));
-  }
-
-  async searchProjects() {
-    const { api, query } = this.props;
-    const { data } = await api.get(`projects/search?q=${query}`);
-    this.setState((prevState) => ({
-      projects: data.filter((project) => !project.notSafeForKids).slice(0, MAX_RESULTS),
-      loadedResults: prevState.loadedResults + 1,
-    }));
-  }
-
-  async addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-  }
-
-  render() {
-    const { teams, users, projects, activeFilterIndex } = this.state;
-    const teamHits = teams ? teams.length : 0;
-    const userHits = users ? users.length : 0;
-    const projectHits = projects ? projects.length : 0;
-
-    const filters = [
-      { name: 'all', hits: null },
-      { name: 'teams', hits: teamHits },
-      { name: 'users', hits: userHits },
-      { name: 'projects', hits: projectHits },
-    ];
-
-    const activeFilter = filters[activeFilterIndex].name;
-    const noResults = [teams, users, projects].every((results) => !showResults(results));
-
-    const showTeams = ['all', 'teams'].includes(activeFilter) && showResults(teams);
-    const showUsers = ['all', 'users'].includes(activeFilter) && showResults(users);
-    const showProjects = ['all', 'projects'].includes(activeFilter) && showResults(projects);
-
-    const loaded = this.state.loadedResults === filters.filter(({ name }) => name !== 'all').length;
-
-    return (
-      <main className="search-results">
-        <FilterContainer filters={filters} setFilter={this.setFilter} activeFilter={activeFilter} query={this.props.query} loaded={loaded} />
-        {showTeams && <TeamResults teams={teams} />}
-        {showUsers && <UserResults users={users} />}
-        {showProjects && (
-          <ProjectResults projects={projects} currentUser={this.props.currentUser} addProjectToCollection={this.addProjectToCollection} />
-        )}
-        {noResults && <NotFound name="any results" />}
-      </main>
-    );
-  }
+  return (
+    <main className="search-results">
+      <FilterContainer
+        totalHits={searchResults.totalHits}
+        filters={filters}
+        setFilter={setActiveFilter}
+        activeFilter={activeFilter}
+        query={query}
+        loaded={loaded}
+      />
+      {showTeams && <TeamResults teams={searchResults.team} />}
+      {showUsers && <UserResults users={searchResults.user} />}
+      {showProjects && <ProjectResults projects={searchResults.project} />}
+      {noResults && <NotFound name="any results" />}
+    </main>
+  );
 }
-SearchResults.propTypes = {
-  api: PropTypes.any.isRequired,
-  query: PropTypes.string.isRequired,
-  currentUser: PropTypes.object.isRequired,
+
+// Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
+const AlgoliaSearchWrapper = ({ query }) => {
+  const searchResults = useAlgoliaSearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
+};
+
+const LegacySearchWrapper = ({ query }) => {
+  const searchResults = useLegacySearch(query);
+  return <SearchResults query={query} searchResults={searchResults} />;
 };
 
 const SearchPage = ({ query }) => {
-  const api = useAPI();
-  const { currentUser } = useCurrentUser();
-  const errorFuncs = useErrorHandlers();
+  const algoliaFlag = useDevToggle('Algolia Search');
+  const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );

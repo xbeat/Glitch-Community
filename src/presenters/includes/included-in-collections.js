@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { sampleSize } from 'lodash';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
-import { useAPI } from '../../state/api';
+import { createAPIHook } from '../../state/api';
 
 import CollectionItem from '../collection-item';
 
-const getIncludedCollections = async (api, projectId) => {
+const useIncludingCollections = createAPIHook(async (api, projectId) => {
   const collections = await getAllPages(api, `/v1/projects/by/id/collections?id=${projectId}&limit=100&orderKey=createdAt&orderDirection=DESC`);
   const selectedCollections = sampleSize(collections, 3);
   return Promise.all(
@@ -18,21 +18,15 @@ const getIncludedCollections = async (api, projectId) => {
       return { ...collection, projects, user, team };
     }),
   );
-};
-
-const useAsync = (asyncFunction, api, ...args) => {
-  const [result, setResult] = useState(null);
-  useEffect(() => {
-    asyncFunction(api, ...args).then(setResult);
-  }, args);
-  return result;
-};
+});
 
 const IncludedInCollections = ({ projectId }) => {
-  const api = useAPI();
-  const rawCollections = useAsync(getIncludedCollections, api, projectId);
-  const collections = rawCollections && rawCollections.filter((c) => c.team || c.user);
-  if (!collections || !collections.length) {
+  const { status, value: rawCollections } = useIncludingCollections(projectId);
+  if (status === 'loading') {
+    return null;
+  }
+  const collections = rawCollections.filter((c) => c.team || c.user);
+  if (!collections.length) {
     return null;
   }
   return (

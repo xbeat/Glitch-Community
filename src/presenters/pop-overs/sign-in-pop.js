@@ -11,7 +11,7 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
-/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
+/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL, API_URL */
 
 function githubAuthLink() {
   const params = new URLSearchParams();
@@ -27,6 +27,13 @@ function facebookAuthLink() {
   params.append('scope', 'email');
   params.append('redirect_uri', `${APP_URL}/login/facebook`);
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
+}
+
+function googleAuthLink() {
+  const params = new URLSearchParams();
+  const callbackURL = `${APP_URL}/login/google`;
+  params.append('callbackURL', callbackURL);
+  return `${API_URL}/auth/google?${params}`;
 }
 
 const SignInPopButton = (props) => (
@@ -214,8 +221,16 @@ EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const NewUserInfoSection = () => (
+  <section className="pop-over-info">
+    <span>
+      <span className="emoji carp_streamer" /> New to Glitch? Create an account by signing in.
+    </span>
+  </section>
+);
+
 const SignInCodeSection = ({ onClick }) => (
-  <section className="pop-over-actions last-section pop-over-info">
+  <section className="pop-over-actions last-section pop-over-info first-section">
     <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
       <span>Use a sign in code</span>
     </button>
@@ -246,10 +261,12 @@ const SignInPopWithoutRouter = (props) => {
           {(showCodeLogin) => (
             <div className="pop-over sign-in-pop">
               {header}
-              <section className="pop-over-actions first-section">
+              <NewUserInfoSection />
+              <section className="pop-over-actions">
                 {prompt}
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
+                <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />
                 <EmailSignInButton
                   onClick={() => {
                     onClick();

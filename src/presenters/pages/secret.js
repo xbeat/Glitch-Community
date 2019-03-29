@@ -1,15 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
 import Helmet from 'react-helmet';
 import { useDevToggles } from '../includes/dev-toggles';
 
-class SecretEffectsOnMount extends React.Component {
-  componentDidMount() {
-    // try to play the secret sound:
+function useZeldaMusicalCue() {
+  useEffect(() => {
     const audio = new Audio('https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988');
     const maybePromise = audio.play();
-
     // Chrome returns a promise which we must handle:
     if (maybePromise) {
       maybePromise
@@ -22,19 +19,13 @@ class SecretEffectsOnMount extends React.Component {
           // s'fine, let it.
         });
     }
-  }
-
-  render() {
-    return null;
-  }
+  }, []);
 }
 
-const SecretPageContainer = () => {
+const Secret = () => {
   const { enabledToggles, toggleData, setEnabledToggles } = useDevToggles();
-  return <Secret {...{ enabledToggles, toggleData, setEnabledToggles }} />;
-};
+  useZeldaMusicalCue();
 
-const Secret = ({ enabledToggles, toggleData, setEnabledToggles }) => {
   const isEnabled = (toggleName) => enabledToggles && enabledToggles.includes(toggleName);
 
   const toggleTheToggle = (name) => {
@@ -51,7 +42,6 @@ const Secret = ({ enabledToggles, toggleData, setEnabledToggles }) => {
     <section className="secretPage">
       <div className="filler" />
       <Helmet title="Glitch - It's a secret to everybody." />
-      <SecretEffectsOnMount />
       <ul>
         {toggleData.map(({ name, description }) => (
           <li key={name}>
@@ -65,10 +55,4 @@ const Secret = ({ enabledToggles, toggleData, setEnabledToggles }) => {
   );
 };
 
-Secret.propTypes = {
-  toggleData: PropTypes.array.isRequired,
-  enabledToggles: PropTypes.array.isRequired,
-  setEnabledToggles: PropTypes.func.isRequired,
-};
-
-export default SecretPageContainer;
+export default Secret;

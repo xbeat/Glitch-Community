@@ -3,44 +3,26 @@ import PropTypes from 'prop-types';
 import styles from './segmented-buttons.styl';
 import Button from './button';
 
-class SegmentedButtons extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeFilter: 0,
-    };
-    this.setFilter = this.setFilter.bind(this);
-  }
-
-  setFilter(index) {
-    this.setState({ activeFilter: index });
-    // call the onclick event passed to the component
-    this.props.onClick(index);
-  }
-
-  render() {
-    const { buttons } = this.props;
-
-    return (
-      <div className={styles.segmentedButtons}>
-        {buttons.map((button, index) => (
-          <Button key={button.id} size="small" type="tertiary" active={index === this.state.activeFilter} onClick={() => this.setFilter(index)}>
-            {button.contents}
-          </Button>
-        ))}
-      </div>
-    );
-  }
-}
+const SegmentedButtons = ({ value, buttons, onChange }) => (
+  <div className={styles.segmentedButtons}>
+    {buttons.map((button) => (
+      <Button key={button.name} size="small" type="tertiary" active={button.name === value} onClick={() => onChange(button.name)}>
+        {button.contents}
+      </Button>
+    ))}
+  </div>
+);
 
 SegmentedButtons.propTypes = {
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      /** name: the filter name, passed back to onChange */
+      name: PropTypes.string.isRequired,
       contents: PropTypes.node.isRequired,
     }),
   ).isRequired,
-  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default SegmentedButtons;

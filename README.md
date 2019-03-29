@@ -14,7 +14,6 @@ Glitch employees should check out [DEPLOYING.md](https://glitch.com/edit/#!/comm
 
 File structure
 
-
 - the backend app starts at `server.js`
 - `src/client.js` is compiled and served as /client-bundle.js
 - components and their styles are in `src/components/` :-)
@@ -31,7 +30,6 @@ application models -> presenter -> DOM
 - [React.js](https://reactjs.org/)
 - [Stylus](http://stylus-lang.com/)
 - [Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/)
-
 
 
 ```
