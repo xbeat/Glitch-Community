@@ -69,11 +69,11 @@ const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
   { id: 'user', label: 'User Results', Component: UserResult },
   { id: 'project', label: 'Project Results', Component: ProjectResult },
-  { id: 'collection', label: 'Collection Results', Component: CollectionResult },
+  //{ id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
 export const AutocompleteResults = ({ query, results }) => {
-  const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id] })).filter((group) => group.items.length > 0);
+  const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id].slice(0, 5) })).filter((group) => group.items.length > 0);
   return (
     <ul className={styles.container}>
       {resultGroupsWithItems.map(({ id, label, Component, items }) => (
@@ -95,8 +95,12 @@ export const AutocompleteResults = ({ query, results }) => {
 
 const AutocompleteSearch = ({ query }) => {
   const results = useAlgoliaSearch(query);
-  if (results.totalResults > 0 && results.status === 'ready') {
-    return <AutocompleteResults query={query} results={results} />;
+  console.log(results)
+  if (results.totalHits > 0 && results.status === 'ready') {
+    return <div className={styles.popOver}>
+      <AutocompleteResults query={query} results={results} />;
+    </div>
+    
   }
   return null;
 };

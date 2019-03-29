@@ -63,6 +63,7 @@ const MAX_RESULTS = 20;
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
   useEffect(() => {
+    if (!query) return;
     searchIndex
       .search({
         query,

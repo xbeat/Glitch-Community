@@ -17,7 +17,7 @@ function SearchForm({ defaultValue }) {
   };
 
   return (
-    <form action="/search" method="get" role="search" onSubmit={onSubmit}>
+    <form action="/search" method="get" role="search" onSubmit={onSubmit} autoComplete={algoliaFlag ? "off" : "on"}>
       <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
       {submitted && <Redirect to={`/search?q=${value}`} push />}
       {algoliaFlag && <AutocompleteSearch query={value} />}
