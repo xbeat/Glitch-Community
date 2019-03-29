@@ -250,12 +250,11 @@ const updateUserOnStorageChange = (store) => {
   return (next) => (action) => next(action);
 };
 
-const loadUserAfterLogin = () =>
-  afterReducer(matchTypes(actions.loggedIn, actions.storageChanged), async (store, action) => {
-    const sharedUser = action.payload;
-    const cachedUser = await getCachedUser(sharedUser);
-    store.dispatch(actions.updated({ cachedUser }));
-  });
+const loadUserAfterLogin = afterReducer(matchTypes(actions.loggedIn, actions.storageChanged), async (store, action) => {
+  const sharedUser = action.payload;
+  const cachedUser = await getCachedUser(sharedUser);
+  store.dispatch(actions.updated({ cachedUser }));
+});
 
 export const currentUserSlice = {
   slice,
@@ -299,4 +298,3 @@ export function normalizeProject({ users, ...project }, currentUser) {
 export function normalizeProjects(projects, currentUser) {
   return projects.map((project) => normalizeProject(project, currentUser));
 }
-

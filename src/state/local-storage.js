@@ -46,7 +46,6 @@ export const writeToStorage = (name, value) => {
 export const subscribeToStorageChanges = (name, onChange) => {
   const reload = (event) => {
     if (event.storageArea === storage && event.key === name) {
-      console.log('subscribeToStorageChanges', event, name)
       onChange(readFromStorage(name));
     }
   };
