@@ -26,7 +26,7 @@ function SearchForm({ defaultValue }) {
           role="search"
           onSubmit={onSubmit}
           autoComplete={algoliaFlag ? 'off' : 'on'}
-          onFocus={(e) => setVisible(true)}
+          onFocus={() => setVisible(true)}
         >
           <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
           {submitted && <Redirect to={`/search?q=${value}`} push />}

@@ -3,7 +3,6 @@ import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../pre
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
-import Markdown from '../text/markdown';
 import { useAlgoliaSearch } from '../../state/search';
 import styles from './autocomplete.styl';
 
@@ -16,7 +15,7 @@ const TeamResult = ({ value: team }) => (
       <div className={styles.infoPrimary}>{team.name}</div>
       <div className={styles.infoSecondary}>@{team.url}</div>
     </div>
-    {/*<div className={styles.memberContainer}>MAYBE: user avatars</div> */}
+    {/* <div className={styles.memberContainer}>MAYBE: user avatars</div> */}
   </TeamLink>
 );
 
@@ -53,7 +52,7 @@ const CollectionResult = ({ value: collection }) => (
       <div className={styles.infoPrimary}>{collection.name}</div>
       <div className={styles.infoSecondary}>@{collection.fullUrl}</div>
     </div>
-    {/*<div className={styles.memberContainer}>MAYBE: project avatars</div> */}
+    {/* <div className={styles.memberContainer}>MAYBE: project avatars</div> */}
   </CollectionLink>
 );
 
@@ -67,7 +66,8 @@ const resultGroups = [
   { id: 'team', label: 'Team Results', Component: TeamResult },
   { id: 'user', label: 'User Results', Component: UserResult },
   { id: 'project', label: 'Project Results', Component: ProjectResult },
-  //{ id: 'collection', label: 'Collection Results', Component: CollectionResult },
+  // TODO: enable after merging collections PR
+  // { id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
 const MAX_RESULTS_PER_TYPE = 3;
