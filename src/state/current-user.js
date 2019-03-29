@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+fimport { useEffect } from 'react';
 import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage, subscribeToStorageChanges } from './local-storage';
@@ -203,7 +203,8 @@ const { slice, reducer, actions } = createSlice({
     }),
     storageChanged: (state, { payload }) => ({
       ...state,
-      ...payload,
+     sharedUser: .payload
+      cachedUser: undefined,,
     }), 
     loggedOut: (state) => ({
       ...state,
@@ -242,11 +243,13 @@ const persistToStorage = afterReducer(matchAlways, (store, action, prevState) =>
 });
 
 const updateUserOnStorageChange = (store) => {
-  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.storageChanged({ sharedUser })));
-  subscribeToStorageChanges('community-cachedUser', (cachedUser) => store.dispatch(actions.storageChanged({ cachedUser })));
+  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.storageChanged sharedUse})));
   return (next) => (action) => next(action);
 };
+const loadUserAfterLogin = () => afterReducer(matchTypes(actions.loggedIn,
+const loadUser
 
+St
 export const currentUserSlice = {
   slice,
   reducer,
@@ -289,3 +292,4 @@ export function normalizeProject({ users, ...project }, currentUser) {
 export function normalizeProjects(projects, currentUser) {
   return projects.map((project) => normalizeProject(project, currentUser));
 }
+A
