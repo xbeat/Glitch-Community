@@ -55,7 +55,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   return (
     <article className={`projects ${extraClasses}`}>
-      <div>
+      <div className="header">
         <Heading tagName="h2">{title}</Heading>
         {props.enableFiltering ? (
           <TextInput
