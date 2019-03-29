@@ -39,9 +39,7 @@ const ProjectResult = ({ value: project }) => (
     </div>
     <div className={styles.infoContainer}>
       <div className={styles.infoPrimary}>{project.domain}</div>
-      <div className={styles.infoSecondary}>
-        <Markdown truncate={20}>{project.description}</Markdown>
-      </div>
+      <div className={styles.infoSecondary}>{project.description}</div>
     </div>
   </ProjectLink>
 );

@@ -7,6 +7,7 @@ import AutocompleteSearch from './autocomplete';
 
 function SearchForm({ defaultValue }) {
   const [value, onChange] = useState(defaultValue);
+  const [focused, setFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const algoliaFlag = useDevToggle('Algolia Search');
 
@@ -17,10 +18,20 @@ function SearchForm({ defaultValue }) {
   };
 
   return (
-    <form action="/search" method="get" role="search" onSubmit={onSubmit} autoComplete={algoliaFlag ? "off" : "on"}>
+    <form
+      action="/search"
+      method="get"
+      role="search"
+      onSubmit={onSubmit}
+      autoComplete={algoliaFlag ? 'off' : 'on'}
+      onFocus={() => console.log(' setFocused(true)}
+      onBlur={() => {
+        setTimeout(() => setFocused(false), 100);
+      }}
+    >
       <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
       {submitted && <Redirect to={`/search?q=${value}`} push />}
-      {algoliaFlag && <AutocompleteSearch query={value} />}
+      {focused && algoliaFlag && <AutocompleteSearch query={value} />}
     </form>
   );
 }
