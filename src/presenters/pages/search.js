@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { capitalize } from 'lodash';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
@@ -18,77 +17,61 @@ import NotFound from '../includes/not-found';
 import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
+import CollectionItem from '../collection-item';
 
 
-const generateFilterButtons = (filters) =>
-  filters
-    .map((filter) => {
-      if (filter.hits > 0 || filter.name === 'all') {
-        return {
-          name: filter.name,
-          contents: (
-            <>
-              {capitalize(filter.name)}
-              {filter.hits && <Badge>{filter.hits}</Badge>}
-            </>
-          ),
-        };
-      }
-      return null;
-    })
-    .filter(Boolean);
-
-const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
-  if (!loaded) {
-    return (
+const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
+  const buttons = filters.map((filter) => ({
+    name: filter.id,
+    contents: (
       <>
-        <Loader />
-        <h1>All results for {query}</h1>
+        {filter.label}
+        {filter.hits && <Badge>{filter.hits}</Badge>}
       </>
-    );
-  }
-  if (loaded && totalHits === 0) {
-    return null;
-  }
+    ),
+  }));
 
   return (
     <>
-      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onChange={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
 };
 
-const TeamResults = ({ teams }) => (
+const TeamResults = ({ results }) => (
   <article>
     <Heading tagName="h2">Teams</Heading>
     <ul className="teams-container">
-      {teams ? (
-        teams.map((team) => (
-          <li key={team.id}>
-            <TeamItem team={team} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
+      {results.map((team) => (
+        <li key={team.id}>
+          <TeamItem team={team} />
+        </li>
+      ))}
     </ul>
   </article>
 );
 
-const UserResults = ({ users }) => (
+const UserResults = ({ results }) => (
   <article>
     <Heading tagName="h2">Users</Heading>
     <ul className="users-container">
-      {users ? (
-        users.map((user) => (
-          <li key={user.id}>
-            <UserItem user={user} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
+      {results.map((user) => (
+        <li key={user.id}>
+          <UserItem user={user} />
+        </li>
+      ))}
+    </ul>
+  </article>
+);
+
+const CollectionResults = ({ results }) => (
+  <article>
+    <Heading tagName="h2">Collections</Heading>
+    <ul className="collections-container">
+      {results.map((collection) => (
+        <CollectionItem key={collection.id} collection={collection} />
+      ))}
     </ul>
   </article>
 );
@@ -97,51 +80,55 @@ function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
-const ProjectResults = ({ projects }) => {
+const ProjectResults = ({ results }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
   return currentUser.login ? (
     <ProjectsList
       title="Projects"
-      projects={projects}
+      projects={results}
       projectOptions={{
         addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
       }}
     />
   ) : (
-    <ProjectsList title="Projects" projects={projects} />
+    <ProjectsList title="Projects" projects={results} />
   );
 };
 
+const groups = [
+  { id: 'team', label: 'Teams', ResultsComponent: TeamResults },
+  { id: 'user', label: 'Users', ResultsComponent: UserResults },
+  { id: 'project', label: 'Projects', ResultsComponent: ProjectResults },
+  { id: 'collection', label: 'Collections', ResultsComponent: CollectionResults },
+];
+
+const showGroup = (id, searchResults, activeFilter) => (activeFilter === 'all' || activeFilter === id) && searchResults[id].length > 0;
+
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const loaded = searchResults.status === 'ready';
-  const noResults = loaded && searchResults.totalHits === 0;
+  const ready = searchResults.status === 'ready';
+  const noResults = ready && searchResults.totalHits === 0;
 
   const filters = [
-    { name: 'all' },
-    { name: 'teams', hits: searchResults.team.length },
-    { name: 'users', hits: searchResults.user.length },
-    { name: 'projects', hits: searchResults.project.length },
+    { id: 'all', label: 'All' },
+    ...groups.map((group) => ({ ...group, hits: searchResults[group.id].length })).filter((group) => group.hits > 0),
   ];
-
-  const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
-  const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
-  const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
 
   return (
     <main className="search-results">
-      <FilterContainer
-        totalHits={searchResults.totalHits}
-        filters={filters}
-        setFilter={setActiveFilter}
-        activeFilter={activeFilter}
-        query={query}
-        loaded={loaded}
-      />
-      {showTeams && <TeamResults teams={searchResults.team} />}
-      {showUsers && <UserResults users={searchResults.user} />}
-      {showProjects && <ProjectResults projects={searchResults.project} />}
+      {searchResults.status === 'loading' && (
+        <>
+          <Loader />
+          <h1>All results for {query}</h1>
+        </>
+      )}
+      {ready && searchResults.totalHits > 0 && (
+        <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
+      )}
+      {groups.map(({ id, ResultsComponent }) =>
+        showGroup(id, searchResults, activeFilter) ? <ResultsComponent key={id} results={searchResults[id]} /> : null,
+      )}
       {noResults && <NotFound name="any results" />}
     </main>
   );
