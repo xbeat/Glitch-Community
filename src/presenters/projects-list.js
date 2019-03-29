@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
+import { Loader } from './includes/loader';
 import ExpanderContainer from '../components/containers/expander';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
@@ -12,11 +13,13 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [debouncedFilter, setDebouncedFilter] = useState([]);
+  const [isFiltering, setIsFiltering] = useState(false);
 
   let { projects } = props;
 
   function filterProjects() {
-    console.log('hit')
+    setIsFiltering(true);
+
     if (filter.length) {
       setFilteredProjects(props.projects.filter((p) => {
         return (
@@ -27,9 +30,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     } else {
       setFilteredProjects([]);
     }
-    console.log('filtering', projects.length);
   }
-  console.log('filtered', projects.length);
 
   useEffect(
     () => {
@@ -39,6 +40,15 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     },
     [filter],
   );
+  
+  let projectsEl;
+  if (filter.length && filteredProjects.length) {
+    projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
+  } else if (filter.length) {
+    projectsEl = <Loader />
+  } else {
+    projectsEl = <PaginatedProjects {...props} projects={projects} />
+  }
 
   return (
     <article className={`projects ${extraClasses}`}>
@@ -61,11 +71,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
         <div className="placeholder">{placeholder}</div>
       )}
 
-      {!filter && props.enablePagination ? (
-        <PaginatedProjects {...props} projects={projects} />
-      ) : (
-        <ProjectsUL {...props} projects={filter.length && filteredProjects.length ? filteredProjects : projects} />
-      )}
+      {projectsEl}
     </article>
   );
 }
@@ -205,7 +211,6 @@ PaginatedProjects.defaultProps = {
 // };
 
 export const ProjectsUL = ({ ...props }) => {
-  console.log(props.projects.length);
   return (
     <ul className="projects-container">
       {props.projects.map((project) => (
