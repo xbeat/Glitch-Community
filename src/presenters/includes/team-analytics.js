@@ -115,8 +115,8 @@ class TeamAnalytics extends React.Component {
     });
 
     const { id, api, projects } = this.props;
-    const { fromDate, currentProjectsDomain } = this.state;
-    getAnalytics({ id, api, projects, fromDate, currentProjectsDomain }).then((data) => {
+    const { fromDate, currentProjectDomain } = this.state;
+    getAnalytics({ id, api, projects, fromDate, currentProjectDomain }).then((data) => {
       this.setState(
         {
           isGettingData: false,
