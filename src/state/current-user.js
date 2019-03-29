@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
-import { readFromStorage, writeToStorage } from './local-storage';
+import { readFromStorage, writeToStorage, subscribeToStorageChanges } from './local-storage';
 import { getAPIForToken } from './api';
 import { useSelector, useActions, afterReducer, matchAlways, matchTypes } from './utils';
 
@@ -237,6 +237,11 @@ const persistToStorage = afterReducer(matchAlways, (store, action, prevState) =>
   }
 });
 
+const updateUserOnStorageChange = (store) => {
+  
+  return (next) => (action) => next(action)
+}
+  
 export const currentUserSlice = {
   slice,
   reducer,

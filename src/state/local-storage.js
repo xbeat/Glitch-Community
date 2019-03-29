@@ -43,20 +43,22 @@ export const writeToStorage = (name, value) => {
   }
 };
 
+export const subscribeToStorageChanges = (name, onChange) => {
+  const reload = (event) => {
+    if (event.storageArea === storage && event.key === name) {
+      onChange(readFromStorage(name));
+    }
+  };
+  window.addEventListener('storage', reload, { passive: true });
+  return () => {
+    window.removeEventListener('storage', reload, { passive: true });
+  };
+};
+
 const useLocalStorage = (name, defaultValue) => {
   const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(name));
 
-  React.useEffect(() => {
-    const reload = (event) => {
-      if (event.storageArea === storage && event.key === name) {
-        setValueInMemory(readFromStorage(name));
-      }
-    };
-    window.addEventListener('storage', reload, { passive: true });
-    return () => {
-      window.removeEventListener('storage', reload, { passive: true });
-    };
-  }, [name]);
+  React.useEffect(() => subscribeToStorageChanges(name, setValueInMemory), [name]);
 
   const value = rawValue !== undefined ? rawValue : defaultValue;
   const setValue = (newValue) => {
