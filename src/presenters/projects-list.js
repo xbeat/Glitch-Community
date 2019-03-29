@@ -60,7 +60,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
         <div className="placeholder">{placeholder}</div>
       )}
 
-      {props.enablePagination ? (
+      {!filter && props.enablePagination ? (
         <PaginatedProjects {...props} projects={projects} />
       ) : (
         <ProjectsUL {...props} projects={projects} />
@@ -134,7 +134,7 @@ class ExpandyProjects extends React.Component {
 function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
-
+  
   let { projects, projectsPerPage } = props; // TODO update where this is passed in
 
   const numProjects = projects.length;
@@ -142,8 +142,10 @@ function PaginatedProjects(props) {
   const hiddenProjects = numProjects - projectsPerPage;
   const canPaginate = !expanded && projectsPerPage < numProjects;
   
-  console.log(props.projects.length);
-  console.log('canPaginate', canPaginate);
+  if (!expanded && canPaginate) {
+    const startIdx = (page - 1) * projectsPerPage
+    projects = projects.slice(startIdx, startIdx + projectsPerPage);
+  }
 
   const PaginationControls = () => (
     <div>
