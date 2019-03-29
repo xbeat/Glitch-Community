@@ -101,7 +101,6 @@ export const AutocompleteResults = ({ query, results }) => {
 
 const AutocompleteSearch = ({ query }) => {
   const results = useAlgoliaSearch(query);
-  console.log(results);
   if (results.totalHits > 0 && results.status === 'ready') {
     return (
       <div className={styles.popOver}>

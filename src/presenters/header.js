@@ -28,9 +28,12 @@ const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
     </div>
 
     <nav>
-      <div className="header-search">
-        <SearchForm defaultValue={searchQuery} />
+      <div>
+        <span className="header-search">
+          <SearchForm defaultValue={searchQuery} />
+        </span>
       </div>
+
       <NewProjectPop />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop />}
