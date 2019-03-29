@@ -238,14 +238,15 @@ const persistToStorage = afterReducer(matchAlways, (store, action, prevState) =>
 });
 
 const updateUserOnStorageChange = (store) => {
-  
-  return (next) => (action) => next(action)
-}
-  
+  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.updated({ sharedUser })));
+  subscribeToStorageChanges('community-cachedUser', (cachedUser) => store.dispatch(actions.updated({ cachedUser })));
+  return (next) => (action) => next(action);
+};
+
 export const currentUserSlice = {
   slice,
   reducer,
-  middleware: [handleLoadRequest, trackUserChanges, persistToStorage],
+  middleware: [handleLoadRequest, trackUserChanges, persistToStorage, updateUserOnStorageChange],
 };
 
 export function useCurrentUser() {
