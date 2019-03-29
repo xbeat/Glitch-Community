@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 const styles = {}
 
+const TeamResult = ({ value })
+
 const resultGroups = [
-  { id: 'team', label: 'Team Results' },
-  { id: 'user', label: 'User Results' },
+  { id: 'team', label: 'Team Results', Component: TeamResult },
+  { id: 'user', label: 'User Results',  },
   { id: 'project', label: 'Project Results' },
   { id: 'collection', label: 'Collection Results' },
 ]
