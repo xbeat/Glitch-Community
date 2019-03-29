@@ -8,7 +8,7 @@ import TextInput from '../components/fields/text-input';
 import Heading from '../components/text/heading';
 import { debounce } from 'lodash';
 
-function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
+function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
 
   let { projects } = props;
@@ -20,21 +20,19 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
       });
     }
   });
-  
-  function onChangeFilter (val) {
 
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
         <Heading tagName="h2">{title}</Heading>
-        {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={value => debounce(setFilter(value), 500)} opaque placeholder="find a project" type="search" value={filter} />
+        {props.enableFiltering ? (
+          <TextInput className="header-search" name="q" onChange={debounce(setFilter, 500)} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
       {!!(placeholder && !projects.length) && <div className="placeholder">{placeholder}</div>}
 
-      {enablePagination
+      {props.enablePagination
         ? <PaginatedProjects {...props} projects={projects} />
         : <ProjectsUL {...props} projects={projects} />
       }
