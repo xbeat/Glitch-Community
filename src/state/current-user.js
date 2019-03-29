@@ -1,4 +1,4 @@
-fimport { useEffect } from 'react';
+import { useEffect } from 'react';
 import { createSlice } from 'redux-starter-kit';
 import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import { readFromStorage, writeToStorage, subscribeToStorageChanges } from './local-storage';
@@ -193,6 +193,7 @@ const { slice, reducer, actions } = createSlice({
       ...state,
       sharedUser: payload,
       cachedUser: undefined,
+      loadStatus: 'loading',
     }),
     updated: (state, { payload }) => ({
       ...state,
@@ -200,12 +201,14 @@ const { slice, reducer, actions } = createSlice({
         ...state.cachedUser,
         ...payload,
       },
+      loadStatus: 'ready',
     }),
     storageChanged: (state, { payload }) => ({
       ...state,
-     sharedUser: .payload
-      cachedUser: undefined,,
-    }), 
+      sharedUser: payload,
+      cachedUser: undefined,
+      loadStatus: 'loading',
+    }),
     loggedOut: (state) => ({
       ...state,
       sharedUser: null,
@@ -243,17 +246,21 @@ const persistToStorage = afterReducer(matchAlways, (store, action, prevState) =>
 });
 
 const updateUserOnStorageChange = (store) => {
-  subscribeToStorageChanges('cachedUser', (sharedUser) => console.log('dispatching', sharedUser) || store.dispatch(actions.storageChanged sharedUse})));
+  subscribeToStorageChanges('cachedUser', (sharedUser) => store.dispatch(actions.storageChanged(sharedUser)));
   return (next) => (action) => next(action);
 };
-const loadUserAfterLogin = () => afterReducer(matchTypes(actions.loggedIn,
-const loadUser
 
-St
+const loadUserAfterLogin = () =>
+  afterReducer(matchTypes(actions.loggedIn, actions.storageChanged), async (store, action) => {
+    const sharedUser = action.payload;
+    const cachedUser = await getCachedUser(sharedUser);
+    store.dispatch(actions.updated({ cachedUser }));
+  });
+
 export const currentUserSlice = {
   slice,
   reducer,
-  middleware: [handleLoadRequest, trackUserChanges, persistToStorage, updateUserOnStorageChange],
+  middleware: [handleLoadRequest, trackUserChanges, persistToStorage, updateUserOnStorageChange, loadUserAfterLogin],
 };
 
 export function useCurrentUser() {
@@ -292,4 +299,4 @@ export function normalizeProject({ users, ...project }, currentUser) {
 export function normalizeProjects(projects, currentUser) {
   return projects.map((project) => normalizeProject(project, currentUser));
 }
-A
+
