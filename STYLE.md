@@ -29,6 +29,10 @@ We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react
 1. Run `npm run storybook` from the terminal console to build the static storybook files.
 1. Go to `https://<remix-name>/storybook`. All the files are served there (from the build folder in the app).
 
+### Make use of the absolute path aliases
+
+
+
 ### Prefer Dependency Injection
 
 All modules receive their dependencies as arguments to their constructor.  This is most especially true for any modules that we write, but we make exceptions for react components and stateless NPM modules.

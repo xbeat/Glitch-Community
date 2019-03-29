@@ -60,6 +60,7 @@
     "markdown-it-sanitizer": "^0.4.3",
     "memory-cache": "^0.2.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "module-alias": "^2.2.0",
     "nodemon": "^1.18.10",
     "prop-types": "^15.6.2",
     "quantize": "^1.0.2",
