@@ -14,24 +14,30 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   // let { projects } = props;
   let projects = props.projects;
-  useEffect(() => {
-    filterProjects();
 
-    const filterProjects = () => {
-      console.log('filtering');
-      
-      if (filter.length) {
-        projects = props.projects.filter((p) => {
-          return (
-            p.domain.includes(filter) ||
-            p.description.toLowerCase().includes(filter)
-          );
-        });
-      } else {
-        projects = props.projects;
-      }
-    };
-  }, [filter]);
+  function filterProjects() {
+    console.log('filtering');
+
+    if (filter.length) {
+      projects = props.projects.filter((p) => {
+        return (
+          p.domain.includes(filter) ||
+          p.description.toLowerCase().includes(filter)
+        );
+      });
+    } else {
+      projects = props.projects;
+    }
+    console.log(projects.length);
+  }
+
+  useEffect(
+    () => {
+      // debounce(filterProjects, 300);
+      filterProjects();
+    },
+    [filter],
+  );
 
   return (
     <article className={`projects ${extraClasses}`}>
@@ -135,6 +141,9 @@ function PaginatedProjects(props) {
   const numPages = Math.ceil(projects.length / projectsPerPage);
   const hiddenProjects = numProjects - projectsPerPage;
   const canPaginate = !expanded && projectsPerPage < numProjects;
+  
+  console.log(props.projects.length);
+  console.log('canPaginate', canPaginate);
 
   const PaginationControls = () => (
     <div>
