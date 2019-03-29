@@ -5,31 +5,30 @@ import ExpanderContainer from '../components/containers/expander';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
 import TextInput from '../components/fields/text-input';
-
 import Heading from '../components/text/heading';
+import { debounce } from 'lodash';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
 
   let { projects } = props;
-  // useEffect(() => {
-  //   console.log('useEffect');
-  //   if (filter.length) {
-  //     projects = projects.filter((p) => {
-  //       return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
-  //     });
-  //   }
-  // });
-  function setFilterz(value) {
-    setFilter(value);
-  }
+  useEffect(() => {
+    console.log('useEffect');
+    if (filter.length) {
+      projects = projects.filter((p) => {
+        return p.domain.includes(filter) || p.description.toLowerCase().includes(filter);
+      });
+    }
+  });
+  
+  function onChangeFilter (val) {
 
   return (
     <article className={`projects ${extraClasses}`}>
       <div>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={setFilterz} opaque placeholder="find a project" type="search" value={filter} />
+          <TextInput className="header-search" name="q" onChange={value => debounce(setFilter(value), 500)} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
