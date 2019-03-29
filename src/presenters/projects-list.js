@@ -12,16 +12,14 @@ import { debounce } from 'lodash';
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [debouncedFilter, setDebouncedFilter] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [debouncedFilter, setDebouncedFilter] = useState([]);
   
   const isValidFilter = filter.length > 1;
 
   let { projects } = props;
 
-  function filterProjects() {
-    setIsFiltering(true);
-
+  function filterProjects() {    
     if (isValidFilter) {      
       setFilteredProjects(props.projects.filter((p) => {
         return (
@@ -33,7 +31,8 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       setFilteredProjects([]);
     }
     
-    setIsFiltering(false);
+    setDoneFiltering(true);
+    console.log('doneFiltereng', doneFiltering);
   }
 
   useEffect(
@@ -46,12 +45,12 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   );
   
   let projectsEl;
-  const noResults = isValidFilter && !filteredProjects.length && !isFiltering 
+  const noResults = isValidFilter && doneFiltering 
   
-  if (isValidFilter && filteredProjects.length) {
-    projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
-  } else if (isFiltering) {
+  if (!doneFiltering) {
     projectsEl = <Loader />
+  } else if (isValidFilter && filteredProjects.length) {
+    projectsEl = <ProjectsUL {...props} projects={filteredProjects} />
   } else if (noResults) {
     projectsEl = 'No results';
   } else {
