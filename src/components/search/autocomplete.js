@@ -16,7 +16,7 @@ const TeamResult = ({ value: team }) => (
       <div className={styles.infoPrimary}>{team.name}</div>
       <div className={styles.infoSecondary}>@{team.url}</div>
     </div>
-    <div className={styles.memberContainer}>TODO: user avatars</div>
+    {/*<div className={styles.memberContainer}>MAYBE: user avatars</div> */}
   </TeamLink>
 );
 
@@ -55,7 +55,7 @@ const CollectionResult = ({ value: collection }) => (
       <div className={styles.infoPrimary}>{collection.name}</div>
       <div className={styles.infoSecondary}>@{collection.fullUrl}</div>
     </div>
-    <div className={styles.memberContainer}>TODO: project avatars</div>
+    {/*<div className={styles.memberContainer}>MAYBE: project avatars</div> */}
   </CollectionLink>
 );
 
@@ -72,37 +72,44 @@ const resultGroups = [
   //{ id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
+const MAX_RESULTS_PER_TYPE = 3;
+
 export const AutocompleteResults = ({ query, results }) => {
-  const resultGroupsWithItems = resultGroups.map((group) => ({ ...group, items: results[group.id].slice(0, 5) })).filter((group) => group.items.length > 0);
+  const resultGroupsWithItems = resultGroups
+    .map((group) => ({ ...group, items: results[group.id].slice(0, MAX_RESULTS_PER_TYPE) }))
+    .filter((group) => group.items.length > 0);
   return (
     <div className={styles.container}>
-    <ul>
-      {resultGroupsWithItems.map(({ id, label, Component, items }) => (
-        <li key={id}>
-          <header className={styles.resultGroupHeader}>{label}</header>
-          <ul>
-            {items.map((item) => (
-              <li key={item.id} className={styles.resultItem}>
-                <Component value={item} />
-              </li>
-            ))}
-          </ul>
+      <ul>
+        {resultGroupsWithItems.map(({ id, label, Component, items }) => (
+          <li key={id}>
+            <header className={styles.resultGroupHeader}>{label}</header>
+            <ul>
+              {items.map((item) => (
+                <li key={item.id} className={styles.resultItem}>
+                  <Component value={item} />
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+        <li>
+          <SeeAllResults query={query} />
         </li>
-      ))}
-      <SeeAllResults query={query} />
-    </ul>
+      </ul>
     </div>
   );
 };
 
 const AutocompleteSearch = ({ query }) => {
   const results = useAlgoliaSearch(query);
-  console.log(results)
+  console.log(results);
   if (results.totalHits > 0 && results.status === 'ready') {
-    return <div className={styles.popOver}>
-      <AutocompleteResults query={query} results={results} />;
-    </div>
-    
+    return (
+      <div className={styles.popOver}>
+        <AutocompleteResults query={query} results={results} />
+      </div>
+    );
   }
   return null;
 };
