@@ -5,7 +5,7 @@ import OptimisticTextInput from './optimistic-text-input';
 
 const TeamUrlInput = ({ url, onChange }) => (
   <OptimisticTextInput
-    
+    labelText="Team URL"
     prefix="@"
     value={url}
     onChange={onChange}
