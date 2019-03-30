@@ -52,7 +52,7 @@ const TextInput = ({ labelText, autoFocus, className, disabled, error, maxLength
 };
 
 TextInput.propTypes = {
-  labelText: PropTypes.string,
+  labelText: PropTypes.string.isRequired,
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
