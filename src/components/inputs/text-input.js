@@ -24,7 +24,6 @@ const TextInput = ({ labelText, autoFocus, className, disabled, error, maxLength
   });
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
-      // using visually hidden text to label input since aria-label values don't get translated into non-English languages
       <span className="visually-hidden">{labelText}</span>
       <span className={borderClassName}>
         {!!prefix && <InputPart>{prefix}</InputPart>}
