@@ -65,10 +65,8 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
 ];
 
-
-
-const ShowMoreButton = ({ onClick }) => (
-  <button onClick={onClick}>Show All</button>
+const ShowMoreButton = ({ label, onClick }) => (
+  <button onClick={onClick}>Show All {label}</button>
 )
 
 const MAX_UNFILTERED_RESULTS = 20
@@ -111,13 +109,15 @@ function SearchResults({ query, searchResults }) {
         <div key={id}>
           <article>
             <Heading tagName="h2">{label}</Heading>
-            <ul className="result-container">
+            <ul className={`${id}s-container`}>
               {results.map((result) => (
-                <ResultComponent key={result.id} result={result} />
+                <li key={result.id}>
+                  <ResultComponent result={result} />
+                </li>
               ))}
             </ul>
           </article>
-          {canShowMoreResults && <ShowMoreButton onClick={() => setActiveFilter(id)} />}
+          {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
         </div>
       ))}
       {noResults && <NotFound name="any results" />}
