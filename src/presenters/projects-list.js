@@ -68,7 +68,9 @@ ExpandyProjects.defaultProps = {
 export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      <li key={project.id}>
+        <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      </li>
     ))}
   </ul>
 );
