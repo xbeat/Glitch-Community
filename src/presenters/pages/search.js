@@ -103,6 +103,8 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultsComponent: CollectionResults },
 ];
 
+const MAX_UNFILTERED_RESULTS = 20
+
 const showGroup = (id, searchResults, activeFilter) => (activeFilter === 'all' || activeFilter === id) && searchResults[id].length > 0;
 
 function SearchResults({ query, searchResults }) {
@@ -112,8 +114,18 @@ function SearchResults({ query, searchResults }) {
 
   const filters = [
     { id: 'all', label: 'All' },
-    ...groups.map((group) => ({ ...group, hits: searchResults[group.id].length })).filter((group) => group.hits > 0),
+    ...groups.map((group) => ({ 
+      ...group, 
+      hits: searchResults[group.id].length,
+      maxHits: activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS, 
+    })).filter((group) => group.hits > 0),
   ];
+  
+  const renderedGroups = groups.map(group => ({
+    ...group,
+    results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
+    canShowMoreResults: activeFilter === group.id
+  })).filter(group => group.isVisible)
 
   return (
     <main className="search-results">
