@@ -103,9 +103,13 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultsComponent: CollectionResults },
 ];
 
+const ShowMoreButton = ({ id, onClick }) => (
+  <button onClick={() => onClick(id)}>Show All {groups[id].label}</button>
+)
+
 const MAX_UNFILTERED_RESULTS = 20
 
-const showGroup = (id, searchResults, activeFilter) => (activeFilter === 'all' || activeFilter === id) && searchResults[id].length > 0;
+const groupIsInFilter = (id, activeFilter) => (activeFilter === 'all' || activeFilter === id);
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -123,8 +127,9 @@ function SearchResults({ query, searchResults }) {
   
   const renderedGroups = groups.map(group => ({
     ...group,
+    isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
     results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
-    canShowMoreResults: activeFilter === group.id
+    canShowMoreResults: activeFilter !== group.id && searchResults[group.id].length > MAX_UNFILTERED_RESULTS,
   })).filter(group => group.isVisible)
 
   return (
@@ -138,9 +143,12 @@ function SearchResults({ query, searchResults }) {
       {ready && searchResults.totalHits > 0 && (
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
-      {groups.map(({ id, ResultsComponent }) =>
-        showGroup(id, searchResults, activeFilter) ? <ResultsComponent key={id} results={searchResults[id]} /> : null,
-      )}
+      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultsComponent }) => (
+        <div key={id}>
+          <ResultsComponent results={results} />
+          {canShowMoreResults && <ShowMoreButton id={id} onClick={setActiveFilter} />}
+        </div>
+      ))}
       {noResults && <NotFound name="any results" />}
     </main>
   );
