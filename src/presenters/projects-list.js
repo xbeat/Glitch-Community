@@ -30,8 +30,8 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      const debounced = debounce(filterProjects, 350);
-      debounced();
+      debounce(filterProjects, 400)();
+      // debounced();
     },
     [filter],
   );
