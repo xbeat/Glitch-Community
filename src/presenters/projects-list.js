@@ -41,19 +41,6 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   }
   
   const placeholderEl = filtering ? 'No projects found' : props.placeholder;
-  console.log(placeholderEl);
-
-  // if (enablePagination || enableFiltering) {
-  //   if (validFilter && isDoneFiltering) {
-  //     projectsEl = filteredProjects.length ? <PaginatedProjects {...props} projects={filteredProjects} /> : 'No results';
-  //   } else {
-  //     projectsEl = <PaginatedProjects {...props} projects={projects} />;
-  //   }
-  // } else if (!projects.length) {
-  //   // placeholder
-  // } else {
-  //   projectsEl = <ProjectsUL {...props} />;
-  // }
 
   return (
     <article className={`projects ${extraClasses}`}>
@@ -131,6 +118,7 @@ function PaginatedProjects(props) {
   );
 }
 
+
 PaginatedProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectsPerPage: PropTypes.number,
@@ -144,18 +132,23 @@ PaginatedProjects.defaultProps = {
   enablePagination: false,
 };
 
-export const ProjectsUL = ({ ...props }) => {
-  return (
-    <ul className="projects-container">
-      {props.projects.map((project) => (
-        <ProjectItem key={project.id} {...{ project }} {...props} />
-      ))}
-    </ul>
-  );
-};
+export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
+  <ul className="projects-container">
+    {props.projects.map((project) => (
+      <li key={project.id}>
+        <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      </li>
+    ))}
+  </ul>
+);
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
+  showProjectDescriptions: PropTypes.bool,
+};
+
+ProjectsUL.defaultProps = {
+  showProjectDescriptions: true,
 };
 
 export default ProjectsList;

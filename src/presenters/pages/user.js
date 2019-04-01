@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { orderBy, partition } from 'lodash';
+import Heading from 'Components/text/heading';
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
@@ -19,7 +20,6 @@ import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
 import ProjectsLoader from '../projects-loader';
 import ReportButton from '../pop-overs/report-abuse-pop';
-import Heading from '../../components/text/heading';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({ login }));

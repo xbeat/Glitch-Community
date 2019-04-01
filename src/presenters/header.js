@@ -1,12 +1,11 @@
 /* global EDITOR_URL */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Redirect } from 'react-router-dom';
 import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
-import TextInput from '../components/fields/text-input';
+import SearchForm from '../components/search/form';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -20,30 +19,6 @@ const ResumeCoding = () => (
   </TrackedExternalLink>
 );
 
-function SearchForm({ defaultValue }) {
-  const [value, onChange] = useState(defaultValue);
-  const [submitted, setSubmitted] = useState(false);
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (!value) return;
-    setSubmitted(true);
-  };
-
-  return (
-    <form action="/search" method="get" role="search" onSubmit={onSubmit}>
-      <TextInput className="header-search" name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
-      {submitted && <Redirect to={`/search?q=${value}`} push />}
-    </form>
-  );
-}
-
-SearchForm.propTypes = {
-  defaultValue: PropTypes.string,
-};
-SearchForm.defaultProps = {
-  defaultValue: '',
-};
-
 const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
   <header role="banner">
     <div className="header-info">
@@ -53,7 +28,12 @@ const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
     </div>
 
     <nav>
-      <SearchForm defaultValue={searchQuery} />
+      <div>
+        <span className="header-search">
+          <SearchForm defaultValue={searchQuery} />
+        </span>
+      </div>
+
       <NewProjectPop />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop />}

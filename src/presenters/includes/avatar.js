@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TooltipContainer from '../../components/tooltips/tooltip-container';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
 
-import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
-import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
+import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from 'Models/team';
+import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from 'Models/user';
 
 // UserAvatar
 

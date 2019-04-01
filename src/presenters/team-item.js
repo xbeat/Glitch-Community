@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from 'Components/buttons/button';
+import Markdown from 'Components/text/markdown';
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
-import { TeamLink } from './includes/link';
-import Markdown from '../components/text/markdown';
 import { Thanks } from './includes/thanks';
 import UsersList from './users-list';
 import WrappingLink from './includes/wrapping-link';
 import { VerifiedBadge } from './includes/team-elements';
-import Button from '../components/buttons/button';
 
 export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });
@@ -21,9 +20,7 @@ export default function TeamItem({ team }) {
         <div className="content">
           <img className="avatar" src={getAvatarUrl(team)} alt="" />
           <div className="information">
-            <TeamLink team={team}>
-              <Button>{team.name}</Button>
-            </TeamLink>
+            <Button href={getLink(team)}>{team.name}</Button>
             {!!team.isVerified && <VerifiedBadge />}
             <UsersList users={team.users} />
             {!!team.description && (

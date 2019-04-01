@@ -15,6 +15,9 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent, childr
     'tooltip-container': true,
   });
 
+  // prevents invalid aria-labelledby values when names contain whitespace
+  id = id.replace(/\s/g, '-');
+
   const tooltipClassName = cx({
     tooltip: true,
     top: align.includes('top'),

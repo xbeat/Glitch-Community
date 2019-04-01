@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from '../src/components/buttons/button';
-import Emoji from '../src/components/images/emoji';
-import TooltipContainer from '../src/components/tooltips/tooltip-container';
-import TextInput from '../src/components/fields/text-input';
-import TextArea from '../src/components/fields/text-area';
-import Image from '../src/components/image/image';
-import Text from '../src/components/text/text';
-import Heading from '../src/components/text/heading';
-import Markdown from '../src/components/text/markdown';
-import Badge from '../src/components/badges/badge';
-import SegmentedButtons from '../src/components/buttons/segmented-buttons';
+import Button from 'Components/buttons/button';
+import Emoji from 'Components/images/emoji';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
+import TextInput from 'Components/inputs/text-input';
+import TextArea from 'Components/inputs/text-area';
+import Image from 'Components/images/image';
+import Text from 'Components/text/text';
+import Heading from 'Components/text/heading';
+import Markdown from 'Components/text/markdown';
+import Badge from 'Components/badges/badge';
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
 
 const helloAlert = () => {
   alert('hello');
+};
+
+const withState = (initState, Component) => {
+  const WrappedComponent = () => {
+    const [state, setState] = useState(initState);
+    return <Component state={state} setState={setState} />;
+  }
+  return () => <WrappedComponent />;
 };
 
 storiesOf('Button', module)
@@ -142,13 +150,40 @@ storiesOf('Badge', module)
   .add('error', () => <Badge type="error">Error</Badge>);
 
 storiesOf('Segmented-Buttons', module)
-
-  .add('regular', () => <SegmentedButtons buttons={[{name: '1', contents: 1}, {name: '2', contents: 2}, {name: '3', contents: 3}]} onClick={helloAlert} />)
-  .add('jsx contents', () => <SegmentedButtons 
-                               buttons={[
-                                {name: 'normal', contents:<><Badge>Normal</Badge> Badge</>}, 
-                                {name: 'error', contents:<><Badge type="error">Error</Badge> Badge</>}
-                                ]}
-                               onClick={helloAlert}
-                             />
+  .add(
+    'regular',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[{ name: 'a', contents: 1 }, { name: 'b', contents: 2 }, { name: 'c', contents: 3 }]}
+      />
+    )),
+  )
+  .add(
+    'jsx contents',
+    withState('a', ({ state, setState }) => (
+      <SegmentedButtons
+        value={state}
+        onChange={setState}
+        buttons={[
+          {
+            name: 'a',
+            contents: (
+              <>
+                <Badge>Normal</Badge> Badge
+              </>
+            ),
+          },
+          {
+            name: 'b',
+            contents: (
+              <>
+                <Badge type="error">Error</Badge> Badge
+              </>
+            ),
+          },
+        ]}
+      />
+    )),
   );

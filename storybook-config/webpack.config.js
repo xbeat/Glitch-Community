@@ -1,4 +1,5 @@
 const path = require('path');
+const appConfig = require('../webpack.config.js');
 
 module.exports = async ({ config, mode }) => {
   // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -23,9 +24,19 @@ module.exports = async ({ config, mode }) => {
         loader: 'stylus-loader',
       },
     ],
-    include: path.resolve(__dirname, '../src/components'),
+    include: path.resolve(__dirname, '..'),
   });
   
+  config.resolve = {
+      extensions: appConfig.resolve.extensions,
+      alias: {
+        ...appConfig.resolve.alias,
+        ...config.resolve.alias,
+      },
+    },
+  
+  config.context = appConfig.context;
+
   config.mode = 'development';
 
   // Return the altered config

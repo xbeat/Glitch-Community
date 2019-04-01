@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { partition } from 'lodash';
+import TeamNameInput from 'Components/fields/team-name-input';
+import TeamUrlInput from 'Components/fields/team-url-input';
+import Text from 'Components/text/text';
+import Heading from 'Components/text/heading';
 import { AnalyticsContext } from '../analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -17,7 +21,6 @@ import { captureException } from '../../utils/sentry';
 // import SampleTeamCollections from '../../curated/sample-team-collections';
 import CollectionsList from '../collections-list';
 
-import EditableField from '../includes/editable-field';
 import { Thanks } from '../includes/thanks';
 import NameConflictWarning from '../includes/name-conflict';
 import AddTeamProject from '../includes/add-team-project';
@@ -28,10 +31,8 @@ import EntityPageProjects from '../entity-page-projects';
 import ProjectsLoader from '../projects-loader';
 import TeamAnalytics from '../includes/team-analytics';
 import { TeamMarketing, VerifiedBadge } from '../includes/team-elements';
-import Text from '../../components/text/text';
 import ReportButton from '../pop-overs/report-abuse-pop';
 
-import Heading from '../../components/text/heading';
 
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
@@ -40,15 +41,10 @@ function syncPageToUrl(team) {
 const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
   <>
     <Heading tagName="h1">
-      <EditableField value={team.name} update={updateName} placeholder="What's its name?" suffix={team.isVerified ? <VerifiedBadge /> : null} />
+      <TeamNameInput name={team.name} onChange={updateName} verified={team.isVerified} />
     </Heading>
     <p className="team-url">
-      <EditableField
-        value={team.url}
-        update={(url) => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))}
-        placeholder="Short url?"
-        prefix="@"
-      />
+      <TeamUrlInput url={team.url} onChange={(url) => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
     </p>
   </>
 );

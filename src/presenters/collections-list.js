@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { orderBy } from 'lodash';
+import Heading from 'Components/text/heading';
 import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
@@ -11,7 +12,6 @@ import { useNotifications } from './notifications';
 import { useAPI } from '../state/api';
 import { useCurrentUser } from '../state/current-user';
 
-import Heading from '../components/text/heading';
 
 function CollectionsList({ collections: rawCollections, title, isAuthorized, maybeTeam }) {
   const api = useAPI();

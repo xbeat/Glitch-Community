@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import Markdown from 'Components/text/markdown';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
-import Markdown from '../components/text/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
-const ProjectItem = ({ project, collection, ...props }) => (
-  <li>
+const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props }) => (
+  <>
     <Note
       collection={collection}
       project={project}
@@ -19,26 +20,33 @@ const ProjectItem = ({ project, collection, ...props }) => (
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
-      <div className={['project', project.private ? 'private-project' : ''].join(' ')} data-track="project" data-track-label={project.domain}>
+      <div
+        className={classnames('project', { 'private-project': project.private, 'hide-description': hideProjectDescriptions })}
+        data-track="project"
+        data-track-label={project.domain}
+      >
         <div className="project-container">
           <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
           <ProjectLink project={project} className="button">
             <span className="project-badge private-project-badge" aria-label="private" />
             <div className="project-name">{project.domain}</div>
           </ProjectLink>
-          <div className="description">
-            <Markdown length={80}>{project.description}</Markdown>
-          </div>
+          {!hideProjectDescriptions && (
+            <div className="description">
+              <Markdown length={80}>{project.description}</Markdown>
+            </div>
+          )}
           <div className="overflow-mask" />
         </div>
       </div>
     </WrappingLink>
-  </li>
+  </>
 );
 
 ProjectItem.propTypes = {
   author: PropTypes.object,
   hideNote: PropTypes.func,
+  hideProjectDescriptions: PropTypes.bool,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
@@ -54,8 +62,9 @@ ProjectItem.propTypes = {
 
 ProjectItem.defaultProps = {
   author: null,
-  projectOptions: {},
   hideNote: () => {},
+  hideProjectDescriptions: false,
+  projectOptions: {},
 };
 
 export default ProjectItem;

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { UserLink } from './includes/link';
-import Markdown from '../components/text/markdown';
-import { Thanks } from './includes/thanks';
+import Button from 'Components/buttons/button';
+import Markdown from 'Components/text/markdown';
 
+import { UserLink } from './includes/link';
+import { Thanks } from './includes/thanks';
 import WrappingLink from './includes/wrapping-link';
-import Button from '../components/buttons/button';
 
 import { ANON_AVATAR_URL, getAvatarUrl, getLink, getProfileStyle } from '../models/user';
 
@@ -25,9 +25,7 @@ export default function UserItem({ user }) {
           <div className="information">
             {user.name ? (
               <>
-                <UserLink user={user}>
-                  <Button>{user.name}</Button>
-                </UserLink>
+                <Button href={getLink(user)}>{user.name}</Button>
                 <p className="name">@{user.login}</p>
               </>
             ) : (

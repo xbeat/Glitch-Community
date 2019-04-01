@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Text from '../components/text/text';
+import Text from 'Components/text/text';
 
 const context = React.createContext();
 const { Provider } = context;

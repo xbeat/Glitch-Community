@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Text from 'Components/text/text';
 import { Link } from './includes/link';
-import Text from '../components/text/text';
 
 const FooterLine = ({ href, track, children }) => (
   <Text>
@@ -24,31 +24,31 @@ export default function Footer() {
     <footer role="contentinfo">
       <FooterLine href="/about" track="about">
         About Glitch{' '}
-        <span role="img" aria-label="">
+        <span aria-hidden="true">
           🔮
         </span>
       </FooterLine>
       <FooterLine href="https://medium.com/glitch" track="blog">
         Blog{' '}
-        <span role="img" aria-label="">
+        <span aria-hidden="true">
           📰
         </span>
       </FooterLine>
       <FooterLine href="/help/" track="faq">
         Help Center{' '}
-        <span role="img" aria-label="">
+        <span aria-hidden="true">
           ☂️
         </span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status{' '}
-        <span role="img" aria-label="">
+        <span aria-hidden="true">
           🚥
         </span>
       </FooterLine>
       <FooterLine href="/legal" track="legal stuff">
         Legal Stuff{' '}
-        <span role="img" aria-label="">
+        <span aria-hidden="true">
           👮‍
         </span>
       </FooterLine>
