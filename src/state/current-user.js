@@ -235,15 +235,23 @@ class CurrentUserManager extends React.Component {
 
   render() {
     const { children, sharedUser, cachedUser } = this.props;
-    return children({
-      currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
-      persistentToken: this.persistentToken(),
-      fetched: !!cachedUser && this.state.fetched,
-      reload: () => this.load(),
-      login: (user) => this.login(user),
-      update: (changes) => this.update(changes),
-      clear: () => this.logout(),
-    });
+    const currentUser = { ...defaultUser, ...sharedUser, ...cachedUser };
+    return (
+      <>
+        {currentUser.isSupport ? <div>You are the super user</div> : null}
+        {
+          children({
+            currentUser,
+            persistentToken: this.persistentToken(),
+            fetched: !!cachedUser && this.state.fetched,
+            reload: () => this.load(),
+            login: (user) => this.login(user),
+            update: (changes) => this.update(changes),
+            clear: () => this.logout(),
+          })
+        }
+      </>
+    );
   }
 }
 CurrentUserManager.propTypes = {
