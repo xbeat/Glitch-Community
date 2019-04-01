@@ -108,7 +108,7 @@ function SearchResults({ query, searchResults }) {
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
         <div key={id}>
-          <article>
+          <article className="search-results__group-container">
             <Heading tagName="h2">{label}</Heading>
             <ul className={`${id}s-container`}>
               {results.map((result) => (
@@ -117,8 +117,8 @@ function SearchResults({ query, searchResults }) {
                 </li>
               ))}
             </ul>
+            {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
           </article>
-          {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
         </div>
       ))}
       {noResults && <NotFound name="any results" />}
