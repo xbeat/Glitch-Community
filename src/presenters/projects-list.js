@@ -77,6 +77,8 @@ ProjectsList.propTypes = {
 ProjectsList.defaultProps = {
   placeholder: null,
   extraClasses: '',
+  enableFiltering: false,
+  enablePagination: false,
 };
 
 function NavigableProjects(props) {
@@ -128,10 +130,14 @@ function NavigableProjects(props) {
 NavigableProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectsPerPage: PropTypes.number,
+  enableFiltering: PropTypes.bool,
+  enablePagination: PropTypes.bool,
 };
 
 NavigableProjects.defaultProps = {
   projectsPerPage: 6,
+  enableFiltering: false,
+  enablePagination: false,
 };
 
 export const ProjectsUL = ({ ...props }) => {
