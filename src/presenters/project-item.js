@@ -10,7 +10,7 @@ import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
 const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props }) => (
-  <li>
+  <>
     <Note
       collection={collection}
       project={project}
@@ -40,7 +40,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
         </div>
       </div>
     </WrappingLink>
-  </li>
+  </>
 );
 
 ProjectItem.propTypes = {
