@@ -10,7 +10,7 @@ import Heading from '../components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
-  // const [filteredProjects, setFilteredProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [isDoneFiltering, setIsDoneFiltering] = useState(false);
 
   const validFilter = filter.length > 1;
@@ -21,32 +21,25 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
     setIsDoneFiltering(false);
 
     if (validFilter) {
-      // setFilteredProjects(props.projects.filter((p) => p.domain.includes(filter) || p.description.toLowerCase().includes(filter)));
-      projects = projects.filter((p) => p.domain.includes(filter) || p.description.toLowerCase().includes(filter));
+      setFilteredProjects(props.projects.filter((p) => p.domain.includes(filter) || p.description.toLowerCase().includes(filter)));
       setIsDoneFiltering(true);
     } else {
-      // setFilteredProjects([]);
-      projects = [];
+      setFilteredProjects([]);
     }
   }
 
-  useEffect(
-    () => {
-      debounce(filterProjects, 400)();
-      // debounced();
-    },
-    [filter],
-  );
-  
-  // projects = enableFiltering && validFilter ? filteredProjects : projects;
-  
+  useEffect(() => debounce(filterProjects, 400)(), [filter]);
+
+  //
+  validFilter && filteredProjects.length ? filteredProjects : projects;
+
   let projectsEl;
   if (enablePagination) {
     projectsEl = <NavigableProjects {...props} projects={projects} />;
   } else {
     projectsEl = <ProjectsUL {...props} projects={projects} />;
-  }   
-    
+  }
+
   // if (enablePagination || enableFiltering) {
   //   if (validFilter && isDoneFiltering) {
   //     projectsEl = filteredProjects.length ? <NavigableProjects {...props} projects={filteredProjects} /> : 'No results';
