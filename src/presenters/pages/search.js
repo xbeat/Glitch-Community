@@ -67,7 +67,7 @@ const groups = [
 
 // TODO: add `type` fields to legacy search results, so everything can render the same
 const groupsByType = keyBy(groups, (group) => group.id);
-   
+
 const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
 
 const MAX_UNFILTERED_RESULTS = 20;
@@ -89,11 +89,9 @@ function SearchResults({ query, searchResults }) {
       }))
       .filter((group) => group.hits > 0),
   ];
-  
-  
-  
-  
-  const renderedGroups = groups.map((group) => ({
+
+  const renderedGroups = groups
+    .map((group) => ({
       ...group,
       isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
       results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
@@ -102,21 +100,21 @@ function SearchResults({ query, searchResults }) {
     .filter((group) => group.isVisible);
 
   if (searchResults.topResults.length > 0) {
-    renderedGroups.unshift({ 
-      id: 'top', 
+    renderedGroups.unshift({
+      id: 'top',
       label: 'Top Results',
       isVisible: true,
       results: searchResults.topResults,
       canShowMoreResults: false,
       ResultComponent: ({ result }) => {
         const Component = groupsByType[result.type].ResultComponent;
-        return <Component result={result} />
+        return <Component result={result} />;
       },
       // TODO: handle this with CSS
       hr: true,
-    })
+    });
   }
-  
+
   return (
     <main className="search-results">
       {searchResults.status === 'loading' && (
@@ -140,7 +138,7 @@ function SearchResults({ query, searchResults }) {
               ))}
             </ul>
             {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
-            {hr && <hr/>}
+            {hr && <hr />}
           </article>
         </div>
       ))}
