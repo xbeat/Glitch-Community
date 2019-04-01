@@ -47,6 +47,8 @@ EntityPageProjects.defaultProps = {
   removePin: null,
   projectOptions: {},
   currentUser: null,
+  enableFiltering: false,
+  enablePagination: false,
 };
 
 export default EntityPageProjects;
