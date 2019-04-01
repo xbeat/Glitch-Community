@@ -19,7 +19,6 @@ import TeamItem from '../team-item';
 import UserItem from '../user-item';
 import CollectionItem from '../collection-item';
 
-
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
     name: filter.id,
@@ -47,8 +46,8 @@ const ProjectResult = ({ result }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
   return currentUser.login ? (
-    <ProjectItem 
-      project={result} 
+    <ProjectItem
+      project={result}
       projectOptions={{
         addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
       }}
@@ -65,13 +64,11 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ label, onClick }) => (
-  <button onClick={onClick}>Show All {label}</button>
-)
+const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
 
-const MAX_UNFILTERED_RESULTS = 20
+const MAX_UNFILTERED_RESULTS = 20;
 
-const groupIsInFilter = (id, activeFilter) => (activeFilter === 'all' || activeFilter === id);
+const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -80,19 +77,23 @@ function SearchResults({ query, searchResults }) {
 
   const filters = [
     { id: 'all', label: 'All' },
-    ...groups.map((group) => ({ 
-      ...group, 
-      hits: searchResults[group.id].length,
-      maxHits: activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS, 
-    })).filter((group) => group.hits > 0),
+    ...groups
+      .map((group) => ({
+        ...group,
+        hits: searchResults[group.id].length,
+        maxHits: activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS,
+      }))
+      .filter((group) => group.hits > 0),
   ];
-  
-  const renderedGroups = groups.map(group => ({
-    ...group,
-    isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
-    results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
-    canShowMoreResults: activeFilter !== group.id && searchResults[group.id].length > MAX_UNFILTERED_RESULTS,
-  })).filter(group => group.isVisible)
+
+  const renderedGroups = groups
+    .map((group) => ({
+      ...group,
+      isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
+      results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
+      canShowMoreResults: activeFilter !== group.id && searchResults[group.id].length > MAX_UNFILTERED_RESULTS,
+    }))
+    .filter((group) => group.isVisible);
 
   return (
     <main className="search-results">

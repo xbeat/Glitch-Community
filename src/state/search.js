@@ -93,17 +93,17 @@ export function useAlgoliaSearch(query) {
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data
+  return data;
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data
+  return data;
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data
+  return data;
 }
 
 // This API is slow and is missing important data (so its unfit for production)
