@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
 import ProjectItem from './project-item';
+import Text from '../components/text/text';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
 import TextInput from '../components/inputs/text-input';
@@ -43,7 +44,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   const placeholderEl = filtering ? (
     <div className="filter-results-placeholder">
       <img alt="" src="https://cdn.glitch.com/c117d5df-3b8d-4389-9e6b-eb049bcefcd6%2Fcompass-not-found.svg?1554146070630" />
-      <p>No projects found</p>
+      <Text>No projects found</Text>
     </div>
   ) : (
     props.placeholder
@@ -100,9 +101,7 @@ function PaginatedProjects(props) {
       <Button type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
         <img alt="" className="arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
-      <div className="pages">
-        {page} / {numPages}
-      </div>
+      <div className="pages">{page} / {numPages}</div>
       <Button type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
         <img alt="" className="arrow next-arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
