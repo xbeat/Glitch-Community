@@ -45,15 +45,23 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     [filter],
   );
 
+  // let projectsEl;
+  // if (isDoneFiltering && validFilter) {
+  //   if (filteredProjects.length) {
+  //     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />;
+  //   } else {
+  //     projectsEl = 'No results';
+  //   }
+  // } else {
+  //   projectsEl = <PaginatedProjects {...props} projects={projects} />;
+  // }
   let projectsEl;
-  if (isDoneFiltering && validFilter) {
-    if (filteredProjects.length) {
-      projectsEl = <ProjectsUL {...props} projects={filteredProjects} />;
-    } else {
-      projectsEl = 'No results';
-    }
+  if (props.enablePagination || props.enableFiltering) {
+    if (isDoneFiltering) {
+      projectsEl = filtered<NavigableProjects {...props} projects={filteredProjects} />;
+    } els 
   } else {
-    projectsEl = <PaginatedProjects {...props} projects={projects} />;
+    projectsEl = <ProjectsUL {...props} />;
   }
 
   return (
