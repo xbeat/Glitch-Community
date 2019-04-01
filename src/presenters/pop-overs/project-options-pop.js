@@ -77,7 +77,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
   const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.displayNewNote;
-  
+
   const onClickAddPin = useTrackedFunc(animateThenAddPin, 'Project Pinned');
   const onClickRemovePin = useTrackedFunc(animateThenRemovePin, 'Project Un-Pinned');
   const onClickLeaveTeamProject = useTrackedFunc(leaveTeamProject, 'Leave Project clicked');

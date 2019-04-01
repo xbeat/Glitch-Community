@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { kebabCase, orderBy } from 'lodash';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
-import { TrackClick } from '../analytics';
+import { useTracker } from '../analytics';
 import { getLink, createCollection } from '../../models/collection';
 import { useAPI } from '../../state/api';
 
@@ -33,6 +33,23 @@ function getTeamOptions(teams) {
   });
   return teamOptions;
 }
+
+const SubmitButton = ({ disabled }) => {
+  const track = useTracker("Create Collection clicked", (inherited) => ({
+    ...inherited,
+    origin: `${inherited.origin} project`,
+  }));
+  return (
+    <div className="button-wrap">
+      <button type="submit" onClick={track} className="create-collection button-small" disabled={disabled}>
+        Create
+      </button>
+    </div>
+  );
+};
+SubmitButton.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+};
 
 class CreateCollectionPop extends React.Component {
   constructor(props) {
@@ -159,19 +176,7 @@ class CreateCollectionPop extends React.Component {
             )}
 
             {!this.state.loading ? (
-              <TrackClick
-                name="Create Collection clicked"
-                properties={(inherited) => ({
-                  ...inherited,
-                  origin: `${inherited.origin} project`,
-                })}
-              >
-                <div className="button-wrap">
-                  <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
-                    Create
-                  </button>
-                </div>
-              </TrackClick>
+              <SubmitButton disabled={!!queryError || !submitEnabled} />
             ) : (
               <Loader />
             )}
