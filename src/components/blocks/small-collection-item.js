@@ -26,16 +26,14 @@ const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
     return { ...value, type: 'team' };
   }
   if (userId > 0) {
-    const value = await getSingleItem(api, `/v1/user/by/id/?id=${userId}`, userId);
-    // NOTE: `userId` added here to support anonymous users
-    return { ...value, id: userId, type: 'user' };
+    const value = await getSingleItem(api, `/v1/users/by/id/?id=${userId}`, userId);
+    return { ...value, type: 'user' };
   }
   return null;
 });
 
 const CollectionCurator = ({ collection }) => {
   const { value: teamOrUser } = useTeamOrUser(collection.teamId, collection.userId);
-  console.log(collection, teamOrUser);
   if (!teamOrUser) {
     return <div className={styles.placeholderAvatar} />;
   }
@@ -70,8 +68,8 @@ const SmallCollectionItem = ({ collection }) => (
             <div className={styles.collectionName}>{collection.name}</div>
           </FakeButton>
         </div>
-        {collection <div className={styles.description}>
-          <Markdown>{collection.description}</Markdown>
+        <div className={styles.description}>
+          <Markdown>{collection.description || ' '}</Markdown>
         </div>
       </div>
       <div className={styles.smallProjectCount}>

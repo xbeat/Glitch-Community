@@ -54,7 +54,7 @@ function formatCollection(hit) {
     teamId: hit.team,
     userId: hit.user,
     team: hit.team > 0 ? { id: hit.team, url: '' } : null,
-    user: hit.user > 0 ? { id: hit.user, login: '', color: '#efe' } : null,
+    user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };
 }
 
