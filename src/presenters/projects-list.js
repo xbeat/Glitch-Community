@@ -22,14 +22,7 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     setIsDoneFiltering(false);
 
     if (validFilter) {
-      setFilteredProjects(
-        props.projects.filter((p) => {
-          return (
-            p.domain.includes(filter) ||
-            p.description.toLowerCase().includes(filter)
-          );
-        }),
-      );
+      setFilteredProjects(props.projects.filter((p) => p.domain.includes(filter) || p.description.toLowerCase().includes(filter)));
       setIsDoneFiltering(true);
     } else {
       setFilteredProjects([]);
@@ -45,21 +38,13 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     [filter],
   );
 
-  // let projectsEl;
-  // if (isDoneFiltering && validFilter) {
-  //   if (filteredProjects.length) {
-  //     projectsEl = <ProjectsUL {...props} projects={filteredProjects} />;
-  //   } else {
-  //     projectsEl = 'No results';
-  //   }
-  // } else {
-  //   projectsEl = <PaginatedProjects {...props} projects={projects} />;
-  // }
   let projectsEl;
   if (props.enablePagination || props.enableFiltering) {
-    if (isDoneFiltering) {
-      projectsEl = filtered<NavigableProjects {...props} projects={filteredProjects} />;
-    } els 
+    if (validFilter && isDoneFiltering) {
+      projectsEl = filteredProjects.length ? <NavigableProjects {...props} projects={filteredProjects} /> : 'No results';
+    } else {
+      projectsEl = <NavigableProjects {...props} projects={projects} />;
+    }
   } else {
     projectsEl = <ProjectsUL {...props} />;
   }
@@ -69,21 +54,11 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
       <div className="header">
         <Heading tagName="h2">{title}</Heading>
         {props.enableFiltering ? (
-          <TextInput
-            className="header-search"
-            name="q"
-            onChange={setFilter}
-            opaque
-            placeholder="find a project"
-            type="search"
-            value={filter}
-          />
+          <TextInput className="header-search" name="q" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
-      {!!(placeholder && !projects.length) && (
-        <div className="placeholder">{placeholder}</div>
-      )}
+      {!!(placeholder && !projects.length) && <div className="placeholder">{placeholder}</div>}
 
       {projectsEl}
     </article>
@@ -104,7 +79,7 @@ ProjectsList.defaultProps = {
   extraClasses: '',
 };
 
-function PaginatedProjects(props) {
+function NavigableProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
@@ -122,30 +97,14 @@ function PaginatedProjects(props) {
 
   const PaginationControls = () => (
     <div>
-      <Button
-        type="tertiary"
-        disabled={page === 1}
-        onClick={() => setPage(page - 1)}
-      >
-        <img
-          alt=""
-          className="arrow"
-          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
-        />
+      <Button type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
+        <img alt="" className="arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
       <div className="pages">
         {page} / {numPages}
       </div>
-      <Button
-        type="tertiary"
-        disabled={page === numPages}
-        onClick={() => setPage(page + 1)}
-      >
-        <img
-          alt=""
-          className="arrow next-arrow"
-          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
-        />
+      <Button type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
+        <img alt="" className="arrow next-arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
@@ -166,12 +125,12 @@ function PaginatedProjects(props) {
   );
 }
 
-PaginatedProjects.propTypes = {
+NavigableProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectsPerPage: PropTypes.number,
 };
 
-PaginatedProjects.defaultProps = {
+NavigableProjects.defaultProps = {
   projectsPerPage: 6,
 };
 
