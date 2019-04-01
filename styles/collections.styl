@@ -129,17 +129,12 @@ collection-avatar-size = 55px
     display: inline-block
 
   .collection-name-description
-    width: 100%
-    margin-left: 12px
-
+    width: "calc(100% - %s- %s - 12px)", colle
+    margin-left: 12px  
+      
   .button
     max-width: "calc(100% - 11px)" % collection-avatar-size
     vertical-align: -13px
-
-  .project-name
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
 
   .description
     display: block
@@ -181,6 +176,9 @@ collection-avatar-size = 55px
       .project-name
         margin-top: 5px
         margin-left: 5px
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
       .private-project-badge
         display: none
         background-image: url("https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fprivate.svg?1496253541539")
