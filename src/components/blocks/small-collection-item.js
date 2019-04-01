@@ -35,6 +35,8 @@ const SmallCollectionItem = ({ collection }) => (
     <CollectionLink collection={collection} className={styles.smallLink} style={collectionColorStyles(collection)}>
       <div className={styles.smallNameDescriptionArea}>
         <div className={styles.nameArea}>
+          <div>
+          </div>
           <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           <FakeButton>
             {collection.private && <PrivateIcon />}
@@ -52,7 +54,7 @@ const SmallCollectionItem = ({ collection }) => (
 
 SmallCollectionItem.propTypes = {
   collection: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,

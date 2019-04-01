@@ -17,7 +17,7 @@ import NotFound from '../includes/not-found';
 import ProjectItem from '../project-item';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
-import SmallCollectionItem from 'Components/';
+import SmallCollectionItem from 'Components/blocks/small-collection-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
@@ -61,7 +61,7 @@ const groups = [
   { id: 'team', label: 'Teams', ResultComponent: ({ result }) => <TeamItem team={result} /> },
   { id: 'user', label: 'Users', ResultComponent: ({ result }) => <UserItem user={result} /> },
   { id: 'project', label: 'Projects', ResultComponent: ProjectResult },
-  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
+  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
 const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
