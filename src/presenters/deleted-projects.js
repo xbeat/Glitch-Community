@@ -35,7 +35,7 @@ DeletedProject.propTypes = {
 };
 
 const DeletedProjectsList = ({ deletedProjects, undelete }) => (
-  <ul className="deleted-projects-container">
+  <ul className="project-sdeleted-projects-container">
     {deletedProjects.map(({ id, domain }) => (
       <li key={id} className="deleted-project-container">
         <DeletedProject id={id} domain={domain} onClick={() => undelete(id)} />

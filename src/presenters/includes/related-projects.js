@@ -10,7 +10,6 @@ import { CoverContainer } from './profile';
 import { TeamLink, UserLink } from './link';
 import { ProjectsUL } from '../projects-list';
 import { useAPI } from '../../state/api';
-
 const PROJECT_COUNT = 3;
 
 const RelatedProjectsBody = ({ projects, coverStyle }) =>
