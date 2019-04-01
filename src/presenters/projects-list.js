@@ -100,7 +100,7 @@ function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
-  let { projects, projectsPerPage } = props; // TODO update where this is passed in
+  let { projects, projectsPerPage } = props;
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
