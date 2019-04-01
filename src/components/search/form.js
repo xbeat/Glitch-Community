@@ -29,7 +29,7 @@ function SearchForm({ defaultValue }) {
           autoCapitalize="off"
           onFocus={() => setVisible(true)}
         >
-          <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
+          <TextInput labelText="Search Glitch" name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
           {submitted && <Redirect to={`/search?q=${value}`} push />}
           {algoliaFlag && visible && <AutocompleteSearch query={value} />}
         </form>
