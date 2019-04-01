@@ -35,7 +35,7 @@ function getTeamOptions(teams) {
 }
 
 const SubmitButton = ({ disabled }) => {
-  const track = useTracker("Create Collection clicked", (inherited) => ({
+  const track = useTracker('Create Collection clicked', (inherited) => ({
     ...inherited,
     origin: `${inherited.origin} project`,
   }));
