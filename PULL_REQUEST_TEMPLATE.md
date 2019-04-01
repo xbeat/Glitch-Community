@@ -1,17 +1,17 @@
-**Links**
+## Links
 * Remix link
 * Manuscript link
 * Specs/Notion docs
 
-**GIF/Screenshots:**
+## GIF/Screenshots:
 
-**Changes:**
+## Changes:
 * ...
 
-**How To Test:**
+## How To Test:
 * ...
 
-**Feedback I'm looking for:** 
+## Feedback I'm looking for:
 
-**Things left to do before deploying:**
+## Things left to do before deploying:
 - [ ] ...
