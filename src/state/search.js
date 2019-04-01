@@ -17,6 +17,7 @@ function formatUser(hit) {
     id: Number(hit.objectID.split('-')[1]),
     thanksCount: hit.thanks,
     hasCoverImage: false,
+    color: '',
   };
 }
 
@@ -77,6 +78,10 @@ const MAX_RESULTS = 20;
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
   useEffect(() => {
+    if (!query) {
+      setHits([]);
+      return;
+    }
     searchIndex
       .search({
         query,
