@@ -67,7 +67,7 @@ const resultGroups = [
   { id: 'user', label: 'Users', Component: UserResult },
   { id: 'project', label: 'Projects', Component: ProjectResult },
   // TODO: enable after merging collections PR
-  // { id: 'collection', label: 'Collection Results', Component: CollectionResult },
+  { id: 'collection', label: 'Collection Results', Component: CollectionResult },
 ];
 
 const MAX_RESULTS_PER_TYPE = 3;
