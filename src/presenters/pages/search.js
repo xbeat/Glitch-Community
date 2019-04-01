@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { keyBy } from 'lodash';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
@@ -64,6 +65,9 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
 ];
 
+// TODO: add `type` fields to legacy search results, so everything can render the same
+const groupsByType = keyBy(groups, (group) => group.id);
+   
 const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
 
 const MAX_UNFILTERED_RESULTS = 20;
@@ -85,9 +89,11 @@ function SearchResults({ query, searchResults }) {
       }))
       .filter((group) => group.hits > 0),
   ];
-
-  const renderedGroups = groups
-    .map((group) => ({
+  
+  
+  
+  
+  const renderedGroups = groups.map((group) => ({
       ...group,
       isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
       results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
@@ -95,6 +101,22 @@ function SearchResults({ query, searchResults }) {
     }))
     .filter((group) => group.isVisible);
 
+  if (searchResults.topResults.length > 0) {
+    renderedGroups.unshift({ 
+      id: 'top', 
+      label: 'Top Results',
+      isVisible: true,
+      results: searchResults.topResults,
+      canShowMoreResults: false,
+      ResultComponent: ({ result }) => {
+        const Component = groupsByType[result.type].ResultComponent;
+        return <Component result={result} />
+      },
+      // TODO: handle this with CSS
+      hr: true,
+    })
+  }
+  
   return (
     <main className="search-results">
       {searchResults.status === 'loading' && (
@@ -106,11 +128,11 @@ function SearchResults({ query, searchResults }) {
       {ready && searchResults.totalHits > 0 && (
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
-      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
+      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent, hr }) => (
         <div key={id}>
           <article className="search-results__group-container">
             <Heading tagName="h2">{label}</Heading>
-            <ul className={`${id}s-container`}>
+            <ul className="search-results__results-container">
               {results.map((result) => (
                 <li key={result.id}>
                   <ResultComponent result={result} />
@@ -118,6 +140,7 @@ function SearchResults({ query, searchResults }) {
               ))}
             </ul>
             {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
+            {hr && <hr/>}
           </article>
         </div>
       ))}

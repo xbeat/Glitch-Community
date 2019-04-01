@@ -56,13 +56,13 @@ function formatCollection(hit) {
   };
 }
 
-const isTopResult = (hit, query) => [hit.name, hit.url, hit.login, hit.domain]
+const isExactMatch = (hit, query) => [hit.name, hit.url, hit.login, hit.domain]
   .filter(Boolean)
   .map(param => param.trim().toLowerCase()).includes(query.trim().toLowerCase())
 
 function formatHit(hit, query) {
-  if (isTopResult(hit, query)) {
-    hit = { ...hit, isTopResult: true }
+  if (isExactMatch(hit, query)) {
+    hit = { ...hit, isExactMatch: true }
   }
   
   switch (hit.type) {
@@ -93,13 +93,15 @@ export function useAlgoliaSearch(query) {
         query,
         hitsPerPage: 500,
       })
-      .then((res) => setHits(res.hits.map(formatHit)));
+      .then((res) => setHits(res.hits.map((hit) => formatHit(hit, query))));
   }, [query]);
 
   return {
     ...emptyResults,
     status: 'ready',
     totalHits: hits.length,
+    // TODO: starter kits should always be in this array
+    topResults: hits.filter(hit => hit.isExactMatch),
     ...groupBy(hits, (hit) => hit.type),
   };
 }
@@ -156,6 +158,8 @@ export function useLegacySearch(query) {
     ...emptyResults,
     status,
     totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
+    topResults: [],
     ...results,
+    
   };
 }
