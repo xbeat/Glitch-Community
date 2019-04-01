@@ -4,7 +4,6 @@ import Heading from 'Components/text/heading';
 import ExpanderContainer from 'Components/containers/expander';
 import ProjectItem from './project-item';
 
-
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
     <Heading tagName="h2">{title}</Heading>
@@ -68,7 +67,9 @@ ExpandyProjects.defaultProps = {
 export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      <li key={project.id}>
+        <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      </li>
     ))}
   </ul>
 );
