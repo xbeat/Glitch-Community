@@ -56,7 +56,15 @@ function formatCollection(hit) {
   };
 }
 
-function formatHit(hit) {
+const isTopResult = (hit, query) => [hit.name, hit.url, hit.login, hit.domain]
+  .filter(Boolean)
+  .map(param => param.trim().toLowerCase()).includes(query.trim().toLowerCase())
+
+function formatHit(hit, query) {
+  if (isTopResult(hit, query)) {
+    hit = { ...hit, isTopResult: true }
+  }
+  
   switch (hit.type) {
     case 'user':
       return formatUser(hit);
