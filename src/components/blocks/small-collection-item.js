@@ -4,8 +4,8 @@ import Pluralize from 'react-pluralize';
 
 import Markdown from 'Components/text/markdown';
 
-import { useAsyncFunction } from '../../state/api'
-import { getSingleItem } from '../../../shared/api'
+import { createAPIHook } from '../../state/api';
+import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
 import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
@@ -20,26 +20,26 @@ const collectionColorStyles = (collection) => ({
 const FakeButton = ({ children }) => <div className="button">{children}</div>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
-async function useTeamOrUser (api, teamId, userId) {
+const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
   if (teamId > 0) {
-    const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId)
-    return { ...value, type: 'team' }
+    const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId);
+    return { ...value, type: 'team' };
   }
   if (userId > 0) {
-        const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId)
-    return { ...value, type: 'user' }
-  
+    const value = await getSingleItem(api, `/v1/user/by/id/?id=${userId}`, userId);
+    // NOTE: `userId` added here to support anonymous users
+    return { ...value, id: userId, type: 'user' };
   }
-  return null
-}
+  return null;
+});
 
 const CollectionCurator = ({ collection }) => {
-  const teamOrUser = useTeamOrUser(collection.teamId, collection.userId)
-  console.log(teamnO
+  const { value: teamOrUser } = useTeamOrUser(collection.teamId, collection.userId);
+  console.log(collection, teamOrUser);
   if (!teamOrUser) {
     return <div className={styles.placeholderAvatar} />;
   }
-  
+
   if (teamOrUser.type === 'user') {
     return (
       <UserLink user={teamOrUser}>
@@ -47,11 +47,11 @@ const CollectionCurator = ({ collection }) => {
       </UserLink>
     );
   }
-    return (
-      <TeamLink team={teamOrUser}>
-        <TeamAvatar team={teamOrUser} />
-      </TeamLink>
-    );  
+  return (
+    <TeamLink team={teamOrUser}>
+      <TeamAvatar team={teamOrUser} />
+    </TeamLink>
+  );
 };
 
 const SmallCollectionItem = ({ collection }) => (
@@ -70,7 +70,7 @@ const SmallCollectionItem = ({ collection }) => (
             <div className={styles.collectionName}>{collection.name}</div>
           </FakeButton>
         </div>
-        <div className={styles.description}>
+        {collection <div className={styles.description}>
           <Markdown>{collection.description}</Markdown>
         </div>
       </div>

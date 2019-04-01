@@ -51,6 +51,8 @@ function formatCollection(hit) {
     coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc']),
     projects: [],
     url: '',
+    teamId: hit.team,
+    userId: hit.user,
     team: hit.team > 0 ? { id: hit.team, url: '' } : null,
     user: hit.user > 0 ? { id: hit.user, login: '', color: '#efe' } : null,
   };
