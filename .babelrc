@@ -11,7 +11,8 @@
           "edge": "16"
         },
         "useBuiltIns": "usage",
-        "corejs": 2
+        "corejs": 2,
+        "debug": true,
       }
     ]
   ],
