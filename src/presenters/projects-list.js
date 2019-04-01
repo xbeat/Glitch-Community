@@ -38,14 +38,15 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
 
   useEffect(
     () => {
-      setDebouncedFilter(debounce(filterProjects, 300));
-      debouncedFilter();
+      const debounced = debounce(filterProjects, 350);
+      setDebouncedFilter(debounced);
+      debounced();
     },
     [filter],
   );
 
   let projectsEl;
-  if (isDoneFiltering && validFilter(filter)) {
+  if (isDoneFiltering && validFilter) {
     if (filteredProjects.length) {
       projectsEl = <ProjectsUL {...props} projects={filteredProjects} />;
     } else {
@@ -59,7 +60,6 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     <article className={`projects ${extraClasses}`}>
       <div className="header">
         <Heading tagName="h2">{title}</Heading>
-        {isDoneFiltering ? 'Done!' : 'not done'}
         {props.enableFiltering ? (
           <TextInput
             className="header-search"
