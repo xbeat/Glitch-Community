@@ -33,24 +33,24 @@ const SmallCollectionItem = ({ collection }) => (
         <PlaceholderAvatar />
       )}
     </div>
-    <CollectionLink collection={collection} className={styles.smallLink} style={collectionColorStyles(collection)}>
-      <div className={styles.smallNameDescriptionArea}>
-        <div className={styles.nameArea}>
-          <div className={styles.collectionAvatarContainer}>
-            <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
+    <CollectionLink collection={collection} className={styles.bubbleContainer} style={collectionColorStyles(collection)}>
+        <div className={styles.smallNameDescriptionArea}>
+          <div className={styles.nameArea}>
+            <div className={styles.collectionAvatarContainer}>
+              <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
+            </div>
+            <FakeButton>
+              {collection.private && <PrivateIcon />}
+              <div className={styles.collectionName}>{collection.name}</div>
+            </FakeButton>
           </div>
-          <FakeButton>
-            {collection.private && <PrivateIcon />}
-            <div className={styles.collectionName}>{collection.name}</div>
-          </FakeButton>
+          <div className={styles.description}>
+            <Markdown>{collection.description}</Markdown>
+          </div>
         </div>
-        <div className={styles.description}>
-          <Markdown>{collection.description}</Markdown>
+        <div className={styles.smallProjectCount}>
+          <Pluralize count={collection.projectCount} singular="project" /> →
         </div>
-      </div>
-      <div className={styles.smallProjectCount}>
-        <Pluralize count={collection.projectCount} singular="project" /> →
-      </div>
     </CollectionLink>
   </div>
 );
