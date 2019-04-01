@@ -1,4 +1,5 @@
 collection-avatar-size = 55px
+collection-padding: 12px 
 
 .collections
   clear: both
@@ -129,7 +130,7 @@ collection-avatar-size = 55px
     display: inline-block
 
   .collection-name-description
-    width: "calc(100% - %s- %s - 12px)", colle
+    width: "calc(100% - %s- %s - 12px)" % collection-avatar-size collection-padding)
     margin-left: 12px  
       
   .button
