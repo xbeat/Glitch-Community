@@ -69,6 +69,10 @@
   .view-controls
     display: flex
     justify-content: space-between
+    // hide pagination menu on mobile
+    @media (max-width: mediumViewport)
+      .pagination-controls
+        display: none
     .arrow
       margin-bottom: 2px
     .next-arrow

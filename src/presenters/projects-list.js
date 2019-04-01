@@ -102,7 +102,7 @@ function PaginatedProjects(props) {
   }
 
   const PaginationControls = () => (
-    <div>
+    <div class="pagination-controls">
       <Button type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
         <img alt="" className="arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
