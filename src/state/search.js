@@ -48,7 +48,7 @@ function formatCollection(hit) {
   return {
     ...hit,
     id: Number(hit.objectID.split('-')[1]),
-    coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc' ]),
+    coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc']),
     projects: [],
     url: '',
     team: hit.team > 0 ? { id: hit.team, url: '' } : null,

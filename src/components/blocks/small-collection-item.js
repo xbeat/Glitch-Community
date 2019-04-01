@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
+
+import Markdown from 'Components/text/markdown';
+
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
 import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
-import Markdown from 'Components/text/markdown';
 
 import styles from './collection-item.styl';
 
@@ -16,41 +18,47 @@ const collectionColorStyles = (collection) => ({
 const FakeButton = ({ children }) => <div className="button">{children}</div>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
-const PlaceholderAvatar = () => <div className={styles.placeholderAvatar} />;
+const CollectionCurator = ({ collection }) => {
+  if (collection.user) {
+    return (
+      <UserLink user={collection.user}>
+        <UserAvatar user={collection.user} />
+      </UserLink>
+    );
+  }
+  if (collection.team && collection.team.url) {
+    return (
+      <TeamLink team={collection.team}>
+        <TeamAvatar team={collection.team} />
+      </TeamLink>
+    );
+  }
+  return <div className={styles.placeholderAvatar} />;
+};
 
 const SmallCollectionItem = ({ collection }) => (
   <div className={styles.smallContainer}>
     <div className={styles.curator}>
-      {collection.user ? (
-        <UserLink user={collection.user}>
-          <UserAvatar user={collection.user} />
-        </UserLink>
-      ) : collection.team && collection.team.url ? (
-        <TeamLink team={collection.team}>
-          <TeamAvatar team={collection.team} />
-        </TeamLink>
-      ) : (
-        <PlaceholderAvatar />
-      )}
+      <CollectionCurator collection={collection} />
     </div>
     <CollectionLink collection={collection} className={styles.bubbleContainer} style={collectionColorStyles(collection)}>
-        <div className={styles.smallNameDescriptionArea}>
-          <div className={styles.nameArea}>
-            <div className={styles.collectionAvatarContainer}>
-              <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
-            </div>
-            <FakeButton>
-              {collection.private && <PrivateIcon />}
-              <div className={styles.collectionName}>{collection.name}</div>
-            </FakeButton>
+      <div className={styles.smallNameDescriptionArea}>
+        <div className={styles.nameArea}>
+          <div className={styles.collectionAvatarContainer}>
+            <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           </div>
-          <div className={styles.description}>
-            <Markdown>{collection.description}</Markdown>
-          </div>
+          <FakeButton>
+            {collection.private && <PrivateIcon />}
+            <div className={styles.collectionName}>{collection.name}</div>
+          </FakeButton>
         </div>
-        <div className={styles.smallProjectCount}>
-          <Pluralize count={collection.projectCount} singular="project" /> →
+        <div className={styles.description}>
+          <Markdown>{collection.description}</Markdown>
         </div>
+      </div>
+      <div className={styles.smallProjectCount}>
+        <Pluralize count={collection.projectCount} singular="project" /> →
+      </div>
     </CollectionLink>
   </div>
 );
@@ -63,12 +71,7 @@ SmallCollectionItem.propTypes = {
     coverColor: PropTypes.string.isRequired,
     user: PropTypes.object,
     team: PropTypes.object,
-  }),
-};
-
-SmallCollectionItem.defaultProps = {
-  user: null,
-  team: null,
+  }).isRequired,
 };
 
 export default SmallCollectionItem;
