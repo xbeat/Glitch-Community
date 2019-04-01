@@ -11,7 +11,6 @@ import Heading from '../components/text/heading';
 function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   const [filter, setFilter] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [debouncedFilter, setDebouncedFilter] = useState(null);
   const [isDoneFiltering, setIsDoneFiltering] = useState(false);
 
   const validFilter = filter.length > 1;
@@ -32,12 +31,12 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
   useEffect(
     () => {
       const debounced = debounce(filterProjects, 350);
-      setDebouncedFilter(debounced);
       debounced();
     },
     [filter],
   );
 
+  
   let projectsEl;
   if (props.enablePagination || props.enableFiltering) {
     if (validFilter && isDoneFiltering) {
@@ -45,6 +44,8 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
     } else {
       projectsEl = <NavigableProjects {...props} projects={projects} />;
     }
+  } else if (!projects.length) {
+    // placeholder
   } else {
     projectsEl = <ProjectsUL {...props} />;
   }
@@ -57,8 +58,6 @@ function ProjectsList({ title, placeholder, extraClasses, ...props }) {
           <TextInput className="header-search" name="q" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
-
-      {!!(placeholder && !projects.length) && <div className="placeholder">{placeholder}</div>}
 
       {projectsEl}
     </article>
