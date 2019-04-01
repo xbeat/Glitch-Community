@@ -1,12 +1,11 @@
 /* global EDITOR_URL */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Redirect } from 'react-router-dom';
-import TextInput from 'Components/inputs/text-input';
 import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
+import SearchForm from '../components/search/form';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -53,7 +52,12 @@ const Header = ({ maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
     </div>
 
     <nav>
-      <SearchForm defaultValue={searchQuery} />
+      <div>
+        <span className="header-search">
+          <SearchForm defaultValue={searchQuery} />
+        </span>
+      </div>
+
       <NewProjectPop />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop />}
