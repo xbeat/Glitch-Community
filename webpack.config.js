@@ -83,14 +83,14 @@ module.exports = smp.wrap({
       },
       {
         oneOf: [
-          // {
-          //   test: /\.js$/,
-          //   loader: 'babel-loader',
-          //   include: mode === 'development' ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
-          //   query: {
-          //     compact: mode === 'development' ? true : false,
-          //   },
-          // },
+          {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            include: mode === 'development' ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
+            query: {
+              compact: mode === 'development' ? true : false,
+            },
+          },
           {
             test: /\.styl/,
             include: CSS_MODULES,
