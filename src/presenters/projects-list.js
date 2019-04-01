@@ -29,22 +29,25 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   }
 
   useEffect(() => debounce(filterProjects, 400)(), [filter]);
-
-  //
-  validFilter && filteredProjects.length ? filteredProjects : projects;
+  
+  const filtering = validFilter && isDoneFiltering
+  projects = filtering ? filteredProjects : projects;
 
   let projectsEl;
   if (enablePagination) {
-    projectsEl = <NavigableProjects {...props} projects={projects} />;
+    projectsEl = <PaginatedProjects {...props} projects={projects} />;
   } else {
     projectsEl = <ProjectsUL {...props} projects={projects} />;
   }
+  
+  const placeholderEl = filtering ? 'No projects found' : props.placeholder;
+  console.log(placeholderEl);
 
   // if (enablePagination || enableFiltering) {
   //   if (validFilter && isDoneFiltering) {
-  //     projectsEl = filteredProjects.length ? <NavigableProjects {...props} projects={filteredProjects} /> : 'No results';
+  //     projectsEl = filteredProjects.length ? <PaginatedProjects {...props} projects={filteredProjects} /> : 'No results';
   //   } else {
-  //     projectsEl = <NavigableProjects {...props} projects={projects} />;
+  //     projectsEl = <PaginatedProjects {...props} projects={projects} />;
   //   }
   // } else if (!projects.length) {
   //   // placeholder
@@ -61,7 +64,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
         ) : null}
       </div>
 
-      {projectsEl}
+      {projects.length ? projectsEl : placeholderEl}
     </article>
   );
 }
@@ -82,7 +85,7 @@ ProjectsList.defaultProps = {
   enablePagination: false,
 };
 
-function NavigableProjects(props) {
+function PaginatedProjects(props) {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState(false);
 
@@ -128,14 +131,14 @@ function NavigableProjects(props) {
   );
 }
 
-NavigableProjects.propTypes = {
+PaginatedProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectsPerPage: PropTypes.number,
   enableFiltering: PropTypes.bool,
   enablePagination: PropTypes.bool,
 };
 
-NavigableProjects.defaultProps = {
+PaginatedProjects.defaultProps = {
   projectsPerPage: 6,
   enableFiltering: false,
   enablePagination: false,
