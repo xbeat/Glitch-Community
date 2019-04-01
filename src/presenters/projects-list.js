@@ -128,14 +128,10 @@ function PaginatedProjects(props) {
 PaginatedProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectsPerPage: PropTypes.number,
-  enableFiltering: PropTypes.bool,
-  enablePagination: PropTypes.bool,
 };
 
 PaginatedProjects.defaultProps = {
   projectsPerPage: 6,
-  enableFiltering: false,
-  enablePagination: false,
 };
 
 export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
