@@ -4,6 +4,7 @@ import Pluralize from 'react-pluralize';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
 import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
+import Markdown from 'Components/text/markdown';
 
 import styles from './collection-item.styl';
 
@@ -20,7 +21,7 @@ const PlaceholderAvatar = () => <div className={styles.placeholderAvatar} />;
 const SmallCollectionItem = ({ collection }) => (
   <div className={styles.smallContainer}>
     <div className={styles.curator}>
-      {collection.user ? (
+      {collection._user ? (
         <UserLink user={collection.user}>
           <UserAvatar user={collection.user} />
         </UserLink>
@@ -35,15 +36,17 @@ const SmallCollectionItem = ({ collection }) => (
     <CollectionLink collection={collection} className={styles.smallLink} style={collectionColorStyles(collection)}>
       <div className={styles.smallNameDescriptionArea}>
         <div className={styles.nameArea}>
-          <div>
+          <div className={styles.collectionAvatarContainer}>
+            <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           </div>
-          <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           <FakeButton>
             {collection.private && <PrivateIcon />}
             <div className={styles.collectionName}>{collection.name}</div>
           </FakeButton>
         </div>
-        <div className={styles.description}>{collection.description}</div>
+        <div className={styles.description}>
+          <Markdown>{collection.description}</Markdown>
+        </div>
       </div>
       <div className={styles.smallProjectCount}>
         <Pluralize count={collection.projectCount} singular="project" /> →

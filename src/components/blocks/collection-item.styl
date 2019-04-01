@@ -1,8 +1,10 @@
 .smallLink
   display: block
   color: inherit
-  border-radius: 1rem
+  border-radius: 0.5rem
   overflow: hidden
+  &:hover
+    text-decoration: none
   
 .smallNameDescriptionArea
   padding: 1rem
@@ -10,12 +12,23 @@
 .nameArea
   display: flex
   align-items: center
+  
+.collectionAvatarContainer
+  width: 40px
+  margin-right: 0.5rem
   svg
-    width: 40px
+    width: 100%
     height: auto
-    margin-right: 0.5rem
   
 .smallProjectCount
   background-color: #eee
-  padding: 0.5rem 1rem
+  padding: 0.5rem
   font-weight: 600
+  &:hover
+    text-decoration: underline
+  
+.placeholderAvatar
+  width: 32px
+  height: 32px
+  border-radius: 50%
+  background-color: #eee
