@@ -236,6 +236,7 @@ class CurrentUserManager extends React.Component {
   render() {
     const { children, sharedUser, cachedUser } = this.props;
     const currentUser = { ...defaultUser, ...sharedUser, ...cachedUser };
+    console.log({ currentUser })
     return (
       <>
         {currentUser.isSupport ? <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center' }}>SUPER USER MODE ENABLED</div> : null}
