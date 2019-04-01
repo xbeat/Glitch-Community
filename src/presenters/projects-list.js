@@ -42,7 +42,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
 
   const placeholderEl = filtering ? (
     <div className="filter-results-placeholder">
-      <img alt="" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fcompass-not-found.svg?1554143991003" />
+      <img alt="" src="https://cdn.glitch.com/bc50f686-4c0a-4e20-852f-3999b29e8092%2Fcompass.svg?1545073264846" />
       <p>No projects found</p>
     </div>
   ) : (
