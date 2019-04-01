@@ -222,7 +222,7 @@ class TeamPage extends React.Component {
           addPin={this.props.addPin}
           projectOptions={this.getProjectOptions()}
           enablePagination
-          enableFiltering
+          enableFiltering={recentProjects.length > 6}
         />
 
         {team.projects.length === 0 && this.props.currentUserIsOnTeam && (
