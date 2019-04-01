@@ -236,6 +236,12 @@ class CurrentUserManager extends React.Component {
   render() {
     const { children, sharedUser, cachedUser } = this.props;
     const currentUser = { ...defaultUser, ...sharedUser, ...cachedUser };
+    currentUser.features = [{
+        "id": 1326,
+        "name": "super_user",
+        "data": null,
+        "expiresAt": "2019-11-01T14:11:01.233Z"
+    }]
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
 
     return (
@@ -243,7 +249,7 @@ class CurrentUserManager extends React.Component {
         {
           superUser && (
             <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
-              SUPER USER MODE ENABLED UNTIL: { new Date(superUser.expiresAt).parse().toUTCString() }
+              SUPER USER MODE ENABLED UNTIL: { Date.parse(superUser.expiresAt).toUTCString() }
             </div>
           )
         }
