@@ -21,11 +21,11 @@ const PlaceholderAvatar = () => <div className={styles.placeholderAvatar} />;
 const SmallCollectionItem = ({ collection }) => (
   <div className={styles.smallContainer}>
     <div className={styles.curator}>
-      {collection._user ? (
+      {collection.user ? (
         <UserLink user={collection.user}>
           <UserAvatar user={collection.user} />
         </UserLink>
-      ) : collection.team ? (
+      ) : collection.team && collection.team.url ? (
         <TeamLink team={collection.team}>
           <TeamAvatar team={collection.team} />
         </TeamLink>
