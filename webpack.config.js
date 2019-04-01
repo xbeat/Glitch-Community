@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const AutoprefixerStylus = require('autoprefixer-stylus');
 const StatsPlugin = require('stats-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const aliases = require('./shared/aliases');
 
 const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
@@ -59,8 +60,10 @@ module.exports = smp.wrap({
     minimizer: [new TerserPlugin({ terserOptions: { safari10: true }, sourceMap: true })],
     noEmitOnErrors: true,
   },
+  context: path.resolve(__dirname),
   resolve: {
     extensions: ['.js'],
+    alias: aliases,
   },
   module: {
     rules: [

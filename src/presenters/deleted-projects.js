@@ -4,12 +4,12 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Heading from 'Components/text/heading';
 import { getAvatarUrl } from '../models/project';
 import { TrackClick } from './analytics';
 import { Loader } from './includes/loader';
 
 import { useAPI } from '../state/api';
-import Heading from '../components/text/heading';
 
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');

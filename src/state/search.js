@@ -13,34 +13,46 @@ const searchIndex = searchClient.initIndex('search');
 // TODO: all this really ought to be in the raw data
 function formatUser(hit) {
   return {
+    ...hit,
     id: Number(hit.objectID.split('-')[1]),
     thanksCount: hit.thanks,
     hasCoverImage: false,
     color: '',
-    ...hit,
   };
 }
 
 function formatTeam(hit) {
   return {
+    ...hit,
     id: Number(hit.objectID.split('-')[1]),
     hasCoverImage: false,
     hasAvatarImage: false,
     isVerified: false,
     url: '',
     users: [],
-    ...hit,
   };
 }
 
 function formatProject(hit) {
   return {
+    ...hit,
     id: hit.objectID.replace('project-', ''),
     description: '',
     users: [],
     showAsGlitchTeam: false,
-    ...hit,
     teams: [],
+  };
+}
+
+function formatCollection(hit) {
+  return {
+    ...hit,
+    id: Number(hit.objectID.split('-')[1]),
+    coverColor: '#ccc',
+    projects: [],
+    url: '',
+    team: hit.team > 0 ? { id: hit.team, url: '' } : null,
+    user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };
 }
 
@@ -52,12 +64,14 @@ function formatHit(hit) {
       return formatTeam(hit);
     case 'project':
       return formatProject(hit);
+    case 'collection':
+      return formatCollection(hit);
     default:
       return hit;
   }
 }
 
-const emptyResults = { team: [], user: [], project: [] };
+const emptyResults = { team: [], user: [], project: [], collection: [] };
 
 const MAX_RESULTS = 20;
 
@@ -99,6 +113,19 @@ async function searchProjects(api, query) {
   return data.slice(0, MAX_RESULTS);
 }
 
+// This API is slow and is missing important data (so its unfit for production)
+// But its still useful for comparing against Algolia
+// eslint-disable-next-line no-unused-vars
+async function searchCollections(api, query) {
+  const { data } = await api.get(`collections/search?q=${query}`);
+  // NOTE: collection URLs don't work correctly with these
+  return data.slice(0, MAX_RESULTS).map((coll) => ({
+    ...coll,
+    team: coll.teamId > 0 ? { id: coll.teamId } : null,
+    user: coll.userId > 0 ? { id: coll.userId } : null,
+  }));
+}
+
 export function useLegacySearch(query) {
   const api = useAPI();
   const { handleError } = useErrorHandlers();
@@ -110,6 +137,8 @@ export function useLegacySearch(query) {
       team: searchTeams(api, query),
       user: searchUsers(api, query),
       project: searchProjects(api, query),
+      // collection: searchCollections(api, query),
+      collection: Promise.resolve([]),
     })
       .then((res) => {
         setStatus('ready');
@@ -118,8 +147,9 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
   return {
+    ...emptyResults,
     status,
-    totalHits: results.team.length + results.user.length + results.project.length,
+    totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
     ...results,
   };
 }

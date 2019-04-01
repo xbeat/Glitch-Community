@@ -5,7 +5,7 @@ const { Cache } = require('memory-cache');
 const dayjs = require('dayjs');
 
 const { API_URL } = require('./constants').current;
-const { getSingleItem } = require('../shared/api');
+const { getSingleItem } = require('Shared/api');
 
 const CACHE_TIMEOUT = dayjs.convert(15, 'minutes', 'ms');
 

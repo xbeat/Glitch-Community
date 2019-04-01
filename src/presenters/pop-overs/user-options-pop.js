@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { orderBy } from 'lodash';
+import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
 import { TrackClick } from '../analytics';
@@ -9,7 +10,6 @@ import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
-import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 // Create Team button
 

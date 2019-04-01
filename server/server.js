@@ -1,7 +1,11 @@
 const express = require('express');
 const compression = require('compression');
 const constants = require('./constants');
-const sentryHelpers = require('../shared/sentryHelpers');
+const moduleAlias = require('module-alias');
+
+moduleAlias.addAliases(require('../shared/aliases'));
+
+const sentryHelpers = require('Shared/sentryHelpers');
 
 // https://docs.sentry.io/error-reporting/quickstart/?platform=node
 const Sentry = require('@sentry/node');

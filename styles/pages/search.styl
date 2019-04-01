@@ -15,23 +15,25 @@
         border-radius: 5px
         background: tertiary
   
-  .projects-container, .teams-container, .users-container
+  .projects-container, .teams-container, .users-container, .collections-container
     overflow: initial
     border-radius: 5px
     display: flex
     flex-direction: row
     flex-wrap: wrap
     align-items: flex-start
+    margin-left: -5px
+    margin-right: -5px
     >li
-      width: calc(25% - 1rem)
-      @media (max-width: hugeViewport)
-        width: calc(25% - 1rem)
-      @media (max-width: largeViewport)
-        width: calc(33% - 1rem)
-      @media (max-width: mediumViewport)
-        width: calc(50% - 1rem)
-      @media (max-width: mediumSmallViewport)
-        width: 100%          
+      margin: 0
+      padding: 0 5px 10px
+      flex: 0 0 25%
+      @media (max-width: largeViewport)	
+        flex: 0 0 33.33%
+      @media (max-width: mediumViewport)	
+        flex: 0 0 50%
+      @media (max-width: mediumSmallViewport)	
+        flex: 1 0 auto
   
   .projects
     margin-top: 0
