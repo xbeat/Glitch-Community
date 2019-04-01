@@ -240,7 +240,7 @@ class CurrentUserManager extends React.Component {
     return (
       <>
         {
-           superUser && (
+          superUser && (
             <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
               SUPER USER MODE ENABLED UNTIL: { new Date(superUser.expiresAt).toUTCString() }
             </div>
