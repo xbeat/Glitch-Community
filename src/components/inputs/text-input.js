@@ -73,7 +73,6 @@ TextInput.defaultProps = {
   className: '',
   disabled: false,
   error: null,
-  labelText: undefined,
   maxLength: undefined,
   name: undefined,
   opaque: false,
