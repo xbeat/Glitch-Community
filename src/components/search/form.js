@@ -26,6 +26,7 @@ function SearchForm({ defaultValue }) {
           role="search"
           onSubmit={onSubmit}
           autoComplete={algoliaFlag ? 'off' : 'on'}
+          autoCapitalize="off"
           onFocus={() => setVisible(true)}
         >
           <TextInput name="q" onChange={onChange} opaque placeholder="bots, apps, users" type="search" value={value} />
