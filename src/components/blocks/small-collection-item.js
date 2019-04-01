@@ -4,6 +4,8 @@ import Pluralize from 'react-pluralize';
 
 import Markdown from 'Components/text/markdown';
 
+import { useAsyncFunction } from '../../state/api'
+import { getSingleItem } from '../../../shared/api'
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
 import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
@@ -18,22 +20,38 @@ const collectionColorStyles = (collection) => ({
 const FakeButton = ({ children }) => <div className="button">{children}</div>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
+async function useTeamOrUser (api, teamId, userId) {
+  if (teamId > 0) {
+    const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId)
+    return { ...value, type: 'team' }
+  }
+  if (userId > 0) {
+        const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId)
+    return { ...value, type: 'user' }
+  
+  }
+  return null
+}
+
 const CollectionCurator = ({ collection }) => {
-  if (collection.user) {
+  const teamOrUser = useTeamOrUser(collection.teamId, collection.userId)
+  console.log(teamnO
+  if (!teamOrUser) {
+    return <div className={styles.placeholderAvatar} />;
+  }
+  
+  if (teamOrUser.type === 'user') {
     return (
-      <UserLink user={collection.user}>
-        <UserAvatar user={collection.user} />
+      <UserLink user={teamOrUser}>
+        <UserAvatar user={teamOrUser} />
       </UserLink>
     );
   }
-  if (collection.team && collection.team.url) {
     return (
-      <TeamLink team={collection.team}>
-        <TeamAvatar team={collection.team} />
+      <TeamLink team={teamOrUser}>
+        <TeamAvatar team={teamOrUser} />
       </TeamLink>
-    );
-  }
-  return <div className={styles.placeholderAvatar} />;
+    );  
 };
 
 const SmallCollectionItem = ({ collection }) => (
