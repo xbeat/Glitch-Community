@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import ProjectItem from './project-item';
 import Button from '../components/buttons/button';
 import Badge from '../components/badges/badge';
-import TextInput from '../components/fields/text-input';
+import TextInput from '../components/inputs/text-input';
 import Heading from '../components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
