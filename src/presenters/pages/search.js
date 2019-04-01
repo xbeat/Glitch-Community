@@ -17,7 +17,7 @@ import NotFound from '../includes/not-found';
 import ProjectItem from '../project-item';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
-import CollectionItem from '../collection-item';
+import SmallCollectionItem from 'Components/';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
