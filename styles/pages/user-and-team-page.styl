@@ -69,10 +69,6 @@
   .view-controls
     display: flex
     justify-content: space-between
-    // hide pagination menu on mobile
-    @media (max-width: mediumViewport)
-      .pagination-controls
-        display: none
     .arrow
       margin-bottom: 2px
     .next-arrow
@@ -83,6 +79,15 @@
       display: inline-block
       text-align: center
       color: tertiary
+  .filter-results-placeholder
+    display: flex
+    align-items: center
+    img
+      width: 60px
+  // hide pagination controls on mobile
+  @media (max-width: mediumViewport)
+    .pagination-controls
+      display: none
   
 .user-page
   .profile-info

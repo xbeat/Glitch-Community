@@ -29,8 +29,8 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   }
 
   useEffect(() => debounce(filterProjects, 400)(), [filter]);
-  
-  const filtering = validFilter && isDoneFiltering
+
+  const filtering = validFilter && isDoneFiltering;
   projects = filtering ? filteredProjects : projects;
 
   let projectsEl;
@@ -39,8 +39,15 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   } else {
     projectsEl = <ProjectsUL {...props} projects={projects} />;
   }
-  
-  const placeholderEl = filtering ? 'No projects found' : props.placeholder;
+
+  const placeholderEl = filtering ? (
+    <div className="filter-results-placeholder">
+      <img alt="" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fcompass-not-found.svg?1554143991003" />
+      <p>No projects found</p>
+    </div>
+  ) : (
+    props.placeholder
+  );
 
   return (
     <article className={`projects ${extraClasses}`}>
@@ -117,7 +124,6 @@ function PaginatedProjects(props) {
     </>
   );
 }
-
 
 PaginatedProjects.propTypes = {
   projects: PropTypes.array.isRequired,
