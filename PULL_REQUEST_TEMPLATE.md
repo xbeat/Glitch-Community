@@ -1,3 +1,8 @@
+**Links**
+* Remix link
+* Manuscript link
+* Specs/Notion docs
+
 **GIF/Screenshots:**
 
 **Changes:**
@@ -10,8 +15,3 @@
 
 **Things left to do before deploying:**
 - [ ] ...
-
-**Links**
-* Remix link
-* Manuscript link
-* Specs/Notion docs
