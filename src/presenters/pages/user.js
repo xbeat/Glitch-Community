@@ -14,12 +14,13 @@ import UserEditor from '../user-editor';
 import { Thanks } from '../includes/thanks';
 
 import DeletedProjects from '../deleted-projects';
-import EntityPageFeaturedProject from '../entity-page-featured-project';
 import EntityPageProjects from '../entity-page-projects';
 import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
 import ProjectsLoader from '../projects-loader';
 import ReportButton from '../pop-overs/report-abuse-pop';
+
+import 
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({ login }));
