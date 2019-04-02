@@ -6,7 +6,7 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 import ReportButton from '../../presenters/pop-overs/report-abuse-pop';
 import { EditButton, RemixButton } from '../../presenters/includes/project-actions';
 import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
-import Embed from '../../presenters/includes/embed';
+import Embed from './embed';
 import { TrackClick } from '../../presenters/analytics';
 
 const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
