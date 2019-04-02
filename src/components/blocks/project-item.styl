@@ -1,3 +1,5 @@
+@require '../constants'
+
 .container
   font-size: 14px
   
@@ -41,7 +43,9 @@
   padding: 1rem 1rem 0.5rem
   min-height: 150px
   &:hover
-    text-decoration: none    
+    text-decoration: none
+    :global .button
+      color: 
   &:after
     content: ""
     top: -13px
