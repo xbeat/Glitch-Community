@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProjectsList from './projects-list';
+import ProjectsList from 'Components/containers/projects-list';
 
 const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions, ...props }) => {
   const pinnedTitle = (

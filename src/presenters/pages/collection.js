@@ -5,12 +5,12 @@ import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Text from 'Components/text/text';
+import { ProjectsUL } from 'Components/containers/projects-list';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
-import { ProjectsUL } from '../projects-list';
 import NotFound from '../includes/not-found';
 import { AuthDescription } from '../includes/description-field';
 import CollectionEditor from '../collection-editor';

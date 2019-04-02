@@ -9,7 +9,7 @@ import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
-import ProjectItem from './project-item';
+import ProjectItem from '../../presenters/project-item';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
