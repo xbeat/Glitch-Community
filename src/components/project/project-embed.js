@@ -26,7 +26,6 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
         )
       }
     </div>
-
     <div className="buttons buttons-right">
       {currentUser.login && (
         <AddProjectToCollection
@@ -37,7 +36,6 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
           addProjectToCollection={addProjectToCollection}
         />
       )}
-
       <TrackClick
         name="Click Remix"
         properties={{
