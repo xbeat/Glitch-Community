@@ -12,7 +12,9 @@ import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
+import SmallCollectionItem from 'Components/blocks/small-collection-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
+import { Context as APIContext } from '../src/state/api';
 
 // load global styles
 import '../build/styles.css';
@@ -31,9 +33,11 @@ const withState = (initState, Component) => {
   return () => <WrappedComponent />;
 };
 
-const provideCurrentUser = (currentUser, Component) => (
+const provideContext = ({ currentUser = {}, api = {} } = {}, Component) => () => (
   <CurrentUserContext.Provider value={{ currentUser }}>
-    <Component />
+    <APIContext.Provider value={api}>
+      <Component />
+    </APIContext.Provider>
   </CurrentUserContext.Provider>
 );
 
@@ -211,7 +215,7 @@ const users = {
 
 storiesOf('ProjectItem', module).add(
   'base',
-  provideCurrentUser({}, () => (
+  provideContext({ currentUser: {} }, () => (
     <div style={{ margin: '2em', width: '25%' }}>
       <ProjectItem
         project={{
@@ -228,9 +232,20 @@ storiesOf('ProjectItem', module).add(
   )),
 );
 
+const mockAPI = {
+  async get(url) {
+    console.log('get', url)
+    return { data: this.responses[url] };
+  },
+  responses: {
+    '/v1/users/by/id/?id=12345': { 12345: users.modernserf },
+  },
+};
+
 storiesOf('SmallCollectionItem', module).add(
-  'base',
-  provideContext({}, <div style={{ margin: '2em', width: '25%' }}>
+  'with user',
+  provideContext({ currentUser: {}, api: mockAPI }, () => (
+    <div style={{ margin: '2em', width: '25%' }}>
       <SmallCollectionItem
         collection={{
           id: 12345,
@@ -238,8 +253,10 @@ storiesOf('SmallCollectionItem', module).add(
           description: 'A collection of cool projects',
           coverColor: '#efe',
           userId: 271885,
+          user: { id: 271885 },
           teamId: -1,
         }}
       />
     </div>
-)
+  )),
+);
