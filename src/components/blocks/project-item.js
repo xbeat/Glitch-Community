@@ -34,8 +34,7 @@ const ProjectItem = ({ project, projectOptions }) => (
         </div>
         <div className={styles.nameWrap}>
           <FakeButton>
-            {project.private && <PrivateIcon />}
-            <div className={styles.projectDomain}>{project.domain}</div>
+            {project.private && <PrivateIcon />} <span className={styles.projectDomain}>{project.domain}</span>
           </FakeButton>
         </div>
       </div>
