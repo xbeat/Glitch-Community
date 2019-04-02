@@ -17,20 +17,20 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
   <section>
     <Heading tagName="h2">
       Featured Project
-      <Emoji name="clapper" />
+      <Emoji name="clapper" isInTitle />
     </Heading>
     {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
     <Embed domain={featuredProject.domain} />
-    <div className="buttons buttons-left">
+    <div className={styles["left-buttons"]}>
       {
         isAuthorized ? (
           <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
         ) : (
-          <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
+          <ReportButton reportedType="project" reportedModel={featuredProject} />
         )
       }
     </div>
-    <div className="buttons buttons-right">
+    <div className={styles["right-buttons"]}>
       {currentUser.login && (
         <AddProjectToCollection
           className="button-small"

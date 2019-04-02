@@ -43,7 +43,7 @@ const EMOJIS = {
  * Emoji Component
  */
 
-const Emoji = ({ name, isInTitle = false }) => {
+const Emoji = ({ name, isInTitle }) => {
   const classNameObj = { emoji: true, [name]: true, "is-in-title": isInTitle };
 
   const className = cx(classNameObj);
@@ -57,6 +57,8 @@ Emoji.propTypes = {
   isInTitle: PropTypes.bool
 };
 
-Emoji.defaultPropTypes
+Emoji.defaultProps = {
+  isInTitle: false
+}
 
 export default Emoji;
