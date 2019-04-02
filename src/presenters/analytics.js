@@ -78,6 +78,7 @@ export const TrackedExternalLink = ({ children, name, properties, to, ...props }
 
   const nameRef = React.useRef(name);
   const propertiesRef = React.useRef({});
+  const inheritedRef = React.useRef({});
   React.useEffect(() => {
     nameRef.current = name;
     propertiesRef.current = resolveProperties(properties, inherited.properties);
