@@ -159,6 +159,11 @@ const { slice, reducer, actions } = createSlice({
       ...payload,
       loadStatus: 'ready',
     }),
+    loadedWithErrors: (state, { payload }) => ({
+      ...state,
+      ...payload,
+      loadStatus: 'init',
+    }),
     loggedIn: (state, { payload }) => ({
       ...state,
       sharedUser: payload,
@@ -195,11 +200,11 @@ const { slice, reducer, actions } = createSlice({
 
 const selectCurrentUser = (state) => state.currentUser;
 
-const handleLoadRequest = afterReducer(matchTypes(actions.requestedLoad), async (store, action, prevState) => {
+const handleLoadRequest = afterReducer(matchTypes(actions.requestedLoad, actions.loadedWithErrors), async (store, action, prevState) => {
   const prevUser = selectCurrentUser(prevState);
   // prevent multiple 'load's from running
   if (prevUser.loadStatus === 'loading') return;
-  
+
   const nextUser = { ...prevUser };
 
   // If we're signed out create a new anon user
@@ -222,11 +227,12 @@ const handleLoadRequest = afterReducer(matchTypes(actions.requestedLoad), async 
       // The user wasn't changed, so we need to fix it
       nextUser.sharedUser = await fixSharedUser(prevUser.sharedUser);
     }
-    dis
-  } else {
-    // The shared user is good, store it
-    nextUser.cachedUser = newCachedUser;
+    store.dispatch(actions.loadedWithErrors(nextUser));
+    return;
   }
+
+  // The shared user is good, store it
+  nextUser.cachedUser = newCachedUser;
 
   store.dispatch(actions.loaded(nextUser));
 });
@@ -259,7 +265,7 @@ const loadUserAfterLogin = afterReducer(matchTypes(actions.loggedIn, actions.sto
   store.dispatch(actions.updated({ cachedUser }));
 });
 
-const loadAnonUserAfterLogout = afterReducer(matchTypes(actions.loggedOut), async (store, action) => {
+const loadAnonUserAfterLogout = afterReducer(matchTypes(actions.loggedOut), async (store) => {
   const anonUser = await getAnonUser();
   store.dispatch(actions.loadedAnonUserAfterLoggedOut(anonUser));
 });
