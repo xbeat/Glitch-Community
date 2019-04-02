@@ -8,6 +8,7 @@ import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
+import Image from 'Components/images/image';
 import ProjectItem from '../../presenters/project-item';
 
 import styles from './projects-list.styl';
@@ -48,7 +49,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
 
   const placeholderEl = filtering ? (
     <div className={styles.filterResultsPlaceholder}>
-      <img alt="" src="https://cdn.glitch.com/c117d5df-3b8d-4389-9e6b-eb049bcefcd6%2Fcompass-not-found.svg?1554146070630" />
+      <Image alt="" src="https://cdn.glitch.com/c117d5df-3b8d-4389-9e6b-eb049bcefcd6%2Fcompass-not-found.svg?1554146070630" />
       <Text>No projects found</Text>
     </div>
   ) : (
@@ -103,11 +104,11 @@ function PaginatedProjects(props) {
   const PaginationControls = () => (
     <div className={styles.paginationControls}>
       <Button aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
-        <img alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <Image alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
       <div className={styles.pageNumbers}>{page} / {numPages}</div>
       <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
-        <img alt="" className={cx({ paginationArrow: true, next: true })} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <Image alt="" className={cx({ paginationArrow: true, next: true })} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
