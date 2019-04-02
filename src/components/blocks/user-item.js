@@ -1,29 +1,33 @@
+/* globals ANON_AVATAR_URL */
+
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
-import Image from 'Components/images/image';
 
 import { UserLink } from '../../presenters/includes/link';
 import { Thanks } from '../../presenters/includes/thanks';
 
-import { getProfileStyle } from '../../models/user';
+import { getAvatarUrl, getProfileStyle } from '../../models/user';
 
 import styles from './user-item.styl';
 
 const Cover = ({ user, size }) => <div className="cover" style={getProfileStyle({ ...user, size })} />;
 
-const UserAvatar = () => {
-
+// TODO: add error handling to <Image>
+function addDefaultSrc(event) {
+  event.target.src = ANON_AVATAR_URL;
 }
+
+const ProfileAvatar = ({ user }) => <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt="" />;
 
 const NameAndLogin = ({ user }) =>
   user.name ? (
-    <>
+    <div>
       <Button decorative>{user.name}</Button>
-      <p className={user}>@{user.login}</p>
-    </>
+      <p className={styles.login}>@{user.login}</p>
+    </div>
   ) : (
     <Button decorative>@{user.login}</Button>
   );
@@ -31,12 +35,16 @@ const NameAndLogin = ({ user }) =>
 const UserItem = ({ user }) => (
   <UserLink className={styles.container} user={user}>
     <Cover user={user} size="medium" />
-    <div className={styles.header}>
-      <UserAvatar user={user} />
-      <NameAndLogin user={user} />
-    </div>
-    <div className={styles.body}>
-      <Markdown length={96}>{user.description || ' '}</Markdown>
+    <div className={styles.innerWrap}>
+      <div className={styles.mainContent}>
+        <div className={styles.avatarWrap}>
+          <ProfileAvatar user={user} />
+        </div>
+        <div className={styles.body}>
+          <NameAndLogin user={user} />
+          <Markdown length={96}>{user.description || ' '}</Markdown>
+        </div>
+      </div>
       {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
     </div>
   </UserLink>
