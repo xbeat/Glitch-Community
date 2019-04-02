@@ -63,10 +63,12 @@ const SmallCollectionItem = ({ collection }) => (
           <div className={styles.collectionAvatarContainer}>
             <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           </div>
-          <FakeButton>
-            {collection.private && <PrivateIcon />}
-            <div className={styles.collectionName}>{collection.name}</div>
-          </FakeButton>
+          <div className={styles.collectionNameWrap}>
+            <FakeButton>
+              {collection.private && <PrivateIcon />}
+              <div className={styles.collectionName}>{collection.name}</div>
+            </FakeButton>
+          </div>
         </div>
         <div className={styles.description}>
           <Markdown>{collection.description || ' '}</Markdown>
