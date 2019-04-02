@@ -14,6 +14,11 @@ import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 
+import '../build/styles.css';
+
+// initialize globals
+window.CDN_URL = 'https://cdn.glitch.com';
+
 const helloAlert = () => {
   alert('hello');
 };
