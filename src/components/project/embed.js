@@ -9,6 +9,7 @@ const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cd
 // Babel does not transpile URLSearchParams, so using this as a compatibility check for showing embeds now.
 // TODO(sheridan) make this more robust in future
 const browserSatisfiesRequirements = (() => {
+  // return false
   try {
     const test = new Function('return () => true'); // eslint-disable-line no-new-func
     if (test()() !== true) {
@@ -42,9 +43,9 @@ const Embed = ({ domain }) => (
     ) : (
       // Error message if JS not supported
       // TODO(sheridan): Refactor this once we have a true error component
-      <div className="error-container">
-        <img className="error-image" src={telescopeImageUrl} alt="" width="50%" height="50%" />
-        <div className="error-msg">
+      <div>
+        <img src={telescopeImageUrl} alt="" width="35%" />
+        <div>
           <h2>The web browser you're using is missing some important Javascript features</h2>
           <p>To use this app, please try applying your latest system updates, or try again with a different web browser.</p>
         </div>
