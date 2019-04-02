@@ -103,7 +103,7 @@ function PaginatedProjects(props) {
       </Button>
       <div className={styles.pageNumbers}>{page} / {numPages}</div>
       <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
-        <img alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img alt="" className={styles.paginationArrow.nextArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
