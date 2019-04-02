@@ -14,8 +14,8 @@ import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 
+// load global styles 
 import '../build/styles.css';
-
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
 
@@ -30,6 +30,12 @@ const withState = (initState, Component) => {
   };
   return () => <WrappedComponent />;
 };
+
+const provideCurrentUser(currentUser, Component) => {
+  <CurrentUserContext.Provider value={{ currentUser }}>
+    <Component />
+  </CurrentUserContext.Provider>
+}
 
 storiesOf('Button', module)
   .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
@@ -195,19 +201,31 @@ storiesOf('Segmented-Buttons', module)
     )),
   );
 
+const users = {
+  modernserf:  {
+            id: 271885,
+            login: 'modernserf',
+            avatarThumbnailUrl:
+              'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+          },
+}
+
 storiesOf('ProjectItem', module).add('base', () => (
   <CurrentUserContext.Provider value={{ currentUser: {} }}>
-    <ProjectItem
-      project={{
-        id: 'foo',
-        domain: 'judicious-pruner',
-        description: 'a judicious project that does pruner things',
-        private: false,
-        showAsGlitchTeam: false,
-        users: [{ id: 271885, login: 'modernserf' }],
-        teams: [],
-      }}
-    />
+    <div style={{ margin: '2em', width: '25%' }}>
+      <ProjectItem
+        project={{
+          id: 'foo',
+          domain: 'judicious-pruner',
+          description: 'a judicious project that does pruner things',
+          private: false,
+          showAsGlitchTeam: false,
+          users: [users.modernserf],
+          teams: [],
+        }}
+      />
+    </div>
+    
   </CurrentUserContext.Provider>
 ));
 
