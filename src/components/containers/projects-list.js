@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
+import styles from './expander.styl';
+
 import Text from 'Components/text/text';
 import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
