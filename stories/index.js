@@ -234,11 +234,10 @@ storiesOf('ProjectItem', module).add(
 
 const mockAPI = {
   async get(url) {
-    console.log('get', url)
     return { data: this.responses[url] };
   },
   responses: {
-    '/v1/users/by/id/?id=12345': { 12345: users.modernserf },
+    '/v1/users/by/id/?id=271885': { 271885: users.modernserf },
   },
 };
 
