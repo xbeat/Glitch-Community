@@ -61,7 +61,7 @@ ProjectEmbed.propTypes = {
 };
 
 ProjectEmbed.defaultProps = {
-  currentUser: null,
+  currentUser: {},
 };
 
 export default ProjectEmbed;
