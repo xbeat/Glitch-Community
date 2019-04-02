@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
 import ProjectItem from './project-item';
-import Text from 'Components//text/text';
+import Text from 'Components/text/text';
 import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
