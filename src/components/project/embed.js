@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'Components/images/image';
 import styles from './embed.styl';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
@@ -9,7 +10,7 @@ const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cd
 // Babel does not transpile URLSearchParams, so using this as a compatibility check for showing embeds now.
 // TODO(sheridan) make this more robust in future
 const browserSatisfiesRequirements = (() => {
-  // return false
+  return false
   try {
     const test = new Function('return () => true'); // eslint-disable-line no-new-func
     if (test()() !== true) {
@@ -44,7 +45,7 @@ const Embed = ({ domain }) => (
       // Error message if JS not supported
       // TODO(sheridan): Refactor this once we have a true error component
       <div>
-        <img src={telescopeImageUrl} alt="" width="35%" />
+        <Image src={telescopeImageUrl} width="35%" />
         <div>
           <h2>The web browser you're using is missing some important Javascript features</h2>
           <p>To use this app, please try applying your latest system updates, or try again with a different web browser.</p>
