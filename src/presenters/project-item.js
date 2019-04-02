@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Markdown from 'Components/text/markdown';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
-import Markdown from '../components/text/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
 const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props }) => (
-  <li>
+  <>
     <Note
       collection={collection}
       project={project}
@@ -40,7 +40,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
         </div>
       </div>
     </WrappingLink>
-  </li>
+  </>
 );
 
 ProjectItem.propTypes = {

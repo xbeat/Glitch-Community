@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { capitalize } from 'lodash';
 
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import Badge from 'Components/badges/badge';
+import Heading from 'Components/text/heading';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -12,136 +14,113 @@ import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
-import ProjectsList from '../projects-list';
+import ProjectItem from '../project-item';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
+import CollectionItem from '../collection-item';
 
-import SegmentedButtons from '../../components/buttons/segmented-buttons';
-import Badge from '../../components/badges/badge';
-import Heading from '../../components/text/heading';
-
-const generateFilterButtons = (filters) =>
-  filters
-    .map((filter) => {
-      if (filter.hits > 0 || filter.name === 'all') {
-        return {
-          name: filter.name,
-          contents: (
-            <>
-              {capitalize(filter.name)}
-              {filter.hits && <Badge>{filter.hits}</Badge>}
-            </>
-          ),
-        };
-      }
-      return null;
-    })
-    .filter(Boolean);
-
-const FilterContainer = ({ totalHits, filters, activeFilter, setFilter, query, loaded }) => {
-  if (!loaded) {
-    return (
+const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
+  const buttons = filters.map((filter) => ({
+    name: filter.id,
+    contents: (
       <>
-        <Loader />
-        <h1>All results for {query}</h1>
+        {filter.label}
+        {filter.hits && <Badge>{filter.hits > filter.maxHits ? `${filter.maxHits}+` : filter.hits}</Badge>}
       </>
-    );
-  }
-  if (loaded && totalHits === 0) {
-    return null;
-  }
+    ),
+  }));
 
   return (
     <>
-      <SegmentedButtons value={activeFilter} buttons={generateFilterButtons(filters)} onChange={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
 };
 
-const TeamResults = ({ teams }) => (
-  <article>
-    <Heading tagName="h2">Teams</Heading>
-    <ul className="teams-container">
-      {teams ? (
-        teams.map((team) => (
-          <li key={team.id}>
-            <TeamItem team={team} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
-    </ul>
-  </article>
-);
-
-const UserResults = ({ users }) => (
-  <article>
-    <Heading tagName="h2">Users</Heading>
-    <ul className="users-container">
-      {users ? (
-        users.map((user) => (
-          <li key={user.id}>
-            <UserItem user={user} />
-          </li>
-        ))
-      ) : (
-        <Loader />
-      )}
-    </ul>
-  </article>
-);
-
 function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
-const ProjectResults = ({ projects }) => {
+const ProjectResult = ({ result }) => {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
   return currentUser.login ? (
-    <ProjectsList
-      title="Projects"
-      projects={projects}
+    <ProjectItem
+      project={result}
       projectOptions={{
         addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
       }}
     />
   ) : (
-    <ProjectsList title="Projects" projects={projects} />
+    <ProjectItem project={result} />
   );
 };
 
+const groups = [
+  { id: 'team', label: 'Teams', ResultComponent: ({ result }) => <TeamItem team={result} /> },
+  { id: 'user', label: 'Users', ResultComponent: ({ result }) => <UserItem user={result} /> },
+  { id: 'project', label: 'Projects', ResultComponent: ProjectResult },
+  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
+];
+
+const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
+
+const MAX_UNFILTERED_RESULTS = 20;
+
+const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
+
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
-  const loaded = searchResults.status === 'ready';
-  const noResults = loaded && searchResults.totalHits === 0;
+  const ready = searchResults.status === 'ready';
+  const noResults = ready && searchResults.totalHits === 0;
 
   const filters = [
-    { name: 'all' },
-    { name: 'teams', hits: searchResults.team.length },
-    { name: 'users', hits: searchResults.user.length },
-    { name: 'projects', hits: searchResults.project.length },
+    { id: 'all', label: 'All' },
+    ...groups
+      .map((group) => ({
+        ...group,
+        hits: searchResults[group.id].length,
+        maxHits: activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS,
+      }))
+      .filter((group) => group.hits > 0),
   ];
 
-  const showTeams = ['all', 'teams'].includes(activeFilter) && !!searchResults.team.length;
-  const showUsers = ['all', 'users'].includes(activeFilter) && !!searchResults.user.length;
-  const showProjects = ['all', 'projects'].includes(activeFilter) && !!searchResults.project.length;
+  const renderedGroups = groups
+    .map((group) => ({
+      ...group,
+      isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
+      results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
+      canShowMoreResults: activeFilter !== group.id && searchResults[group.id].length > MAX_UNFILTERED_RESULTS,
+    }))
+    .filter((group) => group.isVisible);
 
   return (
     <main className="search-results">
-      <FilterContainer
-        totalHits={searchResults.totalHits}
-        filters={filters}
-        setFilter={setActiveFilter}
-        activeFilter={activeFilter}
-        query={query}
-        loaded={loaded}
-      />
-      {showTeams && <TeamResults teams={searchResults.team} />}
-      {showUsers && <UserResults users={searchResults.user} />}
-      {showProjects && <ProjectResults projects={searchResults.project} />}
+      {searchResults.status === 'loading' && (
+        <>
+          <Loader />
+          <h1>All results for {query}</h1>
+        </>
+      )}
+      {ready && searchResults.totalHits > 0 && (
+        <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
+      )}
+      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
+        <div key={id}>
+          <article className="search-results__group-container">
+            <Heading tagName="h2">{label}</Heading>
+            <ul className={`${id}s-container`}>
+              {results.map((result) => (
+                <li key={result.id}>
+                  <ResultComponent result={result} />
+                </li>
+              ))}
+            </ul>
+            {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
+          </article>
+        </div>
+      ))}
       {noResults && <NotFound name="any results" />}
     </main>
   );

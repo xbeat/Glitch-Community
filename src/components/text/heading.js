@@ -15,7 +15,6 @@ const Heading = ({ children, tagName: TagName }) => {
     heading: true,
   };
   classNameObj[TagName] = true;
-
   return <TagName className={cx(classNameObj)}>{children}</TagName>;
 };
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { getAllPages } from 'Shared/api';
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import { createAPIHook } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
-import { getAllPages } from '../../../shared/api';
 
 const useTeamProjects = createAPIHook(async (api, teamId) => {
   if (teamId > 0) {

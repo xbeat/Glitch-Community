@@ -10,7 +10,9 @@ const PopoverButton = ({ onClick, text, emoji }) => (
 
 PopoverButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  /** text to display in the button */
   text: PropTypes.node.isRequired,
+  /** emoji to display in the button */
   emoji: PropTypes.string.isRequired,
 };
 
