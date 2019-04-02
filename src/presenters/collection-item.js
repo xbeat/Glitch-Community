@@ -102,7 +102,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
               <div className="collection-name-description button-area">
                 <div className="button">
                   <span className="project-badge private-project-badge" aria-label="private" />
-                  <div className="project-name">{collection.name}</div>
+                  <div className="collection-name">{collection.name}</div>
                 </div>
                 <div
                   className="description"
