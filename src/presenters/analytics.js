@@ -81,18 +81,20 @@ export const TrackedExternalLink = ({ children, name, properties, to, ...props }
   const inheritedRef = React.useRef({});
   React.useEffect(() => {
     nameRef.current = name;
-    propertiesRef.current = resolveProperties(properties, inherited.properties);
-  });
+    propertiesRef.current = properties;
+    inheritedRef.current = inherited.properties;
+  }, [name, properties, inherited.properties]);
 
   const ref = React.useRef(null);
   React.useEffect(() => {
     try {
       // we only call this on first render, use refs to keep the name/properties up to date
-      analytics.trackLink(ref.current, () => nameRef.current, () => propertiesRef.current);
+      analytics.trackLink(ref.current, () => nameRef.current, () => resolveProperties(propertiesRef.current, inheritedRef.current));
     } catch (error) {
       captureException(error);
     }
   }, []);
+
   return (
     <a href={to} {...omit(props, ['name', 'properties', 'to'])} ref={ref}>
       {children}
