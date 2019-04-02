@@ -12,6 +12,7 @@ import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Embed from 'Components/project/embed';
+import ProjectEmbed from 'Components/project/project-embed';
 
 const helloAlert = () => {
   alert('hello');
@@ -191,3 +192,13 @@ storiesOf('Segmented-Buttons', module)
 
 storiesOf('Embed', module)
   .add('regular', () => <Embed domain="community-staging" />)
+
+storiesOf('ProjectEmbed', module)
+  .add('when authorized, it shows ', () => (
+    <ProjectEmbed 
+      isAuthorized
+      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
+      featuredProject={{id: "123", domain: "community-staging" }}
+      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+    />
+  ))

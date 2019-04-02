@@ -33,7 +33,6 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
     <div className={styles["right-buttons"]}>
       {currentUser.login && (
         <AddProjectToCollection
-          className="button-small"
           currentUser={currentUser}
           project={featuredProject}
           fromProject
