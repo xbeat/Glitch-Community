@@ -13,7 +13,6 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
-import { Context as APIContext } from '../src/state/api';
 
 // load global styles
 import '../build/styles.css';
@@ -32,11 +31,9 @@ const withState = (initState, Component) => {
   return () => <WrappedComponent />;
 };
 
-const provideContext = ({ currentUser, api }, Component) => (
+const provideCurrentUser = (currentUser, Component) => (
   <CurrentUserContext.Provider value={{ currentUser }}>
-    <APIContext.Provider value={api}>
-      <Component />
-    </APIContext.Provider>
+    <Component />
   </CurrentUserContext.Provider>
 );
 
@@ -214,7 +211,7 @@ const users = {
 
 storiesOf('ProjectItem', module).add(
   'base',
-  provideContext({ currentUser: {} }, () => (
+  provideCurrentUser({}, () => (
     <div style={{ margin: '2em', width: '25%' }}>
       <ProjectItem
         project={{
@@ -231,20 +228,9 @@ storiesOf('ProjectItem', module).add(
   )),
 );
 
-const mockAPI = {
-  async get(url) {
-    return { data: this.responses[url] };
-  },
-  responses: {
-    '/v1/users/by/id/?id=12345': { 12345: users.modernserf },
-  },
-};
-
 storiesOf('SmallCollectionItem', module).add(
-  'with user',
-  provideContext(
-    { currentUser: {}, api: mockAPI },
-    <div style={{ margin: '2em', width: '25%' }}>
+  'base',
+  provideContext({}, <div style={{ margin: '2em', width: '25%' }}>
       <SmallCollectionItem
         collection={{
           id: 12345,
@@ -255,6 +241,5 @@ storiesOf('SmallCollectionItem', module).add(
           teamId: -1,
         }}
       />
-    </div>,
-  ),
-);
+    </div>
+)
