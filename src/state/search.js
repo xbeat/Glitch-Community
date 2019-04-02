@@ -108,7 +108,7 @@ async function searchUsers(api, query) {
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data;
+  return data.map(project => ({ ...project,))
 }
 
 // This API is slow and is missing important data (so its unfit for production)
