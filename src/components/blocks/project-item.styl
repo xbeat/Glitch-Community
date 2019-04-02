@@ -1,11 +1,15 @@
 .container
   font-size: 14px
   
+.header
+  display: flex
+  align-items: center
+  margin-bottom: 0.5rem
+  
 .userListContainer
   position: relative
   z-index: 1
-  width: 100%
-  margin-bottom: 0.5rem
+  flex: 1 0 auto
   
   &:after
     content: ""
@@ -18,6 +22,16 @@
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))
     z-index: 1
   
+.projectOptionsContainer
+  flex: 0 0 auto
+  :global .project-options-pop-btn
+    top: 0 !important
+  :global .project-options
+    display: block
+    position: relative
+    top: auto
+    right: auto
+    
 .linkBody
   display: block
   position: relative
