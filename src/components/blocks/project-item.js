@@ -9,7 +9,6 @@ import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
 import UsersList from '../../presenters/users-list';
 import styles from './project-item.styl';
 
-const FakeButton = ({ children }) => <Button onClick={() => {}}>{children}</Button>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const getLinkBodyStyles = (project) =>
@@ -33,9 +32,9 @@ const ProjectItem = ({ project, projectOptions }) => (
           <ProjectAvatar id={project.id} />
         </div>
         <div className={styles.nameWrap}>
-          <FakeButton>
+          <Button decorative>
             {project.private && <PrivateIcon />} <span className={styles.projectDomain}>{project.domain}</span>
-          </FakeButton>
+          </Button>
         </div>
       </div>
       <div className={styles.description}>

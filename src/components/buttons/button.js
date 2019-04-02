@@ -14,7 +14,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active }) => {
+const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active, decorative }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -26,6 +26,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     matchBackground: matchBackground === true,
     active,
     hover,
+    decorative,
   });
 
   return href

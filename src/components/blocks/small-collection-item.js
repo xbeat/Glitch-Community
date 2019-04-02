@@ -18,7 +18,6 @@ const collectionColorStyles = (collection) => ({
   border: collection.coverColor,
 });
 
-const FakeButton = ({ children }) => <Button onClick={() => {}}>{children}</Button>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
@@ -65,10 +64,10 @@ const SmallCollectionItem = ({ collection }) => (
             <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           </div>
           <div className={styles.collectionNameWrap}>
-            <FakeButton>
+            <Button decorative>
               {collection.private && <PrivateIcon />}
               <div className={styles.collectionName}>{collection.name}</div>
-            </FakeButton>
+            </Button>
           </div>
         </div>
         <div className={styles.description}>
