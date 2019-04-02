@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Heading from 'Components/text/heading';
+import ExpanderContainer from 'Components/containers/expander';
 import ProjectItem from './project-item';
-import ExpanderContainer from '../components/containers/expander';
-
-import Heading from '../components/text/heading';
 
 const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
@@ -68,7 +67,9 @@ ExpandyProjects.defaultProps = {
 export const ProjectsUL = ({ showProjectDescriptions, ...props }) => (
   <ul className="projects-container">
     {props.projects.map((project) => (
-      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      <li key={project.id}>
+        <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      </li>
     ))}
   </ul>
 );

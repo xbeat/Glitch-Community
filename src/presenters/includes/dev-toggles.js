@@ -19,10 +19,7 @@ const toggleData = [
     name: 'Email Invites',
     description: 'Enables invite-by-email behavior on the team page.',
   },
-  {
-    name: 'Google Auth',
-    description: 'Sign in with your google account!',
-  },
+  { name: 'Everybody Dance!', description: 'Placeholder for a new toggle.' },
   {
     name: 'Algolia Search',
     description: 'Use the new Algolia-powered search API.',

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { captureException } from '../../utils/sentry';
+import { captureException } from 'Utils/sentry';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {

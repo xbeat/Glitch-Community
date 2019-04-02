@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DefaultAvatar from '../../components/collection/defaultAvatar';
+import DefaultAvatar from 'Components/collection/defaultAvatar';
 
 /* eslint-disable no-bitwise */
 // from https://stackoverflow.com/a/21648508/1720985

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
-import { useTracker } from '../analytics';
+import TextInput from 'Components/inputs/text-input';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
+import { useTracker } from '../analytics';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
-import TextInput from '../../components/inputs/text-input';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿
@@ -135,7 +135,7 @@ class CreateTeamPopBase extends React.Component {
 
         <section className="pop-over-actions">
           <form onSubmit={this.handleSubmit}>
-            <TextInput value={this.state.teamName} onChange={this.handleChange} placeholder={placeholder} error={this.state.error} />
+            <TextInput labelText={placeholder} value={this.state.teamName} onChange={this.handleChange} placeholder={placeholder} error={this.state.error} />
             <p className="action-description team-url-preview">/@{_.kebabCase(this.state.teamName || placeholder)}</p>
 
             {this.state.isLoading ? <Loader /> : <CreateTeamSubmitButton />}
