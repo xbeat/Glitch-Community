@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Heading from 'Components/text/heading';
-import FeaturedProjectOptionsPop from './pop-overs/featured-project-options-pop';
-import ReportButton from './pop-overs/report-abuse-pop';
-import { EditButton, RemixButton } from './includes/project-actions';
-import AddProjectToCollection from './includes/add-project-to-collection';
-import Embed from './includes/embed';
-import { TrackClick } from './analytics';
+import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-project-options-pop';
+import ReportButton from '../../presenters/pop-overs/report-abuse-pop';
+import { EditButton, RemixButton } from '../../presenters/includes/project-actions';
+import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
+import Embed from '../../presenters/includes/embed';
+import { TrackClick } from '../../presenters/analytics';
 
-
-const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
+const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
       <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
@@ -66,7 +65,7 @@ const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProje
   );
 };
 
-FeaturedProject.propTypes = {
+ProjectEmbed.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,
@@ -74,8 +73,8 @@ FeaturedProject.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
-FeaturedProject.defaultProps = {
+ProjectEmbed.defaultProps = {
   currentUser: null,
 };
 
-export default FeaturedProject;
+export default ProjectEmbed;

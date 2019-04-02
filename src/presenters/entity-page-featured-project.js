@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import Heading from 'Components/text/heading';
 import FeaturedProjectOptionsPop from './pop-overs/featured-project-options-pop';
+import ReportButton from './pop-overs/report-abuse-pop';
 import { EditButton, RemixButton } from './includes/project-actions';
 import Embed from './includes/embed';
-import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
 import { TrackClick } from './analytics';
 
