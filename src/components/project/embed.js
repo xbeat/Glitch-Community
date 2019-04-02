@@ -10,7 +10,6 @@ const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cd
 // Babel does not transpile URLSearchParams, so using this as a compatibility check for showing embeds now.
 // TODO(sheridan) make this more robust in future
 const browserSatisfiesRequirements = (() => {
-  return false
   try {
     const test = new Function('return () => true'); // eslint-disable-line no-new-func
     if (test()() !== true) {
