@@ -213,6 +213,7 @@ const { slice, reducer, actions } = createSlice({
       ...state,
       sharedUser: null,
       cachedUser: null,
+      loadStatus: 'loading',
     }),
   },
 });
@@ -254,6 +255,10 @@ const loadUserAfterLogin = afterReducer(matchTypes(actions.loggedIn, actions.sto
   const sharedUser = action.payload;
   const cachedUser = await getCachedUser(sharedUser);
   store.dispatch(actions.updated({ cachedUser }));
+});
+
+const loadAnonUserAfterLogout = afterReducer(matchTypes(actions.loggedOut), async (store, action) => {
+  const sharedUser = await getAnonUser()
 });
 
 export const currentUserSlice = {
