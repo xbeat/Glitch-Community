@@ -20,9 +20,7 @@ const getLinkBodyStyles = (project) =>
 const ProjectItem = ({ project, projectOptions, hideProjectDescriptions }) => (
   <div className={styles.container}>
     <div className={styles.userListContainer}>
-      <div className={styles.userListWrap}>
-        <UsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
-      </div>
+      <UsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
     </div>
     <ProjectOptionsPop project={project} projectOptions={projectOptions} />
     <ProjectLink className={getLinkBodyStyles(project)} project={project}>
