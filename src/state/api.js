@@ -1,10 +1,10 @@
 /* globals API_URL */
-import { useState, useEffect, useContext, useRef, createContext } from 'react';
+import React, { useState, useEffect, useContext, useRef, createContext } from 'react';
 import axios from 'axios';
 import { memoize } from 'lodash';
 import { useCurrentUser } from './current-user';
 
-export const Context = createContext()
+export const Context = createContext();
 
 export const getAPIForToken = memoize((persistentToken) => {
   if (persistentToken) {
@@ -20,10 +20,10 @@ export const getAPIForToken = memoize((persistentToken) => {
   });
 });
 
-export function APIContextProvider ({ children }) {
+export function APIContextProvider({ children }) {
   const { persistentToken } = useCurrentUser();
   const api = getAPIForToken(persistentToken);
-  return <Context.Provider value={api}>{children}</Context.Provider>
+  return <Context.Provider value={api}>{children}</Context.Provider>;
 }
 
 export function useAPI() {

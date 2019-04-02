@@ -13,7 +13,7 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
-import { Context as APIContext } from '../src/state/current-user';
+import { Context as APIContext } from '../src/state/api';
 
 // load global styles
 import '../build/styles.css';
@@ -231,11 +231,20 @@ storiesOf('ProjectItem', module).add(
   )),
 );
 
-
+const mockAPI = {
+  async get(url) {
+    return { data: this.responses[url] };
+  },
+  responses: {
+    '/v1/users/by/id/?id=12345': { 12345: users.modernserf },
+  },
+};
 
 storiesOf('SmallCollectionItem', module).add(
-  'base',
-  provideContext({ currentUser: {}, api: mockAPI }, <div style={{ margin: '2em', width: '25%' }}>
+  'with user',
+  provideContext(
+    { currentUser: {}, api: mockAPI },
+    <div style={{ margin: '2em', width: '25%' }}>
       <SmallCollectionItem
         collection={{
           id: 12345,
@@ -246,5 +255,6 @@ storiesOf('SmallCollectionItem', module).add(
           teamId: -1,
         }}
       />
-    </div>
-)
+    </div>,
+  ),
+);
