@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './embed.styl';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
@@ -24,10 +25,11 @@ const browserSatisfiesRequirements = (() => {
 })();
 
 const Embed = ({ domain }) => (
-  <div className="glitch-embed-wrap">
+  <div className={styles['embed-container']}>
     {browserSatisfiesRequirements ? (
       // Embed iframe for app
       <iframe
+        className={styles['embed-iframe']}
         title="embed"
         src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
         alt={`${domain} on Glitch`}
