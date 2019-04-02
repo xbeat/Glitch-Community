@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
 import ProjectItem from './project-item';
-import Text from '../components/text/text';
-import Button from '../components/buttons/button';
-import Badge from '../components/badges/badge';
-import TextInput from '../components/inputs/text-input';
-import Heading from '../components/text/heading';
+import Text from 'Components//text/text';
+import Button from 'Components/buttons/button';
+import Badge from 'Components/badges/badge';
+import TextInput from 'Components/inputs/text-input';
+import Heading from 'Components/text/heading';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
