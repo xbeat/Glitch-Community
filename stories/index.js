@@ -12,6 +12,7 @@ import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
+import { Context as CurrentUserContext } from '../src/state/current-user';
 
 const helloAlert = () => {
   alert('hello');
@@ -190,17 +191,19 @@ storiesOf('Segmented-Buttons', module)
   );
 
 storiesOf('ProjectItem', module).add('base', () => (
-  <ProjectItem
-    project={{
-      id: 'foo',
-      domain: 'judicious-pruner',
-      description: 'a judicious project that does pruner things',
-      private: false,
-      showAsGlitchTeam: false,
-      users: [{ id: 271885, login: 'modernserf' }],
-      teams: [],
-    }}
-  />
+  <CurrentUserContext.Provider value={{ currentUser: {} }}>
+    <ProjectItem
+      project={{
+        id: 'foo',
+        domain: 'judicious-pruner',
+        description: 'a judicious project that does pruner things',
+        private: false,
+        showAsGlitchTeam: false,
+        users: [{ id: 271885, login: 'modernserf' }],
+        teams: [],
+      }}
+    />
+  </CurrentUserContext.Provider>
 ));
 
 // <!--          project: PropTypes.shape({
