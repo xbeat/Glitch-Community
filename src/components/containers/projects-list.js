@@ -10,6 +10,7 @@ import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
 import Image from 'Components/images/image';
 import ProjectItem from '../../presenters/project-item';
+
 import styles from './projects-list.styl';
 
 const cx = classNames.bind(styles);
