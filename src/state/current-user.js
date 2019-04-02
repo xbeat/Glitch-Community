@@ -139,36 +139,6 @@ async function fixSharedUser(sharedUser) {
   return newSharedUser;
 }
 
-async function load(initState) {
-  const nextState = { ...initState };
-
-  // If we're signed out create a new anon user
-  if (!nextState.sharedUser) {
-    nextState.sharedUser = await getAnonUser();
-  }
-
-  // Check if we have to clear the cached user
-  if (!usersMatch(nextState.sharedUser, nextState.cachedUser)) {
-    nextState.cachedUser = undefined;
-  }
-
-  const newCachedUser = await getCachedUser(nextState.sharedUser);
-  if (newCachedUser === 'error') {
-    // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
-    // Anon users get their token and id deleted when they're merged into a user on sign in
-    // If it did change then quit out and let componentDidUpdate sort it out
-
-    if (usersMatch(initState.sharedUser, nextState.sharedUser)) {
-      // The user wasn't changed, so we need to fix it
-      nextState.sharedUser = await fixSharedUser(initState.sharedUser);
-    }
-  } else {
-    // The shared user is good, store it
-    nextState.cachedUser = newCachedUser;
-  }
-  return nextState;
-}
-
 const { slice, reducer, actions } = createSlice({
   slice: 'currentUser',
   initialState: {
@@ -215,6 +185,11 @@ const { slice, reducer, actions } = createSlice({
       cachedUser: null,
       loadStatus: 'loading',
     }),
+    loadedAnonUserAfterLogout: (state, { payload }) => ({
+      ...state,
+      sharedUser: payload,
+      loadStatus: 'ready',
+    }),
   },
 });
 
@@ -224,9 +199,36 @@ const handleLoadRequest = afterReducer(matchTypes(actions.requestedLoad), async 
   const prevUser = selectCurrentUser(prevState);
   // prevent multiple 'load's from running
   if (prevUser.loadStatus === 'loading') return;
+  
+  const nextUser = { ...prevUser };
 
-  const result = await load(selectCurrentUser(store.getState()));
-  store.dispatch(actions.loaded(result));
+  // If we're signed out create a new anon user
+  if (!nextUser.sharedUser) {
+    nextUser.sharedUser = await getAnonUser();
+  }
+
+  // Check if we have to clear the cached user
+  if (!usersMatch(nextUser.sharedUser, nextUser.cachedUser)) {
+    nextUser.cachedUser = undefined;
+  }
+
+  const newCachedUser = await getCachedUser(nextUser.sharedUser);
+  if (newCachedUser === 'error') {
+    // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
+    // Anon users get their token and id deleted when they're merged into a user on sign in
+    // If it did change then quit out and let componentDidUpdate sort it out
+
+    if (usersMatch(prevUser.sharedUser, nextUser.sharedUser)) {
+      // The user wasn't changed, so we need to fix it
+      nextUser.sharedUser = await fixSharedUser(prevUser.sharedUser);
+    }
+    dis
+  } else {
+    // The shared user is good, store it
+    nextUser.cachedUser = newCachedUser;
+  }
+
+  store.dispatch(actions.loaded(nextUser));
 });
 
 const trackUserChanges = afterReducer(matchTypes(actions.loaded), (store, action, prevState) => {
@@ -258,13 +260,14 @@ const loadUserAfterLogin = afterReducer(matchTypes(actions.loggedIn, actions.sto
 });
 
 const loadAnonUserAfterLogout = afterReducer(matchTypes(actions.loggedOut), async (store, action) => {
-  const sharedUser = await getAnonUser()
+  const anonUser = await getAnonUser();
+  store.dispatch(actions.loadedAnonUserAfterLoggedOut(anonUser));
 });
 
 export const currentUserSlice = {
   slice,
   reducer,
-  middleware: [handleLoadRequest, trackUserChanges, persistToStorage, updateUserOnStorageChange, loadUserAfterLogin],
+  middleware: [handleLoadRequest, trackUserChanges, persistToStorage, updateUserOnStorageChange, loadUserAfterLogin, loadAnonUserAfterLogout],
 };
 
 export function useCurrentUser() {
