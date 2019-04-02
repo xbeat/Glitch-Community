@@ -58,33 +58,6 @@ const useAnalyticsTracker = () => {
   };
 };
 
-// this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
-// this won't work for links that do a full page load, because the request will get cancelled by the nav
-// use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
-export const TrackClick = ({ children, name, properties, context }) => {
-  const track = useAnalyticsTracker();
-  return React.Children.map(children, (child) => {
-    function onClick(...args) {
-      track(name, properties, context);
-      if (child.props.onClick) {
-        return child.props.onClick(...args);
-      }
-      return null;
-    }
-    return React.cloneElement(child, { onClick });
-  });
-};
-TrackClick.propTypes = {
-  children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  properties: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  context: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-};
-TrackClick.defaultProps = {
-  properties: {},
-  context: {},
-};
-
 export const useTracker = (...trackArgs) => {
   const track = useAnalyticsTracker();
   return () => track(...trackArgs);
