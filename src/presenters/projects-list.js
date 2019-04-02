@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
-import ProjectItem from './project-item';
 import Text from 'Components/text/text';
 import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
+import ProjectItem from './project-item';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
   const [filter, setFilter] = useState('');
@@ -88,7 +88,6 @@ function PaginatedProjects(props) {
 
   const numProjects = projects.length;
   const numPages = Math.ceil(projects.length / projectsPerPage);
-  const hiddenProjects = numProjects - projectsPerPage;
   const canPaginate = !expanded && projectsPerPage < numProjects;
 
   if (!expanded && canPaginate) {
@@ -116,7 +115,7 @@ function PaginatedProjects(props) {
         <div className="view-controls">
           <PaginationControls />
           <Button type="tertiary" onClick={() => setExpanded(true)}>
-            Show all<Badge>{hiddenProjects}</Badge>
+            Show all<Badge>{numProjects}</Badge>
           </Button>
         </div>
       ) : null}
