@@ -9,7 +9,7 @@ import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
 import { TrackClick } from './analytics';
 
-
+// project embed
 const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
   const reportBtn = (
     <div className="buttons buttons-left">
