@@ -13,8 +13,9 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/blocks/project-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
+import { Context as APIContext } from '../src/state/current-user';
 
-// load global styles 
+// load global styles
 import '../build/styles.css';
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
@@ -31,11 +32,13 @@ const withState = (initState, Component) => {
   return () => <WrappedComponent />;
 };
 
-const provideCurrentUser(currentUser, Component) => {
+const provideContext = ({ currentUser, api }, Component) => (
   <CurrentUserContext.Provider value={{ currentUser }}>
-    <Component />
+    <APIContext.Provider value={api}>
+      <Component />
+    </APIContext.Provider>
   </CurrentUserContext.Provider>
-}
+);
 
 storiesOf('Button', module)
   .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
@@ -202,16 +205,16 @@ storiesOf('Segmented-Buttons', module)
   );
 
 const users = {
-  modernserf:  {
-            id: 271885,
-            login: 'modernserf',
-            avatarThumbnailUrl:
-              'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
-          },
-}
+  modernserf: {
+    id: 271885,
+    login: 'modernserf',
+    avatarThumbnailUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+  },
+};
 
-storiesOf('ProjectItem', module).add('base', () => (
-  <CurrentUserContext.Provider value={{ currentUser: {} }}>
+storiesOf('ProjectItem', module).add(
+  'base',
+  provideContext({ currentUser: {} }, () => (
     <div style={{ margin: '2em', width: '25%' }}>
       <ProjectItem
         project={{
@@ -225,16 +228,23 @@ storiesOf('ProjectItem', module).add('base', () => (
         }}
       />
     </div>
-    
-  </CurrentUserContext.Provider>
-));
+  )),
+);
 
-// <!--          project: PropTypes.shape({
-//     description: PropTypes.string.isRequired,
-//     domain: PropTypes.string.isRequired,
-//     id: PropTypes.string.isRequired,
-//     private: PropTypes.bool,
-//     showAsGlitchTeam: PropTypes.bool.isRequired,
-//     users: PropTypes.array.isRequired,
-//     teams: PropTypes.array,
-//   }).isRequired, -->
+
+
+storiesOf('SmallCollectionItem', module).add(
+  'base',
+  provideContext({ currentUser: {}, api: mockAPI }, <div style={{ margin: '2em', width: '25%' }}>
+      <SmallCollectionItem
+        collection={{
+          id: 12345,
+          name: 'Cool Projects',
+          description: 'A collection of cool projects',
+          coverColor: '#efe',
+          userId: 271885,
+          teamId: -1,
+        }}
+      />
+    </div>
+)

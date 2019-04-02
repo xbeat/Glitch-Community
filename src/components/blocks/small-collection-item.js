@@ -87,8 +87,8 @@ SmallCollectionItem.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
-    user: PropTypes.object,
-    team: PropTypes.object,
+    userId: PropTypes.number,
+    teamId: PropTypes.number,
   }).isRequired,
 };
 
