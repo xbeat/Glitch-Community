@@ -11,6 +11,7 @@ import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import ProjectItem from 'Components/blocks/project-item';
 
 const helloAlert = () => {
   alert('hello');
@@ -20,7 +21,7 @@ const withState = (initState, Component) => {
   const WrappedComponent = () => {
     const [state, setState] = useState(initState);
     return <Component state={state} setState={setState} />;
-  }
+  };
   return () => <WrappedComponent />;
 };
 
@@ -187,3 +188,27 @@ storiesOf('Segmented-Buttons', module)
       />
     )),
   );
+
+storiesOf('ProjectItem', module).add('base', () => (
+  <ProjectItem
+    project={{
+      id: 'foo',
+      domain: 'judicious-pruner',
+      description: 'a judicious project that does pruner things',
+      private: false,
+      showAsGlitchTeam: false,
+      users: [{ id: 271885, login: 'modernserf' }],
+      teams: [],
+    }}
+  />
+));
+
+// <!--          project: PropTypes.shape({
+//     description: PropTypes.string.isRequired,
+//     domain: PropTypes.string.isRequired,
+//     id: PropTypes.string.isRequired,
+//     private: PropTypes.bool,
+//     showAsGlitchTeam: PropTypes.bool.isRequired,
+//     users: PropTypes.array.isRequired,
+//     teams: PropTypes.array,
+//   }).isRequired, -->
