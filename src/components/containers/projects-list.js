@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
+import classNames from 'classnames/bind';
+import styles from './projects-list.styl';
+
+const cx = classNames.bind(styles);
 
 import Text from 'Components/text/text';
 import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
-import styles from './projects-list.styl';
 import ProjectItem from '../../presenters/project-item';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
@@ -103,7 +106,7 @@ function PaginatedProjects(props) {
       </Button>
       <div className={styles.pageNumbers}>{page} / {numPages}</div>
       <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
-        <img alt="" className={styles.paginationArrow.nextArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img alt="" className={cx({ paginationArrow: true, next: true })} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
