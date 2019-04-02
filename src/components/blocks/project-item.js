@@ -17,12 +17,15 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
-const ProjectItem = ({ project, projectOptions, hideProjectDescriptions }) => (
+const ProjectItem = ({ project, projectOptions }) => (
   <div className={styles.container}>
     <div className={styles.userListContainer}>
       <UsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+      <div className={styles.projectOptionsContainer}>
+        <ProjectOptionsPop project={project} projectOptions={projectOptions} />
+      </div>
     </div>
-    <ProjectOptionsPop project={project} projectOptions={projectOptions} />
+    
     <ProjectLink className={getLinkBodyStyles(project)} project={project}>
       <div className={styles.projectHeader}>
         <div className={styles.avatarWrap}>
@@ -35,7 +38,9 @@ const ProjectItem = ({ project, projectOptions, hideProjectDescriptions }) => (
           </FakeButton>
         </div>
       </div>
-      <div className={styles.description}>{!hideProjectDescriptions && <Markdown>{project.description || ' '}</Markdown>}</div>
+      <div className={styles.description}>
+        <Markdown length={80}>{project.description || ' '}</Markdown>
+      </div>
     </ProjectLink>
   </div>
 );
@@ -50,12 +55,10 @@ ProjectItem.propTypes = {
     users: PropTypes.array.isRequired,
     teams: PropTypes.array,
   }).isRequired,
-  hideProjectDescriptions: PropTypes.bool,
   projectOptions: PropTypes.object,
 };
 
 ProjectItem.defaultProps = {
-  hideProjectDescriptions: false,
   projectOptions: {},
 };
 
