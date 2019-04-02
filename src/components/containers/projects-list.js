@@ -43,7 +43,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
   }
 
   const placeholderEl = filtering ? (
-    <div className="filter-results-placeholder">
+    <div className={styles.filterResultsPlaceholder}>
       <img alt="" src="https://cdn.glitch.com/c117d5df-3b8d-4389-9e6b-eb049bcefcd6%2Fcompass-not-found.svg?1554146070630" />
       <Text>No projects found</Text>
     </div>
@@ -53,10 +53,10 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
 
   return (
     <article className={`projects ${extraClasses}`}>
-      <div className="header">
+      <div className={styles.header}>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className="header-search" name="q" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
+          <TextInput className={styles.headerSearch} name="filter" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
         ) : null}
       </div>
 
@@ -97,13 +97,13 @@ function PaginatedProjects(props) {
   }
 
   const PaginationControls = () => (
-    <div className="pagination-controls">
+    <div className={styles.paginationControls}>
       <Button aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
-        <img alt="" className="arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
-      <div className="pages">{page} / {numPages}</div>
+      <div className={styles.pageNumbers}>{page} / {numPages}</div>
       <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
-        <img alt="" className="arrow next-arrow" src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <img alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
       </Button>
     </div>
   );
@@ -113,7 +113,7 @@ function PaginatedProjects(props) {
       <ProjectsUL {...props} projects={projects} />
 
       {canPaginate ? (
-        <div className="view-controls">
+        <div className={styles.viewControls}>
           <PaginationControls />
           <Button type="tertiary" onClick={() => setExpanded(true)}>
             Show all<Badge>{numProjects}</Badge>

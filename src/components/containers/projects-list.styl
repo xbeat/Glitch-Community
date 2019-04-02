@@ -5,25 +5,25 @@
   font-size: 13px
   @media (max-width: smallViewport)
     flex-wrap: wrap
-    .header-search
+    .filter
       flex: 100%
       margin-bottom: 15px
       
-.view-controls
+.viewControls
   display: flex
   justify-content: space-between
 
 // hide pagination controls on mobile
-@media (max-width: mediumViewport)
-  .pagination-controls
+.paginationControls
+  @media (max-width: mediumViewport)
     display: none
     
-.pagination-arrow
+.paginationArrow
   margin-bottom: 2px
   &.next
     transform: rotate(180deg)
     
-.page-numbers
+.pageNumbers
   // needs to be static width to so next button doesn't jump around when page changes
   width: 60px
   display: inline-block
@@ -31,7 +31,7 @@
   color: tertiary
   font-size: 14px
 
-.filter-results-placeholder
+.filterResultsPlaceholder
   display: flex
   align-items: center
   img
