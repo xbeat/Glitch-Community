@@ -9,61 +9,47 @@ import AddProjectToCollection from '../../presenters/includes/add-project-to-col
 import Embed from '../../presenters/includes/embed';
 import { TrackClick } from '../../presenters/analytics';
 
-const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
-  const reportBtn = (
-    <div className="buttons buttons-left">
-      <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
-    </div>
-  );
-
-  const featuredTitle = (
-    <>
+const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
+  <section id="featured-project-embed">
+    <Heading tagName="h2">
       Featured Project
       <span className="emoji clapper emoji-in-title" />
-    </>
-  );
-
-  return (
-    <>
-      <section id="featured-project-embed">
-        <Heading tagName="h2">{featuredTitle}</Heading>
-
-        {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
-        <Embed domain={featuredProject.domain} />
-
-        {isAuthorized ? (
-          <div className="buttons buttons-left">
-            <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
-          </div>
+    </Heading>
+    {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
+    <Embed domain={featuredProject.domain} />
+    <div className="buttons buttons-left">
+      {
+        isAuthorized ? (
+          <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
         ) : (
-          reportBtn
-        )}
+          <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
+        )
+      }
+    </div>
 
-        <div className="buttons buttons-right">
-          {currentUser.login && (
-            <AddProjectToCollection
-              className="button-small"
-              currentUser={currentUser}
-              project={featuredProject}
-              fromProject
-              addProjectToCollection={addProjectToCollection}
-            />
-          )}
+    <div className="buttons buttons-right">
+      {currentUser.login && (
+        <AddProjectToCollection
+          className="button-small"
+          currentUser={currentUser}
+          project={featuredProject}
+          fromProject
+          addProjectToCollection={addProjectToCollection}
+        />
+      )}
 
-          <TrackClick
-            name="Click Remix"
-            properties={{
-              baseProjectId: featuredProject.id,
-              baseDomain: featuredProject.domain,
-            }}
-          >
-            <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
-          </TrackClick>
-        </div>
-      </section>
-    </>
-  );
-};
+      <TrackClick
+        name="Click Remix"
+        properties={{
+          baseProjectId: featuredProject.id,
+          baseDomain: featuredProject.domain,
+        }}
+      >
+        <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
+      </TrackClick>
+    </div>
+  </section>
+);
 
 ProjectEmbed.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
