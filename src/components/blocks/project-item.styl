@@ -21,19 +21,24 @@
   display: block
   position: relative
   color: inherit
-  background-color: #eee
+  background-color: #e5e5e5
+  border-color: #e5e5e5
   border-radius: 0.5rem
-  padding: 1rem
+  padding: 1rem 1rem 0.5rem
+  min-height: 150px
   &:hover
     text-decoration: none    
   &:after
-    content: ""
+    top: -13px
+    left: 8.5px
+    border: solid transparent
+    content: " "
+    height: 0
+    width: 0
     position: absolute
-    bottom: 100%
-    left: 6px
-    border-left: 0.5rem solid transparent
-    border-right: 0.5rem solid transparent
-    border-bottom: 0.5rem solid #eee
+    pointer-events: none
+    border-bottom-color: inherit
+    border-width: 7px
 
 .projectHeader
   display: flex
