@@ -14,7 +14,7 @@ import { TrackClick } from '../../presenters/analytics';
 import styles from './project-embed.styl';
 
 const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
-  <section>
+  <section className={styles["project-embed"]}>
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" isInTitle />
