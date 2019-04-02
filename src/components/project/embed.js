@@ -1,4 +1,5 @@
-/* global APP_URL */
+/* global */
+const APP_URL = window.APP_URL || "https://glitch.com";
 
 import React from 'react';
 import PropTypes from 'prop-types';

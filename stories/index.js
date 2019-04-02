@@ -11,6 +11,7 @@ import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import Embed from 'Components/project/embed';
 
 const helloAlert = () => {
   alert('hello');
@@ -187,3 +188,6 @@ storiesOf('Segmented-Buttons', module)
       />
     )),
   );
+
+storiesOf('Embed', module)
+  .add('regular', () => <Embed domain="community-staging" />)
