@@ -2,18 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Heading from 'Components/text/heading';
+import Embed from 'Components/project/embed';
+import Emoji from 'Components/images/emoji';
+
 import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-project-options-pop';
 import ReportButton from '../../presenters/pop-overs/report-abuse-pop';
 import { EditButton, RemixButton } from '../../presenters/includes/project-actions';
 import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
-import Embed from './embed';
 import { TrackClick } from '../../presenters/analytics';
 
+import styles from './project-embed.styl';
+
 const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
-  <section id="featured-project-embed">
+  <section>
     <Heading tagName="h2">
       Featured Project
-      <span className="emoji clapper emoji-in-title" />
+      <Emoji name="clapper" />
     </Heading>
     {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
     <Embed domain={featuredProject.domain} />
