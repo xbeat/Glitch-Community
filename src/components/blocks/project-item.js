@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Markdown from 'Components/text/markdown';
+import Button from 'Components/buttons/button';
 import { ProjectLink } from '../../presenters/includes/link';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
 import UsersList from '../../presenters/users-list';
 import styles from './project-item.styl';
 
-// TODO: componentize, share with small-collection-item
-const FakeButton = ({ children }) => <div className="button">{children}</div>;
+const FakeButton = ({ children }) => <Button onClick={() => {}}>{children}</Button>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const getLinkBodyStyles = (project) =>

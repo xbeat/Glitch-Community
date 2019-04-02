@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
 import Markdown from 'Components/text/markdown';
+import Button from 'Components/buttons/button';
 
 import { createAPIHook } from '../../state/api';
 import { getSingleItem } from '../../../shared/api';
@@ -17,7 +18,7 @@ const collectionColorStyles = (collection) => ({
   border: collection.coverColor,
 });
 
-const FakeButton = ({ children }) => <div className="button">{children}</div>;
+const FakeButton = ({ children }) => <Button onClick={() => {}}>{children}</Button>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
