@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
-import styles from './expander.styl';
-
 import Text from 'Components/text/text';
 import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
+import styles from './projects-list.styl';
 import ProjectItem from '../../presenters/project-item';
 
 function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enablePagination, ...props }) {
