@@ -1,0 +1,36 @@
+.container
+  font-size: 14px
+  
+.userListContainer
+  position: relative
+  padding-bottom: 0.5rem
+  overflow: hidden
+  &:after
+    content: ""
+    background-color: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))
+    width: 1rem
+  
+.linkBody
+  display: block
+  position: relative
+  color: inherit
+  background-color: #eee
+  border-radius: 0.5rem
+  padding: 1rem
+  &:hover
+    text-decoration: none    
+  &:after
+    content: ""
+    position: absolute
+    bottom: 100%
+    left: 6px
+    border-left: 0.5rem solid transparent
+    border-right: 0.5rem solid transparent
+    border-bottom: 0.5rem solid #eee
+
+.projectHeader
+  display: flex
+  align-items: flex-start
+
+.nameWrap
+  padding-left: 0.5rem

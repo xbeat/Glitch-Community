@@ -12,8 +12,8 @@ import styles from './project-item.styl';
 const FakeButton = ({ children }) => <div className="button">{children}</div>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
-const getContainerStyles = (project) =>
-  classnames(styles.projectBody, {
+const getLinkBodyStyles = (project) =>
+  classnames(styles.linkBody, {
     [styles.private]: project.private,
   });
 
@@ -23,7 +23,7 @@ const ProjectItem = ({ project, projectOptions, hideProjectDescriptions }) => (
       <UsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
     </div>
     <ProjectOptionsPop project={project} projectOptions={projectOptions} />
-    <ProjectLink className={getContainerStyles(project)} pr>
+    <ProjectLink className={getLinkBodyStyles(project)} project={project}>
       <div className={styles.projectHeader}>
         <div className={styles.avatarWrap}>
           <ProjectAvatar id={project.id} />
