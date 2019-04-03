@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TooltipContainer from 'Components/tooltips/tooltip-container';
+import Image from 'Components/images/image';
 
 import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from 'Models/team';
 import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from 'Models/user';
@@ -17,7 +18,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
   }
 
   const contents = (
-    <img
+    <Image
       width="32px"
       height="32px"
       src={src}

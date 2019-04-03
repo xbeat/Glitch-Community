@@ -4,6 +4,7 @@ import Pluralize from 'react-pluralize';
 import { sampleSize, flatMap, uniq } from 'lodash';
 import Markdown from 'Components/text/markdown';
 import Heading from 'Components/text/heading';
+import { ProjectsUL } from 'Components/containers/projects-list';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
@@ -13,7 +14,6 @@ import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/ap
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
 
