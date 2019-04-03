@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import 'Components/global.styl';
 import Button from 'Components/buttons/button';
 import Emoji from 'Components/images/emoji';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
@@ -15,6 +16,7 @@ import ProjectItem from 'Components/blocks/project-item';
 import SmallCollectionItem from 'Components/blocks/small-collection-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
+
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
