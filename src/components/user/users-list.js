@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import { Avatar, UserAvatar, TeamAvatar } from 'Components/images/avatar';
 
 import { UserLink, TeamLink } from '../../presenters/includes/link';
-import styles from './user-list.styl'
+import styles from './users-list.styl';
 
-const getContainerClass = (layout) => classnames(styles.container, styles[layout])
+const getContainerClass = (layout) => classnames(styles.container, styles[layout]);
 
 // StaticUsersList
 
@@ -23,11 +23,7 @@ export const StaticUsersList = ({ users, layout }) => (
 );
 StaticUsersList.propTypes = {
   users: PropTypes.array.isRequired,
-  layout: PropTypes.oneOf(['row', 'block']),
-};
-
-StaticUsersList.defaultProps = {
-  layout: 'block',
+  layout: PropTypes.oneOf(['row', 'block']).isRequired,
 };
 
 // UserTile
@@ -71,12 +67,11 @@ const PopulatedUsersList = ({ users, teams, layout }) => {
 };
 PopulatedUsersList.propTypes = {
   users: PropTypes.array.isRequired,
-  layout: PropTypes.oneOf(['row', 'block']),
+  layout: PropTypes.oneOf(['row', 'block']).isRequired,
   teams: PropTypes.array,
 };
 
 PopulatedUsersList.defaultProps = {
-  layout: 'block',
   teams: [],
 };
 
