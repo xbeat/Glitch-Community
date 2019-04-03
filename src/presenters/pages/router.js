@@ -71,7 +71,10 @@ const SuperUserBanner = () => {
     });
 
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
-    const toggleSuperUser = () => supportAPI.post(superUser ? 'disable' : 'enable');
+    const toggleSuperUser = () => {
+      supportAPI.post(superUser ? 'disable' : 'enable');
+      window.location.reload();
+    };
     const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
     const displayText = `SUPER USER MODE: ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'}`;
     const showSupportBanner = window.localStorage.getItem('showSupportBanner');
