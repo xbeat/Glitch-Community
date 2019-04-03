@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+import TextInput from 'Components/inputs/text-input';
 import { Link } from '../includes/link';
 import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
