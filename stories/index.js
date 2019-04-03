@@ -209,10 +209,6 @@ storiesOf('Segmented-Buttons', module)
     )),
   );
 
-storiesOf('Embed', module)
-  .add('regular', () => <Embed domain="community-staging" />)
-
-
 const users = {
   modernserf: {
     id: 271885,
@@ -295,4 +291,7 @@ storiesOf('ProjectEmbed', module)
       featuredProject={{id: "123", domain: "community-staging" }}
       addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
     />
-  ))
+  ));
+
+storiesOf('Embed', module)
+  .add('regular', () => <Embed domain="community-staging" />);
