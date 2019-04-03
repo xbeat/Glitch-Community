@@ -4,22 +4,19 @@ import { sum } from 'lodash';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
-import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
-
+import { getAvatarUrl, getProfileStyle } from '../../models/team';
 import { TeamLink } from '../../presenters/includes/link';
+import { VerifiedBadge } from '../../presenters/includes/team-elements';
+import { Thanks } from '../../presenters/includes/thanks';
+import UsersList from '../../presenters/users-list';
 
-import { Thanks } from './includes/thanks';
-import UsersList from './users-list';
-import WrappingLink from './includes/wrapping-link';
-import { VerifiedBadge } from './includes/team-elements';
-
-
+import styles from './team-item.styl';
 
 const Cover = ({ team, size }) => <div className="cover" style={getProfileStyle({ ...team, size })} />;
 
-const ProfileAvatar = ({ team }) => <img className="avatar" src={getAvatarUrl(team)} alt="" />
+const ProfileAvatar = ({ team }) => <img className="avatar" src={getAvatarUrl(team)} alt="" />;
 
-const getTeamThanksCount = (team) => sum(team.users, (user) => user.thanksCount)
+const getTeamThanksCount = (team) => sum(team.users, (user) => user.thanksCount);
 
 const TeamItem = ({ team }) => (
   <TeamLink className={styles.container} team={team}>
@@ -43,7 +40,6 @@ const TeamItem = ({ team }) => (
   </TeamLink>
 );
 
-
 TeamItem.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -57,3 +53,5 @@ TeamItem.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
 };
+
+export default TeamItem;

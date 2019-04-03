@@ -7,6 +7,7 @@ import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
 import SmallCollectionItem from 'Components/blocks/small-collection-item';
 import UserItem from 'Components/blocks/user-item';
+import TeamItem from 'Components/blocks/team-item';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -17,7 +18,6 @@ import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
 import ProjectItem from '../project-item';
-import TeamItem from '../team-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
