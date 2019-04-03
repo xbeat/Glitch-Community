@@ -183,10 +183,10 @@ const SortableProjectItem = SortableElement(({ project }) => (
     <div className={cx({ sortableProjectItem: true })}>{project.domain}</div>
   </div>
 ));
-const SortableProjectList = SortableContainer(({ sortedProjects, ...props }) => (
+const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
   <div className={cx({ sortableProjectContainer: true })}>
     {sortedProjects.map((project, index) => (
-      <SortableProjectItem index={index} key={project.id} project={project} />
+      <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} />
     ))}
   </div>
 ));
@@ -194,25 +194,18 @@ const SortableProjectList = SortableContainer(({ sortedProjects, ...props }) => 
 const sortProjects = (projects) => projects.sort((a, b) => a.projectOrder - b.projectOrder);
 
 /* Testing for the drag and drop */
-export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
+export const SortableProjectsUL = ({ showProjectDescriptions, ...props }) => {
   const [projects, setProjects] = useState([]);
   const handleSort = ({ oldIndex, newIndex }) => {
     const newOrder = arrayMove(projects, oldIndex, newIndex);
     setProjects(newOrder);
     console.log('🚀', `${projects[oldIndex].domain} was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
+  console.log(props);
   if (projects.length === 0) {
     setProjects(props.projects);
   }
-  return (
-    <SortableProjectList
-      lockToContainerEdges={true}
-      helperClass={cx({ sortableHelper: true })}
-      axis={'xy'}
-      sortedProjects={projects}
-      onSortEnd={handleSort}
-    />
-  );
-});
+  return <SortableProjectList lockToContainerEdges={true} helperClass={cx({ sortableHelper: true })} axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
+};
 
 export default ProjectsList;
