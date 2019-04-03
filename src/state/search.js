@@ -1,7 +1,7 @@
 /* eslint-disable prefer-default-export */
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
-import { groupBy } from 'lodash';
+import { groupBy, sample } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
@@ -48,9 +48,11 @@ function formatCollection(hit) {
   return {
     ...hit,
     id: Number(hit.objectID.split('-')[1]),
-    coverColor: '#ccc',
+    coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc']),
     projects: [],
     url: '',
+    teamId: hit.team,
+    userId: hit.user,
     team: hit.team > 0 ? { id: hit.team, url: '' } : null,
     user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import 'Components/global.styl';
 import Button from 'Components/buttons/button';
 import Emoji from 'Components/images/emoji';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
@@ -11,6 +12,14 @@ import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
+import { Context as CurrentUserContext } from '../src/state/current-user';
+import { Context as APIContext } from '../src/state/api';
+
+
+// initialize globals
+window.CDN_URL = 'https://cdn.glitch.com';
 
 const helloAlert = () => {
   alert('hello');
@@ -20,9 +29,17 @@ const withState = (initState, Component) => {
   const WrappedComponent = () => {
     const [state, setState] = useState(initState);
     return <Component state={state} setState={setState} />;
-  }
+  };
   return () => <WrappedComponent />;
 };
+
+const provideContext = ({ currentUser = {}, api = {} } = {}, Component) => () => (
+  <CurrentUserContext.Provider value={{ currentUser }}>
+    <APIContext.Provider value={api}>
+      <Component />
+    </APIContext.Provider>
+  </CurrentUserContext.Provider>
+);
 
 storiesOf('Button', module)
   .add('regular', () => <Button onClick={helloAlert}>Hello Button</Button>)
@@ -187,3 +204,58 @@ storiesOf('Segmented-Buttons', module)
       />
     )),
   );
+
+const users = {
+  modernserf: {
+    id: 271885,
+    login: 'modernserf',
+    avatarThumbnailUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+  },
+};
+
+storiesOf('ProjectItem', module).add(
+  'base',
+  provideContext({ currentUser: {} }, () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <ProjectItem
+        project={{
+          id: 'foo',
+          domain: 'judicious-pruner',
+          description: 'a judicious project that does pruner things',
+          private: false,
+          showAsGlitchTeam: false,
+          users: [users.modernserf],
+          teams: [],
+        }}
+      />
+    </div>
+  )),
+);
+
+const mockAPI = {
+  async get(url) {
+    return { data: this.responses[url] };
+  },
+  responses: {
+    '/v1/users/by/id/?id=271885': { 271885: users.modernserf },
+  },
+};
+
+storiesOf('SmallCollectionItem', module).add(
+  'with user',
+  provideContext({ currentUser: {}, api: mockAPI }, () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <SmallCollectionItem
+        collection={{
+          id: 12345,
+          name: 'Cool Projects',
+          description: 'A collection of cool projects',
+          coverColor: '#efe',
+          userId: 271885,
+          user: { id: 271885 },
+          teamId: -1,
+        }}
+      />
+    </div>
+  )),
+);

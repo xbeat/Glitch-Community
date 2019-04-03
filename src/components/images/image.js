@@ -14,34 +14,38 @@ import PropTypes from 'prop-types';
  * @param {boolean} backgroundImage - If we want the image to be rendered as a background image
  */
 
-const Image = ({ alt, backgroundImage, backgroundRatio, className, height, role, src, srcSet, sizes, width }) => (
-  <>
-    {!backgroundImage ? (
-      <img
-        alt={alt}
-        className={className || undefined}
-        height={height || undefined}
-        role={role}
-        sizes={sizes}
-        src={src}
-        srcSet={srcSet.length > 0 ? srcSet : undefined}
-        width={width || undefined}
-      />
-    ) : (
-      <div
-        className={className || undefined}
-        role={role}
-        style={{
-          backgroundImage: `url(${src})`,
-          paddingBottom: `${backgroundRatio}%`,
-          backgroundRepeat: 'no-repeat',
-          width,
-          height,
-        }}
-      />
-    )}
-  </>
-);
+const handleDefaultSrc = (defaultSrc) => (event) => {
+  if (defaultSrc && event.target.src !== defaultSrc) {
+    event.target.src = defaultSrc;
+  }
+};
+
+const Image = ({ alt, backgroundImage, backgroundRatio, className, height, role, src, srcSet, sizes, width, defaultSrc }) =>
+  !backgroundImage ? (
+    <img
+      alt={alt}
+      className={className || undefined}
+      height={height || undefined}
+      role={role}
+      sizes={sizes}
+      src={src}
+      srcSet={srcSet.length > 0 ? srcSet : undefined}
+      width={width || undefined}
+      onError={handleDefaultSrc(defaultSrc)}
+    />
+  ) : (
+    <div
+      className={className || undefined}
+      role={role}
+      style={{
+        backgroundImage: `url(${src})`,
+        paddingBottom: `${backgroundRatio}%`,
+        backgroundRepeat: 'no-repeat',
+        width,
+        height,
+      }}
+    />
+  );
 
 Image.propTypes = {
   alt: PropTypes.string.isRequired,
@@ -54,6 +58,7 @@ Image.propTypes = {
   srcSet: PropTypes.array,
   sizes: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  defaultSrc: PropTypes.string,
 };
 
 Image.defaultProps = {
@@ -65,6 +70,7 @@ Image.defaultProps = {
   srcSet: [],
   sizes: '',
   width: '100%',
+  defaultSrc: null,
 };
 
 export default Image;

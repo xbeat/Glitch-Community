@@ -14,44 +14,26 @@
         padding-left: 5px
         border-radius: 5px
         background: tertiary
-  
-  .search-results__results-container
+  .projects-container, .teams-container, .users-container, .collections-container
     overflow: initial
     border-radius: 5px
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    align-items: flex-start
-    margin-left: -5px
-    margin-right: -5px
-    >li
-      margin: 0
-      padding: 0 5px 10px
-      flex: 0 0 25%
-      @media (max-width: largeViewport)	
-        flex: 0 0 33.33%
-      @media (max-width: mediumViewport)	
-        flex: 0 0 50%
-      @media (max-width: mediumSmallViewport)	
-        flex: 1 0 auto
+    @media (min-width: largeViewport)	
+      grid-template-columns: 1fr 1fr 1fr 1fr
   
   .projects
     margin-top: 0
     padding: 0
     
-    .project-options
-      display: initial
-
     .project
       margin-bottom: 12px
-    
-    // > h2
-    //   margin-bottom: calc(0.83em - 10px)
       
   .no-results
     margin-bottom: 2rem
     p
       margin: 0
+  
+  .show-all-btn
+    margin-top: 10px
       
 .search-results__group-container
   margin-bottom: 3rem

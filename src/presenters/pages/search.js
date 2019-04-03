@@ -6,6 +6,9 @@ import { keyBy } from 'lodash';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
+
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -15,10 +18,8 @@ import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
-import ProjectItem from '../project-item';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
-import CollectionItem from '../collection-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
@@ -62,13 +63,17 @@ const groups = [
   { id: 'team', label: 'Teams', ResultComponent: ({ result }) => <TeamItem team={result} /> },
   { id: 'user', label: 'Users', ResultComponent: ({ result }) => <UserItem user={result} /> },
   { id: 'project', label: 'Projects', ResultComponent: ProjectResult },
-  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <CollectionItem collection={result} /> },
+  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
 // TODO: add `type` fields to legacy search results, so everything can render the same
 const groupsByType = keyBy(groups, (group) => group.id);
 
-const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
+const ShowMoreButton = ({ label, onClick }) => (
+  <button className="show-all-btn" onClick={onClick}>
+    Show All {label}
+  </button>
+);
 
 const MAX_UNFILTERED_RESULTS = 20;
 

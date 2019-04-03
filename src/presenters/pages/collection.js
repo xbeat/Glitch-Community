@@ -5,12 +5,13 @@ import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Text from 'Components/text/text';
+import { ProjectsUL } from 'Components/containers/projects-list';
+import Image from 'Components/images/image';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
-import { ProjectsUL } from '../projects-list';
 import NotFound from '../includes/not-found';
 import { AuthDescription } from '../includes/description-field';
 import CollectionEditor from '../collection-editor';
@@ -121,7 +122,7 @@ const CollectionPageContents = ({
           </header>
           {!collectionHasProjects && currentUserIsAuthor && (
             <div className="empty-collection-hint">
-              <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
+              <Image src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
               <Text>You can add any project, created by any user</Text>
             </div>
           )}

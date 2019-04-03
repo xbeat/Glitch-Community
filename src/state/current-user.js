@@ -5,7 +5,7 @@ import { configureScope, captureException, captureMessage, addBreadcrumb } from 
 import useLocalStorage from './local-storage';
 import { getAPIForToken } from './api';
 
-const Context = React.createContext();
+export const Context = React.createContext();
 
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do

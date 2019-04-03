@@ -7,6 +7,7 @@ import { VerifiedBadge } from '../../presenters/includes/team-elements';
 
 const TeamNameInput = ({ name, onChange, verified }) => (
   <OptimisticTextInput
+    labelText="Team Name"
     value={name}
     onChange={onChange}
     placeholder="What's its name?"

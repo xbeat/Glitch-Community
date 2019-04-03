@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { sampleSize } from 'lodash';
+import Image from 'Components/images/image';
 
 import FeaturedItems from '../curated/featured';
 import FeaturedEmbedObject from '../curated/featured-embed';
@@ -43,7 +44,7 @@ const ZineItems = () => {
 const FeaturedPanel = ({ img, link, title }) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
-      <img className="featured" src={img} alt="" />
+      <Image className="featured" src={img} alt="" />
       <p className="project-name">{title}</p>
     </div>
   </Link>
