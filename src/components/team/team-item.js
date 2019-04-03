@@ -32,7 +32,9 @@ const TeamItem = ({ team }) => (
             <Button decorative>{team.name}</Button>
             {!!team.isVerified && <VerifiedBadge />}
           </div>
-          <StaticUsersList users={team.users} layout="block" />
+          <div className={styles.usersList}>
+            <StaticUsersList users={team.users} layout="block" />
+          </div>
           <Markdown length={96}>{team.description || ' '}</Markdown>
         </div>
       </div>
