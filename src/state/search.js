@@ -110,19 +110,25 @@ export function useAlgoliaSearch(query) {
   };
 }
 
+const formatLegacyResult = (type, query) => (hit) => ({
+  ...hit,
+  type,
+  isExactMatch: isExactMatch(hit, query),
+});
+
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('team', query));
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('user', query));
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('project', query));
 }
 
 // This API is slow and is missing important data (so its unfit for production)
@@ -133,8 +139,10 @@ async function searchCollections(api, query) {
   // NOTE: collection URLs don't work correctly with these
   return data.map((coll) => ({
     ...coll,
+    type: 'collection',
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
     user: coll.userId > 0 ? { id: coll.userId } : null,
+    isExactMatch: isExactMatch(coll, query),
   }));
 }
 
@@ -158,11 +166,14 @@ export function useLegacySearch(query) {
       })
       .catch(handleError);
   }, [query]);
+
+  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
+
   return {
     ...emptyResults,
     status,
-    totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
-    topResults: [],
+    totalHits: allHits.length,
+    topResults: allHits.filter((hit) => hit.isExactMatch),
     ...results,
   };
 }
