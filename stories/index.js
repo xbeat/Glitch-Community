@@ -13,7 +13,7 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Embed from 'Components/project/embed';
 import ProjectEmbed from 'Components/project/project-embed';
-const Context = React.createContext();
+import { CurrentUserProvider } from '../src/state/current-user';
 
 const helloAlert = () => {
   alert('hello');
@@ -196,17 +196,16 @@ storiesOf('Embed', module)
 
 storiesOf('ProjectEmbed', module)
   .add('when authorized, it shows an "unfeature" button and an edit button', () => (
-    <Context.Provider value={{ currentUser: { login: null } }}>
+    
       <ProjectEmbed 
         isAuthorized
         unfeatureProject={alert.bind(this, "project un-featured would be called now")}
         featuredProject={{id: "123", domain: "community-staging" }}
         addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
       />
-    </Context.Provider>
   ))
   .add('when unauthorized, it shows a report button', () => (
-    <Context.Provider value={{ currentUser: { login: null } }}>
+    
       <ProjectEmbed 
         isAuthorized={false}
         currentUser={{ login: null }}
@@ -214,7 +213,6 @@ storiesOf('ProjectEmbed', module)
         featuredProject={{id: "123", domain: "community-staging" }}
         addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
       />
-    </Context.Provider>
   ))
   // .add('when passed a logged in user it shows a addProjectToCollection button and a remix this button', () => (
   //   <ProjectEmbed 
