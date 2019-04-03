@@ -6,6 +6,7 @@ import Markdown from 'Components/text/markdown';
 import Cover from 'Components/blocks/cover';
 import Thanks from 'Components/blocks/thanks';
 import Image from 'Components/images/image';
+import Text from 'Components/text/text';
 import { getAvatarUrl, ANON_AVATAR_URL } from 'Models/user';
 import { UserLink } from '../../presenters/includes/link';
 import styles from './user-item.styl';
@@ -16,7 +17,9 @@ const NameAndLogin = ({ user }) =>
   user.name ? (
     <>
       <Button decorative>{user.name}</Button>
-      <p className={styles.login}>@{user.login}</p>
+      <div className={styles.login}>
+        <Text>@{user.login}</Text>
+      </div>
     </>
   ) : (
     <Button decorative>@{user.login}</Button>
