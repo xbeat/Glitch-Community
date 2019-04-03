@@ -5,10 +5,9 @@ import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
 import Cover from 'Components/blocks/cover';
 import Image from 'Components/images/image';
+import { getAvatarUrl, ANON_AVATAR_URL } from 'Models/user';
 import { UserLink } from '../../presenters/includes/link';
 import { Thanks } from '../../presenters/includes/thanks';
-import { getAvatarUrl, ANON_AVATAR_URL } from '../../models/user';
-
 import styles from './user-item.styl';
 
 const ProfileAvatar = ({ user }) => <Image className={styles.avatar} src={getAvatarUrl(user)} defaultSrc={ANON_AVATAR_URL} alt="" />;

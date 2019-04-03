@@ -3,6 +3,7 @@ import React from 'react';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
+import Image from 'Components/images/image';
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
 import { Thanks } from './includes/thanks';
@@ -18,7 +19,7 @@ export default function TeamItem({ team }) {
       <>
         <div className="cover" style={style} />
         <div className="content">
-          <img className="avatar" src={getAvatarUrl(team)} alt="" />
+          <Image className="avatar" src={getAvatarUrl(team)} alt="" />
           <div className="information">
             <Button href={getLink(team)}>{team.name}</Button>
             {!!team.isVerified && <VerifiedBadge />}

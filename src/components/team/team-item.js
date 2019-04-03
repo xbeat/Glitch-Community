@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useLayoutEffect } from 'react';
+import React from 'react';
 import { sumBy } from 'lodash';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
 import Cover from 'Components/blocks/cover';
 import Image from 'Components/images/image';
-import { getAvatarUrl, DEFAULT_TEAM_AVATAR } from '../../models/team';
+import { getAvatarUrl, DEFAULT_TEAM_AVATAR } from 'Models/team';
 import { TeamLink } from '../../presenters/includes/link';
 import { VerifiedBadge } from '../../presenters/includes/team-elements';
 import { Thanks } from '../../presenters/includes/thanks';
@@ -18,42 +18,27 @@ const ProfileAvatar = ({ team }) => <Image className={styles.avatar} src={getAva
 
 const getTeamThanksCount = (team) => sumBy(team.users, (user) => user.thanksCount);
 
-const useAbsolutePositioning = () => {
-  const target = useRef()
-  const contents = useRef()
-  useLayoutEffect(() => {
-    target.current.innerHeight = contents.current.innerHeight
-    contents.current.innerWidth = target.current.innerWidth
-    contents.current.style.top = target.current.offsetTop
-    contents.current.style.left = target.current.offsetLeft
-    console.log(target, contents)
-  }, [])
-  return { target, contents }
-}
-
-const TeamItem = ({ team }) => {
-  return (
-    <TeamLink className={styles.container} team={team}>
-      <Cover type="team" item={team} size="medium" />
-      <div className={styles.innerWrap}>
-        <div className={styles.mainContent}>
-          <div className={styles.avatarWrap}>
-            <ProfileAvatar team={team} />
-          </div>
-          <div className={styles.body}>
-            <div>
-              <Button decorative>{team.name}</Button>
-              {!!team.isVerified && <VerifiedBadge />}
-            </div>
-            <StaticUsersList users={team.users} />
-            <Markdown length={96}>{team.description || ' '}</Markdown>
-          </div>
+const TeamItem = ({ team }) => (
+  <TeamLink className={styles.container} team={team}>
+    <Cover type="team" item={team} size="medium" />
+    <div className={styles.innerWrap}>
+      <div className={styles.mainContent}>
+        <div className={styles.avatarWrap}>
+          <ProfileAvatar team={team} />
         </div>
-        <Thanks count={getTeamThanksCount(team)} />
+        <div className={styles.body}>
+          <div>
+            <Button decorative>{team.name}</Button>
+            {!!team.isVerified && <VerifiedBadge />}
+          </div>
+          <StaticUsersList users={team.users} />
+          <Markdown length={96}>{team.description || ' '}</Markdown>
+        </div>
       </div>
-    </TeamLink>
+      <Thanks count={getTeamThanksCount(team)} />
+    </div>
+  </TeamLink>
 );
-}
 
 TeamItem.propTypes = {
   team: PropTypes.shape({

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Heading from 'Components/text/heading';
+import Image from 'Components/images/image';
 import categories from '../curated/categories';
 import { moreIdeasTeam } from '../curated/collections';
 import { isDarkColor } from '../models/collection';
@@ -57,7 +58,7 @@ export const MoreIdeasCategories = () => (
       {categories.map((category) => (
         <li key={category.id}>
           <Link className="more-ideas-box" to={category.url} style={{ backgroundColor: category.color }}>
-            <img src={category.avatarUrl} alt="" />
+            <Image src={category.avatarUrl} alt="" />
             <div>{category.name}</div>
           </Link>
         </li>

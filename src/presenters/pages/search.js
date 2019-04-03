@@ -5,9 +5,11 @@ import Helmet from 'react-helmet';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
-import SmallCollectionItem from 'Components/blocks/small-collection-item';
-import UserItem from 'Components/blocks/user-item';
-import TeamItem from 'Components/blocks/team-item';
+import UserItem from 'Components/user/user-item';
+import TeamItem from 'Components/team/team-item';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
+
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -17,7 +19,6 @@ import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
-import ProjectItem from '../project-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
@@ -64,7 +65,11 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ label, onClick }) => <button onClick={onClick}>Show All {label}</button>;
+const ShowMoreButton = ({ label, onClick }) => (
+  <button className="show-all-btn" onClick={onClick}>
+    Show All {label}
+  </button>
+);
 
 const MAX_UNFILTERED_RESULTS = 20;
 
