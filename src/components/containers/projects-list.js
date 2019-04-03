@@ -199,7 +199,7 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
       console.log('🚀', `Index was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
   if (projects.length === 0) { setProjects(props.projects) }
-  return <SortableProjectList axis='xy' sortedProjects={projects} onSortEnd={handleSort}  {...props} />;
+  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort}  {...props} />;
 });
 
 export default ProjectsList;
