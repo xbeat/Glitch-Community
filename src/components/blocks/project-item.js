@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Markdown from 'Components/text/markdown';
 import Button from 'Components/buttons/button';
+import Image from 'Components/images/image';
 import { StaticUsersList } from 'Components/user/users-list';
-
+import { FALLBACK_AVATAR_URL, getAvatarUrl } from 'Models/project';
 import { ProjectLink } from '../../presenters/includes/link';
-import ProjectAvatar from '../../presenters/includes/project-avatar';
 import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
 import styles from './project-item.styl';
 
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
+
+const ProfileAvatar = ({ project }) => <Image className={styles.avatar} src={getAvatarUrl(project.id)} defaultSrc={FALLBACK_AVATAR_URL} alt="" />;
 
 const getLinkBodyStyles = (project) =>
   classnames(styles.linkBody, {
@@ -30,7 +32,7 @@ const ProjectItem = ({ project, projectOptions }) => (
     <ProjectLink className={getLinkBodyStyles(project)} project={project}>
       <div className={styles.projectHeader}>
         <div className={styles.avatarWrap}>
-          <ProjectAvatar id={project.id} />
+          <ProfileAvatar project={project} />
         </div>
         <div className={styles.nameWrap}>
           <Button decorative>

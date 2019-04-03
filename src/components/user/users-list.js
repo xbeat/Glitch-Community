@@ -79,9 +79,7 @@ const GlitchTeamUsersList = ({ layout }) => {
     <div className={getContainerClass(layout)}>
       <ul className={styles.list}>
         <li className={styles.listItem}>
-          <span className={classnames(styles.user, styles.madeByGlitch)}>
-            <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
-          </span>
+          <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
         </li>
       </ul>
     </div>
