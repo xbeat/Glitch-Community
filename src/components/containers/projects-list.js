@@ -180,7 +180,7 @@ ProjectsUL.defaultProps = {
 
 const SortableProjectItem = SortableElement(({ project }) => (
   <div className={cx({ sortableProjectItemWrapper: true })}>
-    <span className={cx({ sortableProjectItem: true })}>{project.domain}</span>
+    <div className={cx({ sortableProjectItem: true })}>{project.domain}</div>
   </div>
 ));
 const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
@@ -193,6 +193,7 @@ const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDesc
 
 const sortProjects = (projects) => projects.sort((a, b) => a.projectOrder - b.projectOrder);
 
+
 /* Testing for the drag and drop */
 export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
   const [projects, setProjects] = useState([]);
@@ -204,7 +205,7 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
   if (projects.length === 0) {
     setProjects(props.projects);
   }
-  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
+  return <SortableProjectList helperClass={cx({ sortableHelper: true })} axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
 });
 
 export default ProjectsList;
