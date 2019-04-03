@@ -178,9 +178,10 @@ ProjectsUL.defaultProps = {
   showProjectDescriptions: true,
 };
 
-const SortableProjectItem = SortableElement(({ project }) => <li>{project.domain}</li>);
+
+const SortableProjectItem = SortableElement(({ project }) => <li className={cx({ sortableProjectItem: true })}>{project.domain}</li>);
 const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
-  <ul className="projects-container">
+  <ul>
     {sortedProjects.map((project, index) => (
       <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
     ))}
