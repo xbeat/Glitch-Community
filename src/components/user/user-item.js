@@ -25,17 +25,15 @@ const NameAndLogin = ({ user }) =>
 const UserItem = ({ user }) => (
   <UserLink className={styles.container} user={user}>
     <Cover type="user" item={user} size="medium" />
-    <div className={styles.innerWrap}>
-      <div className={styles.mainContent}>
-        <div className={styles.avatarWrap}>
-          <ProfileAvatar user={user} />
-        </div>
-        <div className={styles.body}>
-          <NameAndLogin user={user} />
-          <Markdown length={96}>{user.description || ' '}</Markdown>
-        </div>
+    <div className={styles.mainContent}>
+      <div className={styles.avatarWrap}>
+        <ProfileAvatar user={user} />
       </div>
-      <Thanks count={user.thanksCount} />
+      <div className={styles.body}>
+        <NameAndLogin user={user} />
+        <Markdown length={96}>{user.description || ' '}</Markdown>
+        <Thanks count={user.thanksCount} />
+      </div>
     </div>
   </UserLink>
 );
