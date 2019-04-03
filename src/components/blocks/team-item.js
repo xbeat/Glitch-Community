@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { sumBy } from 'lodash';
 
 import Button from 'Components/buttons/button';
@@ -18,27 +18,44 @@ const ProfileAvatar = ({ team }) => <Image className={styles.avatar} src={getAva
 
 const getTeamThanksCount = (team) => sumBy(team.users, (user) => user.thanksCount);
 
-const TeamItem = ({ team }) => (
-  <TeamLink className={styles.container} team={team}>
-    <Cover type="team" item={team} size="medium" />
-    <div className={styles.innerWrap}>
-      <div className={styles.mainContent}>
-        <div className={styles.avatarWrap}>
-          <ProfileAvatar team={team} />
-        </div>
-        <div className={styles.body}>
-          <div>
-            <Button decorative>{team.name}</Button>
-            {!!team.isVerified && <VerifiedBadge />}
+const useAbsolutePositioning = () => {
+  const target = useRef()
+  const contents = useRef()
+  useLayoutEffect(() => {
+    
+  }, [])
+  return { target, contents }
+}
+
+const TeamItem = ({ team }) => {
+  const { target, contents } = useAbsolutePositioning()
+  return (
+  <div style={{ position: 'relative' }}>
+    <TeamLink className={styles.container} team={team}>
+      <Cover type="team" item={team} size="medium" />
+      <div className={styles.innerWrap}>
+        <div className={styles.mainContent}>
+          <div className={styles.avatarWrap}>
+            <ProfileAvatar team={team} />
           </div>
-          <UsersList users={team.users} />
-          <Markdown length={96}>{team.description || ' '}</Markdown>
+          <div className={styles.body}>
+            <div>
+              <Button decorative>{team.name}</Button>
+              {!!team.isVerified && <VerifiedBadge />}
+            </div>
+            <div ref={target} />
+            <Markdown length={96}>{team.description || ' '}</Markdown>
+          </div>
         </div>
+        <Thanks count={getTeamThanksCount(team)} />
       </div>
-      <Thanks count={getTeamThanksCount(team)} />
+    </TeamLink>
+    <div ref={contents}>
+      <UsersList users={team.users}/>
     </div>
-  </TeamLink>
+  </div>
 );
+}
 
 TeamItem.propTypes = {
   team: PropTypes.shape({
