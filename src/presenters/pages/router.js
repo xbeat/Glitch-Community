@@ -67,8 +67,8 @@ const SuperUserBanner = () => {
   const [showSupportBanner, setShowSupportBanner] = useLocalStorage('showSupportBanner', false);
   if (currentUser && persistentToken) {
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
-    const toggleSuperUser = () => {
-      api.post(`https://support-toggle.glitch.me/support/${superUser ? 'disable' : 'enable'}`);
+    const toggleSuperUser = async () => {
+      await api.post(`https://support-toggle.glitch.me/support/${superUser ? 'disable' : 'enable'}`);
       setShowSupportBanner(!superUser);
       window.location.reload();
     };
