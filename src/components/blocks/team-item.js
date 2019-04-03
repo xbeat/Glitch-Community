@@ -10,7 +10,7 @@ import { getAvatarUrl, DEFAULT_TEAM_AVATAR } from '../../models/team';
 import { TeamLink } from '../../presenters/includes/link';
 import { VerifiedBadge } from '../../presenters/includes/team-elements';
 import { Thanks } from '../../presenters/includes/thanks';
-import UsersList from '../../presenters/users-list';
+import { StaticUsersList } from '../../presenters/users-list';
 
 import styles from './team-item.styl';
 
@@ -32,9 +32,7 @@ const useAbsolutePositioning = () => {
 }
 
 const TeamItem = ({ team }) => {
-  const { target, contents } = useAbsolutePositioning()
   return (
-  <div style={{ position: 'relative' }}>
     <TeamLink className={styles.container} team={team}>
       <Cover type="team" item={team} size="medium" />
       <div className={styles.innerWrap}>
@@ -47,17 +45,13 @@ const TeamItem = ({ team }) => {
               <Button decorative>{team.name}</Button>
               {!!team.isVerified && <VerifiedBadge />}
             </div>
-            <div ref={target} />
+            <StaticUsersList users={team.users} />
             <Markdown length={96}>{team.description || ' '}</Markdown>
           </div>
         </div>
         <Thanks count={getTeamThanksCount(team)} />
       </div>
     </TeamLink>
-    <div style={{ position: 'absolute' }} ref={contents}>
-      <UsersList users={team.users}/>
-    </div>
-  </div>
 );
 }
 
