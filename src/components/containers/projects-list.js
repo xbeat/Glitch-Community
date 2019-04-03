@@ -178,8 +178,11 @@ ProjectsUL.defaultProps = {
   showProjectDescriptions: true,
 };
 
-
-const SortableProjectItem = SortableElement(({ project }) => <div className={cx({ sortableProjectItemWrapper: true })}><span className={cx({ sortableProjectItem: true })}>test</span></div>);
+const SortableProjectItem = SortableElement(({ project }) => (
+  <div className={cx({ sortableProjectItemWrapper: true })}>
+    <span className={cx({ sortableProjectItem: true })}>{project.domain}</span>
+  </div>
+));
 const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
   <div className={cx({ sortableProjectContainer: true })}>
     {sortedProjects.map((project, index) => (
@@ -196,7 +199,7 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
   const handleSort = ({ oldIndex, newIndex }) => {
     const newOrder = arrayMove(projects, oldIndex, newIndex);
     setProjects(newOrder);
-    console.log('🚀', `Index was ${oldIndex} and is now ${newIndex}`, newOrder);
+    console.log('🚀', `${projects[oldIndex].domain} was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
   if (projects.length === 0) {
     setProjects(props.projects);
