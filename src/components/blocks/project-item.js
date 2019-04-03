@@ -6,7 +6,7 @@ import Button from 'Components/buttons/button';
 import { ProjectLink } from '../../presenters/includes/link';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
-import { StaticUsersList } from '../../presenters/users-list';
+import { StaticUsersList } from 'Components/user/users-list';
 import styles from './project-item.styl';
 
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
