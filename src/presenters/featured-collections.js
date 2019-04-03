@@ -81,7 +81,7 @@ const loadCollection = async (api, { owner, name }) => {
     }
     captureException(error);
   }
-  throw new Error('testing');
+
   return null;
 };
 
