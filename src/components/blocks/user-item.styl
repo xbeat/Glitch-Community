@@ -16,9 +16,12 @@
 
 .avatarWrap
   flex: 0 0 30%
-  :global .avatar
-    width: 100%
-    max-width: 75px
+  @media (max-width: smallViewport)
+    flex: 0 0 auto
+  
+.avatar
+  width: 100%
+  max-width: 75px
   
 .body
   flex: 1 1 auto

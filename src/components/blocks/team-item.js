@@ -4,7 +4,8 @@ import { sum } from 'lodash';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
-import { getAvatarUrl, getProfileStyle } from '../../models/team';
+import Cover from 'Components/blocks/cover';
+import { getAvatarUrl } from '../../models/team';
 import { TeamLink } from '../../presenters/includes/link';
 import { VerifiedBadge } from '../../presenters/includes/team-elements';
 import { Thanks } from '../../presenters/includes/thanks';
@@ -12,15 +13,13 @@ import UsersList from '../../presenters/users-list';
 
 import styles from './team-item.styl';
 
-const Cover = ({ team, size }) => <div className="cover" style={getProfileStyle({ ...team, size })} />;
-
 const ProfileAvatar = ({ team }) => <img className="avatar" src={getAvatarUrl(team)} alt="" />;
 
 const getTeamThanksCount = (team) => sum(team.users, (user) => user.thanksCount);
 
 const TeamItem = ({ team }) => (
   <TeamLink className={styles.container} team={team}>
-    <Cover team={team} size="medium" />
+    <Cover type="team" item={team} size="medium" />
     <div className={styles.innerWrap}>
       <div className={styles.mainContent}>
         <div className={styles.avatarWrap}>

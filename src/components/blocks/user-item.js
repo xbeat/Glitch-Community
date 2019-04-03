@@ -1,26 +1,17 @@
-/* globals ANON_AVATAR_URL */
-
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
-
+import Cover from 'Components/blocks/cover';
+import Image from 'Components/images/image';
 import { UserLink } from '../../presenters/includes/link';
 import { Thanks } from '../../presenters/includes/thanks';
-
-import { getAvatarUrl, getProfileStyle } from '../../models/user';
+import { getAvatarUrl, ANON_AVATAR_URL } from '../../models/user';
 
 import styles from './user-item.styl';
 
-const Cover = ({ user, size }) => <div className="cover" style={getProfileStyle({ ...user, size })} />;
-
-// TODO: add error handling to <Image>
-function addDefaultSrc(event) {
-  event.target.src = ANON_AVATAR_URL;
-}
-
-const ProfileAvatar = ({ user }) => <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt="" />;
+const ProfileAvatar = ({ user }) => <Image className={styles.avatar} src={getAvatarUrl(user)} defaultSrc={ANON_AVATAR_URL} alt="" />;
 
 const NameAndLogin = ({ user }) =>
   user.name ? (
@@ -34,7 +25,7 @@ const NameAndLogin = ({ user }) =>
 
 const UserItem = ({ user }) => (
   <UserLink className={styles.container} user={user}>
-    <Cover user={user} size="medium" />
+    <Cover type="user" item={user} size="medium" />
     <div className={styles.innerWrap}>
       <div className={styles.mainContent}>
         <div className={styles.avatarWrap}>
