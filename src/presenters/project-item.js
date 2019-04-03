@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Markdown from 'Components/text/markdown';
+import Image from 'Components/images/image';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
@@ -26,7 +27,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
         data-track-label={project.domain}
       >
         <div className="project-container">
-          <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
+          <Image className="avatar" src={getAvatarUrl(project.id)} alt="" />
           <ProjectLink project={project} className="button">
             <span className="project-badge private-project-badge" aria-label="private" />
             <div className="project-name">{project.domain}</div>

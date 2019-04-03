@@ -12,7 +12,22 @@ const TYPES = ['email', 'password', 'search', 'text'];
 
 const InputPart = ({ children }) => <span className={styles.inputPart}>{children}</span>;
 
-const TextInput = ({ autoFocus, className, disabled, error, labelText, maxLength, name, onChange, opaque, placeholder, postfix, prefix, type, value }) => {
+const TextInput = ({
+  autoFocus,
+  className,
+  disabled,
+  error,
+  labelText,
+  maxLength,
+  name,
+  onChange,
+  opaque,
+  placeholder,
+  postfix,
+  prefix,
+  type,
+  value,
+}) => {
   const uniqueId = useUniqueId();
   const outerClassName = classNames(className, styles.outer);
   const borderClassName = classNames(styles.inputBorder, {

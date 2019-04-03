@@ -6,6 +6,7 @@ import Image from 'Components/images/image';
 
 import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from 'Models/team';
 import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from 'Models/user';
+import styles from './avatar.styl';
 
 // UserAvatar
 
@@ -25,7 +26,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
       alt={name}
       style={color ? { backgroundColor: color } : null}
       onError={onError}
-      className={`${type}-avatar`}
+      className={styles[type]}
     />
   );
 

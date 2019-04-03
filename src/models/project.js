@@ -1,5 +1,5 @@
-/* global CDN_URL EDITOR_URL PROJECTS_DOMAIN */
-const EDITOR_URL = window.EDITOR_URL || 'https://glitch.com/edit/'; // eslint-disable-line no-unused-vars
+/* global CDN_URL EDITOR_URL PROJECTS_DOMAIN */ // eslint-disable-line no-unused-vars
+const EDITOR_URL = window.EDITOR_URL || 'https://glitch.com/edit/';
 
 export const FALLBACK_AVATAR_URL = 'https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123';
 

@@ -14,14 +14,14 @@ import { TrackClick } from '../../presenters/analytics';
 import styles from './project-embed.styl';
 
 const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
-  <section className={styles["project-embed"]}>
+  <section className={styles['project-embed']}>
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" isInTitle />
     </Heading>
     {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
     <Embed domain={featuredProject.domain} />
-    <div className={styles["left-buttons"]}>
+    <div className={styles['left-buttons']}>
       {
         isAuthorized ? (
           <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
@@ -30,7 +30,7 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
         )
       }
     </div>
-    <div className={styles["right-buttons"]}>
+    <div className={styles['right-buttons']}>
       {currentUser.login && (
         <AddProjectToCollection
           currentUser={currentUser}

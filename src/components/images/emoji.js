@@ -44,7 +44,7 @@ const EMOJIS = {
  */
 
 const Emoji = ({ name, isInTitle }) => {
-  const classNameObj = { emoji: true, [name]: true, "is-in-title": isInTitle };
+  const classNameObj = { emoji: true, [name]: true, 'is-in-title': isInTitle };
 
   const className = cx(classNameObj);
 
@@ -54,11 +54,11 @@ const Emoji = ({ name, isInTitle }) => {
 Emoji.propTypes = {
   /** element(s) to display in the button */
   name: PropTypes.oneOf(Object.keys(EMOJIS)).isRequired,
-  isInTitle: PropTypes.bool
+  isInTitle: PropTypes.bool,
 };
 
 Emoji.defaultProps = {
-  isInTitle: false
-}
+  isInTitle: false,
+};
 
 export default Emoji;
