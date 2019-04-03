@@ -14,11 +14,6 @@
         padding-left: 5px
         border-radius: 5px
         background: tertiary
-  .projects-container, .teams-container, .users-container, .collections-container
-    overflow: initial
-    border-radius: 5px
-    @media (min-width: largeViewport)	
-      grid-template-columns: 1fr 1fr 1fr 1fr
   
   .projects
     margin-top: 0
@@ -37,6 +32,22 @@
       
 .search-results__group-container
   margin-bottom: 3rem
+
+.search-results__results-container
+  display: grid
+  overflow: initial
+  list-style-type: none
+  margin: 0
+  padding: 0
+  @media (min-width: mediumSmallViewport)	
+    grid-template-columns: 1fr 1fr
+
+  @media (min-width: mediumViewport)	
+    grid-template-columns: 1fr 1fr 1fr
+
+  @media (min-width: largeViewport)	
+    grid-template-columns: 1fr 1fr 1fr 1fr
+
 
 // remove default search styling
 input[type="search"],
