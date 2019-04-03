@@ -14,10 +14,10 @@ const ProfileAvatar = ({ user }) => <Image className={styles.avatar} src={getAva
 
 const NameAndLogin = ({ user }) =>
   user.name ? (
-    <div>
+    <>
       <Button decorative>{user.name}</Button>
       <p className={styles.login}>@{user.login}</p>
-    </div>
+    </>
   ) : (
     <Button decorative>@{user.login}</Button>
   );
@@ -30,7 +30,9 @@ const UserItem = ({ user }) => (
         <ProfileAvatar user={user} />
       </div>
       <div className={styles.body}>
-        <NameAndLogin user={user} />
+        <div className={styles.nameLoginWrap}>
+          <NameAndLogin user={user} />
+        </div>
         <Markdown length={96}>{user.description || ' '}</Markdown>
         <Thanks count={user.thanksCount} />
       </div>
