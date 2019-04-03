@@ -1,8 +1,10 @@
-/* globals API_URL */
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { memoize } from 'lodash';
 import { useCurrentUser } from './current-user';
+
+/* globals API_URL */
+const API_URL = window.API_URL || "";
 
 export const getAPIForToken = memoize((persistentToken) => {
   if (persistentToken) {
