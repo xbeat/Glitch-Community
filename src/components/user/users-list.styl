@@ -1,3 +1,5 @@
+@import '../constants'
+
 .container
   display: flex
   list-style-type: none
@@ -9,6 +11,14 @@
   
 .row
   flex-wrap: nowrap
+  position: relative
+  white-space: nowrap
+  height: 35px
+  @media (min-width: mediumViewport)
+    // like overflow:hidden but with an L shape
+    // it extends below the rect and to the right
+    // cut off avatars but let tooltips keep rendering
+    clip-path: polygon(-100% 0%, 100% 0%, 100% 100%, 200% 100%, 200% 200%, -100% 200%)
   
 .block
   flex-wrap: wrap
