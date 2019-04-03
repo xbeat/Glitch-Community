@@ -1,9 +1,6 @@
 const onProductionSite = (projectDomain, apiEnvironment) => (projectDomain === 'community' || projectDomain === 'community-staging') && 
   apiEnvironment === 'production';
 
-const isFromBrowserExtension = (event) => {
-  return false;
-}
 const filterSecrets = function (jsonEvent) {
   const tokens = ['facebookToken', 'gitAccessToken', 'githubToken', 'inviteToken', 'persistentToken'];
   tokens.forEach((token) => {
