@@ -9,6 +9,7 @@ import Badge from 'Components/badges/badge';
 import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
 import Image from 'Components/images/image';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import ProjectItem from '../../presenters/project-item';
 
 import styles from './projects-list.styl';
@@ -175,5 +176,18 @@ ProjectsUL.propTypes = {
 ProjectsUL.defaultProps = {
   showProjectDescriptions: true,
 };
+
+const SortableProjectItem = SortableElement(({ project }) => <li>{project.name}</li>);
+
+/* Testing for the drag and drop */
+export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => (
+  <ul className="projects-container">
+    {props.projects.map((project) => (
+      <li key={project.id}>
+        <SortableProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      </li>
+    ))}
+  </ul>
+));
 
 export default ProjectsList;

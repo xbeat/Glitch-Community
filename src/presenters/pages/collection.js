@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Text from 'Components/text/text';
-import { ProjectsUL } from 'Components/containers/projects-list';
+import { ProjectsUL, SortableProjectsUL } from 'Components/containers/projects-list';
 import Image from 'Components/images/image';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
@@ -159,7 +159,7 @@ const CollectionPageContents = ({
                     }}
                   />
                 )}
-                {!currentUserIsAuthor && !userIsLoggedIn && <ProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />}
+                {!currentUserIsAuthor && !userIsLoggedIn && <SortableProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />}
               </div>
             </>
           )}
