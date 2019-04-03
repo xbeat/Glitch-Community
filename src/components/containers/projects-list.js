@@ -178,19 +178,11 @@ ProjectsUL.defaultProps = {
 };
 
 const SortableProjectItem = SortableElement(({ project }) => <li>{project.domain}</li>);
-
-/* Testing for the drag and drop */
-export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
-  const [projects, setProjects] = useState(props.projects.sort((a, b) => a.projectOrder - b.projectOrder));
-  const handleSortEnd = ({ oldIndex, newIndex }) => {
-    console.log(oldIndex, newIndex);
-  }
-  return (
-    <ul className="projects-container">
+const SortableProjectList = SortableContainer(({ projects, showProjectDescriptions, ...props }) => (
+  <ul className="projects-container">
       {projects.map((project) => (
         <SortableProjectItem
           index={project.projectOrder}
-          onSortEnd={handleSortEnd}
           key={project.id}
           project={project}
           showProjectDescriptions={showProjectDescriptions}
@@ -198,6 +190,18 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
         />
       ))}
     </ul>
+));
+
+
+
+/* Testing for the drag and drop */
+export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
+  const [projects, setProjects] = useState(props.projects.sort((a, b) => a.projectOrder - b.projectOrder));
+  const handleSort = ({ oldIndex, newIndex }) => {
+    console.log(oldIndex, newIndex);
+  };
+  return (
+    <SortableProjectList projects={projects} onSortEnd={handleSort} {...props} />
   );
 });
 
