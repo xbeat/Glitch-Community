@@ -13,10 +13,8 @@ const getContainerClass = (layout) => classnames(styles.container, styles[layout
 export const StaticUsersList = ({ users, layout }) => (
   <ul className={getContainerClass(layout)}>
     {users.map((user) => (
-      <li key={user.id}>
-        <span className={styles.user}>
-          <UserAvatar user={user} />
-        </span>
+      <li key={user.id} className={styles.listItem}>
+        <UserAvatar user={user} />
       </li>
     ))}
   </ul>
@@ -29,7 +27,7 @@ StaticUsersList.propTypes = {
 // UserTile
 
 export const UserTile = ({ user }) => (
-  <UserLink user={user} className={styles.user}>
+  <UserLink user={user}>
     <UserAvatar user={user} />
   </UserLink>
 );
@@ -44,8 +42,8 @@ const PopulatedUsersList = ({ users, teams, layout }) => {
     return (
       <ul className={getContainerClass(layout)}>
         {users.map((user) => (
-          <li key={user.id}>
-            <UserLink user={user} className={styles.user}>
+          <li key={user.id} className={styles.listItem}>
+            <UserLink user={user}>
               <UserAvatar user={user} />
             </UserLink>
           </li>
@@ -56,8 +54,8 @@ const PopulatedUsersList = ({ users, teams, layout }) => {
   return (
     <ul className={getContainerClass(layout)}>
       {teams.map((team) => (
-        <li key={team.id}>
-          <TeamLink team={team} className={styles.team}>
+        <li key={team.id} className={styles.listItem}>
+          <TeamLink team={team}>
             <TeamAvatar team={team} />
           </TeamLink>
         </li>
@@ -78,13 +76,15 @@ PopulatedUsersList.defaultProps = {
 const GlitchTeamUsersList = ({ layout }) => {
   const GLITCH_TEAM_AVATAR = 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267';
   return (
-    <ul className={getContainerClass(layout)}>
-      <li>
-        <span className={classnames(styles.user, styles.madeByGlitch)}>
-          <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
-        </span>
-      </li>
-    </ul>
+    <div className={getContainerClass(layout)}>
+      <ul className={styles.list}>
+        <li className={styles.listItem}>
+          <span className={classnames(styles.user, styles.madeByGlitch)}>
+            <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
+          </span>
+        </li>
+      </ul>
+    </div>
   );
 };
 
