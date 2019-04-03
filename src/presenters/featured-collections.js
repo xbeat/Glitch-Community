@@ -23,7 +23,6 @@ const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   const featuredProjects = sampleSize(collection.projects, 3);
   const featuredProjectsHaveAtLeastOneNote = featuredProjects.filter((p) => !!p.note).length > 0;
-
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -45,6 +44,7 @@ const CollectionWide = ({ collection }) => {
           View all <Pluralize count={collection.projectCount} singular="project" /> <span aria-hidden>→</span>
         </CollectionLink>
       </div>
+    {() => throw Error('testing')}
     </article>
   );
 };
