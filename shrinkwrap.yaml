@@ -10,6 +10,7 @@ dependencies:
   '@storybook/addon-info': 5.0.5
   '@storybook/react': 5.0.5
   algoliasearch: 3.32.1
+  array-move: 2.1.0
   autoprefixer-stylus: 0.14.0
   axios: 0.18.0
   babel-eslint: 10.0.1
@@ -3318,6 +3319,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-iKK6tz0c97zVwbEYoAP2b2ZfpmI=
+  /array-move/2.1.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-BXEIud+F7/ech2HcSfo+6bpgSCRlNnVTqQhGKdMov9iJkHq+vu9IP9qRXDpZvQpc1WWpDLiEfjs6Lfvvac+fDA==
   /array-reduce/0.0.0:
     dev: false
     resolution:
@@ -12068,6 +12075,7 @@ specifiers:
   '@storybook/addon-info': ^5.0.0
   '@storybook/react': ^5.0.0
   algoliasearch: ^3.32.1
+  array-move: ^2.1.0
   autoprefixer-stylus: ^0.14.0
   axios: ^0.18.0
   babel-eslint: ^10.0.1
