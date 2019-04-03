@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
-import axios from 'axios';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
 import { useCurrentUser } from '../../state/current-user';
 import useLocalStorage from '../../state/local-storage';
+import { useAPI } from '../../state/api';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, EmailTokenLoginPage } from './login';
@@ -63,19 +63,14 @@ const PageChangeHandler = withRouter(({ location }) => {
 
 const SuperUserBanner = () => {
   const { currentUser, persistentToken } = useCurrentUser();
+  const api = useAPI();
   const [showSupportBanner, setShowSupportBanner] = useLocalStorage('showSupportBanner', false);
   if (currentUser && persistentToken) {
-    const supportAPI = axios.create({
-      baseURL: 'https://support-toggle.glitch.me/support/',
-      headers: {
-        Authorization: persistentToken,
-      },
-    });
-
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
     const toggleSuperUser = () => {
-      supportAPI.post(superUser ? 'disable' : 'enable');
+      api.post(`https://support-toggle.glitch.me/support/${superUser ? 'disable' : 'enable'}`);
       setShowSupportBanner(!superUser);
+      window.location.reload();
     };
     const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
     const displayText = `SUPER USER MODE: ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'}`;
