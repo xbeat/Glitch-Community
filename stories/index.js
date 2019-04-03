@@ -216,7 +216,7 @@ storiesOf('ProjectEmbed', module)
   ))
   .add('when passed a logged in user it shows a addProjectToCollection button and a remix this button', () => (
     <ProjectEmbed 
-      isAuthorized={false}
+      isAuthorized={true}
       currentUser={{ login: "@sarahzinger" }}
       unfeatureProject={alert.bind(this, "project un-featured would be called now")}
       featuredProject={{id: "123", domain: "community-staging" }}
