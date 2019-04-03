@@ -7,6 +7,7 @@ import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
 import { useCurrentUser } from '../../state/current-user';
+import useLocalStorage from '../../state/local-storage';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, EmailTokenLoginPage } from './login';
@@ -62,6 +63,7 @@ const PageChangeHandler = withRouter(({ location }) => {
 
 const SuperUserBanner = () => {
   const { currentUser, persistentToken } = useCurrentUser();
+  const [showSupportBanner, setShowSupportBanner] = useLocalStorage('showSupportBanner', false);
   if (currentUser && persistentToken) {
     const supportAPI = axios.create({
       baseURL: 'https://support-toggle.glitch.me/support/',
@@ -73,11 +75,10 @@ const SuperUserBanner = () => {
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
     const toggleSuperUser = () => {
       supportAPI.post(superUser ? 'disable' : 'enable');
-      window.location.reload();
+      setShowSupportBanner(!superUser);
     };
     const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
     const displayText = `SUPER USER MODE: ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'}`;
-    const showSupportBanner = window.localStorage.getItem('showSupportBanner');
 
     if (superUser || showSupportBanner) {
       return (
