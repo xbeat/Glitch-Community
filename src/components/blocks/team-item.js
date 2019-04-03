@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { sum } from 'lodash';
+import { sumBy } from 'lodash';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
@@ -16,8 +16,7 @@ import styles from './team-item.styl';
 
 const ProfileAvatar = ({ team }) => <Image className={styles.avatar} src={getAvatarUrl(team)} defaultSrc={DEFAULT_TEAM_AVATAR} alt="" />;
 
-const getTeamThanksCount = (team) => sum(team.users, (user) => user.thanksCount);
-const tap = (x) => console.log(x) || x
+const getTeamThanksCount = (team) => sumBy(team.users, (user) => user.thanksCount);
 
 const TeamItem = ({ team }) => (
   <TeamLink className={styles.container} team={team}>
@@ -36,7 +35,7 @@ const TeamItem = ({ team }) => (
           <Markdown length={96}>{team.description || ' '}</Markdown>
         </div>
       </div>
-      <Thanks count={tap(getTeamThanksCount(team))} />
+      <Thanks count={getTeamThanksCount(team)} />
     </div>
   </TeamLink>
 );
