@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { keyBy } from 'lodash';
+import classnames from 'classnames';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
@@ -115,8 +116,6 @@ function SearchResults({ query, searchResults }) {
         const Component = groupsByType[result.type].ResultComponent;
         return <Component result={result} />;
       },
-      // TODO: handle this with CSS
-      hr: true,
     });
   }
 
@@ -132,20 +131,17 @@ function SearchResults({ query, searchResults }) {
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent, hr }) => (
-        <div key={id}>
-          <article className="search-results__group-container">
-            <Heading tagName="h2">{label}</Heading>
-            <ul className="search-results__results-container">
-              {results.map((result) => (
-                <li key={result.id}>
-                  <ResultComponent result={result} />
-                </li>
-              ))}
-            </ul>
-            {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
-            {hr && <hr />}
-          </article>
-        </div>
+        <article key={id} className={classnames('search-results__group-container', id === 'top' && 'search-results--top-results')}>
+          <Heading tagName="h2">{label}</Heading>
+          <ul className="search-results__results-container">
+            {results.map((result) => (
+              <li key={result.id}>
+                <ResultComponent result={result} />
+              </li>
+            ))}
+          </ul>
+          {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
+        </article>
       ))}
       {noResults && <NotFound name="any results" />}
     </main>

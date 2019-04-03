@@ -31,22 +31,23 @@
     margin-top: 10px
       
 .search-results__group-container
-  margin-bottom: 3rem
+  padding-bottom: 3rem
 
 .search-results__results-container
   display: grid
-  overflow: initial
+  grid-template-columns: 1fr
+  grid-gap: 10px
   list-style-type: none
-  margin: 0
-  padding: 0
+  padding: 0  
   @media (min-width: mediumSmallViewport)	
     grid-template-columns: 1fr 1fr
-
   @media (min-width: mediumViewport)	
     grid-template-columns: 1fr 1fr 1fr
-
   @media (min-width: largeViewport)	
     grid-template-columns: 1fr 1fr 1fr 1fr
+    
+.search-results--top-results
+  border-bottom: 1px solid #ccc
 
 
 // remove default search styling
