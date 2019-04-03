@@ -194,10 +194,13 @@ storiesOf('Embed', module)
   .add('regular', () => <Embed domain="community-staging" />)
 
 storiesOf('ProjectEmbed', module)
+  .addDecorator(function(getStory) {
+    return (<Context>getStory()</Context>)
+  })
   .add('when authorized, it shows an "unfeature" button and an edit button', () => (
     <ProjectEmbed 
       isAuthorized
-      currentUser={{  }}
+      currentUser={{ login: null }}
       unfeatureProject={alert.bind(this, "project un-featured would be called now")}
       featuredProject={{id: "123", domain: "community-staging" }}
       addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
@@ -206,7 +209,7 @@ storiesOf('ProjectEmbed', module)
   .add('when unauthorized, it shows a report button', () => (
     <ProjectEmbed 
       isAuthorized={false}
-      currentUser={{ }}
+      currentUser={{ login: null }}
       unfeatureProject={alert.bind(this, "project un-featured would be called now")}
       featuredProject={{id: "123", domain: "community-staging" }}
       addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
@@ -224,7 +227,7 @@ storiesOf('ProjectEmbed', module)
   .add('when not passed a logged in user it shows a addProjectToCollection button and a remix your own button', () => (
     <ProjectEmbed 
       isAuthorized={false}
-      currentUser={{ }}
+      currentUser={{ login: null }}
       unfeatureProject={alert.bind(this, "project un-featured would be called now")}
       featuredProject={{id: "123", domain: "community-staging" }}
       addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
