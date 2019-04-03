@@ -12,8 +12,8 @@ import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
 import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
-import ProjectItem from 'Components/blocks/project-item';
-import SmallCollectionItem from 'Components/blocks/small-collection-item';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 

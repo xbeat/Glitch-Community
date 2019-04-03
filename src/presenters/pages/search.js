@@ -5,8 +5,8 @@ import Helmet from 'react-helmet';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
-import ProjectItem from 'Components/blocks/project-item';
-import SmallCollectionItem from 'Components/blocks/small-collection-item';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
