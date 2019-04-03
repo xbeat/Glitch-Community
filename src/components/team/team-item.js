@@ -6,11 +6,12 @@ import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
 import Cover from 'Components/blocks/cover';
 import Image from 'Components/images/image';
+import { StaticUsersList } from 'Components/user/users-list';
 import { getAvatarUrl, DEFAULT_TEAM_AVATAR } from 'Models/team';
 import { TeamLink } from '../../presenters/includes/link';
 import { VerifiedBadge } from '../../presenters/includes/team-elements';
 import { Thanks } from '../../presenters/includes/thanks';
-import { StaticUsersList } from '../../presenters/users-list';
+
 
 import styles from './team-item.styl';
 
@@ -31,7 +32,7 @@ const TeamItem = ({ team }) => (
             <Button decorative>{team.name}</Button>
             {!!team.isVerified && <VerifiedBadge />}
           </div>
-          <StaticUsersList users={team.users} />
+          <StaticUsersList users={team.users} layout="block" />
           <Markdown length={96}>{team.description || ' '}</Markdown>
         </div>
       </div>

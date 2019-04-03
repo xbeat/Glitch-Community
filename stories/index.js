@@ -218,7 +218,7 @@ const users = {
     location: 'Brooklyn, NY',
     color: '#ea6996',
     description:
-      'programmer & writer\n\n[🐦](https://twitter.com/modernserf) [🐙](https://github.com/modernserf) [🏠](https://justinfalcone.com)\n\nthey/them',
+      'programmer & writer\n\n[🐦](https://twitter.com/modernserf) [🐙](https://github.com/modernserf) [🏠](https://justinfalcone.com) [☄](http://pronoun.is/they/.../themselves)',
     hasCoverImage: true,
     coverColor: 'rgb(84,138,53)',
     thanksCount: 1,
@@ -280,5 +280,23 @@ storiesOf('SmallCollectionItem', module).add(
 storiesOf('UserItem', module).add('base', () => (
   <div style={{ margin: '2em', width: '25%' }}>
     <UserItem user={users.modernserf} />
+  </div>
+));
+
+storiesOf('TeamItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <TeamItem
+      team={{
+        id: 12345,
+        coverColor: '#efe',
+        description: 'An example team',
+        hasAvatarImage: false,
+        hasCoverImage: false,
+        isVerified: false,
+        name: ['Example Team'],
+        url: 'example-team',
+        users: [users.modernserf],
+      }}
+    />
   </div>
 ));
