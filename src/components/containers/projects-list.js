@@ -10,6 +10,7 @@ import TextInput from 'Components/inputs/text-input';
 import Heading from 'Components/text/heading';
 import Image from 'Components/images/image';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 import ProjectItem from '../../presenters/project-item';
 
 import styles from './projects-list.styl';
@@ -190,17 +191,14 @@ const sortProjects = (projects) => projects.sort((a, b) => a.projectOrder - b.pr
 
 /* Testing for the drag and drop */
 export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
-  const [projects, setProjects] = useState(sortProjects(props.projects));
+  const [projects, setProjects] = useState([]);
   const handleSort = ({ oldIndex, newIndex }) => {
-    const newProjects = projects.map((p) => {
-      if (p.projectOrder === oldIndex) {
-        // p.projectOrder = newIndex;
-        console.log('🚀', `Index was ${oldIndex} and is now ${newIndex} for ${p.domain}`);
-      }
-      return p;
-    });
+      const newOrder = arrayMove(projects, oldIndex, newIndex);
+      setProjects(newOrder);
+      console.log('🚀', `Index was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
-  return <SortableProjectList projects={projects} onSortEnd={handleSort} {...props} />;
+  if (projects.length === 0) { setProjects(props.projects) }
+  return <SortableProjectList axix='xy' projects={projects} onSortEnd={handleSort}  {...props} />;
 });
 
 export default ProjectsList;
