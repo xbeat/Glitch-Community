@@ -181,12 +181,16 @@ const SortableProjectItem = SortableElement(({ project }) => <li>{project.domain
 
 /* Testing for the drag and drop */
 export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
-  const projects = props.projects.sort((a, b) => a.projectOrder - b.projectOrder);
+  const [projects, setProjects] = useState(props.projects.sort((a, b) => a.projectOrder - b.projectOrder));
+  const handleSortEnd = ({ oldIndex, newIndex }) => {
+    console.log(oldIndex, newIndex);
+  }
   return (
     <ul className="projects-container">
       {projects.map((project) => (
         <SortableProjectItem
           index={project.projectOrder}
+          onSortEnd={handleSortEnd}
           key={project.id}
           project={project}
           showProjectDescriptions={showProjectDescriptions}
