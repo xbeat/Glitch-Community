@@ -9,7 +9,7 @@ import { createAPIHook } from '../../state/api';
 import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
-import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
+import { UserAvatar, TeamAvatar } from 'Components/images/avatar';
 
 import styles from './collection-item.styl';
 
