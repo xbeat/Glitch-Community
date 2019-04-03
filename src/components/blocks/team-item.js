@@ -22,7 +22,11 @@ const useAbsolutePositioning = () => {
   const target = useRef()
   const contents = useRef()
   useLayoutEffect(() => {
-    
+    target.current.innerHeight = contents.current.innerHeight
+    contents.current.innerWidth = target.current.innerWidth
+    contents.current.style.top = target.current.offsetTop
+    contents.current.style.left = target.current.offsetLeft
+    console.log(target, contents)
   }, [])
   return { target, contents }
 }
@@ -50,7 +54,7 @@ const TeamItem = ({ team }) => {
         <Thanks count={getTeamThanksCount(team)} />
       </div>
     </TeamLink>
-    <div ref={contents}>
+    <div style={{ position: 'absolute' }} ref={contents}>
       <UsersList users={team.users}/>
     </div>
   </div>
