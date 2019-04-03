@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Heading from 'Components/text/heading';
+import { ProjectsUL } from 'Components/containers/projects-list';
 import { getAvatarStyle, getProfileStyle } from '../models/user';
 import { useCurrentUser } from '../state/current-user';
 import { UserLink } from './includes/link';
@@ -10,7 +11,6 @@ import { UserLink } from './includes/link';
 import { CoverContainer } from './includes/profile';
 import { Loader } from './includes/loader';
 import ProjectsLoader from './projects-loader';
-import { ProjectsUL } from './projects-list';
 import SignInPop from './pop-overs/sign-in-pop';
 
 const SignInNotice = () => (

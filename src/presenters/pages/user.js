@@ -175,6 +175,8 @@ const UserPage = ({
           addProjectToCollection,
         }}
         currentUser={maybeCurrentUser}
+        enableFiltering={recentProjects.length > 6}
+        enablePagination
       />
       {isAuthorized && <DeletedProjects setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
