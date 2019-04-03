@@ -4,10 +4,10 @@ import axios from 'axios';
 import { memoize } from 'lodash';
 import { useCurrentUser } from './current-user';
 
-export const getAPIForToken = memoize((persistentToken) => {
+export const getAPIForToken = memoize((persistentToken, useSupportURL = false) => {
   if (persistentToken) {
     return axios.create({
-      baseURL: API_URL,
+      baseURL: useSupportURL || API_URL,
       headers: {
         Authorization: persistentToken,
       },
@@ -18,9 +18,9 @@ export const getAPIForToken = memoize((persistentToken) => {
   });
 });
 
-export function useAPI() {
+export function useAPI(useSupportURL) {
   const { persistentToken } = useCurrentUser();
-  return getAPIForToken(persistentToken);
+  return getAPIForToken(persistentToken, useSupportURL);
 }
 
 /*

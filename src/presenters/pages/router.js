@@ -6,6 +6,7 @@ import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
 import { useCurrentUser } from '../../state/current-user';
+import { useAPI } from '../../state/api';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, EmailTokenLoginPage } from './login';
@@ -61,12 +62,17 @@ const PageChangeHandler = withRouter(({ location }) => {
 
 const SuperUserBanner = () => {
   const { currentUser } = useCurrentUser();
+  const supportAPI = useAPI('https://support-toggle.glitch.me/support/');
   const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
+  const toggleSuperUser = () => supportAPI.post(superUser ? 'disable' : 'enable');
+  const displayText = "SUPER USER MODE " + superUser ? "ENABLED UNTIL: " + new Date(superUser.expiresAt).toUTCString() }` : 'DISABLED'; 
+  const { showSupportBanner } = window.localStorage;
 
-  if (superUser) {
+  if (superUser || showSupportBanner) {
     return (
-      <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
-        SUPER USER MODE ENABLED UNTIL: { new Date(superUser.expiresAt).toUTCString() }
+      <div style={{ backgroundColor: `${superUser ? 'red' : 'green'`, padding: '10px', textAlign: 'center', fontWeight: 'bold' }} >
+        {displayText}
+        <button onClick={toggleSuperUser}>Click to {superUser ? 'disable' : 'enable' }</button>
       </div>
     );
   }
