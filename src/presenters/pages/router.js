@@ -59,8 +59,23 @@ const PageChangeHandler = withRouter(({ location }) => {
   return null;
 });
 
+const SuperUserBanner = () => {
+  const { currentUser } = useCurrentUser();
+  const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
+
+  if (superUser) {
+    return (
+      <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
+        SUPER USER MODE ENABLED UNTIL: { new Date(superUser.expiresAt).toUTCString() }
+      </div>
+    );
+  }
+  return null;
+};
+
 const Router = () => (
   <>
+    <SuperUserBanner />
     <PageChangeHandler />
     <Switch>
       <Route path="/" exact render={({ location }) => <IndexPage key={location.key} />} />

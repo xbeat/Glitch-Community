@@ -235,31 +235,16 @@ class CurrentUserManager extends React.Component {
 
   render() {
     const { children, sharedUser, cachedUser } = this.props;
-    const currentUser = { ...defaultUser, ...sharedUser, ...cachedUser };
-    const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
-
-    return (
-      <>
-        {
-          superUser && (
-            <div style={{ backgroundColor: 'red', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
-              SUPER USER MODE ENABLED UNTIL: { new Date(superUser.expiresAt).toUTCString() }
-            </div>
-          )
-        }
-        {
-          children({
-            currentUser,
-            persistentToken: this.persistentToken(),
-            fetched: !!cachedUser && this.state.fetched,
-            reload: () => this.load(),
-            login: (user) => this.login(user),
-            update: (changes) => this.update(changes),
-            clear: () => this.logout(),
-          })
-        }
-      </>
-    );
+    const currentUser = ;
+    return children({
+      currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
+      persistentToken: this.persistentToken(),
+      fetched: !!cachedUser && this.state.fetched,
+      reload: () => this.load(),
+      login: (user) => this.login(user),
+      update: (changes) => this.update(changes),
+      clear: () => this.logout(),
+    });
   }
 }
 CurrentUserManager.propTypes = {
