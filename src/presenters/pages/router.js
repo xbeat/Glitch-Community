@@ -65,9 +65,9 @@ const SuperUserBanner = () => {
   const { currentUser, persistentToken } = useCurrentUser();
   const api = useAPI();
   const [showSupportBanner, setShowSupportBanner] = useLocalStorage('showSupportBanner', false);
-  const isOnGlitchTeam = currentUser && currentUser.teams && currentUser.teams.filter((t) => t.id === 74).length > 0;
+  const isSupporter = currentUser && currentUser.projects && currentUser.projects.filter((p) => p.id === 'b9f7fbdd-ac07-45f9-84ea-d484533635ff').length > 0;
 
-  if (isOnGlitchTeam && persistentToken) {
+  if (isSupporter && persistentToken) {
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
     const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
     const displayText = `SUPER USER MODE ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'} `;
