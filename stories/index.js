@@ -75,7 +75,8 @@ storiesOf('Button', module)
         Support <Emoji name="ambulance" />
       </Button>
     </div>
-  ));
+  ))
+  .add('with aria-label', () => <Button aria-label="Close">x</Button>);  
 
 storiesOf('Emoji', module)
   .add('standard', () => <Emoji name="herb" />)

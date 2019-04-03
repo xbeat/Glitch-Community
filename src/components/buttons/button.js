@@ -31,7 +31,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
 
   if (href) {
     return (
-      <Link to={href} className={className}>
+      <Link to={href} className={className} {...props}>
         {children}
       </Link>
     );
@@ -39,12 +39,11 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
 
   if (decorative) {
     return (
-      <button className={className} disabled={disabled} tabIndex={-1}>
+      <button className={className} disabled={disabled} tabIndex={-1} {...props}>
         {children}
       </button>
     );
   }
-  console.log(...props);
 
   return (
     <button onClick={onClick} className={className} disabled={disabled} {...props}>
