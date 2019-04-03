@@ -7,6 +7,8 @@ import TeamNameInput from 'Components/fields/team-name-input';
 import TeamUrlInput from 'Components/fields/team-url-input';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
+import ProjectEmbed from 'Components/project/project-embed';
+
 import { AnalyticsContext } from '../analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -26,7 +28,6 @@ import NameConflictWarning from '../includes/name-conflict';
 import AddTeamProject from '../includes/add-team-project';
 import DeleteTeam from '../includes/delete-team';
 import { AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam } from '../includes/team-users';
-import EntityPageFeaturedProject from '../entity-page-featured-project';
 import EntityPageProjects from '../entity-page-projects';
 import ProjectsLoader from '../projects-loader';
 import TeamAnalytics from '../includes/team-analytics';
@@ -198,7 +199,7 @@ class TeamPage extends React.Component {
         </ErrorBoundary>
 
         {featuredProject && (
-          <EntityPageFeaturedProject
+          <ProjectEmbed
             featuredProject={featuredProject}
             isAuthorized={this.props.currentUserIsOnTeam}
             unfeatureProject={this.props.unfeatureProject}
