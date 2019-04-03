@@ -179,9 +179,9 @@ ProjectsUL.defaultProps = {
 };
 
 const SortableProjectItem = SortableElement(({ project }) => <li>{project.domain}</li>);
-const SortableProjectList = SortableContainer(({ projects, showProjectDescriptions, ...props }) => (
+const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
   <ul className="projects-container">
-    {projects.map((project, index) => (
+    {sortedProjects.map((project, index) => (
       <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
     ))}
   </ul>
@@ -198,7 +198,7 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
       console.log('🚀', `Index was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
   if (projects.length === 0) { setProjects(props.projects) }
-  return <SortableProjectList axix='xy' projects={projects} onSortEnd={handleSort}  {...props} />;
+  return <SortableProjectList axis='xy' sortedProjects={projects} onSortEnd={handleSort}  {...props} />;
 });
 
 export default ProjectsList;
