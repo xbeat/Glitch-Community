@@ -41,19 +41,14 @@
     margin-right: 15px
 
 .sortableProjectContainer
-  display: block;
-  width: 130 * 4px;
-  height: 350px;
-  border: 0;
-  background-color: transparent;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
     
 .sortableProjectItemWrapper
-  float: left;
-  width: 130px;
-  height: 130px;
-  padding: 8px;
-  background: transparent;
-  border: 0;
+  height: 200px;
+  width: 200px;
+  background-color: #eee;
 
 .sortableProjectItem
   display: flex;
@@ -63,9 +58,6 @@
   height: 100%;
   background: #fff;
   border: 1px solid #efefef;
-  font-size: 28px;
-  span 
-    display: none;
 
 .sortableHelper
     z-index: 200;

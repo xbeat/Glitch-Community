@@ -193,7 +193,6 @@ const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDesc
 
 const sortProjects = (projects) => projects.sort((a, b) => a.projectOrder - b.projectOrder);
 
-
 /* Testing for the drag and drop */
 export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, ...props }) => {
   const [projects, setProjects] = useState([]);

@@ -88,6 +88,7 @@ const CollectionPageContents = ({
   return (
     <>
       <Helmet title={collection.name} />
+      <SortableProjectsUL projects={collection.projects} collection={collection} projectOptions={{}} />
       <main className="collection-page">
         <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
           <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
