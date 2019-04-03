@@ -14,9 +14,10 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import TeamItem from 'Components/team/team-item';
+import UserItem from 'Components/user/user-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
-
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
@@ -207,9 +208,25 @@ storiesOf('Segmented-Buttons', module)
 
 const users = {
   modernserf: {
+    isSupport: false,
+    isInfrastructureUser: false,
     id: 271885,
-    login: 'modernserf',
+    avatarUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-large.jpg',
     avatarThumbnailUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+    login: 'modernserf',
+    name: 'Justin Falcone',
+    location: 'Brooklyn, NY',
+    color: '#ea6996',
+    description:
+      'programmer & writer\n\n[🐦](https://twitter.com/modernserf) [🐙](https://github.com/modernserf) [🏠](https://justinfalcone.com)\n\nthey/them',
+    hasCoverImage: true,
+    coverColor: 'rgb(84,138,53)',
+    thanksCount: 1,
+    utcOffset: -240,
+    featuredProjectId: '22a883dc-a45d-4257-b44c-a43b6b8cabe9',
+    createdAt: '2017-03-21T00:14:37.651Z',
+    updatedAt: '2019-04-03T13:34:21.147Z',
+    features: [],
   },
 };
 
@@ -259,3 +276,9 @@ storiesOf('SmallCollectionItem', module).add(
     </div>
   )),
 );
+
+storiesOf('UserItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <UserItem user={users.modernserf} />
+  </div>
+));
