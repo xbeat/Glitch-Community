@@ -183,10 +183,10 @@ const SortableProjectItem = SortableElement(({ project }) => (
     <div className={cx({ sortableProjectItem: true })}>{project.domain}</div>
   </div>
 ));
-const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
+const SortableProjectList = SortableContainer(({ sortedProjects, ...props }) => (
   <div className={cx({ sortableProjectContainer: true })}>
     {sortedProjects.map((project, index) => (
-      <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
+      <SortableProjectItem index={index} key={project.id} project={project} />
     ))}
   </div>
 ));
@@ -204,7 +204,15 @@ export const SortableProjectsUL = SortableContainer(({ showProjectDescriptions, 
   if (projects.length === 0) {
     setProjects(props.projects);
   }
-  return <SortableProjectList helperClass={cx({ sortableHelper: true })} axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
+  return (
+    <SortableProjectList
+      lockToContainerEdges={true}
+      helperClass={cx({ sortableHelper: true })}
+      axis={'xy'}
+      sortedProjects={projects}
+      onSortEnd={handleSort}
+    />
+  );
 });
 
 export default ProjectsList;
