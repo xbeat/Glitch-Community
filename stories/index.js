@@ -22,6 +22,7 @@ import ProjectEmbed from 'Components/project/project-embed';
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
+window.EDITOR_URL = 'https://glitch.com/edit/';
 
 const helloAlert = () => {
   alert('hello');
