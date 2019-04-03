@@ -65,7 +65,11 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ label, onClick }) => <button className="show-all-btn" onClick={onClick}>Show All {label}</button>;
+const ShowMoreButton = ({ label, onClick }) => (
+  <button className="show-all-btn" onClick={onClick}>
+    Show All {label}
+  </button>
+);
 
 const MAX_UNFILTERED_RESULTS = 20;
 

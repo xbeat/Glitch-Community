@@ -16,8 +16,6 @@ import SmallCollectionItem from 'Components/blocks/small-collection-item';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 
-// load global styles
-import '../build/styles.css';
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
 
