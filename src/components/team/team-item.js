@@ -4,7 +4,7 @@ import { sumBy } from 'lodash';
 
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
-import Cover from 'Components/blocks/cover';
+import Cover from 'Components/blocks/search-result-cover-bar';
 import Image from 'Components/images/image';
 import Thanks from 'Components/blocks/thanks';
 import { StaticUsersList } from 'Components/user/users-list';
