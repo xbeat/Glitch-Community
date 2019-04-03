@@ -7,7 +7,6 @@ import Text from 'Components/text/text';
 import { Link } from '../includes/link';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
-import { useTrackedFunc } from '../segment-analytics';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
@@ -63,24 +62,6 @@ NewStuffOverlay.propTypes = {
   ).isRequired,
 };
 
-const NewStuffPup = ({ showNewStuff }) => {
-  const onClick = useTrackedFunc(showNewStuff, 'Pupdate');
-  return (
-    <TooltipContainer
-      id="new-stuff-tooltip"
-      type="info"
-      target={
-        <button className="button-unstyled new-stuff" onClick={onClick}>
-          <figure className="new-stuff-avatar" alt="New Stuff" />
-        </button>
-      }
-      tooltip="New"
-      persistent
-      align={['top']}
-    />
-    );
-};
-
 class NewStuff extends React.Component {
   constructor(props) {
     super(props);
@@ -89,21 +70,39 @@ class NewStuff extends React.Component {
     };
   }
 
-  renderOuter({ visible, setVisible }) {
-    const { children, isSignedIn, showNewStuff, newStuffReadId } = this.props;
-    const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
-  const showNewStuff = () => {
+  showNewStuff(setVisible) {
     setVisible(true);
     const unreadStuff = newStuffLog.filter(({ id }) => id > this.props.newStuffReadId);
     this.setState({ log: unreadStuff.length ? unreadStuff : newStuffLog });
     this.props.setNewStuffReadId(latestId);
   }
+
+  renderOuter({ visible, setVisible }) {
+    const { children, isSignedIn, showNewStuff, newStuffReadId } = this.props;
+    const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
+    const show = () => {
+      if (window.analytics) {
+        window.analytics.track('Pupdate');
+      }
+      this.showNewStuff(setVisible);
+    };
     return (
       <>
         {children(show)}
         {dogVisible && (
           <div className="new-stuff-footer">
-            <NewStuffPup showNewStuff={() => this.showNewStuff(setVisible)} />
+            <TooltipContainer
+              id="new-stuff-tooltip"
+              type="info"
+              target={
+                <button className="button-unstyled new-stuff" onClick={show}>
+                  <figure className="new-stuff-avatar" alt="New Stuff" />
+                </button>
+              }
+              tooltip="New"
+              persistent
+              align={['top']}
+            />
           </div>
         )}
         {visible && <div className="overlay-background" role="presentation" />}
