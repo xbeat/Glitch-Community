@@ -16,6 +16,8 @@ import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
 import TeamItem from 'Components/team/team-item';
 import UserItem from 'Components/user/user-item';
+import Cover from 'Components/blocks/cover';
+import Thanks from 'Components/blocks/thanks';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 
@@ -298,5 +300,26 @@ storiesOf('TeamItem', module).add('base', () => (
         users: [users.modernserf],
       }}
     />
+  </div>
+));
+
+storiesOf('Cover', module)
+  .add('user', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <Cover type="user" item={users.modernserf} size="medium" />
+    </div>
+  ))
+  .add('user without cover', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <Cover type="user" item={{ id: 123, login: 'nobody' }} size="medium" />
+    </div>
+  ));
+
+storiesOf('Thanks', module).add('variations', () => (
+  <div>
+    <Thanks count={1} />
+    <Thanks count={2} />
+    <Thanks count={3} />
+    <Thanks count={3} short />
   </div>
 ));
