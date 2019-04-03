@@ -130,7 +130,7 @@ function SearchResults({ query, searchResults }) {
       {ready && searchResults.totalHits > 0 && (
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
-      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent, hr }) => (
+      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
         <article key={id} className={classnames('search-results__group-container', id === 'top' && 'search-results--top-results')}>
           <Heading tagName="h2">{label}</Heading>
           <ul className="search-results__results-container">
