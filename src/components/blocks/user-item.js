@@ -45,7 +45,7 @@ const UserItem = ({ user }) => (
           <Markdown length={96}>{user.description || ' '}</Markdown>
         </div>
       </div>
-      {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
+      <Thanks count={user.thanksCount} />
     </div>
   </UserLink>
 );
