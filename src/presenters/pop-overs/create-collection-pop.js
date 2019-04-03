@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { kebabCase, orderBy } from 'lodash';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
-import { useTracker } from '../analytics';
+import { useTracker } from '../segment-analytics';
 import { getLink, createCollection } from '../../models/collection';
 import { useAPI } from '../../state/api';
 

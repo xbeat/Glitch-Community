@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
-import { useTrackedFunc } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';

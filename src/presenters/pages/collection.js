@@ -10,7 +10,7 @@ import Image from 'Components/images/image';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
 import { AuthDescription } from '../includes/description-field';

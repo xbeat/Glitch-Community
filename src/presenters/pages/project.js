@@ -10,7 +10,7 @@ import Markdown from 'Components/text/markdown';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
 import ProjectEditor from '../project-editor';

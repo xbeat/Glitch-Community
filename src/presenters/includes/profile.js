@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'Components/buttons/button';
-import { useTrackedFunc } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import TeamsList from '../teams-list';
 
 // Image Buttons

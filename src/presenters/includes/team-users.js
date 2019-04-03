@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getDisplayName } from '../../models/user';
-import { useTrackedFunc } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { WhitelistedDomainIcon } from './team-elements';
 import { UserAvatar } from './avatar';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop';

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Heading from 'Components/text/heading';
 import { getAvatarUrl } from '../models/project';
-import { useTrackedFunc } from './analytics';
+import { useTrackedFunc } from './segment-analytics';
 import { Loader } from './includes/loader';
 
 import { useAPI } from '../state/api';

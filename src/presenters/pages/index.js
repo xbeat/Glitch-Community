@@ -7,7 +7,7 @@ import Heading from 'Components/text/heading';
 import Layout from '../layout';
 
 import { getEditorUrl } from '../../models/project';
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { useCurrentUser } from '../../state/current-user';
 import { Link } from '../includes/link';
 

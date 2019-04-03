@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useTracker } from '../analytics';
+import { useTracker } from '../segment-analytics';
 import PopoverContainer from '../pop-overs/popover-container';
 
 const Video = () => (

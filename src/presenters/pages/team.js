@@ -7,7 +7,7 @@ import TeamNameInput from 'Components/fields/team-name-input';
 import TeamUrlInput from 'Components/fields/team-url-input';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';

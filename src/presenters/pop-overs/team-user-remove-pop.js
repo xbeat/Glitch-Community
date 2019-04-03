@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useTrackedFunc } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';

@@ -5,7 +5,7 @@ import { orderBy } from 'lodash';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
-import { useTrackedFunc } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';

@@ -8,7 +8,7 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
-import { useTracker } from '../analytics';
+import { useTracker } from '../segment-analytics';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
 import { SignInPopBase } from './sign-in-pop';

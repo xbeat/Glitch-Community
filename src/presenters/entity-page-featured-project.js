@@ -7,7 +7,7 @@ import { EditButton, RemixButton } from './includes/project-actions';
 import Embed from './includes/embed';
 import ReportButton from './pop-overs/report-abuse-pop';
 import AddProjectToCollection from './includes/add-project-to-collection';
-import { useTracker } from './analytics';
+import { useTracker } from './segment-analytics';
 
 
 const EntityPageFeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
