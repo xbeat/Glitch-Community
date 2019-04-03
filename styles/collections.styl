@@ -130,7 +130,9 @@ collection-avatar-size = 55px
     vertical-align: -13px
 
   .project-name
-    display: inline-block
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
 
   .description
     display: block
@@ -184,7 +186,8 @@ collection-avatar-size = 55px
       &:focus
         background-color: secondary-hover-on-color
     .project-link
-      display: block
+      display: flex
+      flex-direction: row
       padding: 7px 15px
   .projects-preview.empty
     height: 100%

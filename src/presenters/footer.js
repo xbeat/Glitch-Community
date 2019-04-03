@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Text from 'Components/text/text';
+import Image from 'Components/images/image';
 import { Link } from './includes/link';
 
 const FooterLine = ({ href, track, children }) => (
@@ -54,7 +55,7 @@ export default function Footer() {
       </FooterLine>
       <hr />
       <FooterLine href="/teams" track="platforms">
-        <img className="for-platforms-icon" src={srcForPlatforms} alt="" />
+        <Image className="for-platforms-icon" src={srcForPlatforms} alt="" />
         <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
     </footer>

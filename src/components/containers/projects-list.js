@@ -28,7 +28,8 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
     setIsDoneFiltering(false);
 
     if (validFilter) {
-      setFilteredProjects(props.projects.filter((p) => p.domain.includes(filter) || p.description.toLowerCase().includes(filter)));
+      const lowercaseFilter = filter.toLowerCase();
+      setFilteredProjects(props.projects.filter((p) => p.domain.includes(lowercaseFilter) || p.description.toLowerCase().includes(lowercaseFilter)));
       setIsDoneFiltering(true);
     } else {
       setFilteredProjects([]);
@@ -61,7 +62,15 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
       <div className={styles.header}>
         <Heading tagName="h2">{title}</Heading>
         {enableFiltering ? (
-          <TextInput className={styles.headerSearch} name="filter" onChange={setFilter} opaque placeholder="find a project" type="search" value={filter} />
+          <TextInput
+            className={styles.headerSearch}
+            name="filter"
+            onChange={setFilter}
+            opaque
+            placeholder="find a project"
+            type="search"
+            value={filter}
+          />
         ) : null}
       </div>
 
@@ -104,11 +113,21 @@ function PaginatedProjects(props) {
   const PaginationControls = () => (
     <div className={styles.paginationControls}>
       <Button aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
-        <Image alt="" className={styles.paginationArrow} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <Image
+          alt=""
+          className={styles.paginationArrow}
+          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
+        />
       </Button>
-      <div className={styles.pageNumbers}>{page} / {numPages}</div>
+      <div className={styles.pageNumbers}>
+        {page} / {numPages}
+      </div>
       <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
-        <Image alt="" className={cx({ paginationArrow: true, next: true })} src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269" />
+        <Image
+          alt=""
+          className={cx({ paginationArrow: true, next: true })}
+          src="https://cdn.glitch.com/11efcb07-3386-43b6-bab0-b8dc7372cba8%2Fleft-arrow.svg?1553883919269"
+        />
       </Button>
     </div>
   );
