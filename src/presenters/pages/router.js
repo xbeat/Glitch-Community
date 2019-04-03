@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
 import { useCurrentUser } from '../../state/current-user';
-import { useAPI } from '../../state/api';
 
 import IndexPage from './index';
 import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, EmailTokenLoginPage } from './login';
@@ -61,21 +61,30 @@ const PageChangeHandler = withRouter(({ location }) => {
 });
 
 const SuperUserBanner = () => {
-  const { currentUser } = useCurrentUser();
-  const supportAPI = useAPI('https://support-toggle.glitch.me/support/');
-  const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
-  const toggleSuperUser = () => supportAPI.post(superUser ? 'disable' : 'enable');
-  const displayText = "SUPER USER MODE " + superUser ? "ENABLED UNTIL: " + new Date(superUser.expiresAt).toUTCString() }` : 'DISABLED'; 
-  const { showSupportBanner } = window.localStorage;
+  const { currentUser, persistentToken } = useCurrentUser();
+  if (currentUser && persistentToken) {
+    const supportAPI = axios.create({
+      baseURL: 'https://support-toggle.glitch.me/support/',
+      headers: {
+        Authorization: persistentToken,
+      },
+    });
 
-  if (superUser || showSupportBanner) {
-    return (
-      <div style={{ backgroundColor: `${superUser ? 'red' : 'green'`, padding: '10px', textAlign: 'center', fontWeight: 'bold' }} >
-        {displayText}
-        <button onClick={toggleSuperUser}>Click to {superUser ? 'disable' : 'enable' }</button>
-      </div>
-    );
+    const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
+    const toggleSuperUser = () => supportAPI.post(superUser ? 'disable' : 'enable');
+    const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
+    const displayText = `SUPER USER MODE: ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'}`;
+    const showSupportBanner = window.localStorage.getItem('showSupportBanner');
+
+    if (superUser || showSupportBanner) {
+      return (
+        <div style={{ backgroundColor: `${superUser ? 'red' : 'aliceblue'}`, padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
+          {displayText} <button onClick={toggleSuperUser}>Click to {superUser ? 'disable' : 'enable'}</button>
+        </div>
+      );
+    }
   }
+
   return null;
 };
 
