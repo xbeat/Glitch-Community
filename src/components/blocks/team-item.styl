@@ -1,3 +1,5 @@
+@import '../constants.styl'
+
 .container
   display: block
   border-radius: 0.5rem
@@ -13,9 +15,12 @@
   
 .avatarWrap
   flex: 0 0 30%
-  :global .avatar
-    width: 100%
-    max-width: 75px
+  @media (max-width: mediumSmallViewport)
+    flex: 0 0 75px
+  
+.avatar
+  width: 100%
+  max-width: 75px
   
 .body
   flex: 1 1 auto

@@ -5,7 +5,8 @@ import { sum } from 'lodash';
 import Button from 'Components/buttons/button';
 import Markdown from 'Components/text/markdown';
 import Cover from 'Components/blocks/cover';
-import { getAvatarUrl } from '../../models/team';
+import Image from 'Components/images/image';
+import { getAvatarUrl, DEFAULT_TEAM_AVATAR } from '../../models/team';
 import { TeamLink } from '../../presenters/includes/link';
 import { VerifiedBadge } from '../../presenters/includes/team-elements';
 import { Thanks } from '../../presenters/includes/thanks';
@@ -13,9 +14,10 @@ import UsersList from '../../presenters/users-list';
 
 import styles from './team-item.styl';
 
-const ProfileAvatar = ({ team }) => <img className="avatar" src={getAvatarUrl(team)} alt="" />;
+const ProfileAvatar = ({ team }) => <Image className={styles.avatar} src={getAvatarUrl(team)} defaultSrc={DEFAULT_TEAM_AVATAR} alt="" />;
 
 const getTeamThanksCount = (team) => sum(team.users, (user) => user.thanksCount);
+const tap = (x) => console.log(x) || x
 
 const TeamItem = ({ team }) => (
   <TeamLink className={styles.container} team={team}>
@@ -34,7 +36,7 @@ const TeamItem = ({ team }) => (
           <Markdown length={96}>{team.description || ' '}</Markdown>
         </div>
       </div>
-      <Thanks count={getTeamThanksCount(team)} />
+      <Thanks count={tap(getTeamThanksCount(team))} />
     </div>
   </TeamLink>
 );
