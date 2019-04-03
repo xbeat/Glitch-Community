@@ -1,9 +1,10 @@
+/* global APP_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'Components/images/image';
 import styles from './embed.styl';
 
-const APP_URL = window.APP_URL || 'https://glitch.com';
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 // Babel does not transpile URLSearchParams, so using this as a compatibility check for showing embeds now.
