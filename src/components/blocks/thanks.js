@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Emoji from 'Components/image/emoji';
-import styles from './thanks.js'
+import Emoji from 'Components/images/emoji';
+import styles from './thanks.styl';
 
 const thanksText = (count) => {
   if (count === 1) {
@@ -13,29 +13,27 @@ const thanksText = (count) => {
   return `Thanked ${count} times`;
 };
 
-const HeartEmoji = () => <span className="emoji sparkling_heart" />
-
 const ThanksLong = ({ count }) => (
-    <p className={styles.container}>
-      {thanksText(count)}
-      &nbsp;
-      <HeartEmoji />
-    </p>
-  )
+  <p className={styles.container}>
+    {thanksText(count)}
+    &nbsp;
+    <Emoji name="sparklingHeart" />
+  </p>
+);
 
 const ThanksShort = ({ count }) => (
   <p className={styles.container}>
-    <HeartEmoji />
+    <Emoji name="sparklingHeart" />
     &nbsp;
     {count}
   </p>
 );
 
 const Thanks = ({ count, short }) => {
-  if (count <= 0) return null
-  if (short) return <ThanksShort count={count} />
-  return <ThanksLong count={count} />
-}
+  if (count <= 0) return null;
+  if (short) return <ThanksShort count={count} />;
+  return <ThanksLong count={count} />;
+};
 
 Thanks.propTypes = {
   count: PropTypes.number.isRequired,
@@ -44,6 +42,6 @@ Thanks.propTypes = {
 
 Thanks.defaultProps = {
   short: false,
-}
+};
 
 export default Thanks;
