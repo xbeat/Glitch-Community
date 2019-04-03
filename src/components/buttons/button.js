@@ -29,9 +29,27 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     decorative,
   });
 
-  return href
-    ? <Link to={href} className={className}>{children}</Link>
-    : <button onClick={onClick} className={className} disabled={disabled}>{children}</button>;
+  if (href) {
+    return (
+      <Link to={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+
+  if (decorative) {
+    return (
+      <button className={className} disabled={disabled} tabIndex={-1}>
+        {children}
+      </button>
+    );
+  }
+
+  return (
+    <button onClick={onClick} className={className} disabled={disabled}>
+      {children}
+    </button>
+  );
 };
 
 Button.propTypes = {

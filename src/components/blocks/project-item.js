@@ -6,7 +6,7 @@ import Button from 'Components/buttons/button';
 import { ProjectLink } from '../../presenters/includes/link';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
-import UsersList from '../../presenters/users-list';
+import { StaticUsersList } from '../../presenters/users-list';
 import styles from './project-item.styl';
 
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
@@ -20,7 +20,7 @@ const ProjectItem = ({ project, projectOptions }) => (
   <div className={styles.container}>
     <header className={styles.header}>
       <div className={styles.userListContainer}>
-        <UsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+        <StaticUsersList extraClass="single-line" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
       </div>
       <div className={styles.projectOptionsContainer}>
         <ProjectOptionsPop project={project} projectOptions={projectOptions} />
