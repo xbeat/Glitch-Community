@@ -235,7 +235,6 @@ class CurrentUserManager extends React.Component {
 
   render() {
     const { children, sharedUser, cachedUser } = this.props;
-    const currentUser = ;
     return children({
       currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
       persistentToken: this.persistentToken(),
