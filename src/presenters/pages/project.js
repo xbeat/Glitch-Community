@@ -1,5 +1,3 @@
-/* global analytics */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +8,7 @@ import Markdown from 'Components/text/markdown';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
-import { AnalyticsContext } from '../segment-analytics';
+import { AnalyticsContext, useTracker } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
 import ProjectEditor from '../project-editor';
@@ -32,14 +30,6 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Layout from '../layout';
-
-function trackRemix(id, domain) {
-  analytics.track('Click Remix', {
-    origin: 'project page',
-    baseProjectId: id,
-    baseDomain: domain,
-  });
-}
 
 function syncPageToDomain(domain) {
   history.replaceState(null, null, `/~${domain}`);
@@ -101,7 +91,11 @@ ReadmeLoader.propTypes = {
 };
 
 const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorized, updateDomain, updateDescription, updatePrivate }) => {
-  const { domain, users, teams } = project;
+  const { id, domain, users, teams } = project;
+  const trackRemix = useTracker('Click Remix', {
+    baseProjectId: id,
+    baseDomain: domain,
+  });
   return (
     <main className="project-page">
       <section id="info">
@@ -152,7 +146,7 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
                 addProjectToCollection={addProjectToCollection}
               />
             )}
-            <RemixButton name={domain} isMember={isAuthorized} onClick={() => trackRemix(project.id, domain)} />
+            <RemixButton name={domain} isMember={isAuthorized} onClick={trackRemix} />
           </div>
         </div>
       </section>
