@@ -5,7 +5,7 @@ import { orderBy } from 'lodash';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
-import { useTrackedFunc } from '../segment-analytics';
+import { useTrackedFunc, useTracker } from '../segment-analytics';
 import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
@@ -79,6 +79,8 @@ TeamList.propTypes = {
 // User Options 🧕
 
 const UserOptionsPop = ({ togglePopover, showCreateTeam, user, signOut, showNewStuffOverlay }) => {
+  const trackLogout = useTracker('Logout');
+
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -96,9 +98,8 @@ Are you sure you want to sign out?`)
       }
     }
     togglePopover();
-    /* global analytics */
-    analytics.track('Logout');
-    analytics.reset();
+    trackLogout();
+    window.analytics.reset();
     signOut();
   };
 
