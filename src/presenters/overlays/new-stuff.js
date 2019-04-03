@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Markdown from 'Components/text/markdown';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import Text from 'Components/text/text';
-import { useTrackedFunc } from '../segment-analytics';
+import { useTracker } from '../segment-analytics';
 import { Link } from '../includes/link';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
@@ -63,18 +63,20 @@ NewStuffOverlay.propTypes = {
   ).isRequired,
 };
 
-const NewStuff = ({ children, isSignedIn, showNewStuff, newStuffReadId }) => {
+const NewStuff = ({ children, isSignedIn, showNewStuff, setShowNewStuff, newStuffReadId, setNewStuffReadId }) => {
   const [log, setLog] = React.useState(() => newStuffLog);
+  const track = useTracker('Pupdate');
 
   const renderOuter = ({ visible, setVisible }) => {
     const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
 
-    const show = useTrackedFunc(() => {
+    const show = () => {
+      track();
       setVisible(true);
-      const unreadStuff = newStuffLog.filter(({ id }) => id > this.props.newStuffReadId);
-      this.setState({ log: unreadStuff.length ? unreadStuff : newStuffLog });
-      this.props.setNewStuffReadId(latestId);
-    }, 'Pupdate');
+      const unreadStuff = newStuffLog.filter(({ id }) => id > newStuffReadId);
+      setLog(unreadStuff.length ? unreadStuff : newStuffLog);
+      setNewStuffReadId(latestId);
+    };
 
     return (
       <>
@@ -101,8 +103,8 @@ const NewStuff = ({ children, isSignedIn, showNewStuff, newStuffReadId }) => {
   };
 
   return (
-    <PopoverContainer outer={this.renderOuter.bind(this)}>
-      {({ visible }) => (visible ? <NewStuffOverlay {...this.props} newStuff={this.state.log} /> : null)}
+    <PopoverContainer outer={renderOuter}>
+      {({ visible }) => (visible ? <NewStuffOverlay showNewStuff={showNewStuff} setShowNewStuff={setShowNewStuff} newStuff={log} /> : null)}
     </PopoverContainer>
   );
 };
