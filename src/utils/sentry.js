@@ -22,7 +22,7 @@ try {
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
     ignoreErrors: SentryHelpers.ignoreErrors,
-    whitelistUrls: [/glitch\.com/],
+    whitelistUrls: ['/glitch.com/'],
     beforeSend(event) {
       try {
         return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);

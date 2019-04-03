@@ -44,7 +44,6 @@ const CollectionWide = ({ collection }) => {
           View all <Pluralize count={collection.projectCount} singular="project" /> <span aria-hidden>→</span>
         </CollectionLink>
       </div>
-    {() => throw Error('testing')}
     </article>
   );
 };
@@ -82,6 +81,7 @@ const loadCollection = async (api, { owner, name }) => {
     }
     captureException(error);
   }
+  throw new Error('testing');
   return null;
 };
 
