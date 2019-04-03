@@ -63,22 +63,24 @@ const PageChangeHandler = withRouter(({ location }) => {
 
 const SuperUserBanner = () => {
   const { currentUser, persistentToken } = useCurrentUser();
+  const isOnGlitchTeam = currentUser.teams.find(t => t.id ===74)
   const api = useAPI();
   const [showSupportBanner, setShowSupportBanner] = useLocalStorage('showSupportBanner', false);
-  if (currentUser && persistentToken) {
+  if (isOnGlitchTeam && currentUser && persistentToken) {
     const superUser = currentUser.features && currentUser.features.find((feature) => feature.name === 'super_user');
     const toggleSuperUser = async () => {
       await api.post(`https://support-toggle.glitch.me/support/${superUser ? 'disable' : 'enable'}`);
-      setShowSupportBanner(!superUser);
       window.location.reload();
     };
     const expirationDate = superUser && new Date(superUser.expiresAt).toUTCString();
-    const displayText = `SUPER USER MODE: ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'}`;
+    const displayText = `SUPER USER MODE ${superUser ? `ENABLED UNTIL: ${expirationDate}` : 'DISABLED'} `;
 
     if (superUser || showSupportBanner) {
       return (
         <div style={{ backgroundColor: `${superUser ? 'red' : 'aliceblue'}`, padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
-          {displayText} <button onClick={toggleSuperUser}>Click to {superUser ? 'disable' : 'enable'}</button>
+          {displayText} 
+          <button onClick={toggleSuperUser}>Click to {superUser ? 'disable' : 'enable'}</button> 
+          {!superUser && <button onClick={() => setShowSupportBanner(false)}>Hide</button>}
         </div>
       );
     }
