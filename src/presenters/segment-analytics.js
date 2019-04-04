@@ -39,10 +39,9 @@ AnalyticsContext.defaultProps = {
   context: {},
 };
 
-// this gives you a generic track function that pulls in inherited properties
-const useAnalyticsTracker = () => {
+export const useTracker = (name, properties, context) => {
   const inherited = React.useContext(Context);
-  return (name, properties, context) => {
+  return () => {
     try {
       analytics.track(name, resolveProperties(properties, inherited.properties), resolveProperties(context, inherited.context));
     } catch (error) {
@@ -56,11 +55,6 @@ const useAnalyticsTracker = () => {
       }
     }
   };
-};
-
-export const useTracker = (name, properties, context) => {
-  const track = useAnalyticsTracker();
-  return () => track(name, properties, context);
 };
 
 export const useTrackedFunc = (func, name, properties, context) => {
