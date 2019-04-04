@@ -179,9 +179,9 @@ ProjectsUL.defaultProps = {
 };
 
 const SortableProjectItem = SortableElement(({ project, showProjectDescriptions, ...props }) => (
-  <div className={cx({ sortableProjectItemWrapper: true })}>
+  <ul className={cx({ sortableProjectItemWrapper: true })}>
     <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
-  </div>
+  </ul>
 ));
 const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
   <div className={cx({ sortableProjectContainer: true })}>
