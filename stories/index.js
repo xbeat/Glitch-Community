@@ -264,9 +264,13 @@ storiesOf('SmallCollectionItem', module).add(
   )),
 );
 
-const TopRightButtons = <button>I'm up top</button>;
-const RightButtons = <><button>one</button><button>two</button></>;
-const LeftButtons = <button>Everything you own in a box to the left</button>;
+storiesOf('Embed', module)
+  .add('regular', () => <Embed domain="community-staging" />);
+       
+const TopLeft = <h2>This project is bananas</h2>
+const TopRight = <button>I'm up top</button>;
+const BottomRight = <><button>one</button><button>two</button></>;
+const BottomLeft = <button>Everything you own in a box to the left</button>;
 
 storiesOf('ProjectEmbed', module)
   .add('base', () => (
@@ -274,15 +278,22 @@ storiesOf('ProjectEmbed', module)
       project={{ domain: "community-staging" }}
     />
   ))
-  .add('with headers and buttons', () => (
+  .add('with some things', () => (
     <ProjectEmbed 
       project={{ domain: "community-staging" }}
-      heading="This project is bananas"
-      topRightButtons={TopRightButtons}
-      rightButtons={RightButtons}
-      leftButtons={LeftButtons}
+      topLeft={TopLeft}
+      topRight={null}
+      bottomLeft={null}
+      bottomRight={BottomRight}
+    />
+  ))
+  .add('with all the things', () => (
+    <ProjectEmbed 
+      project={{ domain: "community-staging" }}
+      topLeft={TopLeft}
+      topRight={TopRight}
+      bottomLeft={BottomLeft}
+      bottomRight={BottomRight}
     />
   ));
 
-storiesOf('Embed', module)
-  .add('regular', () => <Embed domain="community-staging" />);
