@@ -7,6 +7,7 @@ import { CurrentUserProvider } from './state/current-user';
 import { UserPrefsProvider } from './presenters/includes/user-prefs';
 import { DevTogglesProvider } from './presenters/includes/dev-toggles';
 import { Notifications } from './presenters/notifications';
+import SuperUserBanner from './presenters/overlays/super-user-banner';
 
 import Router from './presenters/pages/router';
 
@@ -18,7 +19,10 @@ const App = () => (
           <DevTogglesProvider>
             <AnalyticsContext context={{ groupId: '0' }}>
               <CurrentUserProvider>
-                <Router />
+                <>
+                  <SuperUserBanner />
+                  <Router />
+                </>
               </CurrentUserProvider>
             </AnalyticsContext>
           </DevTogglesProvider>
