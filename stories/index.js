@@ -213,7 +213,6 @@ storiesOf('Segmented-Buttons', module)
 
 const users = {
   modernserf: {
-    type: 'user',
     isSupport: false,
     isInfrastructureUser: false,
     id: 271885,
