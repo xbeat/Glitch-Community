@@ -10,34 +10,43 @@ import { EditButton, RemixButton } from '../../presenters/includes/project-actio
 import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
 import { TrackClick } from '../../presenters/analytics';
 
-import styles from './project-embed.styl';
+import styles from './featured-project.styl';
 
-const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
-  <section className={styles.projectEmbed}>
-    <Heading tagName="h2">
-      Featured Project
-      <Emoji name="clapper" isInTitle />
-    </Heading>
-    {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
-    <Embed domain={featuredProject.domain} />
-    <div className={styles.leftButtons}>
+const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
+  const TopLeft = () => (
+    <div className={styles.header}>
+      <Heading tagName="h2">
+        Featured Project
+        <Emoji name="clapper" isInTitle />
+      </Heading>
+    </div>
+  );
+  
+  const TopRight = () => {
+    if (!isAuthorized) return null;   
+    return <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />;
+  }
+  
+  const BottomLeft = () => {
+    if (isAuthorized) {
+      return <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
+    } else {
+      return <ReportButton reportedType="project" reportedModel={featuredProject} />
+    }
+  };
+  
+  const BottomRight = () => (
+    <>
       {
-        isAuthorized ? (
-          <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
-        ) : (
-          <ReportButton reportedType="project" reportedModel={featuredProject} />
+        currentUser.login && (
+          <AddProjectToCollection
+            currentUser={currentUser}
+            project={featuredProject}
+            fromProject
+            addProjectToCollection={addProjectToCollection}
+          />
         )
       }
-    </div>
-    <div className={styles.rightButtons}>
-      {currentUser.login && (
-        <AddProjectToCollection
-          currentUser={currentUser}
-          project={featuredProject}
-          fromProject
-          addProjectToCollection={addProjectToCollection}
-        />
-      )}
       <TrackClick
         name="Click Remix"
         properties={{
@@ -47,20 +56,30 @@ const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectT
       >
         <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
       </TrackClick>
-    </div>
-  </section>
-);
+    </>
+  );
+  
+  return (
+    <ProjectEmbed 
+      project={featuredProject}
+      topLeft={<TopLeft />}
+      topRight={<TopRight />}
+      bottomLeft={<BottomLeft />}
+      bottomRight={<BottomRight />}
+    />
+  );
+};
 
-ProjectEmbed.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
+FeaturedProject.propTypes = {
   currentUser: PropTypes.object,
+  isAuthorized: PropTypes.bool.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
   featuredProject: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
-ProjectEmbed.defaultProps = {
+FeaturedProject.defaultProps = {
   currentUser: {},
 };
 
-export default ProjectEmbed;
+export default FeaturedProject;
