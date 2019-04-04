@@ -56,11 +56,19 @@ function ProjectResult({ result }) {
   );
 }
 
+const MaskImage = (props) => (
+  <div className="zine-items">
+    <div className="zine-item">
+      <div className="mask-container">
+        <img {...props} className="mask mask-4" />
+      </div>
+    </div>
+  </div>
+)
+
 const StarterKitResult = ({ result }) => (
   <a href={result.url}>
-    <Mask>
-      <img src={result.imageURL} />
-    </Mask>
+    <MaskImage src={result.imageURL}/>
     <div>{result.name}</div>
   </a>
 )
