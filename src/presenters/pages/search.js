@@ -20,7 +20,9 @@ import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
 
-const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
+const pathForSearch = (query, filter) => `/search?q=${query}&activeFilter=${filter}`;
+
+const FilterContainer = ({ filters, activeFilter, query }) => {
   const buttons = filters.map((filter) => ({
     name: filter.id,
     contents: (
@@ -30,6 +32,8 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
       </>
     ),
   }));
+  
+  const 
 
   return (
     <>
@@ -65,8 +69,8 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ label, onClick }) => (
-  <button className="show-all-btn" onClick={onClick}>
+const ShowMoreButton = ({ location, label, query, filter }) => (
+  <button className="show-all-btn" href={pathForSearch(query, filter)}>
     Show All {label}
   </button>
 );
@@ -75,8 +79,13 @@ const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-function SearchResults({ query, searchResults }) {
-  const [activeFilter, setActiveFilter] = useState('all');
+const validFilter = (activeFilter) => ['all', 'team', 'user', 'project', 'collection'].includes(validFilter)
+   
+function SearchResults({ query, searchResults, activeFilter }) {
+  if (!validFilter(activeFilter)) {
+    activeFilter = 'all'
+  }
+  
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
 
@@ -109,7 +118,7 @@ function SearchResults({ query, searchResults }) {
         </>
       )}
       {ready && searchResults.totalHits > 0 && (
-        <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
+        <FilterContainer filters={filters} activeFilter={activeFilter} query={query} />
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
         <div key={id}>
@@ -122,7 +131,7 @@ function SearchResults({ query, searchResults }) {
                 </li>
               ))}
             </ul>
-            {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
+            {canShowMoreResults && <ShowMoreButton label={label} query={query} filter={id} />}
           </article>
         </div>
       ))}
@@ -132,32 +141,34 @@ function SearchResults({ query, searchResults }) {
 }
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
-const AlgoliaSearchWrapper = ({ query }) => {
+const AlgoliaSearchWrapper = ({ query, activeFilter }) => {
   const searchResults = useAlgoliaSearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+  return <SearchResults query={query} activeFilter={activeFilter} searchResults={searchResults} />;
 };
 
-const LegacySearchWrapper = ({ query }) => {
+const LegacySearchWrapper = ({ query, activeFilter }) => {
   const searchResults = useLegacySearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+  return <SearchResults query={query} activeFilter={activeFilter} searchResults={searchResults} />;
 };
 
-const SearchPage = ({ query }) => {
+const SearchPage = ({ query, activeFilter }) => {
   const algoliaFlag = useDevToggle('Algolia Search');
   const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} activeFilter={activeFilter} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );
 };
 SearchPage.propTypes = {
   query: PropTypes.string,
+  activeFilter: PropTypes.string,
 };
 SearchPage.defaultProps = {
   query: '',
+  activeFilter: 'all',
 };
 
 export default SearchPage;
