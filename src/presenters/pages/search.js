@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { keyBy } from 'lodash';
 import classnames from 'classnames';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
@@ -45,30 +44,37 @@ function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
-const ProjectResult = ({ result }) => {
-  const { currentUser } = useCurrentUser();
-  const api = useAPI();
-  return currentUser.login ? (
-    <ProjectItem
-      project={result}
-      projectOptions={{
-        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-      }}
-    />
-  ) : (
-    <ProjectItem project={result} />
-  );
-};
-
 const groups = [
-  { id: 'team', label: 'Teams', ResultComponent: ({ result }) => <TeamItem team={result} /> },
-  { id: 'user', label: 'Users', ResultComponent: ({ result }) => <UserItem user={result} /> },
-  { id: 'project', label: 'Projects', ResultComponent: ProjectResult },
-  { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
+  { id: 'team', label: 'Teams' },
+  { id: 'user', label: 'Users' },
+  { id: 'project', label: 'Projects' },
+  { id: 'collection', label: 'Collections' },
 ];
 
-// TODO: add `type` fields to legacy search results, so everything can render the same
-const groupsByType = keyBy(groups, (group) => group.id);
+const resultComponents = {
+  team: ({ result }) => <TeamItem team={result} />,
+  user: ({ result }) => <UserItem user={result} />,
+  project: ({ result }) => {
+    const { currentUser } = useCurrentUser();
+    const api = useAPI();
+    return currentUser.login ? (
+      <ProjectItem
+        project={result}
+        projectOptions={{
+          addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+        }}
+      />
+    ) : (
+      <ProjectItem project={result} />
+    );
+  },
+  collection: ({ result }) => <SmallCollectionItem collection={result} />,
+};
+
+const ResultComponent = ({ result }) => {
+  const Component = resultComponents[result.type];
+  return <Component result={result} />;
+};
 
 const ShowMoreButton = ({ label, onClick }) => (
   <button className="show-all-btn" onClick={onClick}>
@@ -80,7 +86,7 @@ const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isTopResult && activeFilter === results[0].type;
+const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isExactMatch && activeFilter === results[0].type;
 
 const groupIsVisible = (searchResults, group, activeFilter) => {
   const resultsForGroup = searchResults[group.id];
@@ -100,6 +106,19 @@ const visibleResultsForFilter = (searchResults, group, activeFilter) => {
   if (!hasLimitedResults(searchResults, group, activeFilter)) return resultsForGroup;
   return resultsForGroup.slice(0, MAX_UNFILTERED_RESULTS);
 };
+
+function ResultGroup ({ searchResults, group, activeFilter }) {
+  const resultsForGroup = searchResults[group.id];
+  
+  if (resultsForGroup.length === 0) return null;
+  if (!groupIsInFilter(group.id, activeFilter)) return null;
+  if (isSingleTopResult(resultsForGroup, activeFilter)) return null;  
+
+  const maxResultCount = activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS
+  const visibleResults = resultsForGroup.slice(0, maxResultCount);
+  
+  
+}
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -121,7 +140,7 @@ function SearchResults({ query, searchResults }) {
   const renderedGroups = groups
     .map((group) => ({
       ...group,
-      isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
+      isVisible: groupIsVisible(searchResults, group, activeFilter),
       results: visibleResultsForFilter(searchResults, group, activeFilter),
       canShowMoreResults: hasLimitedResults(searchResults, group, activeFilter),
     }))
@@ -134,10 +153,6 @@ function SearchResults({ query, searchResults }) {
       isVisible: true,
       results: searchResults.topResults,
       canShowMoreResults: false,
-      ResultComponent: ({ result }) => {
-        const Component = groupsByType[result.type].ResultComponent;
-        return <Component result={result} />;
-      },
     });
   }
 
@@ -152,7 +167,7 @@ function SearchResults({ query, searchResults }) {
       {ready && searchResults.totalHits > 0 && (
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
-      {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
+      {renderedGroups.map(({ id, label, results, canShowMoreResults }) => (
         <article key={id} className={classnames('search-results__group-container', id === 'top' && 'search-results--top-results')}>
           <Heading tagName="h2">{label}</Heading>
           <ul className="search-results__results-container">
