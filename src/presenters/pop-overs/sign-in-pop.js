@@ -56,8 +56,8 @@ class EmailHandler extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ email: e.target.value });
+  onChange(email) {
+    this.setState({ email });
   }
 
   async onSubmit(e) {
@@ -107,7 +107,6 @@ class EmailHandler extends React.Component {
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
                   <TextInput
-                    type="email"
                     labelText="new@user.com"
                     value={this.state.email}
                     onChange={this.onChange}
