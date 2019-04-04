@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { parseOneAddress } from 'email-addresses';
 
 import TextInput from 'Components/inputs/text-input';
 import { Link } from '../includes/link';
@@ -57,6 +58,7 @@ class EmailHandler extends React.Component {
   }
 
   onChange(email) {
+    console.log(parseOneAddress(email));
     this.setState({ email });
   }
 
