@@ -7,7 +7,7 @@ import TeamNameInput from 'Components/fields/team-name-input';
 import TeamUrlInput from 'Components/fields/team-url-input';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
-import ProjectEmbed from 'Components/project/project-embed';
+import FeaturedProject from 'Components/project/featured-project';
 
 import { AnalyticsContext } from '../analytics';
 import { useAPI } from '../../state/api';
@@ -199,12 +199,13 @@ class TeamPage extends React.Component {
         </ErrorBoundary>
 
         {featuredProject && (
-          <ProjectEmbed
+          <FeaturedProject
             featuredProject={featuredProject}
             isAuthorized={this.props.currentUserIsOnTeam}
             unfeatureProject={this.props.unfeatureProject}
             addProjectToCollection={this.props.addProjectToCollection}
             currentUser={this.props.currentUser}
+            trackingOrigin="team page"
           />
         )}
 
