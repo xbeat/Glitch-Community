@@ -7,6 +7,8 @@ import classnames from 'classnames';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
+import UserItem from 'Components/user/user-item';
+import TeamItem from 'Components/team/team-item';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
 
@@ -19,8 +21,6 @@ import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
-import TeamItem from '../team-item';
-import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
