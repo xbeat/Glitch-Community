@@ -5,6 +5,7 @@ import TextInput from '../inputs/text-input';
 import useDevToggle from '../../presenters/includes/dev-toggles';
 import PopoverContainer from '../../presenters/pop-overs/popover-container';
 import AutocompleteSearch from './autocomplete';
+import styles from './form.styl'
 
 function SearchForm({ defaultValue }) {
   const [value, onChange] = useState(defaultValue);
@@ -21,6 +22,7 @@ function SearchForm({ defaultValue }) {
     <PopoverContainer>
       {({ visible, setVisible }) => (
         <form
+          className={styles.container}
           action="/search"
           method="get"
           role="search"

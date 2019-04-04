@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import classnames from 'classnames';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
+import Button from 'Components/buttons/button';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
 import UserItem from 'Components/user/user-item';
@@ -78,17 +79,17 @@ const ResultComponent = ({ result }) => {
   return <Component result={result} />;
 };
 
-const ShowMoreButton = ({ label, onClick }) => (
-  <button className="show-all-btn" onClick={onClick}>
-    Show All {label}
-  </button>
+const ShowAllButton = ({ label, onClick }) => (
+  <div className="search-results__show-all-btn">
+    <Button onClick={onClick}>Show All {label}</Button>
+  </div>
 );
 
 const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isExactMatch && activeFilter === results[0].type;
+const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isExactMatch && activeFilter === 'all';
 
 function getResultsForGroup({ searchResults, group, activeFilter }) {
   const resultsForGroup = searchResults[group.id];
@@ -160,7 +161,7 @@ function SearchResults({ query, searchResults }) {
               </li>
             ))}
           </ul>
-          {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
+          {canShowMoreResults && <ShowAllButton label={label} onClick={() => setActiveFilter(id)} />}
         </article>
       ))}
       {noResults && <NotFound name="any results" />}
