@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 import Embed from 'Components/project/embed';
 
+import ReportButton from '../../presenters/pop-overs/report-abuse-pop';
+import { EditButton, RemixButton } from '../../presenters/includes/project-actions';
+import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
+import { TrackClick } from '../../presenters/analytics';
+
 import styles from './project-embed.styl';
 
 const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection }) => {
   const BottomLeft = () => {
     if (isAuthorized) {
-      return <EditButton name={project.id} isMember={isAuthorized} size="small" />
-    } else {
-      return <ReportButton reportedType="project" reportedModel={project} />
+      return <EditButton name={project.id} isMember={isAuthorized} size="small" />;
     }
+    return <ReportButton reportedType="project" reportedModel={project} />;
   };
-  
+
   const BottomRight = () => (
     <>
       {
@@ -37,7 +41,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
       </TrackClick>
     </>
   );
-  
+
   return (
     <section className={styles.projectEmbed}>
       <div className={styles.buttonContainer}>
@@ -54,7 +58,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
         </div>
       </div>
     </section>
-  )
+  );
 };
 
 ProjectEmbed.propTypes = {
@@ -67,7 +71,7 @@ ProjectEmbed.propTypes = {
 };
 
 ProjectEmbed.defaultProps = {
-  addProjectToCollection: () => {},
+  addProjectToCollection: null,
   topLeft: null,
   topRight: null,
 };

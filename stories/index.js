@@ -271,61 +271,50 @@ const TopLeft = <h2>This project is bananas</h2>
 const TopRight = <button>I'm up top</button>;
 const BottomRight = <><button>one</button><button>two</button></>;
 const BottomLeft = <button>Everything you own in a box to the left</button>;
+const addProjectToCollection = () => {};
 
 storiesOf('ProjectEmbed', module)
-  .add('base', () => (
-    <ProjectEmbed 
-      project={{ id: "123", domain: "community-staging" }}
-      isAuthorized={false}
-      currentUser={{ login: null }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
-    />
-  ))
-  .add('with some things', () => (
-    <ProjectEmbed 
-      project={{ domain: "community-staging" }}
-      topLeft={TopLeft}
-      topRight={null}
-      bottomLeft={null}
-      bottomRight={BottomRight}
-    />
-  ))
-  .add('with all the things', () => (
-    <ProjectEmbed 
-      project={{ domain: "community-staging" }}
-      topLeft={TopLeft}
-      topRight={TopRight}
-      bottomLeft={BottomLeft}
-      bottomRight={BottomRight}
-    />
-  ));
-
-storiesOf('FeaturedProject', module)
   .add('does not own project, not logged in', provideContext({ currentUser: {} }, () => (
-    <FeaturedProject 
+    <ProjectEmbed 
+      project={{id: "123", domain: "community-staging" }}
       isAuthorized={false}
       currentUser={{ login: null }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+      addProjectToCollection={addProjectToCollection}
     />
   )))
   .add('does not own project, is logged in', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
-    <FeaturedProject 
+    <ProjectEmbed 
+      project={{id: "123", domain: "community-staging" }}
       isAuthorized={false}
       currentUser={{ login: "@sarahzinger" }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+      addProjectToCollection={addProjectToCollection}
     />
   )))
   .add('owns project, is logged in', () => (
-    <FeaturedProject 
+    <ProjectEmbed 
+      project={{id: "123", domain: "community-staging" }}
       isAuthorized={true}
       currentUser={{ login: "@sarahzinger" }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+      addProjectToCollection={addProjectToCollection}
     />
   ));
+
+const unfeatureProject = () => {};
+
+storiesOf('FeaturedProject', module)
+  .add('owns featured project', provideContext({ currentUser: {} }, () => (
+    <FeaturedProject 
+      featuredProject={{id: "123", domain: "community-staging" }}
+      isAuthorized={true}
+      currentUser={{ login: "@sarahzinger" }}
+      addProjectToCollection={addProjectToCollection}
+      unfeatureProject={unfeatureProject}
+    />
+  )))
+  .add('does not own featured project', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
+    <FeaturedProject 
+      featuredProject={{id: "123", domain: "community-staging" }}
+      isAuthorized={false}
+      currentUser={{ login: "@sarahzinger" }}
+    />
+  )))
