@@ -58,8 +58,8 @@ class EmailHandler extends React.Component {
   }
 
   onChange(email) {
-    console.log(parseOneAddress(email));
-    this.setState({ email });
+    const isValidEmail = parseOneAddress(email) !== null;
+    this.setState({ email, errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
   }
 
   async onSubmit(e) {
@@ -109,7 +109,8 @@ class EmailHandler extends React.Component {
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
                   <TextInput
-                    labelText="new@user.com"
+                    type="email"
+                    labelText="Email address"
                     value={this.state.email}
                     onChange={this.onChange}
                     placeholder="new@user.com"
