@@ -8,21 +8,30 @@ import styles from './project-embed.styl';
 
 const ProjectEmbed = ({ project, heading, topRightButtons, leftButtons, rightButtons }) => (
   <section className={styles.projectEmbed}>
-    {
-      heading && (
-        <Heading tagName="h2">
-          {heading}
-        </Heading>
-      )
-    }
-    {
-      topRightButtons && (
-        <div className={styles.topRightButtons}>
-          {topRightButtons}
+    { 
+      (heading || topRightButtons) && (
+        <div className={styles.buttonContainer}>
+          {
+            heading && (
+              <Heading tagName="h2">
+                {heading}
+              </Heading>
+            )
+          }
+          {
+            topRightButtons && (
+              <div className={styles.right}>
+                {topRightButtons}
+              </div>
+            )
+          }
         </div>
       )
     }
     <Embed domain={project.domain} />
+    { 
+      (leftButtons || rightButtons) && (
+        <div className={styles.bottom}>
     {
       leftButtons && (
         <div className={styles.leftButtons}>
