@@ -135,7 +135,7 @@ function SearchResults({ query, searchResults }) {
           <Heading tagName="h2">{label}</Heading>
           <ul className="search-results__results-container">
             {results.map((result) => (
-              <li key={result.id}>
+              <li key={result.id} className="search-results__result-item">
                 <ResultComponent result={result} />
               </li>
             ))}
