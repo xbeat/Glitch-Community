@@ -106,7 +106,14 @@ class EmailHandler extends React.Component {
             <section className="pop-over-actions first-section">
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
-                  <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com" />
+                  <TextInput
+                    type="email"
+                    labelText="new@user.com"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    placeholder="new@user.com"
+                    error={this.state.errorMsg}
+                  />
                   <button type="submit" style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled}>
                     Send Link
                   </button>
