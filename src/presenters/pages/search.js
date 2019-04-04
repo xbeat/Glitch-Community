@@ -79,11 +79,14 @@ const ShowMoreButton = ({ label, onClick }) => (
 const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
+   
+   
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
+  const showTopResults = searchResults.topResults.length > 0 && activeFilter === 'all';
 
   const filters = [
     { id: 'all', label: 'All' },
@@ -105,7 +108,7 @@ function SearchResults({ query, searchResults }) {
     }))
     .filter((group) => group.isVisible);
 
-  if (searchResults.topResults.length > 0) {
+  if (showTopResults) {
     renderedGroups.unshift({
       id: 'top',
       label: 'Top Results',
