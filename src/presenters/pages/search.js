@@ -76,14 +76,12 @@ const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-const validFilter = (activeFilter) => ['all', 'team', 'user', 'project', 'collection'].includes(activeFilter);
-
 const SearchResults = withRouter(({ query, searchResults, activeFilter, history }) => {
   const setActiveFilter = (filter) => {
     history.push(`/search?q=${query}&activeFilter=${filter}`);
   };
 
-  if (!validFilter(activeFilter)) {
+  if (!searchResults[activeFilter] || searchResults[activeFilter].length <= 0) {
     activeFilter = 'all';
   }
 
