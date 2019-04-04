@@ -58,9 +58,9 @@ export const useTracker = (name, properties, context) => {
 };
 
 export const useTrackedFunc = (func, name, properties, context) => {
-  const track = useAnalyticsTracker();
+  const track = useTracker(name, properties, context);
   return (...funcArgs) => {
-    track(name, properties, context);
+    track();
     return func(...funcArgs);
   };
 };
@@ -71,8 +71,8 @@ export const TrackedExternalLink = ({ children, name, properties, to, ...props }
   const inherited = React.useContext(Context);
 
   const nameRef = React.useRef(name);
-  const propertiesRef = React.useRef({});
-  const inheritedRef = React.useRef({});
+  const propertiesRef = React.useRef(properties);
+  const inheritedRef = React.useRef(inherited.properties);
   React.useEffect(() => {
     nameRef.current = name;
     propertiesRef.current = properties;
