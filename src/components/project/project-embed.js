@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 
 import Embed from 'Components/project/embed';
 
@@ -9,6 +10,7 @@ import AddProjectToCollection from '../../presenters/includes/add-project-to-col
 import { TrackClick } from '../../presenters/analytics';
 
 import styles from './project-embed.styl';
+const cx = classNames.bind(styles);
 
 const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
   const BottomLeft = () => {
@@ -54,7 +56,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
         <div className={styles.left}>
           <BottomLeft />
         </div>
-        <div className={styles.right}>
+        <div className={cx({ right: true, buttonWrap: true })}>
           <BottomRight />
         </div>
       </div>
