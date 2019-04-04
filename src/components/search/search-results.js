@@ -56,6 +56,15 @@ function ProjectResult({ result }) {
   );
 }
 
+const StarterKitResult = ({ result }) => (
+  <a href={result.url}>
+    <Mask>
+      <img src={result.imageURL} />
+    </Mask>
+    <div>{result.name}</div>
+  </a>
+)
+
 const groups = [
   { id: 'team', label: 'Teams' },
   { id: 'user', label: 'Users' },
@@ -68,6 +77,7 @@ const resultComponents = {
   user: ({ result }) => <UserItem user={result} />,
   project: ProjectResult,
   collection: ({ result }) => <SmallCollectionItem collection={result} />,
+  'starter-kit': StarterKitResult,
 };
 
 const ResultComponent = ({ result }) => {

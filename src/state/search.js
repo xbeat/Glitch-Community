@@ -116,14 +116,14 @@ const starterKits = [
     keywords: ['react'],
     imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
     name: 'Build a Web App with React',
-    url: 'https://glitch.com/culture/react-starter-kit/'
+    url: 'https://glitch.com/culture/react-starter-kit/',
   },
   {
     id: 2,
     keywords: ['website'],
     imageURL: 'https://glitch.com/culture/content/images/2018/10/website-starter-kit-1.jpg',
     name: 'How to Make a Website',
-    url: 'https://glitch.com/culture/website-starter-kit/'
+    url: 'https://glitch.com/culture/website-starter-kit/',
   },
   {
     id: 3,
@@ -132,8 +132,13 @@ const starterKits = [
     name: 'An Intro to WebVR',
     url: 'https://glitch.com/culture/an-intro-to-webvr/',
   },
-]
+];
 
+function searchStarterKits(query) {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery)).map((kit) => ({ ...kit, type: 'starter-kit', isExactMatch: true }));
+}
 
 const formatLegacyResult = (type, query) => (hit) => ({
   ...hit,
@@ -192,7 +197,9 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
 
-  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
+  const matchingStarterKits = searchStarterKits(query);
+
+  const allHits = [...matchingStarterKits, ...results.team, ...results.user, ...results.project, ...results.collection];
 
   return {
     ...emptyResults,
