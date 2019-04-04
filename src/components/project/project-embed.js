@@ -10,6 +10,7 @@ import AddProjectToCollection from '../../presenters/includes/add-project-to-col
 import { TrackClick } from '../../presenters/analytics';
 
 import styles from './project-embed.styl';
+
 const cx = classNames.bind(styles);
 
 const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {

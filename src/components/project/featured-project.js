@@ -20,7 +20,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
 
   const TopRight = () => {
     if (!isAuthorized) return null;
-    return <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />;
+    return <div className={styles.unfeatureBtn}><FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} /></div>;
   };
 
   return (
