@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import styles from './loader.styl';
 
 const Loader = () => (
-  <div className="loader">
-    <div className="moon" />
-    <div className="earth" />
-  <div className="asteroid" />
-    <div className="asteroid-dust" />
+  <div className={styles.loader}>
+    <div className={styles.moon} />
+    <div className={styles.earth} />
+    <div className={styles.asteroid} />
+    <div className={styles.asteroidDust} />
   </div>
 );
+
+export default Loader;
