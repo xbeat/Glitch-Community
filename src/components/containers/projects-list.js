@@ -112,7 +112,7 @@ function PaginatedProjects(props) {
 
   const PaginationControls = () => (
     <div className={styles.paginationControls}>
-      <Button aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
+      <Button icon ariaLabel="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
         <Image
           alt=""
           className={styles.paginationArrow}
@@ -122,7 +122,7 @@ function PaginatedProjects(props) {
       <div className={styles.pageNumbers}>
         {page} / {numPages}
       </div>
-      <Button aria-label="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
+      <Button icon ariaLabel="Next" type="tertiary" disabled={page === numPages} onClick={() => setPage(page + 1)}>
         <Image
           alt=""
           className={cx({ paginationArrow: true, next: true })}

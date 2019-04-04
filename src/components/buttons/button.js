@@ -28,6 +28,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     hover,
     decorative,
   });
+  console.log(children.nodeType);
 
   if (href) {
     return (
