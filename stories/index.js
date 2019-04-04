@@ -268,7 +268,7 @@ storiesOf('Embed', module)
   .add('regular', () => <Embed domain="community-staging" />);
        
 const TopLeft = <h2>This project is bananas</h2>
-const TopRight = <button>I'm up top</button>;
+const TopRight = <button>I am on top</button>;
 const BottomRight = <><button>one</button><button>two</button></>;
 const BottomLeft = <button>Everything you own in a box to the left</button>;
 const addProjectToCollection = () => {};
