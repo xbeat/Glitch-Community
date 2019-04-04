@@ -12,7 +12,7 @@ import { TrackClick } from '../../presenters/analytics';
 
 import styles from './featured-project.styl';
 
-const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => {
+const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection }) => {
   const TopLeft = () => (
     <div className={styles.header}>
       <Heading tagName="h2">
@@ -27,59 +27,25 @@ const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProje
     return <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />;
   }
   
-  const BottomLeft = () => {
-    if (isAuthorized) {
-      return <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
-    } else {
-      return <ReportButton reportedType="project" reportedModel={featuredProject} />
-    }
-  };
-  
-  const BottomRight = () => (
-    <div className={styles.bottomRight}>
-      {
-        currentUser.login && (
-          <AddProjectToCollection
-            currentUser={currentUser}
-            project={featuredProject}
-            fromProject
-            addProjectToCollection={addProjectToCollection}
-          />
-        )
-      }
-      <TrackClick
-        name="Click Remix"
-        properties={{
-          baseProjectId: featuredProject.id,
-          baseDomain: featuredProject.domain,
-        }}
-      >
-        <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
-      </TrackClick>
-    </div>
-  );
-  
   return (
     <ProjectEmbed 
-      project={featuredProject}
       topLeft={<TopLeft />}
       topRight={<TopRight />}
-      bottomLeft={<BottomLeft />}
-      bottomRight={<BottomRight />}
+      project={featuredProject}
+      unfeatureProject={unfeatureProject}
+      isAuthorized={isAuthorized}
+      currentUser={currentUser}
+      addProjectToCollection={addProjectToCollection}
     />
   );
 };
 
 FeaturedProject.propTypes = {
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
   featuredProject: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-};
-
-FeaturedProject.defaultProps = {
-  currentUser: {},
 };
 
 export default FeaturedProject;

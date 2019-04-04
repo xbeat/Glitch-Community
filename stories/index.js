@@ -275,7 +275,11 @@ const BottomLeft = <button>Everything you own in a box to the left</button>;
 storiesOf('ProjectEmbed', module)
   .add('base', () => (
     <ProjectEmbed 
-      project={{ domain: "community-staging" }}
+      project={{ id: "123", domain: "community-staging" }}
+      isAuthorized={false}
+      currentUser={{ login: null }}
+      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
+      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
     />
   ))
   .add('with some things', () => (
