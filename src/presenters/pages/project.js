@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
+import ProjectEmbed from 'Components/project/project-embed';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
@@ -16,12 +17,9 @@ import NotFound from '../includes/not-found';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
 import EditableField from '../includes/editable-field';
-import Embed from '../includes/embed';
 import { AuthDescription } from '../includes/description-field';
 import { InfoContainer, ProjectInfoContainer } from '../includes/profile';
-import { ShowButton, EditButton, RemixButton } from '../includes/project-actions';
-import ReportButton from '../pop-overs/report-abuse-pop';
-import AddProjectToCollection from '../includes/add-project-to-collection';
+import { ShowButton, EditButton, } from '../includes/project-actions';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
@@ -138,24 +136,12 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
           </ProjectInfoContainer>
         </InfoContainer>
       </section>
-      <section id="embed">
-        <Embed domain={domain} />
-        <div className="buttons space-between">
-          <ReportButton reportedType="project" reportedModel={project} />
-          <div>
-            {currentUser.login && (
-              <AddProjectToCollection
-                className="button-small margin"
-                currentUser={currentUser}
-                project={project}
-                fromProject
-                addProjectToCollection={addProjectToCollection}
-              />
-            )}
-            <RemixButton name={domain} isMember={isAuthorized} onClick={() => trackRemix(project.id, domain)} />
-          </div>
-        </div>
-      </section>
+      <ProjectEmbed 
+        project={project}
+        isAuthorized={isAuthorized}
+        currentUser={currentUser}
+        addProjectToCollection={addProjectToCollection}
+      />
       <section id="readme">
         <ReadmeLoader domain={domain} />
       </section>

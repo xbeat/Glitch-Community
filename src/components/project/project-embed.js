@@ -10,7 +10,7 @@ import { TrackClick } from '../../presenters/analytics';
 
 import styles from './project-embed.styl';
 
-const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection }) => {
+const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
   const BottomLeft = () => {
     if (isAuthorized) {
       return <EditButton name={project.id} isMember={isAuthorized} size="small" />;
@@ -23,10 +23,10 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
       {
         currentUser.login && (
           <AddProjectToCollection
-            currentUser={currentUser}
             project={project}
-            fromProject
+            currentUser={currentUser}
             addProjectToCollection={addProjectToCollection}
+            fromProject
           />
         )
       }
