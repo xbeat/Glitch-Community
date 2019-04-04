@@ -44,6 +44,21 @@ function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
+function ProjectResult({ result }) {
+  const { currentUser } = useCurrentUser();
+  const api = useAPI();
+  return currentUser.login ? (
+    <ProjectItem
+      project={result}
+      projectOptions={{
+        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
+      }}
+    />
+  ) : (
+    <ProjectItem project={result} />
+  );
+}
+
 const groups = [
   { id: 'team', label: 'Teams' },
   { id: 'user', label: 'Users' },
@@ -54,20 +69,7 @@ const groups = [
 const resultComponents = {
   team: ({ result }) => <TeamItem team={result} />,
   user: ({ result }) => <UserItem user={result} />,
-  project: ({ result }) => {
-    const { currentUser } = useCurrentUser();
-    const api = useAPI();
-    return currentUser.login ? (
-      <ProjectItem
-        project={result}
-        projectOptions={{
-          addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-        }}
-      />
-    ) : (
-      <ProjectItem project={result} />
-    );
-  },
+  project: ProjectResult,
   collection: ({ result }) => <SmallCollectionItem collection={result} />,
 };
 
@@ -88,36 +90,20 @@ const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFi
 
 const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isExactMatch && activeFilter === results[0].type;
 
-const groupIsVisible = (searchResults, group, activeFilter) => {
+function getResultsForGroup({ searchResults, group, activeFilter }) {
   const resultsForGroup = searchResults[group.id];
-  if (resultsForGroup.length === 0) return false;
-  if (!groupIsInFilter(group.id, activeFilter)) return false;
-  if (isSingleTopResult(resultsForGroup, activeFilter)) return false;
-  return true;
-};
+  const noResults = { results: [], canShowMoreResults: false };
 
-const hasLimitedResults = (searchResults, group, activeFilter) => {
-  if (activeFilter === group.id) return false;
-  return searchResults[group.id].length > MAX_UNFILTERED_RESULTS;
-};
+  if (resultsForGroup.length === 0) return noResults;
+  if (!groupIsInFilter(group.id, activeFilter)) return noResults;
+  if (isSingleTopResult(resultsForGroup, activeFilter)) return noResults;
 
-const visibleResultsForFilter = (searchResults, group, activeFilter) => {
-  const resultsForGroup = searchResults[group.id];
-  if (!hasLimitedResults(searchResults, group, activeFilter)) return resultsForGroup;
-  return resultsForGroup.slice(0, MAX_UNFILTERED_RESULTS);
-};
-
-function ResultGroup ({ searchResults, group, activeFilter }) {
-  const resultsForGroup = searchResults[group.id];
-  
-  if (resultsForGroup.length === 0) return null;
-  if (!groupIsInFilter(group.id, activeFilter)) return null;
-  if (isSingleTopResult(resultsForGroup, activeFilter)) return null;  
-
-  const maxResultCount = activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS
+  const maxResultCount = activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS;
   const visibleResults = resultsForGroup.slice(0, maxResultCount);
-  
-  
+  return {
+    results: visibleResults,
+    canShowMoreResults: visibleResults.length < resultsForGroup.length,
+  };
 }
 
 function SearchResults({ query, searchResults }) {
@@ -140,17 +126,14 @@ function SearchResults({ query, searchResults }) {
   const renderedGroups = groups
     .map((group) => ({
       ...group,
-      isVisible: groupIsVisible(searchResults, group, activeFilter),
-      results: visibleResultsForFilter(searchResults, group, activeFilter),
-      canShowMoreResults: hasLimitedResults(searchResults, group, activeFilter),
+      ...getResultsForGroup({ searchResults, group, activeFilter }),
     }))
-    .filter((group) => group.isVisible);
+    .filter((group) => group.results.length > 0);
 
   if (showTopResults) {
     renderedGroups.unshift({
       id: 'top',
       label: 'Top Results',
-      isVisible: true,
       results: searchResults.topResults,
       canShowMoreResults: false,
     });
