@@ -95,6 +95,7 @@ Button.propTypes = {
 Button.defaultProps = {
   onClick: null,
   href: null,
+  icon: null,
   disabled: false,
   type: null,
   size: null,

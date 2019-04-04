@@ -112,7 +112,7 @@ function PaginatedProjects(props) {
 
   const PaginationControls = () => (
     <div className={styles.paginationControls}>
-      <Button icon aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
+      <Button aria-label="Previous" type="tertiary" disabled={page === 1} onClick={() => setPage(page - 1)}>
         <Image
           alt=""
           className={styles.paginationArrow}
