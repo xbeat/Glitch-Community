@@ -69,6 +69,13 @@ Button.propTypes = {
     }
     return null;
   },
+  /** it's an icon button (no text label) */
+  icon: (props, propName, componentName) => {
+    if (!props.ariaLabel) {
+      return new Error(`prop 'ariaLabel' was not specified in '${componentName}'.`);
+    }
+    return null;
+  },
   /** OR its decorative, because its inside a larger button/link */
   decorative: PropTypes.bool,
   /** button disabled */
