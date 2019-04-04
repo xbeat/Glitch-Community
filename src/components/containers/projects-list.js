@@ -214,7 +214,7 @@ export const SortableProjectsUL = ({ showProjectDescriptions, ...props }) => {
   // Collection is protected by react-sortable-hoc
   const safeCollection = props.collection;
   delete props.collection;
-  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} safeCollection={safeCollection} {...props} />;
+  return <SortableProjectList helperClass={cx({ sortableProjectHelper: true })} axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} safeCollection={safeCollection} {...props} />;
 };
 
 export default ProjectsList;
