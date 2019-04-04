@@ -26,11 +26,11 @@ const browserSatisfiesRequirements = (() => {
 })();
 
 const Embed = ({ domain }) => (
-  <div className={styles['embed-container']}>
+  <div className={styles.embedContainer}>
     {browserSatisfiesRequirements ? (
       // Embed iframe for app
       <iframe
-        className={styles['embed-iframe']}
+        className={styles.embedIframe}
         title="embed"
         src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
         alt={`${domain} on Glitch`}
