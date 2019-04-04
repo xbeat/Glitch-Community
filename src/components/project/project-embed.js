@@ -6,43 +6,30 @@ import Embed from 'Components/project/embed';
 
 import styles from './project-embed.styl';
 
-const ProjectEmbed = ({ project, heading, topRightButtons, leftButtons, rightButtons }) => (
+const ProjectEmbed = ({ project, topLeft, topRight, bottomLeft, bottomRight }) => (
   <section className={styles.projectEmbed}>
-    { 
-      (heading || topRightButtons) && (
-        <div className={styles.buttonContainer}>
-          {
-            heading && (
-              <Heading tagName="h2">
-                {heading}
-              </Heading>
-            )
-          }
-          {
-            topRightButtons && (
-              <div className={styles.right}>
-                {topRightButtons}
-              </div>
-            )
-          }
-        </div>
-      )
-    }
+    <div className={styles.buttonContainer}>
+      <div className={styles.containerChild>{topLeft}</div>
+      <div className={styles.containerChild>{topLeft}</div>
+    </div>
     <Embed domain={project.domain} />
     { 
       (leftButtons || rightButtons) && (
-        <div className={styles.bottom}>
-    {
-      leftButtons && (
-        <div className={styles.leftButtons}>
-          {leftButtons}
-        </div>
-      )
-    }
-    {
-      rightButtons && (
-        <div className={styles.rightButtons}>
-          {rightButtons}
+        <div className={styles.buttonContainer}>
+          {
+            leftButtons && (
+              <div className={styles.containerChild}>
+                {leftButtons}
+              </div>
+            )
+          }
+          {
+            rightButtons && (
+              <div className={styles.containerChild}>
+                {rightButtons}
+              </div>
+            )
+          }
         </div>
       )
     }
