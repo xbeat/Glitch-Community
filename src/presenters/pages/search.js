@@ -79,8 +79,27 @@ const ShowMoreButton = ({ label, onClick }) => (
 const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
-   
-   
+
+const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isTopResult && activeFilter === results[0].type;
+
+const groupIsVisible = (searchResults, group, activeFilter) => {
+  const resultsForGroup = searchResults[group.id];
+  if (resultsForGroup.length === 0) return false;
+  if (!groupIsInFilter(group.id, activeFilter)) return false;
+  if (isSingleTopResult(resultsForGroup, activeFilter)) return false;
+  return true;
+};
+
+const hasLimitedResults = (searchResults, group, activeFilter) => {
+  if (activeFilter === group.id) return false;
+  return searchResults[group.id].length > MAX_UNFILTERED_RESULTS;
+};
+
+const visibleResultsForFilter = (searchResults, group, activeFilter) => {
+  const resultsForGroup = searchResults[group.id];
+  if (!hasLimitedResults(searchResults, group, activeFilter)) return resultsForGroup;
+  return resultsForGroup.slice(0, MAX_UNFILTERED_RESULTS);
+};
 
 function SearchResults({ query, searchResults }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -103,8 +122,8 @@ function SearchResults({ query, searchResults }) {
     .map((group) => ({
       ...group,
       isVisible: groupIsInFilter(group.id, activeFilter) && searchResults[group.id].length > 0,
-      results: activeFilter === group.id ? searchResults[group.id] : searchResults[group.id].slice(0, MAX_UNFILTERED_RESULTS),
-      canShowMoreResults: activeFilter !== group.id && searchResults[group.id].length > MAX_UNFILTERED_RESULTS,
+      results: visibleResultsForFilter(searchResults, group, activeFilter),
+      canShowMoreResults: hasLimitedResults(searchResults, group, activeFilter),
     }))
     .filter((group) => group.isVisible);
 
