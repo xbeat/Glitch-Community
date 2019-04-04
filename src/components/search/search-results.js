@@ -10,6 +10,7 @@ import UserItem from 'Components/user/user-item';
 import TeamItem from 'Components/team/team-item';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import NotFound from 'Components/errors/not-found';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -17,7 +18,6 @@ import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
 import useDevToggle from '../../presenters/includes/dev-toggles';
 
 import { Loader } from '../../presenters/includes/loader';
-import NotFound from '../../presenters/includes/not-found';
 
 import styles from './search-results.styl';
 

@@ -5,7 +5,7 @@ export const Loader = () => (
   <div className="loader">
     <div className="moon" />
     <div className="earth" />
-    <div className="asteroid" />
+  <div className="asteroid" />
     <div className="asteroid-dust" />
   </div>
 );

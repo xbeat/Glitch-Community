@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import SearchResults from 'Components/search/search-results';
+import NotFound from 'Components/errors/not-found';
 import Layout from '../layout';
 import MoreIdeas from '../more-ideas';
-import NotFound from '../includes/not-found';
 
 const SearchPage = ({ query }) => (
   <Layout searchQuery={query}>
