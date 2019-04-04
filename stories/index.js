@@ -18,6 +18,9 @@ import TeamItem from 'Components/team/team-item';
 import UserItem from 'Components/user/user-item';
 import SearchResultCoverBar from 'Components/blocks/search-result-cover-bar';
 import Thanks from 'Components/blocks/thanks';
+import Loader from 'Components/loaders/loader';
+import NotFound from 'Components/errors/not-found';
+import SearchResults from 'Components/search/search-results';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 
@@ -323,3 +326,9 @@ storiesOf('Thanks', module).add('variations', () => (
     <Thanks count={3} short />
   </div>
 ));
+
+storiesOf('Loader', module).add('loader', () => <Loader />);
+
+storiesOf('NotFound', module).add('not found', () => <NotFound name="any results" />);
+
+storiesOf('SearchResults', module).add('results', provideContext({ currentUser: {}, api: mockAPI }, () => <div />));
