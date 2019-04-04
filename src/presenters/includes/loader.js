@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'Components/loaders/loader';
 
-export { Loader };
-
+// eslint-disable-next-line import/prefer-default-export
 export class DataLoader extends React.Component {
   constructor(props) {
     super(props);

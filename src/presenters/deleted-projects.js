@@ -5,9 +5,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Heading from 'Components/text/heading';
+import Loader from 'Components/loaders/loader';
 import { getAvatarUrl } from '../models/project';
 import { TrackClick } from './analytics';
-import { Loader } from './includes/loader';
 
 import { useAPI } from '../state/api';
 

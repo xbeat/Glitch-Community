@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 import { debounce } from 'lodash';
 
+import Loader from 'Components/loaders/loader';
 import { TrackClick } from '../analytics';
-import { Loader } from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
 import { useAPI } from '../../state/api';
