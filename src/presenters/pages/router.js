@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
 
-import SearchPage from 'Components/search/search-page';
-
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
@@ -19,6 +17,7 @@ import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
 import OauthSignIn from './sign-in';
+import SearchPage from './search';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import classnames from 'classnames';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
@@ -17,12 +16,29 @@ import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
 import useDevToggle from '../../presenters/includes/dev-toggles';
 
-import Layout from '../../presenters/layout';
 import { Loader } from '../../presenters/includes/loader';
-import MoreIdeas from '../../presenters/more-ideas';
 import NotFound from '../../presenters/includes/not-found';
 
-import styles from './search-page.styl'
+import styles from './search-results.styl';
+
+const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
+  const buttons = filters.map((filter) => ({
+    name: filter.id,
+    contents: (
+      <>
+        {filter.label}
+        {filter.hits && <Badge>{filter.hits > filter.maxHits ? `${filter.maxHits}+` : filter.hits}</Badge>}
+      </>
+    ),
+  }));
+
+  return (
+    <>
+      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
+      {activeFilter === 'all' && <h1>All results for {query}</h1>}
+    </>
+  );
+};
 
 function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
@@ -152,6 +168,8 @@ function SearchResults({ query, searchResults }) {
   );
 }
 
+SearchResults.propTypes = ()
+
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
 const AlgoliaSearchWrapper = ({ query }) => {
   const searchResults = useAlgoliaSearch(query);
@@ -163,22 +181,8 @@ const LegacySearchWrapper = ({ query }) => {
   return <SearchResults query={query} searchResults={searchResults} />;
 };
 
-const SearchPage = ({ query }) => {
+export default ({ query }) => {
   const algoliaFlag = useDevToggle('Algolia Search');
   const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
-  return (
-    <Layout searchQuery={query}>
-      {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
-      <MoreIdeas />
-    </Layout>
-  );
+  return <SearchWrapper query={query} />;
 };
-SearchPage.propTypes = {
-  query: PropTypes.string,
-};
-SearchPage.defaultProps = {
-  query: '',
-};
-
-export default SearchPage;
