@@ -13,41 +13,26 @@ import { TrackClick } from '../../presenters/analytics';
 
 import styles from './project-embed.styl';
 
-const ProjectEmbed = ({ isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject }) => (
-  <section className={styles['project-embed']}>
-    <Heading tagName="h2">
-      Featured Project
-      <Emoji name="clapper" isInTitle />
-    </Heading>
-    {isAuthorized && <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />}
-    <Embed domain={featuredProject.domain} />
-    <div className={styles['left-buttons']}>
-      {
-        isAuthorized ? (
-          <EditButton name={featuredProject.id} isMember={isAuthorized} size="small" />
-        ) : (
-          <ReportButton reportedType="project" reportedModel={featuredProject} />
-        )
-      }
+const ProjectEmbed = ({ project, heading, topRightButtons, }) => (
+  <section className={styles.projectEmbed}>
+    {
+      heading && (
+        <Heading tagName="h2">
+          {heading}
+        </Heading>
+      )
+    }
+    {
+      topRightButtons && (
+        <div>{topRightButtons}</div>
+      )
+    }
+    <Embed domain={project.domain} />
+    {leftButtons && <div className={styles.leftButtons}>
+      {leftButtons}
     </div>
-    <div className={styles['right-buttons']}>
-      {currentUser.login && (
-        <AddProjectToCollection
-          currentUser={currentUser}
-          project={featuredProject}
-          fromProject
-          addProjectToCollection={addProjectToCollection}
-        />
-      )}
-      <TrackClick
-        name="Click Remix"
-        properties={{
-          baseProjectId: featuredProject.id,
-          baseDomain: featuredProject.domain,
-        }}
-      >
-        <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
-      </TrackClick>
+    <div className={styles.rightButtons}>
+      {rightButtons}
     </div>
   </section>
 );
@@ -56,7 +41,7 @@ ProjectEmbed.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,
-  featuredProject: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
