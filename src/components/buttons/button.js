@@ -7,7 +7,7 @@ import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown', 'icon'];
 export const SIZES = ['small'];
 
 /**
@@ -71,7 +71,7 @@ Button.propTypes = {
   },
   /** it's an icon button (no text label) */
   icon: (props, propName, componentName) => {
-    if (!props.ariaLabel) {
+    if (props.icon && !props.ariaLabel) {
       return new Error(`prop 'ariaLabel' was not specified in '${componentName}'.`);
     }
     return null;
