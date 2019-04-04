@@ -1,0 +1,61 @@
+.bubbleContainer
+  display: block
+  position: relative
+  color: inherit
+  text-decoration: none
+  border-radius: 0.5rem
+  &:hover
+    text-decoration: none
+  &:after
+    content: ""
+    position: absolute
+    width: 0
+    height: 0
+    left: 8px
+    bottom: 100%
+    border-color: inherit
+    border-bottom-width: 6px
+    border-bottom-style solid
+    border-left: 6px solid transparent
+    border-right: 6px solid transparent
+  
+.smallNameDescriptionArea
+  padding: 1rem 1rem 0
+  
+.nameArea
+  display: flex
+  align-items: flex-start
+  
+.collectionNameWrap
+  padding-top: 4px
+  
+.description
+  font-size: 14px
+  
+.collectionAvatarContainer
+  flex: 0 0 40px
+  margin-right: 0.5rem
+  svg
+    width: 100%
+    height: auto
+    
+.smallProjectCount
+  background-color: #eee
+  padding: 0.5rem
+  font-size: 14px
+  font-weight: 600
+  border-radius: 0 0 0.5rem 0.5rem
+  
+a:hover .smallProjectCount
+  text-decoration: underline
+  
+.placeholderAvatar
+  width: 32px
+  height: 32px
+  border-radius: 50%
+  background-color: #eee
+  
+.curator
+  height: 32px
+  margin-bottom: 0.5rem
+  

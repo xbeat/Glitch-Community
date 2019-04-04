@@ -126,7 +126,13 @@ class CreateTeamPopBase extends React.Component {
 
         <section className="pop-over-actions">
           <form onSubmit={this.handleSubmit}>
-            <TextInput value={this.state.teamName} onChange={this.handleChange} placeholder={placeholder} error={this.state.error} />
+            <TextInput
+              labelText={placeholder}
+              value={this.state.teamName}
+              onChange={this.handleChange}
+              placeholder={placeholder}
+              error={this.state.error}
+            />
             <p className="action-description team-url-preview">/@{_.kebabCase(this.state.teamName || placeholder)}</p>
 
             {this.state.isLoading ? (

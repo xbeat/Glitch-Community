@@ -1,7 +1,7 @@
 /* eslint-disable prefer-default-export */
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
-import { groupBy } from 'lodash';
+import { groupBy, sample } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
@@ -17,6 +17,7 @@ function formatUser(hit) {
     id: Number(hit.objectID.split('-')[1]),
     thanksCount: hit.thanks,
     hasCoverImage: false,
+    color: '',
   };
 }
 
@@ -47,9 +48,11 @@ function formatCollection(hit) {
   return {
     ...hit,
     id: Number(hit.objectID.split('-')[1]),
-    coverColor: '#ccc',
+    coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc']),
     projects: [],
     url: '',
+    teamId: hit.team,
+    userId: hit.user,
     team: hit.team > 0 ? { id: hit.team, url: '' } : null,
     user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };
@@ -72,11 +75,13 @@ function formatHit(hit) {
 
 const emptyResults = { team: [], user: [], project: [], collection: [] };
 
-const MAX_RESULTS = 20;
-
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
   useEffect(() => {
+    if (!query) {
+      setHits([]);
+      return;
+    }
     searchIndex
       .search({
         query,
@@ -95,17 +100,17 @@ export function useAlgoliaSearch(query) {
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data.slice(0, MAX_RESULTS);
+  return data;
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data.slice(0, MAX_RESULTS);
+  return data;
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data.slice(0, MAX_RESULTS);
+  return data;
 }
 
 // This API is slow and is missing important data (so its unfit for production)
@@ -114,7 +119,7 @@ async function searchProjects(api, query) {
 async function searchCollections(api, query) {
   const { data } = await api.get(`collections/search?q=${query}`);
   // NOTE: collection URLs don't work correctly with these
-  return data.slice(0, MAX_RESULTS).map((coll) => ({
+  return data.map((coll) => ({
     ...coll,
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
     user: coll.userId > 0 ? { id: coll.userId } : null,
