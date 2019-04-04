@@ -35,6 +35,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
         properties={{
           baseProjectId: project.id,
           baseDomain: project.domain,
+          origin: trackingOrigin,
         }}
       >
         <RemixButton name={project.domain} isMember={isAuthorized} />
@@ -65,6 +66,7 @@ ProjectEmbed.propTypes = {
   project: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  trackingOrigin: PropTypes.string.isRequired,
   addProjectToCollection: PropTypes.func,
   topLeft: PropTypes.any,
   topRight: PropTypes.any,

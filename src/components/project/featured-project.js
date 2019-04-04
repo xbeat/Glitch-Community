@@ -8,7 +8,7 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 
 import styles from './featured-project.styl';
 
-const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection }) => {
+const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
   const TopLeft = () => (
     <div className={styles.header}>
       <Heading tagName="h2">
@@ -32,6 +32,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       isAuthorized={isAuthorized}
       currentUser={currentUser}
       addProjectToCollection={addProjectToCollection}
+      trackingOrigin={trackingOrigin}
     />
   );
 };
@@ -41,6 +42,7 @@ FeaturedProject.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   featuredProject: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
+  trackingOrigin: PropTypes.string.isRequired,
   unfeatureProject: PropTypes.func,
 };
 

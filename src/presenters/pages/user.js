@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { orderBy, partition } from 'lodash';
 
 import Heading from 'Components/text/heading';
-import ProjectEmbed from 'Components/project/project-embed';
+import FeaturedProject from 'Components/project/featured-project';
 
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
@@ -130,12 +130,13 @@ const UserPage = ({
       </section>
 
       {featuredProject && (
-        <ProjectEmbed
+        <FeaturedProject
           featuredProject={featuredProject}
           isAuthorized={isAuthorized}
           unfeatureProject={unfeatureProject}
           addProjectToCollection={addProjectToCollection}
           currentUser={maybeCurrentUser}
+          trackingOrigin="user page"
         />
       )}
 

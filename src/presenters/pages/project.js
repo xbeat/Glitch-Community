@@ -1,5 +1,3 @@
-/* global analytics */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -19,7 +17,7 @@ import Expander from '../includes/expander';
 import EditableField from '../includes/editable-field';
 import { AuthDescription } from '../includes/description-field';
 import { InfoContainer, ProjectInfoContainer } from '../includes/profile';
-import { ShowButton, EditButton, } from '../includes/project-actions';
+import { ShowButton, EditButton } from '../includes/project-actions';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
@@ -30,14 +28,6 @@ import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import Layout from '../layout';
-
-function trackRemix(id, domain) {
-  analytics.track('Click Remix', {
-    origin: 'project page',
-    baseProjectId: id,
-    baseDomain: domain,
-  });
-}
 
 function syncPageToDomain(domain) {
   history.replaceState(null, null, `/~${domain}`);
@@ -136,11 +126,12 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
           </ProjectInfoContainer>
         </InfoContainer>
       </section>
-      <ProjectEmbed 
+      <ProjectEmbed
         project={project}
         isAuthorized={isAuthorized}
         currentUser={currentUser}
         addProjectToCollection={addProjectToCollection}
+        trackingOrigin="project page"
       />
       <section id="readme">
         <ReadmeLoader domain={domain} />
