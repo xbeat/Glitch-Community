@@ -36,7 +36,7 @@ const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProje
   };
   
   const BottomRight = () => (
-    <>
+    <div className={styles.bottomRight}>
       {
         currentUser.login && (
           <AddProjectToCollection
@@ -56,7 +56,7 @@ const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProje
       >
         <RemixButton name={featuredProject.domain} isMember={isAuthorized} />
       </TrackClick>
-    </>
+    </div>
   );
   
   return (
