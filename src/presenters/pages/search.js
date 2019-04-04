@@ -21,7 +21,7 @@ import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
 
-const FilterContainer = ({ filters, activeFilter, setActiveFilter, query }) => {
+const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
     name: filter.id,
     contents: (
@@ -34,7 +34,7 @@ const FilterContainer = ({ filters, activeFilter, setActiveFilter, query }) => {
 
   return (
     <>
-      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setActiveFilter} />
+      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
@@ -119,7 +119,7 @@ const SearchResults = withRouter(({ query, searchResults, activeFilter, history 
         </>
       )}
       {ready && searchResults.totalHits > 0 && (
-        <FilterContainer filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} query={query} />
+        <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
         <div key={id}>
