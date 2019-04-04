@@ -17,14 +17,14 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       </Heading>
     </div>
   );
-  
+
   const TopRight = () => {
-    if (!isAuthorized) return null;   
+    if (!isAuthorized) return null;
     return <FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} />;
-  }
-  
+  };
+
   return (
-    <ProjectEmbed 
+    <ProjectEmbed
       topLeft={<TopLeft />}
       topRight={<TopRight />}
       project={featuredProject}
