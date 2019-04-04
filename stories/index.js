@@ -14,6 +14,10 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import TeamItem from 'Components/team/team-item';
+import UserItem from 'Components/user/user-item';
+import SearchResultCoverBar from 'Components/blocks/search-result-cover-bar';
+import Thanks from 'Components/blocks/thanks';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 import Embed from 'Components/project/embed';
@@ -211,9 +215,25 @@ storiesOf('Segmented-Buttons', module)
 
 const users = {
   modernserf: {
+    isSupport: false,
+    isInfrastructureUser: false,
     id: 271885,
-    login: 'modernserf',
+    avatarUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-large.jpg',
     avatarThumbnailUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+    login: 'modernserf',
+    name: 'Justin Falcone',
+    location: 'Brooklyn, NY',
+    color: '#ea6996',
+    description:
+      'programmer & writer\n\n[🐦](https://twitter.com/modernserf) [🐙](https://github.com/modernserf) [🏠](https://justinfalcone.com) [☄](http://pronoun.is/they/.../themselves)',
+    hasCoverImage: true,
+    coverColor: 'rgb(84,138,53)',
+    thanksCount: 1,
+    utcOffset: -240,
+    featuredProjectId: '22a883dc-a45d-4257-b44c-a43b6b8cabe9',
+    createdAt: '2017-03-21T00:14:37.651Z',
+    updatedAt: '2019-04-03T13:34:21.147Z',
+    features: [],
   },
 };
 
@@ -263,6 +283,51 @@ storiesOf('SmallCollectionItem', module).add(
     </div>
   )),
 );
+
+storiesOf('UserItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <UserItem user={users.modernserf} />
+  </div>
+));
+
+storiesOf('TeamItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <TeamItem
+      team={{
+        id: 12345,
+        coverColor: '#efe',
+        description: 'An example team',
+        hasAvatarImage: false,
+        hasCoverImage: false,
+        isVerified: false,
+        name: ['Example Team'],
+        url: 'example-team',
+        users: [users.modernserf],
+      }}
+    />
+  </div>
+));
+
+storiesOf('SearchResultCoverBar', module)
+  .add('user', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <SearchResultCoverBar type="user" item={users.modernserf} size="medium" />
+    </div>
+  ))
+  .add('user without cover', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <SearchResultCoverBar type="user" item={{ id: 123, login: 'nobody' }} size="medium" />
+    </div>
+  ));
+
+storiesOf('Thanks', module).add('variations', () => (
+  <div>
+    <Thanks count={1} />
+    <Thanks count={2} />
+    <Thanks count={3} />
+    <Thanks count={3} short />
+  </div>
+));
 
 storiesOf('Embed', module)
   .add('regular', () => <Embed domain="community-staging" />);
