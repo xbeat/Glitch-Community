@@ -205,7 +205,7 @@ export const SortableProjectsUL = ({ showProjectDescriptions, ...props }) => {
   if (projects.length === 0) {
     setProjects(props.projects);
   }
-  return <SortableProjectList lockToContainerEdges={true} helperClass={cx({ sortableHelper: true })} axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
+  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
 };
 
 export default ProjectsList;
