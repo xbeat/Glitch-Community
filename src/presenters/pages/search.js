@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
@@ -20,9 +21,7 @@ import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
 
-const pathForSearch = (query, filter) => `/search?q=${query}&activeFilter=${filter}`;
-
-const FilterContainer = ({ filters, activeFilter, query }) => {
+const FilterContainer = ({ filters, activeFilter, setActiveFilter, query }) => {
   const buttons = filters.map((filter) => ({
     name: filter.id,
     contents: (
@@ -32,12 +31,10 @@ const FilterContainer = ({ filters, activeFilter, query }) => {
       </>
     ),
   }));
-  
-  const 
 
   return (
     <>
-      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
+      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setActiveFilter} />
       {activeFilter === 'all' && <h1>All results for {query}</h1>}
     </>
   );
@@ -69,8 +66,8 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ location, label, query, filter }) => (
-  <button className="show-all-btn" href={pathForSearch(query, filter)}>
+const ShowMoreButton = ({ label, onClick }) => (
+  <button className="show-all-btn" onClick={onClick}>
     Show All {label}
   </button>
 );
@@ -79,13 +76,17 @@ const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-const validFilter = (activeFilter) => ['all', 'team', 'user', 'project', 'collection'].includes(validFilter)
-   
-function SearchResults({ query, searchResults, activeFilter }) {
+const validFilter = (activeFilter) => ['all', 'team', 'user', 'project', 'collection'].includes(activeFilter);
+
+const SearchResults = withRouter(({ query, searchResults, activeFilter, history }) => {
+  const setActiveFilter = (filter) => {
+    history.push(`/search?q=${query}&activeFilter=${filter}`);
+  };
+
   if (!validFilter(activeFilter)) {
-    activeFilter = 'all'
+    activeFilter = 'all';
   }
-  
+
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
 
@@ -118,7 +119,7 @@ function SearchResults({ query, searchResults, activeFilter }) {
         </>
       )}
       {ready && searchResults.totalHits > 0 && (
-        <FilterContainer filters={filters} activeFilter={activeFilter} query={query} />
+        <FilterContainer filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} query={query} />
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults, ResultComponent }) => (
         <div key={id}>
@@ -131,14 +132,14 @@ function SearchResults({ query, searchResults, activeFilter }) {
                 </li>
               ))}
             </ul>
-            {canShowMoreResults && <ShowMoreButton label={label} query={query} filter={id} />}
+            {canShowMoreResults && <ShowMoreButton label={label} onClick={() => setActiveFilter(id)} />}
           </article>
         </div>
       ))}
       {noResults && <NotFound name="any results" />}
     </main>
   );
-}
+});
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
 const AlgoliaSearchWrapper = ({ query, activeFilter }) => {
