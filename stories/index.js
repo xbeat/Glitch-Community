@@ -213,6 +213,7 @@ storiesOf('Segmented-Buttons', module)
 
 const users = {
   modernserf: {
+    type: 'user',
     isSupport: false,
     isInfrastructureUser: false,
     id: 271885,
@@ -331,4 +332,29 @@ storiesOf('Loader', module).add('loader', () => <Loader />);
 
 storiesOf('NotFound', module).add('not found', () => <NotFound name="any results" />);
 
-storiesOf('SearchResults', module).add('results', provideContext({ currentUser: {}, api: mockAPI }, () => <div />));
+storiesOf('SearchResults', module).add(
+  'results',
+  provideContext({ currentUser: {}, api: mockAPI }, () => (
+    <SearchResults
+      query="modernserf"
+      searchResults={{
+        status: 'ready',
+        totalHits: 2,
+        topResults: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+        team: [],
+        user: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+        project: [{
+          type: 'project',
+          id: 'foo',
+          domain: 'modernserf-zebu',
+          description: 'a modernserf project that does zebu things',
+          private: false,
+          showAsGlitchTeam: false,
+          users: [users.modernserf],
+          teams: [],
+        }],
+        collection: [],
+      }}
+    />
+  )),
+);

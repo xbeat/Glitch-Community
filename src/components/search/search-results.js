@@ -15,8 +15,6 @@ import Loader from 'Components/loaders/loader';
 
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
-import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
-import useDevToggle from '../../presenters/includes/dev-toggles';
 
 import styles from './search-results.styl';
 
@@ -180,19 +178,4 @@ SearchResults.propTypes = {
   }).isRequired,
 };
 
-// Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
-const AlgoliaSearchWrapper = ({ query }) => {
-  const searchResults = useAlgoliaSearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
-};
-
-const LegacySearchWrapper = ({ query }) => {
-  const searchResults = useLegacySearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
-};
-
-export default ({ query }) => {
-  const algoliaFlag = useDevToggle('Algolia Search');
-  const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
-  return <SearchWrapper query={query} />;
-};
+export default SearchResults;
