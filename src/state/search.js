@@ -98,18 +98,31 @@ export function useAlgoliaSearch(query) {
   };
 }
 
+// When the URL changes, the whole search page unmounts, so 
+const legacySearchResultCache = {
+  requests: new Map(),
+  get (api, url) {
+    if (this.requests.has(url)) {
+      return this.requests.get(url)
+    }
+    const request = api.get(url)
+    this.requests.set(url, request)
+    return request
+  }
+}
+
 async function searchTeams(api, query) {
-  const { data } = await api.get(`teams/search?q=${query}`);
+  const { data } = await legacySearchResultCache.get(api, `teams/search?q=${query}`);
   return data;
 }
 
 async function searchUsers(api, query) {
-  const { data } = await api.get(`users/search?q=${query}`);
+  const { data } = await legacySearchResultCache.get(api, `users/search?q=${query}`);
   return data;
 }
 
 async function searchProjects(api, query) {
-  const { data } = await api.get(`projects/search?q=${query}`);
+  const { data } = await legacySearchResultCache.get(api, `projects/search?q=${query}`);
   return data;
 }
 
@@ -117,7 +130,7 @@ async function searchProjects(api, query) {
 // But its still useful for comparing against Algolia
 // eslint-disable-next-line no-unused-vars
 async function searchCollections(api, query) {
-  const { data } = await api.get(`collections/search?q=${query}`);
+  const { data } = await legacySearchResultCache.get(api, `collections/search?q=${query}`);
   // NOTE: collection URLs don't work correctly with these
   return data.map((coll) => ({
     ...coll,

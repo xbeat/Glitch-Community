@@ -122,8 +122,13 @@ const Router = () => (
         <Route key={name} path={`/${name}`} exact render={({ location }) => <TeamPage key={location.key} id={rootTeams[name]} name={name} />} />
       ))}
 
-      <Route path="/search" exact render={({ location }) => 
-        <SearchPage key={location.key} query={parse(location.search, 'q')} activeFilter={parse(location.search, 'searchType')} />} />
+      <Route
+        path="/search"
+        exact
+        render={({ location }) => (
+          <SearchPage key={location.key} query={parse(location.search, 'q')} activeFilter={parse(location.search, 'activeFilter')} />
+        )}
+      />
 
       {categories.map((category) => (
         <Route
