@@ -178,15 +178,20 @@ ProjectsUL.defaultProps = {
   showProjectDescriptions: true,
 };
 
-const SortableProjectItem = SortableElement(({ project, showProjectDescriptions, ...props }) => (
-  <ul className={cx({ sortableProjectItemWrapper: true })}>
-    <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
-  </ul>
-));
+const SortableProjectItem = SortableElement(({ project, showProjectDescriptions, ...props }) => {
+  const collection = props.safeCollection;
+  delete props.collection;
+  return (
+    <div className={cx({ sortableProjectItemWrapper: true })}>
+      <ProjectItem key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} collection={collection} {...props} />
+    </div>
+  );
+});
+
 const SortableProjectList = SortableContainer(({ sortedProjects, showProjectDescriptions, ...props }) => (
   <div className={cx({ sortableProjectContainer: true })}>
     {sortedProjects.map((project, index) => (
-      <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} />
+      <SortableProjectItem index={index} key={project.id} project={project} showProjectDescriptions={showProjectDescriptions} {...props} />
     ))}
   </div>
 ));
@@ -201,11 +206,15 @@ export const SortableProjectsUL = ({ showProjectDescriptions, ...props }) => {
     setProjects(newOrder);
     console.log('🚀', `${projects[oldIndex].domain} was ${oldIndex} and is now ${newIndex}`, newOrder);
   };
-  console.log(props);
+
   if (projects.length === 0) {
     setProjects(props.projects);
   }
-  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} {...props} />;
+
+  // Collection is protected by react-sortable-hoc
+  const safeCollection = props.collection;
+  delete props.collection;
+  return <SortableProjectList axis={'xy'} sortedProjects={projects} onSortEnd={handleSort} safeCollection={safeCollection} {...props} />;
 };
 
 export default ProjectsList;
