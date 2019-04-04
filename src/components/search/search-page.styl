@@ -1,16 +1,18 @@
-.search-results
-  .no-results
+@import '../constants'
+
+.page
+  :global .no-results
     margin-bottom: 2rem
     p
       margin: 0
       
-.search-resullts__show-all-button
+.showAllButton
   margin-top: 10px    
     
-.search-results__group-container
+.groupContainer
   padding-bottom: 3rem
 
-.search-results__results-container
+.resultsContainer
   display: grid
   grid-template-columns: 1fr
   grid-gap: 10px
@@ -23,7 +25,7 @@
   @media (min-width: largeViewport)	
     grid-template-columns: 1fr 1fr 1fr 1fr
     
-.search-results--top-results
+.topResults
   border-bottom: 1px solid #ccc
   padding-bottom: 2rem
   margin-bottom: 2rem

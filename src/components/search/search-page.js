@@ -15,31 +15,14 @@ import SmallCollectionItem from 'Components/collection/small-collection-item';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
-import useDevToggle from '../includes/dev-toggles';
+import useDevToggle from '../../presenters/includes/dev-toggles';
 
-import Layout from '../layout';
-import { Loader } from '../includes/loader';
-import MoreIdeas from '../more-ideas';
-import NotFound from '../includes/not-found';
+import Layout from '../../presenters/layout';
+import { Loader } from '../../presenters/includes/loader';
+import MoreIdeas from '../../presenters/more-ideas';
+import NotFound from '../../presenters/includes/not-found';
 
-const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
-  const buttons = filters.map((filter) => ({
-    name: filter.id,
-    contents: (
-      <>
-        {filter.label}
-        {filter.hits && <Badge>{filter.hits > filter.maxHits ? `${filter.maxHits}+` : filter.hits}</Badge>}
-      </>
-    ),
-  }));
-
-  return (
-    <>
-      <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
-      {activeFilter === 'all' && <h1>All results for {query}</h1>}
-    </>
-  );
-};
+import styles from './search-page.styl'
 
 function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
@@ -80,7 +63,7 @@ const ResultComponent = ({ result }) => {
 };
 
 const ShowAllButton = ({ label, onClick }) => (
-  <div className="search-results__show-all-btn">
+  <div className={styles.showAllButton}>
     <Button onClick={onClick}>Show All {label}</Button>
   </div>
 );
@@ -141,7 +124,7 @@ function SearchResults({ query, searchResults }) {
   }
 
   return (
-    <main className="search-results">
+    <main className={styles.page}>
       {searchResults.status === 'loading' && (
         <>
           <Loader />
@@ -152,11 +135,11 @@ function SearchResults({ query, searchResults }) {
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
       {renderedGroups.map(({ id, label, results, canShowMoreResults }) => (
-        <article key={id} className={classnames('search-results__group-container', id === 'top' && 'search-results--top-results')}>
+        <article key={id} className={classnames(styles.groupContainer, id === 'top' && styles.topResults)}>
           <Heading tagName="h2">{label}</Heading>
-          <ul className="search-results__results-container">
+          <ul className={styles.resultsContainer}>
             {results.map((result) => (
-              <li key={result.id} className="search-results__result-item">
+              <li key={result.id} className={styles.resultItem}>
                 <ResultComponent result={result} />
               </li>
             ))}

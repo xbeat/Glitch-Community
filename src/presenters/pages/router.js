@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
 
+import SearchPage from 'Components/search/search-page';
+
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
@@ -13,7 +15,6 @@ import JoinTeamPage from './join-team';
 import QuestionsPage from './questions';
 import ProjectPage from './project';
 import { TeamPage, UserPage, TeamOrUserPage } from './team-or-user';
-import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
