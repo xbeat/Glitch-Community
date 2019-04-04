@@ -264,32 +264,23 @@ storiesOf('SmallCollectionItem', module).add(
   )),
 );
 
+const TopRightButtons = <button>I'm up top</button>;
+const RightButtons = <><button>one</button><button>two</button></>;
+const LeftButtons = <button>Everything you own in a box to the left</button>;
+
 storiesOf('ProjectEmbed', module)
-  .add('does not own project, not logged in', provideContext({ currentUser: {} }, () => (
+  .add('base', () => (
     <ProjectEmbed 
-      isAuthorized={false}
-      currentUser={{ login: null }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+      project={{ domain: "community-staging" }}
     />
-  )))
-  .add('does not own project, is logged in', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
+  ))
+  .add('with headers and buttons', () => (
     <ProjectEmbed 
-      isAuthorized={false}
-      currentUser={{ login: "@sarahzinger" }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
-    />
-  )))
-  .add('owns project, is logged in', () => (
-    <ProjectEmbed 
-      isAuthorized={true}
-      currentUser={{ login: "@sarahzinger" }}
-      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
-      featuredProject={{id: "123", domain: "community-staging" }}
-      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+      project={{ domain: "community-staging" }}
+      heading="This project is bananas"
+      topRightButtons={TopRightButtons}
+      rightButtons={RightButtons}
+      leftButtons={LeftButtons}
     />
   ));
 
