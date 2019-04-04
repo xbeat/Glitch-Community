@@ -168,7 +168,18 @@ function SearchResults({ query, searchResults }) {
   );
 }
 
-SearchResults.propTypes = ()
+SearchResults.propTypes = {
+  query: PropTypes.string.isRequired,
+  searchResults: PropTypes.shape({
+    status: PropTypes.oneOf(['init', 'loading', 'ready']).isRequired,
+    totalHits: PropTypes.number.isRequired,
+    topResults: PropTypes.array.isRequired,
+    team: PropTypes.array.isRequired,
+    user: PropTypes.array.isRequired,
+    project: PropTypes.array.isRequired,
+    collection: PropTypes.array.isRequired,
+  }).isRequired,
+};
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
 const AlgoliaSearchWrapper = ({ query }) => {
