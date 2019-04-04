@@ -125,9 +125,10 @@ const Router = () => (
       <Route
         path="/search"
         exact
-        render={({ location }) => (
-          <SearchPage key={location.key} query={parse(location.search, 'q')} activeFilter={parse(location.search, 'activeFilter')} />
-        )}
+        render={({ location }) => {
+          const query = parse(location.search, 'q');
+          return <SearchPage key={query} query={query} activeFilter={parse(location.search, 'activeFilter')} />;
+        }}
       />
 
       {categories.map((category) => (
