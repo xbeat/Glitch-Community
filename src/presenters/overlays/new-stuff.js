@@ -64,7 +64,7 @@ NewStuffOverlay.propTypes = {
 };
 
 const NewStuff = ({ children, isSignedIn, showNewStuff, setShowNewStuff, newStuffReadId, setNewStuffReadId }) => {
-  const [log, setLog] = React.useState(() => newStuffLog);
+  const [log, setLog] = React.useState(newStuffLog);
   const track = useTracker('Pupdate');
 
   const renderOuter = ({ visible, setVisible }) => {
