@@ -18,12 +18,15 @@ import Questions from '../questions';
 import RecentProjects from '../recent-projects';
 import ReportButton from '../pop-overs/report-abuse-pop';
 
-
+const loadedScripts = new Set();
 function loadScript(src) {
-  const script = document.createElement('script');
-  script.src = src;
-  script.async = true;
-  document.head.appendChild(script);
+  if (!loadedScripts.has(src)) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.head.appendChild(script);
+    loadedScripts.add(src);
+  }
 }
 
 const Callout = ({ classes, imgUrl, title, description }) => (

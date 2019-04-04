@@ -58,15 +58,15 @@ const useAnalyticsTracker = () => {
   };
 };
 
-export const useTracker = (...trackArgs) => {
+export const useTracker = (name, properties, context) => {
   const track = useAnalyticsTracker();
-  return () => track(...trackArgs);
+  return () => track(name, properties, context);
 };
 
-export const useTrackedFunc = (func, ...trackArgs) => {
-  const track = useTracker(...trackArgs);
+export const useTrackedFunc = (func, name, properties, context) => {
+  const track = useAnalyticsTracker();
   return (...funcArgs) => {
-    track();
+    track(name, properties, context);
     return func(...funcArgs);
   };
 };
