@@ -18,7 +18,7 @@ import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 import Embed from 'Components/project/embed';
 import ProjectEmbed from 'Components/project/project-embed';
-
+import FeaturedProject from 'Components/project/featured-project';
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
@@ -297,3 +297,31 @@ storiesOf('ProjectEmbed', module)
     />
   ));
 
+storiesOf('FeaturedProject', module)
+  .add('does not own project, not logged in', provideContext({ currentUser: {} }, () => (
+    <FeaturedProject 
+      isAuthorized={false}
+      currentUser={{ login: null }}
+      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
+      featuredProject={{id: "123", domain: "community-staging" }}
+      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+    />
+  )))
+  .add('does not own project, is logged in', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
+    <FeaturedProject 
+      isAuthorized={false}
+      currentUser={{ login: "@sarahzinger" }}
+      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
+      featuredProject={{id: "123", domain: "community-staging" }}
+      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+    />
+  )))
+  .add('owns project, is logged in', () => (
+    <FeaturedProject 
+      isAuthorized={true}
+      currentUser={{ login: "@sarahzinger" }}
+      unfeatureProject={alert.bind(this, "project un-featured would be called now")}
+      featuredProject={{id: "123", domain: "community-staging" }}
+      addProjectToCollection={alert.bind(this, "add project to collection would have been called now")}
+    />
+  ));

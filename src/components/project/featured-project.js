@@ -17,7 +17,7 @@ const FeaturedProject = ({ isAuthorized, currentUser, unfeatureProject, addProje
     <div className={styles.header}>
       <Heading tagName="h2">
         Featured Project
-        <Emoji name="clapper" isInTitle />
+        <Emoji name="clapper" />
       </Heading>
     </div>
   );

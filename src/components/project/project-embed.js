@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Heading from 'Components/text/heading';
 import Embed from 'Components/project/embed';
 
 import styles from './project-embed.styl';
