@@ -367,11 +367,22 @@ storiesOf('SearchResults', module).add(
   ),
 );
 
-storiesOf('MaskImage', module).add('random mask', () => (
-  <MaskImage src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />
-)).add('select mask', withState('mask1', ({state, setState}) => (
-
-)))
+storiesOf('MaskImage', module)
+  .add('random mask', () => <MaskImage src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />)
+  .add(
+    'select mask',
+    withState('mask1', ({ state, setState }) => (
+      <div>
+        <MaskImage maskClass={state} src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />
+        <select value={state} onChange={(e) => setState(e.target.value)}>
+          <option value="mask1">Mask 1</option>
+          <option value="mask2">Mask 2</option>
+          <option value="mask3">Mask 3</option>
+          <option value="mask4">Mask 4</option>
+        </select>
+      </div>
+    )),
+  );
 
 storiesOf('StarterKit', module).add('react', () => (
   <StarterKitResult
