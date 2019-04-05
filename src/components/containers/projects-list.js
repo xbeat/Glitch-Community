@@ -68,6 +68,7 @@ function ProjectsList({ title, placeholder, extraClasses, enableFiltering, enabl
             onChange={setFilter}
             opaque
             placeholder="find a project"
+            labelText="project search"
             type="search"
             value={filter}
           />
