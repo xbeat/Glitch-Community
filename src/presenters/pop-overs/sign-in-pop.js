@@ -242,9 +242,9 @@ SignInCodeSection.propTypes = {
 
 const TermsAndPrivacySection = () => (
   <aside className="pop-over-info last-section">
-    By signing into Glitch, you agree to our {" "}
+    By signing into Glitch, you agree to our {' '}
     <Link to="/legal/#tos">Terms of Services</Link>
-    {" "} and {" "} 
+    {' '} and {' '}
     <Link to="/legal/#privacy">Privacy Statement</Link>
   </aside>
 );
