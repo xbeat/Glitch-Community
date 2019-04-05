@@ -131,7 +131,6 @@ class EmailHandler extends React.Component {
                 }}
               />
             )}
-            <TermsAndPrivacySection />
           </dialog>
         )}
       </NestedPopover>
@@ -242,12 +241,12 @@ SignInCodeSection.propTypes = {
 };
 
 const TermsAndPrivacySection = () => (
-  <section className="pop-over-actions pop-over-info last-section">
-    <aside>
-      By signing into Glitch, you agree to our <a href="https://glitch.com/legal/#tos">Terms of Services</a> and{' '}
-      <a href="https://glitch.com/legal/#privacy">Privacy Statement</a>.
-    </aside>
-  </section>
+  <aside className="pop-over-info last-section">
+    By signing into Glitch, you agree to our {" "}
+    <Link to="/legal/#tos">Terms of Services</Link>
+    {" "} and {" "} 
+    <Link to="/legal/#privacy">Privacy Statement</Link>
+  </aside>
 );
 
 const SignInPopWithoutRouter = (props) => {
@@ -290,6 +289,7 @@ const SignInPopWithoutRouter = (props) => {
                   showCodeLogin(api);
                 }}
               />
+              <TermsAndPrivacySection />
             </div>
           )}
         </NestedPopover>
