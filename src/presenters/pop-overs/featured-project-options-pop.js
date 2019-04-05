@@ -17,7 +17,7 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject }) {
     <PopoverContainer>
       {({ togglePopover, visible }) => (
         <div>
-          <button className="project-options button-borderless" onClick={togglePopover}>
+          <button className="project-options button-borderless featured-project-options-pop" onClick={togglePopover}>
             <div className="down-arrow" />
           </button>
           {visible && (

@@ -25,9 +25,14 @@ import SearchResults from 'Components/search/search-results';
 import StarterKitResult from 'Components/search/starter-kit-result';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
+import Embed from 'Components/project/embed';
+import ProjectEmbed from 'Components/project/project-embed';
+import FeaturedProject from 'Components/project/featured-project';
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
+window.EDITOR_URL = 'https://glitch.com/edit/';
+window.APP_URL = 'https://glitch.com';
 
 const helloAlert = () => {
   alert('hello');
@@ -398,3 +403,79 @@ storiesOf('StarterKit', module).add('react', () => (
     }}
   />
 ));
+
+storiesOf('Embed', module).add('regular', () => <Embed domain="community-staging" />);
+
+const TopLeft = <h2>This project is bananas</h2>;
+const TopRight = <button>I am on top</button>;
+const BottomRight = (
+  <>
+    <button>one</button>
+    <button>two</button>
+  </>
+);
+const BottomLeft = <button>Everything you own in a box to the left</button>;
+const addProjectToCollection = () => {};
+
+storiesOf('ProjectEmbed', module)
+  .add(
+    'does not own project, not logged in',
+    provideContext({ currentUser: {} }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: null }}
+        addProjectToCollection={addProjectToCollection}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
+  .add(
+    'does not own project, is logged in',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
+  .add('owns project, is logged in', () => (
+    <ProjectEmbed
+      project={{ id: '123', domain: 'community-staging' }}
+      isAuthorized={true}
+      currentUser={{ login: '@sarahzinger' }}
+      addProjectToCollection={addProjectToCollection}
+      trackingOrigin="storybook"
+    />
+  ));
+
+const unfeatureProject = () => {};
+
+storiesOf('FeaturedProject', module)
+  .add(
+    'owns featured project',
+    provideContext({ currentUser: {} }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={true}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+        unfeatureProject={unfeatureProject}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
+  .add(
+    'does not own featured project',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+        trackingOrigin="storybook"
+      />
+    )),
+  );
