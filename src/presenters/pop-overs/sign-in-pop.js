@@ -99,7 +99,7 @@ class EmailHandler extends React.Component {
 
   validate(email) {
     const isValidEmail = parseOneAddress(email) !== null;
-    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
+    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter a valid email address' });
   }
 
   render() {
