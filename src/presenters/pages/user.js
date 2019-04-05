@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { orderBy, partition } from 'lodash';
+
 import Heading from 'Components/text/heading';
+import FeaturedProject from 'Components/project/featured-project';
+
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
@@ -14,7 +17,6 @@ import UserEditor from '../user-editor';
 import { Thanks } from '../includes/thanks';
 
 import DeletedProjects from '../deleted-projects';
-import EntityPageFeaturedProject from '../entity-page-featured-project';
 import EntityPageProjects from '../entity-page-projects';
 import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
@@ -128,12 +130,13 @@ const UserPage = ({
       </section>
 
       {featuredProject && (
-        <EntityPageFeaturedProject
+        <FeaturedProject
           featuredProject={featuredProject}
           isAuthorized={isAuthorized}
           unfeatureProject={unfeatureProject}
           addProjectToCollection={addProjectToCollection}
           currentUser={maybeCurrentUser}
+          trackingOrigin="user page"
         />
       )}
 
