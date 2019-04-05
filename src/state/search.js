@@ -5,6 +5,7 @@ import { groupBy, sample } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
+import starterKits from '../curated/starter-kits';
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
@@ -57,40 +58,6 @@ function formatCollection(hit) {
     user: hit.user > 0 ? { id: hit.user, login: '' } : null,
   };
 }
-
-// starter kits
-const starterKits = [
-  {
-    id: 1,
-    type: 'starter-kit',
-    keywords: ['react'],
-    imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
-    name: 'Build a Web App with React',
-    url: 'https://glitch.com/culture/react-starter-kit/',
-    description: 'A free, 5-part video course with interactive code examples that will help you learn React.',
-    coverColor: '#f0fcff',
-  },
-  {
-    id: 2,
-    type: 'starter-kit',
-    keywords: ['website'],
-    imageURL: 'https://glitch.com/culture/content/images/2018/10/website-starter-kit-1.jpg',
-    name: 'How to Make a Website',
-    url: 'https://glitch.com/culture/website-starter-kit/',
-    description: 'A free, 4-part video course with interactive code examples to learn how to make a website using HTML, JS, CSS, and Node.js.',
-    coverColor: '#efe',
-  },
-  {
-    id: 3,
-    type: 'starter-kit',
-    keywords: ['vr', 'webvr'],
-    imageURL: 'https://glitch.com/culture/content/images/2019/02/WebVR-Starter-Kit.-Part-1_-Intro-to-WebVR-1.png',
-    name: 'An Intro to WebVR',
-    url: 'https://glitch.com/culture/an-intro-to-webvr/',
-    description: 'A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.',
-    coverColor: '#fee',
-  },
-];
 
 const normalize = (str) => (str || '').trim().toLowerCase();
 
