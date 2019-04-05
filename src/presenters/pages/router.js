@@ -13,11 +13,11 @@ import JoinTeamPage from './join-team';
 import QuestionsPage from './questions';
 import ProjectPage from './project';
 import { TeamPage, UserPage, TeamOrUserPage } from './team-or-user';
-import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
 import OauthSignIn from './sign-in';
+import SearchPage from './search';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */
@@ -122,7 +122,14 @@ const Router = () => (
         <Route key={name} path={`/${name}`} exact render={({ location }) => <TeamPage key={location.key} id={rootTeams[name]} name={name} />} />
       ))}
 
-      <Route path="/search" exact render={({ location }) => <SearchPage key={location.key} query={parse(location.search, 'q')} />} />
+      <Route
+        path="/search"
+        exact
+        render={({ location }) => {
+          const query = parse(location.search, 'q');
+          return <SearchPage key={query} query={query} activeFilter={parse(location.search, 'activeFilter')} />;
+        }}
+      />
 
       {categories.map((category) => (
         <Route

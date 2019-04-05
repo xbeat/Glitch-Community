@@ -3,8 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Loader from 'Components/loaders/loader';
 import { TrackClick } from '../analytics';
-import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 import { getAvatarUrl as getProjectAvatarUrl } from '../../models/project';

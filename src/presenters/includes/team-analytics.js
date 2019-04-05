@@ -5,7 +5,7 @@ import _ from 'lodash';
 import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
 import Text from 'Components/text/text';
-import { Loader } from './loader';
+import Loader from 'Components/loaders/loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
 
