@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { sampleSize, difference } from 'lodash';
 
+import { ProjectsUL } from 'Components/containers/projects-list';
+
 import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
 import { getDisplayName, getProfileStyle as getUserProfileStyle } from '../../models/user';
 
 import { DataLoader } from './loader';
 import { CoverContainer } from './profile';
 import { TeamLink, UserLink } from './link';
-import { ProjectsUL } from '../projects-list';
 import { useAPI } from '../../state/api';
 
 const PROJECT_COUNT = 3;

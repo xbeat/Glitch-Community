@@ -12,7 +12,22 @@ const TYPES = ['email', 'password', 'search', 'text'];
 
 const InputPart = ({ children }) => <span className={styles.inputPart}>{children}</span>;
 
-const TextInput = ({ autoFocus, className, disabled, error, maxLength, name, onChange, opaque, placeholder, postfix, prefix, type, value }) => {
+const TextInput = ({
+  autoFocus,
+  className,
+  disabled,
+  error,
+  labelText,
+  maxLength,
+  name,
+  onChange,
+  opaque,
+  placeholder,
+  postfix,
+  prefix,
+  type,
+  value,
+}) => {
   const uniqueId = useUniqueId();
   const outerClassName = classNames(className, styles.outer);
   const borderClassName = classNames(styles.inputBorder, {
@@ -24,6 +39,7 @@ const TextInput = ({ autoFocus, className, disabled, error, maxLength, name, onC
   });
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
+      <span className="visually-hidden">{labelText}</span>
       <span className={borderClassName}>
         {!!prefix && <InputPart>{prefix}</InputPart>}
         <input
@@ -55,6 +71,7 @@ TextInput.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.node,
+  labelText: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
