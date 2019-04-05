@@ -7,7 +7,7 @@ import PopoverContainer from '../../presenters/pop-overs/popover-container';
 import AutocompleteSearch from './autocomplete';
 import styles from './form.styl';
 
-function SearchForm({ defaultValue }) {
+function Form({ defaultValue }) {
   const [value, onChange] = useState(defaultValue);
   const [submitted, setSubmitted] = useState(false);
   const algoliaFlag = useDevToggle('Algolia Search');
@@ -40,11 +40,11 @@ function SearchForm({ defaultValue }) {
   );
 }
 
-SearchForm.propTypes = {
+Form.propTypes = {
   defaultValue: PropTypes.string,
 };
-SearchForm.defaultProps = {
+Form.defaultProps = {
   defaultValue: '',
 };
 
-export default SearchForm;
+export default Form;
