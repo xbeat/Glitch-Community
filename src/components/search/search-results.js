@@ -145,7 +145,7 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
       {showTopResults && (
         <article  className={classnames(styles.groupContainer, styles.topResults)}>
           <Heading tagName="h2">Top Results</Heading>
-          <ul className={styles.starterKitResultsContainer}>
+          <ul className={classnames(styles.resultsContainer, styles.starterKitResultsContainer)}>
             {searchResults.starterKit.map(result => (
               <li key={result.id} className={styles.resultItem}>
                 <StarterKitItem result={result} />

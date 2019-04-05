@@ -118,11 +118,7 @@ const findTop = {
 };
 
 const getTopResults = (resultsByType, query) =>
-  [
-    findTop.project(resultsByType.project, query),
-    findTop.team(resultsByType.team, query),
-    findTop.user(resultsByType.user, query),
-  ].filter(Boolean);
+  [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
 function formatHit(hit) {
   switch (hit.type) {
@@ -166,10 +162,7 @@ export function useAlgoliaSearch(query) {
   };
 }
 
-const formatLegacyResult = (type) => (hit) => ({
-  ...hit,
-  type,
-});
+const formatLegacyResult = (type) => (hit) => ({ ...hit, type });
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);

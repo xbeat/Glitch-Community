@@ -1,10 +1,23 @@
 import React from 'react';
+import Image from 'Components/images/Image';
 import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { useAlgoliaSearch } from '../../state/search';
 import styles from './autocomplete.styl';
+
+const StarterKitResult = ({ value: starterKit }) => (
+  <a href={starterKit.url} className={styles.resultContainer}>
+    <div className={styles.avatarContainer}>
+      <Image src={starterKit.imageURL} />
+    </div>
+    <div className={styles.infoContainer}>
+      <div className={styles.infoPrimary}>{team.name}</div>
+      <div className={styles.infoSecondary}>@{team.url}</div>
+    </div>
+  </a>
+)
 
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
@@ -15,7 +28,6 @@ const TeamResult = ({ value: team }) => (
       <div className={styles.infoPrimary}>{team.name}</div>
       <div className={styles.infoSecondary}>@{team.url}</div>
     </div>
-    {/* <div className={styles.memberContainer}>MAYBE: user avatars</div> */}
   </TeamLink>
 );
 
@@ -52,7 +64,6 @@ const CollectionResult = ({ value: collection }) => (
       <div className={styles.infoPrimary}>{collection.name}</div>
       <div className={styles.infoSecondary}>@{collection.fullUrl}</div>
     </div>
-    {/* <div className={styles.memberContainer}>MAYBE: project avatars</div> */}
   </CollectionLink>
 );
 
