@@ -139,26 +139,32 @@ const emptyResults = { team: [], user: [], project: [], collection: [], starterK
 
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
+  const [status, setStatus] = useState('init');
   useEffect(() => {
     if (!query) {
       setHits([]);
       return;
     }
+    setStatus('loading');
     searchIndex
       .search({
         query,
         hitsPerPage: 500,
       })
-      .then((res) => setHits(res.hits.map(formatHit)));
+      .then((res) => {
+        setHits(res.hits.map(formatHit));
+        setStatus('ready');
+      });
   }, [query]);
 
   const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
 
   return {
-    status: 'ready',
+    status,
     totalHits: hits.length,
     topResults: getTopResults(resultsByType, query),
     ...resultsByType,
+    starterKit: findStarterKits(query),
   };
 }
 

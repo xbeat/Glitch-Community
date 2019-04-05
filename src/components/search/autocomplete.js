@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'Components/images/Image';
+import Image from 'Components/images/image';
 import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
@@ -10,14 +10,14 @@ import styles from './autocomplete.styl';
 const StarterKitResult = ({ value: starterKit }) => (
   <a href={starterKit.url} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
-      <Image src={starterKit.imageURL} />
+      <Image src={starterKit.imageURL} alt="" />
     </div>
     <div className={styles.infoContainer}>
-      <div className={styles.infoPrimary}>{team.name}</div>
-      <div className={styles.infoSecondary}>@{team.url}</div>
+      <div className={styles.infoPrimary}>{starterKit.name}</div>
+      <div className={styles.infoSecondary}>{starterKit.description}</div>
     </div>
   </a>
-)
+);
 
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
@@ -74,6 +74,7 @@ const SeeAllResults = ({ query }) => (
 );
 
 const resultGroups = [
+  { id: 'starterKit', label: 'Top Results', Component: StarterKitResult },
   { id: 'team', label: 'Teams', Component: TeamResult },
   { id: 'user', label: 'Users', Component: UserResult },
   { id: 'project', label: 'Projects', Component: ProjectResult },
