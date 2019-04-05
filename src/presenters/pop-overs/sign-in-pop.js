@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { parseOneAddress } from 'email-addresses';
-
+import debounce from 'lodash/debounce';
 import TextInput from 'Components/inputs/text-input';
 import { Link } from '../includes/link';
 import useLocalStorage from '../../state/local-storage';
@@ -53,13 +53,19 @@ class EmailHandler extends React.Component {
       error: false,
       errorMsg: '',
     };
+    this.debouncedValidate = debounce(this.onChange.bind(this), 5000);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(email) {
+  validate(email) {
     const isValidEmail = parseOneAddress(email) !== null;
-    this.setState({ email, errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
+    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
+  }
+
+  onChange(email) {
+    this.setState({ email });
+    this.debouncedValidate(email);
   }
 
   async onSubmit(e) {
