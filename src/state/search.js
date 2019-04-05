@@ -58,27 +58,27 @@ function formatCollection(hit) {
   };
 }
 
-
-
-const findTopByPriority = (...prioritizedKeys) => (items, query) => {
+// top results
+// byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `undefined`
+const byPriority = (...prioritizedKeys) => (items, query) => {
   const normalizedQuery = query.trim().toLowerCase()
   return prioritizedKeys.find(key => items.find(item => item[key].trim().toLowerCase() === normalizedQuery))
 }
 
-const findTop
+const findTop = {
+  project: byPriority('domain', 'name'),
+  team: byPriority('url', 'name'),
+  user: byPriority('login', 'name'),
+}
 
-
-const isExactMatch = (hit, query) =>
-  [hit.name, hit.url, hit.login, hit.domain]
-    .filter(Boolean)
-    .map((param) => param.trim().toLowerCase())
-    .includes(query.trim().toLowerCase());
+// TODO: starter kits go at the front of this list
+const getTopResults = (resultsByType, query) => [
+  findTop.project(resultsByType.project, query), 
+  findTop.team(resultsByType.team, query), 
+  findTop.user(resultsByType.user, query)
+].filter(Boolean)
 
 function formatHit(hit, query) {
-  if (isExactMatch(hit, query)) {
-    hit = { ...hit, isExactMatch: true };
-  }
-
   switch (hit.type) {
     case 'user':
       return formatUser(hit);
@@ -92,8 +92,6 @@ function formatHit(hit, query) {
       return hit;
   }
 }
-
-const filterExactMatches = (hit) => hit.type !== 'collection' && hit.isExactMatch
 
 const emptyResults = { team: [], user: [], project: [], collection: [] };
 
@@ -111,36 +109,36 @@ export function useAlgoliaSearch(query) {
       })
       .then((res) => setHits(res.hits.map((hit) => formatHit(hit, query))));
   }, [query]);
+  
+  const resultsByType = groupBy(hits, (hit) => hit.type)
 
   return {
     ...emptyResults,
     status: 'ready',
     totalHits: hits.length,
-    // TODO: starter kits should always be in this array
-    topResults: hits.filter(filterExactMatches),
-    ...groupBy(hits, (hit) => hit.type),
+    topResults: getTopResults(resultsByType, query),
+    ...resultsByType,
   };
 }
 
-const formatLegacyResult = (type, query) => (hit) => ({
+const formatLegacyResult = (type) => (hit) => ({
   ...hit,
   type,
-  isExactMatch: isExactMatch(hit, query),
 });
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data.map(formatLegacyResult('team', query));
+  return data.map(formatLegacyResult('team'));
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data.map(formatLegacyResult('user', query));
+  return data.map(formatLegacyResult('user'));
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data.map(formatLegacyResult('project', query));
+  return data.map(formatLegacyResult('project'));
 }
 
 // This API is slow and is missing important data (so its unfit for production)
@@ -154,7 +152,6 @@ async function searchCollections(api, query) {
     type: 'collection',
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
     user: coll.userId > 0 ? { id: coll.userId } : null,
-    isExactMatch: isExactMatch(coll, query),
   }));
 }
 
@@ -185,7 +182,7 @@ export function useLegacySearch(query) {
     ...emptyResults,
     status,
     totalHits: allHits.length,
-    topResults: allHits.filter(filterExactMatches),
+    topResults: getTopResults(results, query),
     ...results,
   };
 }
