@@ -1,6 +1,7 @@
-import React from 'react'
-
-
+import React from 'react';
+import Heading from 'Components/text/heading'
+import Text from 'Components/text/text';
+import styles from './starter-kit-result.styl'
 
 const MaskImage = (props) => (
   <div className="zine-items">
@@ -10,13 +11,17 @@ const MaskImage = (props) => (
       </div>
     </div>
   </div>
-)
+);
 
 const StarterKitResult = ({ result }) => (
-  <a href={result.url}>
-    <MaskImage src={result.imageURL}/>
-    <div>{result.name}</div>
+  <a href={result.url} className={styles.container}>
+    <MaskImage src={result.imageURL} />
+    <div className={styles.contentWrap}>
+      <Heading tagName="h3">{result.name}</Heading>
+    <Text>{result.description}</Text>
+    </div>
+    
   </a>
-)
+);
 
-export Start
+export default StarterKitResult;

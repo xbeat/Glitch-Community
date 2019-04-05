@@ -10,6 +10,7 @@ import UserItem from 'Components/user/user-item';
 import TeamItem from 'Components/team/team-item';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import StarterKitItem from 'Components/search/starter-kit-result';
 import NotFound from 'Components/errors/not-found';
 import Loader from 'Components/loaders/loader';
 
@@ -56,23 +57,6 @@ function ProjectResult({ result }) {
   );
 }
 
-const MaskImage = (props) => (
-  <div className="zine-items">
-    <div className="zine-item">
-      <div className="mask-container">
-        <img {...props} className="mask mask-4" />
-      </div>
-    </div>
-  </div>
-)
-
-const StarterKitResult = ({ result }) => (
-  <a href={result.url}>
-    <MaskImage src={result.imageURL}/>
-    <div>{result.name}</div>
-  </a>
-)
-
 const groups = [
   { id: 'team', label: 'Teams' },
   { id: 'user', label: 'Users' },
@@ -85,7 +69,7 @@ const resultComponents = {
   user: ({ result }) => <UserItem user={result} />,
   project: ProjectResult,
   collection: ({ result }) => <SmallCollectionItem collection={result} />,
-  'starter-kit': StarterKitResult,
+  'starter-kit': StarterKitItem,
 };
 
 const ResultComponent = ({ result }) => {
