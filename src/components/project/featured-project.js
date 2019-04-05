@@ -10,12 +10,10 @@ import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
   const TopLeft = () => (
-    <div className={styles.header}>
-      <Heading tagName="h2">
-        Featured Project
-        <Emoji name="clapper" />
-      </Heading>
-    </div>
+    <Heading tagName="h2">
+      Featured Project
+      <Emoji name="clapper" />
+    </Heading>
   );
 
   const TopRight = () => {
