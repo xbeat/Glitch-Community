@@ -367,13 +367,15 @@ storiesOf('SearchResults', module).add(
   ),
 );
 
-storiesOf('MaskImage', module).add('react starter kit', () => (
+storiesOf('MaskImage', module).add('random mask', () => (
   <MaskImage src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />
-));
+)).add('select mask', withState('mask1', ({state, setState}) => (
+
+)))
 
 storiesOf('StarterKit', module).add('react', () => (
   <StarterKitResult
-    starterKit={{
+    result={{
       id: 1,
       type: 'starter-kit',
       keywords: ['react'],
