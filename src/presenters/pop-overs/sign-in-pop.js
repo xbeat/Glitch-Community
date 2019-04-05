@@ -53,14 +53,9 @@ class EmailHandler extends React.Component {
       error: false,
       errorMsg: '',
     };
-    this.debouncedValidate = debounce(this.onChange.bind(this), 5000);
+    this.debouncedValidate = debounce(this.validate.bind(this), 500);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  validate(email) {
-    const isValidEmail = parseOneAddress(email) !== null;
-    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
   }
 
   onChange(email) {
@@ -100,6 +95,11 @@ class EmailHandler extends React.Component {
         });
       }
     }
+  }
+
+  validate(email) {
+    const isValidEmail = parseOneAddress(email) !== null;
+    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter an email address.' });
   }
 
   render() {
