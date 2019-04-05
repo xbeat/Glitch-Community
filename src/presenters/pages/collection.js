@@ -84,7 +84,8 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-
+  const featureProject = () => console.log("should figure out this function");
+  
   return (
     <>
       <Helmet title={collection.name} />
@@ -146,6 +147,7 @@ const CollectionPageContents = ({
                       addProjectToCollection,
                       updateOrAddNote,
                       displayNewNote,
+                      featureProject,
                     }}
                   />
                 )}
