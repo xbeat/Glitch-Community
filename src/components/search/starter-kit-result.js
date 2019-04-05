@@ -12,7 +12,7 @@ const StarterKitResult = ({ result }) => (
     <div className={styles.imageWrap}>
       <MaskImage src={result.imageURL} />
     </div>
-    <div className={styles.contentWrap}>
+    <div className={styles.contentWrap} style={{ backgroundColor: result.coverColor }}>
       <Heading tagName="h3">{result.name}</Heading>
     <Text>{result.description}</Text>
     </div>

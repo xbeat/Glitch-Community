@@ -68,6 +68,7 @@ const starterKits = [
     name: 'Build a Web App with React',
     url: 'https://glitch.com/culture/react-starter-kit/',
     description: 'A free, 5-part video course with interactive code examples that will help you learn React.',
+    coverColor: '#f0fcff',
   },
   {
     id: 2,
@@ -77,6 +78,7 @@ const starterKits = [
     name: 'How to Make a Website',
     url: 'https://glitch.com/culture/website-starter-kit/',
     description: 'A free, 4-part video course with interactive code examples to learn how to make a website using HTML, JS, CSS, and Node.js.',
+    coverColor: '#efe',
   },
   {
     id: 3,
@@ -86,6 +88,7 @@ const starterKits = [
     name: 'An Intro to WebVR',
     url: 'https://glitch.com/culture/an-intro-to-webvr/',
     description: 'A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.',
+    coverColor: '#fee',
   },
 ];
 
@@ -116,7 +119,6 @@ const findTop = {
 
 const getTopResults = (resultsByType, query) =>
   [
-    findStarterKit(query),
     findTop.project(resultsByType.project, query),
     findTop.team(resultsByType.team, query),
     findTop.user(resultsByType.user, query),
@@ -227,6 +229,7 @@ export function useLegacySearch(query) {
     status,
     totalHits: allHits.length,
     topResults: getTopResults(results, query),
+    starterKit: findStarterKit(query),
     ...results,
   };
 }
