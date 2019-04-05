@@ -59,26 +59,30 @@ function formatCollection(hit) {
 }
 
 // top results
-// byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `undefined`
+
+const normalize = (str) => (str || '').trim().toLowerCase();
+
+// byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
 const byPriority = (...prioritizedKeys) => (items, query) => {
-  const normalizedQuery = query.trim().toLowerCase()
-  return prioritizedKeys.find(key => items.find(item => item[key].trim().toLowerCase() === normalizedQuery))
-}
+  const normalizedQuery = normalize(query);
+  for (const key of prioritizedKeys) {
+    const match = items.find((item) => normalize(item[key]) === normalizedQuery);
+    if (match) return match;
+  }
+  return null;
+};
 
 const findTop = {
   project: byPriority('domain', 'name'),
   team: byPriority('url', 'name'),
   user: byPriority('login', 'name'),
-}
+};
 
 // TODO: starter kits go at the front of this list
-const getTopResults = (resultsByType, query) => [
-  findTop.project(resultsByType.project, query), 
-  findTop.team(resultsByType.team, query), 
-  findTop.user(resultsByType.user, query)
-].filter(Boolean)
+const getTopResults = (resultsByType, query) =>
+  [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
-function formatHit(hit, query) {
+function formatHit(hit) {
   switch (hit.type) {
     case 'user':
       return formatUser(hit);
@@ -107,13 +111,12 @@ export function useAlgoliaSearch(query) {
         query,
         hitsPerPage: 500,
       })
-      .then((res) => setHits(res.hits.map((hit) => formatHit(hit, query))));
+      .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
-  
-  const resultsByType = groupBy(hits, (hit) => hit.type)
+
+  const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
 
   return {
-    ...emptyResults,
     status: 'ready',
     totalHits: hits.length,
     topResults: getTopResults(resultsByType, query),
@@ -176,6 +179,7 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
 
+//   TODO: do I need total hits?
   const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
 
   return {

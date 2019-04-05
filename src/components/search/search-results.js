@@ -85,7 +85,7 @@ const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-const isSingleTopResult = (results, activeFilter) => results.length === 1 && results[0].isExactMatch && activeFilter === 'all';
+const isSingleTopResult = (results, topResults, activeFilter) => results.length === 1 && topResults.includes(results[0]) && activeFilter === 'all';
 
 function getResultsForGroup({ searchResults, group, activeFilter }) {
   const resultsForGroup = searchResults[group.id];
@@ -93,7 +93,7 @@ function getResultsForGroup({ searchResults, group, activeFilter }) {
 
   if (resultsForGroup.length === 0) return noResults;
   if (!groupIsInFilter(group.id, activeFilter)) return noResults;
-  if (isSingleTopResult(resultsForGroup, activeFilter)) return noResults;
+  if (isSingleTopResult(resultsForGroup, searchResults.topResults, activeFilter)) return noResults;
 
   const maxResultCount = activeFilter === group.id ? Infinity : MAX_UNFILTERED_RESULTS;
   const visibleResults = resultsForGroup.slice(0, maxResultCount);
