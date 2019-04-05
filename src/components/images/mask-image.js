@@ -15,11 +15,10 @@ const MaskImage = ({ maskClass: controlledMaskClass, ...props }) => {
 
 MaskImage.propTypes = {
   maskClass: PropTypes.oneOf(maskClasses),
-}
+};
 
 MaskImage.defaultProps = {
-
-}
-
+  maskClass: null,
+};
 
 export default MaskImage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'Components/images/image';
+import MaskImage from 'Components/images/mask-image';
 import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
@@ -10,7 +10,7 @@ import styles from './autocomplete.styl';
 const StarterKitResult = ({ value: starterKit }) => (
   <a href={starterKit.url} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
-      <Image src={starterKit.imageURL} alt="" />
+      <MaskImage src={starterKit.imageURL} />
     </div>
     <div className={styles.infoContainer}>
       <div className={styles.infoPrimary}>{starterKit.name}</div>

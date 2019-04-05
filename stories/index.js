@@ -7,6 +7,7 @@ import TooltipContainer from 'Components/tooltips/tooltip-container';
 import TextInput from 'Components/inputs/text-input';
 import TextArea from 'Components/inputs/text-area';
 import Image from 'Components/images/image';
+import MaskImage from 'Components/images/mask-image';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
@@ -21,6 +22,7 @@ import Thanks from 'Components/blocks/thanks';
 import Loader from 'Components/loaders/loader';
 import NotFound from 'Components/errors/not-found';
 import SearchResults from 'Components/search/search-results';
+import StarterKitResult from 'Components/search/starter-kit-result';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 
@@ -364,3 +366,22 @@ storiesOf('SearchResults', module).add(
     )),
   ),
 );
+
+storiesOf('MaskImage', module).add('react starter kit', () => (
+  <MaskImage src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />
+));
+
+storiesOf('StarterKit', module).add('react', () => (
+  <StarterKitResult
+    starterKit={{
+      id: 1,
+      type: 'starter-kit',
+      keywords: ['react'],
+      imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
+      name: 'Build a Web App with React',
+      url: 'https://glitch.com/culture/react-starter-kit/',
+      description: 'A free, 5-part video course with interactive code examples that will help you learn React.',
+      coverColor: '#f0fcff',
+    }}
+  />
+));
