@@ -333,27 +333,34 @@ storiesOf('NotFound', module).add('not found', () => <NotFound name="any results
 
 storiesOf('SearchResults', module).add(
   'results',
-  provideContext({ currentUser: {}, api: mockAPI }, () => (
-    <SearchResults
-      query="modernserf"
-      searchResults={{
-        status: 'ready',
-        totalHits: 2,
-        topResults: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
-        team: [],
-        user: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
-        project: [{
-          type: 'project',
-          id: 'foo',
-          domain: 'modernserf-zebu',
-          description: 'a modernserf project that does zebu things',
-          private: false,
-          showAsGlitchTeam: false,
-          users: [users.modernserf],
-          teams: [],
-        }],
-        collection: [],
-      }}
-    />
-  )),
+  provideContext(
+    { currentUser: {}, api: mockAPI },
+    withState('all', ({ state, setState }) => (
+      <SearchResults
+        query="modernserf"
+        activeFilter={state}
+        setActiveFilter={setState}
+        searchResults={{
+          status: 'ready',
+          totalHits: 2,
+          topResults: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          team: [],
+          user: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          project: [
+            {
+              type: 'project',
+              id: 'foo',
+              domain: 'modernserf-zebu',
+              description: 'a modernserf project that does zebu things',
+              private: false,
+              showAsGlitchTeam: false,
+              users: [users.modernserf],
+              teams: [],
+            },
+          ],
+          collection: [],
+        }}
+      />
+    )),
+  ),
 );

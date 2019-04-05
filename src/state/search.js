@@ -58,17 +58,68 @@ function formatCollection(hit) {
   };
 }
 
-const isExactMatch = (hit, query) =>
-  [hit.name, hit.url, hit.login, hit.domain]
-    .filter(Boolean)
-    .map((param) => param.trim().toLowerCase())
-    .includes(query.trim().toLowerCase());
+// starter kits
+const starterKits = [
+  {
+    id: 1,
+    type: 'starter-kit',
+    keywords: ['react'],
+    imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
+    name: 'Build a Web App with React',
+    url: 'https://glitch.com/culture/react-starter-kit/',
+  },
+  {
+    id: 2,
+    type: 'starter-kit',
+    keywords: ['website'],
+    imageURL: 'https://glitch.com/culture/content/images/2018/10/website-starter-kit-1.jpg',
+    name: 'How to Make a Website',
+    url: 'https://glitch.com/culture/website-starter-kit/',
+  },
+  {
+    id: 3,
+    type: 'starter-kit',
+    keywords: ['vr', 'webvr'],
+    imageURL: 'https://glitch.com/culture/content/images/2019/02/WebVR-Starter-Kit.-Part-1_-Intro-to-WebVR-1.png',
+    name: 'An Intro to WebVR',
+    url: 'https://glitch.com/culture/an-intro-to-webvr/',
+  },
+];
 
-function formatHit(hit, query) {
-  if (isExactMatch(hit, query)) {
-    hit = { ...hit, isExactMatch: true };
+const normalize = (str) => (str || '').trim().toLowerCase();
+
+function findStarterKit(query) {
+  const normalizedQuery = normalize(query);
+  return starterKits.find((kit) => kit.keywords.includes(normalizedQuery));
+}
+
+// top results
+
+// byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
+const byPriority = (...prioritizedKeys) => (items, query) => {
+  const normalizedQuery = normalize(query);
+  for (const key of prioritizedKeys) {
+    const match = items.find((item) => normalize(item[key]) === normalizedQuery);
+    if (match) return match;
   }
+  return null;
+};
 
+const findTop = {
+  project: byPriority('domain', 'name'),
+  team: byPriority('url', 'name'),
+  user: byPriority('login', 'name'),
+};
+
+const getTopResults = (resultsByType, query) =>
+  [
+    findStarterKit(query),
+    findTop.project(resultsByType.project, query),
+    findTop.team(resultsByType.team, query),
+    findTop.user(resultsByType.user, query),
+  ].filter(Boolean);
+
+function formatHit(hit) {
   switch (hit.type) {
     case 'user':
       return formatUser(hit);
@@ -97,68 +148,37 @@ export function useAlgoliaSearch(query) {
         query,
         hitsPerPage: 500,
       })
-      .then((res) => setHits(res.hits.map((hit) => formatHit(hit, query))));
+      .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
 
+  const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
+
   return {
-    ...emptyResults,
     status: 'ready',
     totalHits: hits.length,
-    // TODO: starter kits should always be in this array
-    topResults: hits.filter((hit) => hit.isExactMatch),
-    ...groupBy(hits, (hit) => hit.type),
+    topResults: getTopResults(resultsByType, query),
+    ...resultsByType,
   };
 }
 
-const starterKits = [
-  {
-    id: 1,
-    keywords: ['react'],
-    imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
-    name: 'Build a Web App with React',
-    url: 'https://glitch.com/culture/react-starter-kit/',
-  },
-  {
-    id: 2,
-    keywords: ['website'],
-    imageURL: 'https://glitch.com/culture/content/images/2018/10/website-starter-kit-1.jpg',
-    name: 'How to Make a Website',
-    url: 'https://glitch.com/culture/website-starter-kit/',
-  },
-  {
-    id: 3,
-    keywords: ['vr', 'webvr'],
-    imageURL: 'https://glitch.com/culture/content/images/2019/02/WebVR-Starter-Kit.-Part-1_-Intro-to-WebVR-1.png',
-    name: 'An Intro to WebVR',
-    url: 'https://glitch.com/culture/an-intro-to-webvr/',
-  },
-];
-
-function searchStarterKits(query) {
-  const normalizedQuery = query.trim().toLowerCase();
-
-  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery)).map((kit) => ({ ...kit, type: 'starter-kit', isExactMatch: true }));
-}
-
-const formatLegacyResult = (type, query) => (hit) => ({
+const formatLegacyResult = (type) => (hit) => ({
   ...hit,
   type,
-  isExactMatch: isExactMatch(hit, query),
 });
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data.map(formatLegacyResult('team', query));
+  return data.map(formatLegacyResult('team'));
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data.map(formatLegacyResult('user', query));
+  return data.map(formatLegacyResult('user'));
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data.map(formatLegacyResult('project', query));
+  return data.map(formatLegacyResult('project'));
 }
 
 // This API is slow and is missing important data (so its unfit for production)
@@ -172,7 +192,6 @@ async function searchCollections(api, query) {
     type: 'collection',
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
     user: coll.userId > 0 ? { id: coll.userId } : null,
-    isExactMatch: isExactMatch(coll, query),
   }));
 }
 
@@ -197,15 +216,14 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
 
-  const matchingStarterKits = searchStarterKits(query);
-
-  const allHits = [...matchingStarterKits, ...results.team, ...results.user, ...results.project, ...results.collection];
+  //   TODO: do I need total hits?
+  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
 
   return {
     ...emptyResults,
     status,
     totalHits: allHits.length,
-    topResults: allHits.filter((hit) => hit.isExactMatch),
+    topResults: getTopResults(results, query),
     ...results,
   };
 }
