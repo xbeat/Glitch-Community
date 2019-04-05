@@ -23,7 +23,6 @@ const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   const featuredProjects = sampleSize(collection.projects, 3);
   const featuredProjectsHaveAtLeastOneNote = featuredProjects.filter((p) => !!p.note).length > 0;
-
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -82,6 +81,7 @@ const loadCollection = async (api, { owner, name }) => {
     }
     captureException(error);
   }
+
   return null;
 };
 

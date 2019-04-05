@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
 import Markdown from 'Components/text/markdown';
+import Button from 'Components/buttons/button';
+import { UserAvatar, TeamAvatar } from 'Components/images/avatar';
 
 import { createAPIHook } from '../../state/api';
 import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
-import { UserAvatar, TeamAvatar } from '../../presenters/includes/avatar';
 
 import styles from './collection-item.styl';
 
@@ -17,7 +18,6 @@ const collectionColorStyles = (collection) => ({
   border: collection.coverColor,
 });
 
-const FakeButton = ({ children }) => <div className="button">{children}</div>;
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
@@ -64,10 +64,10 @@ const SmallCollectionItem = ({ collection }) => (
             <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
           </div>
           <div className={styles.collectionNameWrap}>
-            <FakeButton>
+            <Button decorative>
               {collection.private && <PrivateIcon />}
               <div className={styles.collectionName}>{collection.name}</div>
-            </FakeButton>
+            </Button>
           </div>
         </div>
         <div className={styles.description}>
@@ -87,8 +87,8 @@ SmallCollectionItem.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
-    user: PropTypes.object,
-    team: PropTypes.object,
+    userId: PropTypes.number,
+    teamId: PropTypes.number,
   }).isRequired,
 };
 

@@ -1,0 +1,71 @@
+.container
+  font-size: 14px
+  
+.header
+  margin-bottom: 0.5rem
+  position: relative
+  z-index: 1
+  
+.userListContainer
+  max-width: calc(100% - 30px)
+  &:after
+    content: ""
+    pointer-events: none
+    position: absolute
+    top: 0
+    right: 28px
+    width: 12rem
+    height: 100%
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))
+    z-index: 1
+  
+.projectOptionsContainer
+  position: absolute
+  top: 0
+  right: 0
+  :global .project-options-pop-btn
+    top: 0 !important
+  :global .project-options
+    display: block
+    position: relative
+    top: auto
+    right: auto
+    
+.linkBody
+  display: block
+  position: relative
+  color: inherit
+  background-color: #e5e5e5
+  border-color: #e5e5e5
+  border-radius: 0.5rem
+  padding: 1rem 1rem 0.5rem
+  min-height: 150px
+  text-decoration: none
+  &:hover
+    text-decoration: none
+  &:after
+    content: ""
+    top: -13px
+    left: 8.5px
+    border: solid transparent
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+    border-bottom-color: inherit
+    border-width: 7px
+  &.private
+    background-color: #fcf3b0
+    border-color: #fcf3b0
+
+.projectHeader
+  display: flex
+  align-items: flex-start
+
+.nameWrap
+  padding-left: 0.5rem
+  
+.avatar
+  width: 42px
+  height: 42px
+  border-radius: 5px

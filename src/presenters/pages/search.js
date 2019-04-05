@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import Badge from 'Components/badges/badge';
 import Heading from 'Components/text/heading';
-import SmallCollectionItem from 'Components/blocks/small-collection-item';
+import UserItem from 'Components/user/user-item';
+import TeamItem from 'Components/team/team-item';
+import ProjectItem from 'Components/project/project-item';
+import SmallCollectionItem from 'Components/collection/small-collection-item';
+
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
@@ -15,9 +20,6 @@ import Layout from '../layout';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
-import ProjectItem from '../project-item';
-import TeamItem from '../team-item';
-import UserItem from '../user-item';
 
 const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   const buttons = filters.map((filter) => ({
@@ -64,14 +66,25 @@ const groups = [
   { id: 'collection', label: 'Collections', ResultComponent: ({ result }) => <SmallCollectionItem collection={result} /> },
 ];
 
-const ShowMoreButton = ({ label, onClick }) => <button className="show-all-btn" onClick={onClick}>Show All {label}</button>;
+const ShowMoreButton = ({ label, onClick }) => (
+  <button className="show-all-btn" onClick={onClick}>
+    Show All {label}
+  </button>
+);
 
 const MAX_UNFILTERED_RESULTS = 20;
 
 const groupIsInFilter = (id, activeFilter) => activeFilter === 'all' || activeFilter === id;
 
-function SearchResults({ query, searchResults }) {
-  const [activeFilter, setActiveFilter] = useState('all');
+const SearchResults = withRouter(({ query, searchResults, activeFilter, history }) => {
+  const setActiveFilter = (filter) => {
+    history.push(`/search?q=${query}&activeFilter=${filter}`);
+  };
+
+  if (!searchResults[activeFilter] || searchResults[activeFilter].length <= 0) {
+    activeFilter = 'all';
+  }
+
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
 
@@ -124,35 +137,37 @@ function SearchResults({ query, searchResults }) {
       {noResults && <NotFound name="any results" />}
     </main>
   );
-}
+});
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
-const AlgoliaSearchWrapper = ({ query }) => {
+const AlgoliaSearchWrapper = ({ query, activeFilter }) => {
   const searchResults = useAlgoliaSearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+  return <SearchResults query={query} activeFilter={activeFilter} searchResults={searchResults} />;
 };
 
-const LegacySearchWrapper = ({ query }) => {
+const LegacySearchWrapper = ({ query, activeFilter }) => {
   const searchResults = useLegacySearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+  return <SearchResults query={query} activeFilter={activeFilter} searchResults={searchResults} />;
 };
 
-const SearchPage = ({ query }) => {
+const SearchPage = ({ query, activeFilter }) => {
   const algoliaFlag = useDevToggle('Algolia Search');
   const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} activeFilter={activeFilter} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );
 };
 SearchPage.propTypes = {
   query: PropTypes.string,
+  activeFilter: PropTypes.string,
 };
 SearchPage.defaultProps = {
   query: '',
+  activeFilter: 'all',
 };
 
 export default SearchPage;
