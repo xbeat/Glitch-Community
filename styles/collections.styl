@@ -121,6 +121,7 @@ collection-padding = 12px
     display: inline-block
 
   .collection-name-description
+    /** subtract collection avatar width and collection padding from the total width **/
     width: "calc(100% - %s - %s - 12px)" % (collection-avatar-size collection-padding)
     margin-left: 12px  
       
