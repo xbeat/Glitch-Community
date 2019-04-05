@@ -94,9 +94,9 @@ const starterKits = [
 
 const normalize = (str) => (str || '').trim().toLowerCase();
 
-function findStarterKit(query) {
+function findStarterKits(query) {
   const normalizedQuery = normalize(query);
-  return starterKits.find((kit) => kit.keywords.includes(normalizedQuery));
+  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery));
 }
 
 // top results
@@ -139,7 +139,7 @@ function formatHit(hit) {
   }
 }
 
-const emptyResults = { team: [], user: [], project: [], collection: [] };
+const emptyResults = { team: [], user: [], project: [], collection: [], starterKit: [] };
 
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
@@ -229,7 +229,7 @@ export function useLegacySearch(query) {
     status,
     totalHits: allHits.length,
     topResults: getTopResults(results, query),
-    starterKit: findStarterKit(query),
+    starterKit: findStarterKits(query),
     ...results,
   };
 }
