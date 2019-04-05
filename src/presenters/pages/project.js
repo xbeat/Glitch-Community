@@ -5,13 +5,13 @@ import Helmet from 'react-helmet';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
+import NotFound from 'Components/errors/not-found';
 import ProjectEmbed from 'Components/project/project-embed';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
-import NotFound from '../includes/not-found';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
 import EditableField from '../includes/editable-field';

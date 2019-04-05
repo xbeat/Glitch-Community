@@ -7,12 +7,12 @@ import Helmet from 'react-helmet';
 import Text from 'Components/text/text';
 import { ProjectsUL } from 'Components/containers/projects-list';
 import Image from 'Components/images/image';
+import NotFound from 'Components/errors/not-found';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
-import NotFound from '../includes/not-found';
 import { AuthDescription } from '../includes/description-field';
 import CollectionEditor from '../collection-editor';
 

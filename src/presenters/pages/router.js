@@ -13,11 +13,11 @@ import JoinTeamPage from './join-team';
 import QuestionsPage from './questions';
 import ProjectPage from './project';
 import { TeamPage, UserPage, TeamOrUserPage } from './team-or-user';
-import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
 import OauthSignIn from './sign-in';
+import SearchPage from './search';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */

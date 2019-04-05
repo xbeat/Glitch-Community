@@ -5,9 +5,10 @@ import Pluralize from 'react-pluralize';
 import Markdown from 'Components/text/markdown';
 import Text from 'Components/text/text';
 import Image from 'Components/images/image';
+import Loader from 'Components/loaders/loader';
+
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
 import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
-import { Loader } from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar';
 import { TeamAvatar, UserAvatar } from './includes/avatar';
 import { getAvatarUrl } from '../models/project';

@@ -18,6 +18,9 @@ import TeamItem from 'Components/team/team-item';
 import UserItem from 'Components/user/user-item';
 import SearchResultCoverBar from 'Components/blocks/search-result-cover-bar';
 import Thanks from 'Components/blocks/thanks';
+import Loader from 'Components/loaders/loader';
+import NotFound from 'Components/errors/not-found';
+import SearchResults from 'Components/search/search-results';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
 import Embed from 'Components/project/embed';
@@ -329,40 +332,87 @@ storiesOf('Thanks', module).add('variations', () => (
   </div>
 ));
 
-storiesOf('Embed', module)
-  .add('regular', () => <Embed domain="community-staging" />);
-       
-const TopLeft = <h2>This project is bananas</h2>
+storiesOf('Loader', module).add('loader', () => <Loader />);
+
+storiesOf('NotFound', module).add('not found', () => <NotFound name="any results" />);
+
+storiesOf('SearchResults', module).add(
+  'results',
+  provideContext(
+    { currentUser: {}, api: mockAPI },
+    withState('all', ({ state, setState }) => (
+      <SearchResults
+        query="modernserf"
+        activeFilter={state}
+        setActiveFilter={setState}
+        searchResults={{
+          status: 'ready',
+          totalHits: 2,
+          topResults: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          team: [],
+          user: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          project: [
+            {
+              type: 'project',
+              id: 'foo',
+              domain: 'modernserf-zebu',
+              description: 'a modernserf project that does zebu things',
+              private: false,
+              showAsGlitchTeam: false,
+              users: [users.modernserf],
+              teams: [],
+            },
+          ],
+          collection: [],
+        }}
+      />
+    )),
+  ),
+);
+
+storiesOf('Embed', module).add('regular', () => <Embed domain="community-staging" />);
+
+const TopLeft = <h2>This project is bananas</h2>;
 const TopRight = <button>I am on top</button>;
-const BottomRight = <><button>one</button><button>two</button></>;
+const BottomRight = (
+  <>
+    <button>one</button>
+    <button>two</button>
+  </>
+);
 const BottomLeft = <button>Everything you own in a box to the left</button>;
 const addProjectToCollection = () => {};
 
 storiesOf('ProjectEmbed', module)
-  .add('does not own project, not logged in', provideContext({ currentUser: {} }, () => (
-    <ProjectEmbed 
-      project={{id: "123", domain: "community-staging" }}
-      isAuthorized={false}
-      currentUser={{ login: null }}
-      addProjectToCollection={addProjectToCollection}
-      trackingOrigin="storybook"
-
-    />
-  )))
-  .add('does not own project, is logged in', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
-    <ProjectEmbed 
-      project={{id: "123", domain: "community-staging" }}
-      isAuthorized={false}
-      currentUser={{ login: "@sarahzinger" }}
-      addProjectToCollection={addProjectToCollection}
-      trackingOrigin="storybook"
-    />
-  )))
+  .add(
+    'does not own project, not logged in',
+    provideContext({ currentUser: {} }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: null }}
+        addProjectToCollection={addProjectToCollection}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
+  .add(
+    'does not own project, is logged in',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
   .add('owns project, is logged in', () => (
-    <ProjectEmbed 
-      project={{id: "123", domain: "community-staging" }}
+    <ProjectEmbed
+      project={{ id: '123', domain: 'community-staging' }}
       isAuthorized={true}
-      currentUser={{ login: "@sarahzinger" }}
+      currentUser={{ login: '@sarahzinger' }}
       addProjectToCollection={addProjectToCollection}
       trackingOrigin="storybook"
     />
@@ -371,21 +421,27 @@ storiesOf('ProjectEmbed', module)
 const unfeatureProject = () => {};
 
 storiesOf('FeaturedProject', module)
-  .add('owns featured project', provideContext({ currentUser: {} }, () => (
-    <FeaturedProject 
-      featuredProject={{id: "123", domain: "community-staging" }}
-      isAuthorized={true}
-      currentUser={{ login: "@sarahzinger" }}
-      addProjectToCollection={addProjectToCollection}
-      unfeatureProject={unfeatureProject}
-      trackingOrigin="storybook"
-    />
-  )))
-  .add('does not own featured project', provideContext({ currentUser: { login: "@sarahzinger" } }, () => (
-    <FeaturedProject 
-      featuredProject={{id: "123", domain: "community-staging" }}
-      isAuthorized={false}
-      currentUser={{ login: "@sarahzinger" }}
-      trackingOrigin="storybook"
-    />
-  )))
+  .add(
+    'owns featured project',
+    provideContext({ currentUser: {} }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={true}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+        unfeatureProject={unfeatureProject}
+        trackingOrigin="storybook"
+      />
+    )),
+  )
+  .add(
+    'does not own featured project',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+        trackingOrigin="storybook"
+      />
+    )),
+  );
