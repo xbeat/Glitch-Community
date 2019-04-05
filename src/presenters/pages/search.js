@@ -32,7 +32,7 @@ const SearchPage = withRouter(({ query, activeFilter, history }) => {
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchWrapper query={query} activeFilter={activeFilter} setActiveFilter={setActiveFilter} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} activeFilter={activeFilter || 'all'} setActiveFilter={setActiveFilter} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );
