@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { kebabCase, orderBy } from 'lodash';
+import Loader from 'Components/loaders/loader';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
 import { useTracker } from '../segment-analytics';
 import { getLink, createCollection } from '../../models/collection';
@@ -13,7 +14,6 @@ import { AddProjectToCollectionMsg, useNotifications } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
-import { Loader } from '../includes/loader';
 
 // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
 function getTeamOptions(teams) {

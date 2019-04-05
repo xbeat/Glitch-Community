@@ -98,7 +98,7 @@ export const AutocompleteResults = ({ query, results }) => {
   );
 };
 
-const AutocompleteSearch = ({ query }) => {
+const Autocomplete = ({ query }) => {
   const results = useAlgoliaSearch(query);
   if (results.totalHits > 0 && results.status === 'ready') {
     return (
@@ -110,4 +110,4 @@ const AutocompleteSearch = ({ query }) => {
   return null;
 };
 
-export default AutocompleteSearch;
+export default Autocomplete;

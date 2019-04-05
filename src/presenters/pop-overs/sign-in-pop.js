@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
-
+import { parseOneAddress } from 'email-addresses';
+import debounce from 'lodash/debounce';
+import TextInput from 'Components/inputs/text-input';
 import { Link } from '../includes/link';
 import useLocalStorage from '../../state/local-storage';
 import PopoverWithButton from './popover-with-button';
@@ -51,12 +53,14 @@ class EmailHandler extends React.Component {
       error: false,
       errorMsg: '',
     };
+    this.debouncedValidate = debounce(this.validate.bind(this), 500);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ email: e.target.value });
+  onChange(email) {
+    this.setState({ email });
+    this.debouncedValidate(email);
   }
 
   async onSubmit(e) {
@@ -93,6 +97,11 @@ class EmailHandler extends React.Component {
     }
   }
 
+  validate(email) {
+    const isValidEmail = parseOneAddress(email) !== null;
+    this.setState({ errorMsg: isValidEmail ? undefined : 'Enter a valid email address' });
+  }
+
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
@@ -105,7 +114,14 @@ class EmailHandler extends React.Component {
             <section className="pop-over-actions first-section">
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
-                  <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com" />
+                  <TextInput
+                    type="email"
+                    labelText="Email address"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    placeholder="new@user.com"
+                    error={this.state.errorMsg}
+                  />
                   <button type="submit" style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled}>
                     Send Link
                   </button>

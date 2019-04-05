@@ -58,6 +58,30 @@ function formatCollection(hit) {
   };
 }
 
+// top results
+
+const normalize = (str) => (str || '').trim().toLowerCase();
+
+// byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
+const byPriority = (...prioritizedKeys) => (items, query) => {
+  const normalizedQuery = normalize(query);
+  for (const key of prioritizedKeys) {
+    const match = items.find((item) => normalize(item[key]) === normalizedQuery);
+    if (match) return match;
+  }
+  return null;
+};
+
+const findTop = {
+  project: byPriority('domain', 'name'),
+  team: byPriority('url', 'name'),
+  user: byPriority('login', 'name'),
+};
+
+// TODO: starter kits go at the front of this list
+const getTopResults = (resultsByType, query) =>
+  [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
+
 function formatHit(hit) {
   switch (hit.type) {
     case 'user':
@@ -90,27 +114,34 @@ export function useAlgoliaSearch(query) {
       .then((res) => setHits(res.hits.map(formatHit)));
   }, [query]);
 
+  const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
+
   return {
-    ...emptyResults,
     status: 'ready',
     totalHits: hits.length,
-    ...groupBy(hits, (hit) => hit.type),
+    topResults: getTopResults(resultsByType, query),
+    ...resultsByType,
   };
 }
 
+const formatLegacyResult = (type) => (hit) => ({
+  ...hit,
+  type,
+});
+
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('team'));
 }
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('user'));
 }
 
 async function searchProjects(api, query) {
   const { data } = await api.get(`projects/search?q=${query}`);
-  return data;
+  return data.map(formatLegacyResult('project'));
 }
 
 // This API is slow and is missing important data (so its unfit for production)
@@ -121,6 +152,7 @@ async function searchCollections(api, query) {
   // NOTE: collection URLs don't work correctly with these
   return data.map((coll) => ({
     ...coll,
+    type: 'collection',
     team: coll.teamId > 0 ? { id: coll.teamId } : null,
     user: coll.userId > 0 ? { id: coll.userId } : null,
   }));
@@ -146,10 +178,15 @@ export function useLegacySearch(query) {
       })
       .catch(handleError);
   }, [query]);
+
+  //   TODO: do I need total hits?
+  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
+
   return {
     ...emptyResults,
     status,
-    totalHits: results.team.length + results.user.length + results.project.length + results.collection.length,
+    totalHits: allHits.length,
+    topResults: getTopResults(results, query),
     ...results,
   };
 }
