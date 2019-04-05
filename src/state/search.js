@@ -179,7 +179,7 @@ export function useLegacySearch(query) {
       .catch(handleError);
   }, [query]);
 
-//   TODO: do I need total hits?
+  //   TODO: do I need total hits?
   const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
 
   return {
