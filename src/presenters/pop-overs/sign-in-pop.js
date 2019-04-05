@@ -230,7 +230,7 @@ const NewUserInfoSection = () => (
 );
 
 const SignInCodeSection = ({ onClick }) => (
-  <section className="pop-over-actions last-section pop-over-info first-section">
+  <section className="pop-over-actions pop-over-info">
     <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
       <span>Use a sign in code</span>
     </button>
@@ -239,6 +239,12 @@ const SignInCodeSection = ({ onClick }) => (
 SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
+
+const TermsAndPrivacySection = () => (
+  <section className="pop-over-actions pop-over-info last-section">
+    <span></span>
+  </section>
+)
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api, location, hash } = props;
