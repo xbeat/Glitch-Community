@@ -103,8 +103,10 @@ function getResultsForGroup({ searchResults, group, activeFilter }) {
   };
 }
 
-function SearchResults({ query, searchResults }) {
-  const [activeFilter, setActiveFilter] = useState('all');
+function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) {
+  if (!searchResults[activeFilter] || searchResults[activeFilter].length <= 0) {
+    activeFilter = 'all';
+  }
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
   const showTopResults = searchResults.topResults.length > 0 && activeFilter === 'all';
@@ -176,6 +178,8 @@ SearchResults.propTypes = {
     project: PropTypes.array.isRequired,
     collection: PropTypes.array.isRequired,
   }).isRequired,
+  activeFilter: PropTypes.string.isRequired,
+  setActiveFilter: PropTypes.func.isRequired,
 };
 
 export default SearchResults;

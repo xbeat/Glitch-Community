@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Create Colored Ink Patterns',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-05.png?1554128528416',
-    link: 'https://glitch.com/~marbled-paper',
+    title: 'You Make The Rules',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-03.png?1554128528198',
+    link: 'https://abiding-cyclone.glitch.me/',
   },
   {
-    title: 'You Can Be Mayo Hero',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-07.png?1554128529193',
-    link: 'https://mayo-hero.glitch.me/',
+    title: 'Generate Freestyle Weaving Patterns',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-02.png?1554128529639',
+    link: 'https://weaving-pattern.glitch.me/',
   },
   {
-    title: 'Ga Ga for Radio?',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-01.png?1554128581859',
-    link: 'https://rdio.glitch.me/',  
+    title: 'Channel Your Inner Bach',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-08.png?1554128529037',
+    link: 'https://coconet.glitch.me/',  
   }
 ];

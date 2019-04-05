@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 
 import SearchResults from 'Components/search/search-results';
 import NotFound from 'Components/errors/not-found';
@@ -11,33 +12,39 @@ import { useAlgoliaSearch, useLegacySearch } from '../../state/search';
 import useDevToggle from '../includes/dev-toggles';
 
 // Hooks can't be _used_ conditionally, but components can be _rendered_ conditionally
-const AlgoliaSearchWrapper = ({ query }) => {
-  const searchResults = useAlgoliaSearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+const AlgoliaSearchWrapper = (props) => {
+  const searchResults = useAlgoliaSearch(props.query);
+  return <SearchResults {...props} searchResults={searchResults} />;
 };
 
-const LegacySearchWrapper = ({ query }) => {
-  const searchResults = useLegacySearch(query);
-  return <SearchResults query={query} searchResults={searchResults} />;
+const LegacySearchWrapper = (props) => {
+  const searchResults = useLegacySearch(props.query);
+  return <SearchResults {...props} searchResults={searchResults} />;
 };
 
-const SearchPage = ({ query }) => {
+const SearchPage = withRouter(({ query, activeFilter, history }) => {
   const algoliaFlag = useDevToggle('Algolia Search');
   const SearchWrapper = algoliaFlag ? AlgoliaSearchWrapper : LegacySearchWrapper;
+  const setActiveFilter = (filter) => {
+    history.push(`/search?q=${query}&activeFilter=${filter}`);
+  };
+
   return (
     <Layout searchQuery={query}>
       {!!query && <Helmet title={`Search for ${query}`} />}
-      {query ? <SearchWrapper query={query} /> : <NotFound name="anything" />}
+      {query ? <SearchWrapper query={query} activeFilter={activeFilter} setActiveFilter={setActiveFilter} /> : <NotFound name="anything" />}
       <MoreIdeas />
     </Layout>
   );
-};
+});
 
 SearchPage.propTypes = {
   query: PropTypes.string,
+  activeFilter: PropTypes.string,
 };
 SearchPage.defaultProps = {
   query: '',
+  activeFilter: 'all',
 };
 
 export default SearchPage;
