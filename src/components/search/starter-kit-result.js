@@ -1,9 +1,8 @@
 import React from 'react';
 import Heading from 'Components/text/heading';
 import Text from 'Components/text/text';
+import MaskImage from 'Components/images/mask-image';
 import styles from './starter-kit-result.styl';
-
-const MaskImage = (props) => <img {...props} className={styles.maskImage} alt="" />;
 
 const StarterKitResult = ({ result }) => (
   <a href={result.url} className={styles.container}>
