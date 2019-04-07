@@ -5,11 +5,11 @@ import _ from 'lodash';
 import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
 import Text from 'Components/text/text';
-import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
 
+import TeamAnalyticsToggle from './team-analytics-toggle';
 import TeamAnalyticsSummary from './team-analytics-summary';
 import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
@@ -155,6 +155,11 @@ class TeamAnalytics extends React.Component {
   }
   
   setFilter(filter){
+    console.log('set filter');
+    if(filter === "view"){
+      
+    }else{
+    }
     this.setState({ activeFilter: filter});
   }
 
