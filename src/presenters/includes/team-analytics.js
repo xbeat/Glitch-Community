@@ -59,6 +59,7 @@ class TeamAnalytics extends React.Component {
     super(props);
     const currentTimeFrame = 'Last 2 Weeks';
     this.state = {
+      activeFilter: 'views',
       currentTimeFrame,
       fromDate: dateFromTime(currentTimeFrame),
       currentProjectDomain: '', // empty string means all projects
@@ -152,13 +153,18 @@ class TeamAnalytics extends React.Component {
       },
     );
   }
+  
+  setFilter(filter){
+    this.setState({ activeFilter: filter});
+  }
 
   render() {
     if (!this.props.currentUserIsOnTeam) {
       return null;
     }
     
-    const buttons = [{name: "Views", contents: "App Views"}, {name: "Remixes", contents: "Remixes"}];
+    // segmented button filters
+    const buttons = [{name: "views", contents: "App Views"}, {name: "remixes", contents: "Remixes"}];
     
     return (
       <section className="team-analytics">
@@ -170,9 +176,10 @@ class TeamAnalytics extends React.Component {
         </h2>
 
         {!!this.props.projects.length && (
-          <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
           
           <section className="controls">
+            <SegmentedButtons value={this.state.activeFilter} buttons={buttons} onChange={this.setFilter} />
+            
             <TeamAnalyticsProjectPop
               updateProjectDomain={this.updateProjectDomain.bind(this)}
               currentProjectDomain={this.state.currentProjectDomain}
