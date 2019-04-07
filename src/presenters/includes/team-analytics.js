@@ -155,7 +155,6 @@ class TeamAnalytics extends React.Component {
   }
   
   setFilter(filter){
-    console.log('set filter to ', filter);
     this.setState({ activeFilter: filter});
   }
 
@@ -186,7 +185,7 @@ class TeamAnalytics extends React.Component {
               currentProjectDomain={this.state.currentProjectDomain}
               projects={this.props.projects}
             />
-            <TeamAnalyticsTimePop activeFilter={this.state.activeFilter} updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
+            <TeamAnalyticsTimePop updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
           </section>
         )}
 
@@ -194,7 +193,7 @@ class TeamAnalytics extends React.Component {
           {this.state.isGettingData ? (
             <Loader />
           ) : (
-            <TeamAnalyticsSummary totalAppViews={this.state.totalAppViews} totalRemixes={this.state.totalRemixes} />
+            <TeamAnalyticsSummary activeFilter={this.state.activeFilter} totalAppViews={this.state.totalAppViews} totalRemixes={this.state.totalRemixes} />
           )}
         </section>
 
