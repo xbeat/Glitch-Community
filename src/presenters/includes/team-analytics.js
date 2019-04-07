@@ -5,11 +5,11 @@ import _ from 'lodash';
 import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
 import Text from 'Components/text/text';
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
 
-import TeamAnalyticsToggle from './team-analytics-toggle';
 import TeamAnalyticsSummary from './team-analytics-summary';
 import TeamAnalyticsActivity from './team-analytics-activity';
 import TeamAnalyticsReferrers from './team-analytics-referrers';
@@ -155,11 +155,7 @@ class TeamAnalytics extends React.Component {
   }
   
   setFilter(filter){
-    console.log('set filter');
-    if(filter === "view"){
-      
-    }else{
-    }
+    console.log('set filter to ', filter);
     this.setState({ activeFilter: filter});
   }
 
@@ -183,14 +179,14 @@ class TeamAnalytics extends React.Component {
         {!!this.props.projects.length && (
           
           <section className="controls">
-            <SegmentedButtons value={this.state.activeFilter} buttons={buttons} onChange={this.setFilter} />
+            <SegmentedButtons value={this.state.activeFilter} buttons={buttons} onChange={this.setFilter.bind(this)} />
             
             <TeamAnalyticsProjectPop
               updateProjectDomain={this.updateProjectDomain.bind(this)}
               currentProjectDomain={this.state.currentProjectDomain}
               projects={this.props.projects}
             />
-            <TeamAnalyticsTimePop updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
+            <TeamAnalyticsTimePop activeFilter={this.state.activeFilter} updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
           </section>
         )}
 

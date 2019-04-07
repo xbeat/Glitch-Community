@@ -19,8 +19,10 @@ class TeamAnalyticsSummary extends React.Component {
   };
 
   render() {
+    const {activeFilter} = this.props;
     return (
       <>
+        { activeFilter === "views" && 
         <span
           className="summary-item"
           onClick={() => {
@@ -41,7 +43,8 @@ class TeamAnalyticsSummary extends React.Component {
             showCount={false}
           />
         </span>
-        ,{' '}
+        }
+        { activeFilter === "remixes" && 
         <span
           className="summary-item"
           onClick={() => {
@@ -56,12 +59,14 @@ class TeamAnalyticsSummary extends React.Component {
           <span className="total remixes">{this.props.totalRemixes.toLocaleString('en')}</span>{' '}
           <Pluralize className="summary-label" singular="Remix" plural="Remixes" count={this.props.totalRemixes} showCount={false} />
         </span>
+        }
       </>
     );
   }
 }
 
 TeamAnalyticsSummary.propTypes = {
+  activeFilter: PropTypes.string.isRequired,
   totalAppViews: PropTypes.number.isRequired,
   totalRemixes: PropTypes.number.isRequired,
 };
