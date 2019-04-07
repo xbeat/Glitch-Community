@@ -5,6 +5,7 @@ import _ from 'lodash';
 import sampleAnalytics, { sampleAnalyticsTime } from 'Curated/sample-analytics';
 
 import Text from 'Components/text/text';
+import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop';
@@ -156,6 +157,9 @@ class TeamAnalytics extends React.Component {
     if (!this.props.currentUserIsOnTeam) {
       return null;
     }
+    
+    const buttons = [{name: "Views", contents: "App Views"}, {name: "Remixes", contents: "Remixes"}];
+    
     return (
       <section className="team-analytics">
         <h2>
@@ -166,6 +170,8 @@ class TeamAnalytics extends React.Component {
         </h2>
 
         {!!this.props.projects.length && (
+          <SegmentedButtons value={activeFilter} buttons={buttons} onChange={setFilter} />
+          
           <section className="controls">
             <TeamAnalyticsProjectPop
               updateProjectDomain={this.updateProjectDomain.bind(this)}

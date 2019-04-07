@@ -97,6 +97,7 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
 class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.isGettingData === true && this.props.isGettingData === false) {
+      // graph total app views
       renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
