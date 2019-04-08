@@ -87,7 +87,6 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  console.log("collection", collection);
   
   return (
     <>
@@ -147,6 +146,11 @@ const CollectionPageContents = ({
                     addProjectToCollection={addProjectToCollection}
                     currentUser={currentUser}
                     trackingOrigin="collection page"
+                    noteOptions={{
+                      collection: collection,
+                      update: updateOrAddNote,
+                      hideNote: hideNote,
+                    }}
                   />
                 )}
                 {currentUserIsAuthor && (

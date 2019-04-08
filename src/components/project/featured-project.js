@@ -8,18 +8,19 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
-const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
-  console.log(featuredProject)
+const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, noteOptions }) => {
+  
   const TopLeft = () => (
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" />
       {featuredProject.note && (
         <Note 
-          collection
           project={featuredProject}
-          update={update} 
-          hideNote={hideNote} })
+          collection={noteOptions.collection}
+          update={noteOptions.update} 
+          hideNote={noteOptions.hideNote}
+        />
       )}
     </Heading>
   );
@@ -50,10 +51,12 @@ FeaturedProject.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
   trackingOrigin: PropTypes.string.isRequired,
   unfeatureProject: PropTypes.func,
+  noteOptions: PropTypes.object,
 };
 
 FeaturedProject.defaultProps = {
   unfeatureProject: null,
+  noteOptions: {},
 };
 
 export default FeaturedProject;
