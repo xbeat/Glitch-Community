@@ -144,7 +144,7 @@ const CollectionPageContents = ({
                     featuredProject={collection.featuredProject}
                     isAuthorized={true}
                     unfeatureProject={() => console.log("work on this")}
-                    addProjectToCollection={() => console.log("work on this")}
+                    addProjectToCollection={addProjectToCollection}
                     currentUser={currentUser}
                     trackingOrigin="collection page"
                   />
@@ -225,8 +225,12 @@ async function loadCollection(api, ownerName, collectionName) {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     }
     
+    // mock todo remove
+    collection.featuredProjectId = "dcfb2eed-3f27-4f30-8d17-b9a67f1b6b66";
+    
     if (collection.featuredProjectId) {
       collection.featuredProject = await getSingleItem(api, `v1/projects/by/id?id=${collection.featuredProjectId}`, collection.featuredProjectId);
+      console.log(collection, "here")
     }
 
     // fetch users for each project
