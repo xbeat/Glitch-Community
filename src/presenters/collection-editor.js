@@ -54,6 +54,7 @@ class CollectionEditor extends React.Component {
   }
 
   async updateOrAddNote({ note, projectId }) {
+    console.log("inside update or add note", note, projectId)
     note = _.trim(note);
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
