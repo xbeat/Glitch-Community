@@ -5,7 +5,7 @@ import { orderBy, remove } from 'lodash';
 import Loader from 'Components/loaders/loader';
 import { captureException } from '../../utils/sentry';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { getAvatarUrl } from '../../models/project';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
@@ -26,6 +26,19 @@ const AddProjectPopoverTitle = ({ project }) => (
 );
 AddProjectPopoverTitle.propTypes = {
   project: PropTypes.object.isRequired,
+};
+
+const AddProjectToCollectionResultItem = ({ onClick, collection, ...props }) => {
+  const onClickTracked = useTrackedFunc(onClick, 'Project Added to Collection', {}, {
+    groupId: collection.team ? collection.team.id : 0,
+  });
+  return (
+    <CollectionResultItem
+      onClick={onClickTracked}
+      collection={collection}
+      {...props}
+    />
+  );
 };
 
 class AddProjectToCollectionPopContents extends React.Component {
@@ -58,20 +71,13 @@ class AddProjectToCollectionPopContents extends React.Component {
 
     return (
       <li key={collection.id}>
-        <TrackClick
-          name="Project Added to Collection"
-          context={{
-            groupId: collection.team ? collection.team.id : 0,
-          }}
-        >
-          <CollectionResultItem
-            onClick={this.props.addProjectToCollection}
-            project={this.props.project}
-            collection={collection}
-            togglePopover={this.props.togglePopover}
-            currentUser={this.props.currentUser}
-          />
-        </TrackClick>
+        <AddProjectToCollectionResultItem
+          onClick={this.props.addProjectToCollection}
+          project={this.props.project}
+          collection={collection}
+          togglePopover={this.props.togglePopover}
+          currentUser={this.props.currentUser}
+        />
       </li>
     );
   }

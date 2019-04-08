@@ -9,5 +9,5 @@ export default {
   appDomain: 'aframe-bvh-mocap',
   blogUrl: '/master-webvr-with-a-week-of-experiments/',
   body,
-  color: '#f5f5f5'
+  color: '#f5f5f5',
 };

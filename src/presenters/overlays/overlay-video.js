@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useTracker } from '../segment-analytics';
 import PopoverContainer from '../pop-overs/popover-container';
 
 const Video = () => (
@@ -11,20 +12,31 @@ const Video = () => (
   </div>
 );
 
-const OverlayVideo = ({ children }) => (
-  <PopoverContainer>
-    {({ visible, setVisible }) => (
-      <details onToggle={(evt) => setVisible(evt.target.open)} open={visible} className="overlay-container">
-        <summary>{children}</summary>
-        <dialog className="overlay video-overlay">
-          <section className="pop-over-actions">
-            <Video />
-          </section>
-        </dialog>
-      </details>
-    )}
-  </PopoverContainer>
-);
+const OverlayVideo = ({ children }) => {
+  const track = useTracker('How it works clicked');
+  return (
+    <PopoverContainer>
+      {({ visible, setVisible }) => {
+        const onToggle = (evt) => {
+          setVisible(evt.target.open);
+          if (evt.target.open) {
+            track();
+          }
+        };
+        return (
+          <details onToggle={onToggle} open={visible} className="overlay-container">
+            <summary>{children}</summary>
+            <dialog className="overlay video-overlay">
+              <section className="pop-over-actions">
+                <Video />
+              </section>
+            </dialog>
+          </details>
+        );
+      }}
+    </PopoverContainer>
+  );
+};
 OverlayVideo.propTypes = {
   children: PropTypes.node.isRequired,
 };

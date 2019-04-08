@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import Heading from 'Components/text/heading';
 import Loader from 'Components/loaders/loader';
-import { TrackClick } from './analytics';
+import { useTrackedFunc } from './segment-analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { useNotifications } from './notifications';
@@ -93,6 +93,7 @@ function CreateCollectionButton({ maybeTeam }) {
       setState(collectionStates.ready());
     }
   }
+  const onClick = useTrackedFunc(createCollectionOnClick, 'Create Collection clicked');
 
   if (state.type === 'newCollection') {
     return <Redirect to={state.value} push />;
@@ -107,11 +108,9 @@ function CreateCollectionButton({ maybeTeam }) {
 
   return (
     <div id="create-collection-container">
-      <TrackClick name="Create Collection clicked">
-        <button className="button" id="create-collection" onClick={createCollectionOnClick}>
-          Create Collection
-        </button>
-      </TrackClick>
+      <button className="button" id="create-collection" onClick={onClick}>
+        Create Collection
+      </button>
     </div>
   );
 }

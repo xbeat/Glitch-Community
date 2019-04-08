@@ -426,7 +426,6 @@ storiesOf('ProjectEmbed', module)
         isAuthorized={false}
         currentUser={{ login: null }}
         addProjectToCollection={addProjectToCollection}
-        trackingOrigin="storybook"
       />
     )),
   )
@@ -438,7 +437,6 @@ storiesOf('ProjectEmbed', module)
         isAuthorized={false}
         currentUser={{ login: '@sarahzinger' }}
         addProjectToCollection={addProjectToCollection}
-        trackingOrigin="storybook"
       />
     )),
   )
@@ -448,7 +446,6 @@ storiesOf('ProjectEmbed', module)
       isAuthorized={true}
       currentUser={{ login: '@sarahzinger' }}
       addProjectToCollection={addProjectToCollection}
-      trackingOrigin="storybook"
     />
   ));
 
@@ -464,7 +461,6 @@ storiesOf('FeaturedProject', module)
         currentUser={{ login: '@sarahzinger' }}
         addProjectToCollection={addProjectToCollection}
         unfeatureProject={unfeatureProject}
-        trackingOrigin="storybook"
       />
     )),
   )
@@ -475,7 +471,6 @@ storiesOf('FeaturedProject', module)
         featuredProject={{ id: '123', domain: 'community-staging' }}
         isAuthorized={false}
         currentUser={{ login: '@sarahzinger' }}
-        trackingOrigin="storybook"
       />
     )),
   );

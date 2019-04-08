@@ -5,15 +5,24 @@ import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import TextInput from 'Components/inputs/text-input';
 import Loader from 'Components/loaders/loader';
-import { TrackClick } from '../analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
+import { useTracker } from '../segment-analytics';
 import { NestedPopoverTitle } from './popover-nested';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿
+
+const CreateTeamSubmitButton = () => {
+  const onClick = useTracker('Create Team submitted');
+  return (
+    <button type="submit" className="button-small has-emoji" onClick={onClick}>
+      Create Team <span className="emoji thumbs_up" />
+    </button>
+  );
+};
 
 class CreateTeamPopBase extends React.Component {
   constructor(props) {
@@ -135,15 +144,7 @@ class CreateTeamPopBase extends React.Component {
             />
             <p className="action-description team-url-preview">/@{_.kebabCase(this.state.teamName || placeholder)}</p>
 
-            {this.state.isLoading ? (
-              <Loader />
-            ) : (
-              <TrackClick name="Create Team submitted">
-                <button type="submit" className="button-small has-emoji">
-                  Create Team <span className="emoji thumbs_up" />
-                </button>
-              </TrackClick>
-            )}
+            {this.state.isLoading ? <Loader /> : <CreateTeamSubmitButton />}
           </form>
         </section>
         <section className="pop-over-info">

@@ -11,7 +11,7 @@ import NotFound from 'Components/errors/not-found';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import { AuthDescription } from '../includes/description-field';
 import CollectionEditor from '../collection-editor';

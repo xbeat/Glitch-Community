@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from 'Components/loaders/loader';
-import { TrackedExternalLink } from '../analytics';
+import { TrackedExternalLink } from '../segment-analytics';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
 

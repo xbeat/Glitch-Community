@@ -4,10 +4,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from 'Components/loaders/loader';
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { NestedPopoverTitle } from './popover-nested';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 import { getAvatarUrl as getProjectAvatarUrl } from '../../models/project';
+
+const TeamUserRemoveButton = ({ userAvatar, userLogin, userStyle, removeUser }) => {
+  const onClick = useTrackedFunc(removeUser, 'Remove from Team submitted');
+  return (
+    <button className="button-small has-emoji" onClick={onClick} type="button">
+      Remove <img className="emoji avatar" src={userAvatar} alt={userLogin} style={userStyle} />
+    </button>
+  );
+};
+TeamUserRemoveButton.propTypes = {
+  userAvatar: PropTypes.string.isRequired,
+  userLogin: PropTypes.string.isRequired,
+  userStyle: PropTypes.object.isRequired,
+  removeUser: PropTypes.func.isRequired,
+};
 
 class TeamUserRemovePop extends React.Component {
   constructor(props) {
@@ -100,11 +115,12 @@ class TeamUserRemovePop extends React.Component {
         )}
 
         <section className="pop-over-actions danger-zone">
-          <TrackClick name="Remove from Team submitted">
-            <button className="button-small has-emoji" onClick={this.removeUser} type="button">
-              Remove <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle} />
-            </button>
-          </TrackClick>
+          <TeamUserRemoveButton
+            userAvatar={getAvatarThumbnailUrl(this.props.user)}
+            userLogin={this.props.user.login}
+            userStyle={userAvatarStyle}
+            removeUser={this.removeUser}
+          />
         </section>
       </dialog>
     );

@@ -7,13 +7,18 @@ import Embed from 'Components/project/embed';
 import ReportButton from '../../presenters/pop-overs/report-abuse-pop';
 import { EditButton, RemixButton } from '../../presenters/includes/project-actions';
 import AddProjectToCollection from '../../presenters/includes/add-project-to-collection';
-import { TrackClick } from '../../presenters/analytics';
+import { useTracker } from '../../presenters/segment-analytics';
 
 import styles from './project-embed.styl';
 
 const cx = classNames.bind(styles);
 
-const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
+const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, addProjectToCollection }) => {
+  const trackRemix = useTracker('Click Remix', {
+    baseProjectId: project.id,
+    baseDomain: project.domain,
+  });
+
   const BottomLeft = () => {
     if (isAuthorized) {
       return <EditButton name={project.id} isMember={isAuthorized} size="small" />;
@@ -33,16 +38,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
           />
         )
       }
-      <TrackClick
-        name="Click Remix"
-        properties={{
-          baseProjectId: project.id,
-          baseDomain: project.domain,
-          origin: trackingOrigin,
-        }}
-      >
-        <RemixButton name={project.domain} isMember={isAuthorized} />
-      </TrackClick>
+      <RemixButton name={project.domain} isMember={isAuthorized} onClick={trackRemix} />
     </>
   );
 
@@ -69,7 +65,6 @@ ProjectEmbed.propTypes = {
   project: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  trackingOrigin: PropTypes.string.isRequired,
   addProjectToCollection: PropTypes.func,
   topLeft: PropTypes.any,
   topRight: PropTypes.any,

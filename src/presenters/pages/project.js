@@ -10,7 +10,7 @@ import ProjectEmbed from 'Components/project/project-embed';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import ProjectEditor from '../project-editor';
 import Expander from '../includes/expander';
@@ -131,7 +131,6 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
         isAuthorized={isAuthorized}
         currentUser={currentUser}
         addProjectToCollection={addProjectToCollection}
-        trackingOrigin="project page"
       />
       <section id="readme">
         <ReadmeLoader domain={domain} />
