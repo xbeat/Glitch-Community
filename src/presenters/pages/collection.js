@@ -87,7 +87,6 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  collection.featuredProjectId = "2e00fd67-9577-4e34-b0e3-3ed0194a334b" //mock
   return (
     <>
       <Helmet title={collection.name} />
@@ -138,6 +137,16 @@ const CollectionPageContents = ({
                 <div className="collection-project-container-header">
                   {currentUserIsAuthor && <AddCollectionProject addProjectToCollection={addProjectToCollection} collection={collection} />}
                 </div>
+                {collection.featuredProjectId && (
+                  <FeaturedProject
+                    featuredProject={{id: collection.featuredProject}}
+                    isAuthorized={true}
+                    unfeatureProject={() => console.log("work on this")}
+                    addProjectToCollection={() => console.log("work on this")}
+                    currentUser={currentUser}
+                    trackingOrigin="collection page"
+                  />
+                )}
                 {currentUserIsAuthor && (
                   <ProjectsUL
                     {...props}
