@@ -229,8 +229,7 @@ async function loadCollection(api, ownerName, collectionName) {
     collection.featuredProjectId = "dcfb2eed-3f27-4f30-8d17-b9a67f1b6b66";
     
     if (collection.featuredProjectId) {
-      collection.featuredProject = await getSingleItem(api, `v1/projects/by/id?id=${collection.featuredProjectId}`, collection.featuredProjectId);
-      console.log(collection, "here")
+      collection.featuredProject = collectionProjects.find(({id}) => id === collection.featuredProjectId);
     }
 
     // fetch users for each project

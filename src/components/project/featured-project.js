@@ -13,6 +13,10 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" />
+      {featuredProject.note && (
+        <div>{featuredProject.note}</div>
+        {featuredProject.u}
+      )}
     </Heading>
   );
 
