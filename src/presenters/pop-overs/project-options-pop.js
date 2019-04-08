@@ -68,7 +68,8 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
 
   function featureProject(event) {
-    animate(event, 'slide-up', () => props.featureProject(props.project.id));
+    props.featureProject(props.project.id)
+    // animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
 
   function toggleAndDisplayNote() {

@@ -80,11 +80,11 @@ const CollectionPageContents = ({
   updateOrAddNote,
   displayNewNote,
   hideNote,
+  featureProject,
   ...props
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  const featureProject = () => console.log("should figure out this function");
   
   return (
     <>

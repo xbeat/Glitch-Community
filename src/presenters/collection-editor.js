@@ -100,6 +100,7 @@ class CollectionEditor extends React.Component {
       hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
+      featureProject: (id) => this.updateFields({ featured_project_id: id }).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsAuthor());
   }
