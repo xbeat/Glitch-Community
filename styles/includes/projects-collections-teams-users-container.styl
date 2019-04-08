@@ -1,0 +1,18 @@
+.projects-container,
+.collections-container
+.teams-container
+.users-container
+  display: grid
+  grid-template-columns: 1fr
+  grid-gap: 10px
+  list-style-type: none
+  padding: 0
+
+  @media (min-width: mediumViewport)
+    grid-template-columns: 1fr 1fr 1fr
+    > li
+      min-width: 33%  
+
+  > li
+    margin-top: 2px
+    min-width: 100%

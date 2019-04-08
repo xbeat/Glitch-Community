@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'Components/images/image';
 
 import { getEditorUrl } from '../models/project';
 import { Link } from './includes/link';
@@ -21,11 +22,11 @@ function truncateTag(tag) {
 
 const QuestionItem = ({ colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character }) => (
   <>
-    <img className="help-icon" src={iconHelp} alt="" />
+    <Image className="help-icon" src={iconHelp} alt="Help icon" />
     <Link to={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{ backgroundColor: colorOuter }}>
         <div className="project-container" style={{ backgroundColor: colorInner }}>
-          <img className="avatar" src={userAvatar} style={{ backgroundColor: userColor }} alt="" />
+          <Image className="avatar" src={userAvatar} style={{ backgroundColor: userColor }} alt="" />
           <div className="button">Help {userLogin}</div>
           <div className="description question" title={question}>
             {truncateQuestion(question)}

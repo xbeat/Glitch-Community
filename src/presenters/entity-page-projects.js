@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProjectsList from './projects-list';
+import ProjectsList from 'Components/containers/projects-list';
 
-const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions }) => {
+const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, removePin, projectOptions, ...props }) => {
   const pinnedTitle = (
     <>
       Pinned Projects
       <span className="emoji pushpin emoji-in-title" />
     </>
   );
-
   const recentTitle = 'Recent Projects';
+
   let projectOptionsToPass = {};
   if (isAuthorized) {
     projectOptionsToPass = { addPin, removePin, ...projectOptions };
@@ -21,7 +21,12 @@ const EntityPageProjects = ({ projects, currentUser, isAuthorized, addPin, remov
   return (
     <>
       {projects.length > 0 && (
-        <ProjectsList title={removePin ? pinnedTitle : recentTitle} projects={projects} projectOptions={projectOptionsToPass} />
+        <ProjectsList
+          {...props}
+          title={removePin ? pinnedTitle : recentTitle}
+          projects={projects}
+          projectOptions={projectOptionsToPass}
+        />
       )}
     </>
   );
@@ -33,6 +38,8 @@ EntityPageProjects.propTypes = {
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   projectOptions: PropTypes.object,
+  enableFiltering: PropTypes.bool,
+  enablePagination: PropTypes.bool,
 };
 
 EntityPageProjects.defaultProps = {
@@ -40,6 +47,8 @@ EntityPageProjects.defaultProps = {
   removePin: null,
   projectOptions: {},
   currentUser: null,
+  enableFiltering: false,
+  enablePagination: false,
 };
 
 export default EntityPageProjects;

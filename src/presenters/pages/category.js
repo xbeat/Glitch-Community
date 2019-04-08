@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Image from 'Components/images/image';
 import Heading from 'Components/text/heading';
+import { ProjectsUL } from 'Components/containers/projects-list';
 import Layout from '../layout';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
-import { ProjectsUL } from '../projects-list';
 import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';
 

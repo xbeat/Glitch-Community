@@ -4,9 +4,11 @@ import Pluralize from 'react-pluralize';
 
 import Markdown from 'Components/text/markdown';
 import Text from 'Components/text/text';
+import Image from 'Components/images/image';
+import Loader from 'Components/loaders/loader';
+
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
 import { TeamLink, UserLink, CollectionLink, ProjectLink } from './includes/link';
-import { Loader } from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar';
 import { TeamAvatar, UserAvatar } from './includes/avatar';
 import { getAvatarUrl } from '../models/project';
@@ -29,7 +31,7 @@ const ProjectsPreview = ({ collection, isAuthorized }) => {
           {collection.projects.slice(0, 3).map((project) => (
             <li key={project.id} className={`project-container ${project.private ? 'private' : ''}`}>
               <ProjectLink project={project} className="project-link">
-                <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
+                <Image className="avatar" src={getAvatarUrl(project.id)} alt="" />
                 <div className="project-name">{project.domain}</div>
                 <div className="project-badge private-project-badge" aria-label="private" />
               </ProjectLink>
@@ -102,7 +104,7 @@ const CollectionItem = ({ collection, deleteCollection, isAuthorized, showCurato
               <div className="collection-name-description button-area">
                 <div className="button">
                   <span className="project-badge private-project-badge" aria-label="private" />
-                  <div className="project-name">{collection.name}</div>
+                  <div className="collection-name">{collection.name}</div>
                 </div>
                 <div
                   className="description"

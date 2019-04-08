@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { orderBy, partition } from 'lodash';
+
 import Heading from 'Components/text/heading';
+import FeaturedProject from 'Components/project/featured-project';
+
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { useCurrentUser } from '../../state/current-user';
 import { AuthDescription } from '../includes/description-field';
 import EditableField from '../includes/editable-field';
@@ -14,7 +17,6 @@ import UserEditor from '../user-editor';
 import { Thanks } from '../includes/thanks';
 
 import DeletedProjects from '../deleted-projects';
-import EntityPageFeaturedProject from '../entity-page-featured-project';
 import EntityPageProjects from '../entity-page-projects';
 import CollectionsList from '../collections-list';
 import { ProfileContainer, ImageButtons } from '../includes/profile';
@@ -128,7 +130,7 @@ const UserPage = ({
       </section>
 
       {featuredProject && (
-        <EntityPageFeaturedProject
+        <FeaturedProject
           featuredProject={featuredProject}
           isAuthorized={isAuthorized}
           unfeatureProject={unfeatureProject}
@@ -175,6 +177,8 @@ const UserPage = ({
           addProjectToCollection,
         }}
         currentUser={maybeCurrentUser}
+        enableFiltering={recentProjects.length > 6}
+        enablePagination
       />
       {isAuthorized && <DeletedProjects setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}

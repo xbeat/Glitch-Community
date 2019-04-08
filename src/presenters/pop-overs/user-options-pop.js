@@ -5,7 +5,7 @@ import { orderBy } from 'lodash';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
 import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
-import { TrackClick } from '../analytics';
+import { useTrackedFunc, useTracker } from '../segment-analytics';
 import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
@@ -14,6 +14,7 @@ import CreateTeamPop from './create-team-pop';
 // Create Team button
 
 const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
+  const onClickCreateTeam = useTrackedFunc(showCreateTeam, 'Create Team clicked');
   if (userIsAnon) {
     return (
       <>
@@ -30,11 +31,9 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     );
   }
   return (
-    <TrackClick name="Create Team clicked">
-      <button type="button" onClick={showCreateTeam} className="button button-small has-emoji">
-        Create Team <span className="emoji herb" />
-      </button>
-    </TrackClick>
+    <button type="button" onClick={onClickCreateTeam} className="button button-small has-emoji">
+      Create Team <span className="emoji herb" />
+    </button>
   );
 };
 
@@ -80,6 +79,8 @@ TeamList.propTypes = {
 // User Options 🧕
 
 const UserOptionsPop = ({ togglePopover, showCreateTeam, user, signOut, showNewStuffOverlay }) => {
+  const trackLogout = useTracker('Logout');
+
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -97,9 +98,8 @@ Are you sure you want to sign out?`)
       }
     }
     togglePopover();
-    /* global analytics */
-    analytics.track('Logout');
-    analytics.reset();
+    trackLogout();
+    window.analytics.reset();
     signOut();
   };
 

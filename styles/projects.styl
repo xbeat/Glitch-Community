@@ -57,22 +57,14 @@ project-avatar-size = 42px
     font-size: 14px
     margin-bottom: 0
 
+.projects
   .projects-container
     margin: 0
     padding: 0
-    list-style-type: none
 
     > li
-      float: left
-      display: block
-      margin-right: 10px
-      width: calc(33.3% - 10px)
       position: relative
-      margin-bottom: 12px
-      
-      @media (max-width: mediumViewport)
-        width: 100%
-      
+
     a
       &:hover
         text-decoration: none
@@ -177,7 +169,6 @@ project-avatar-size = 42px
     opacity: 0.7
     background-image: url('https://cdn.glitch.com/26aa7be9-76e2-4f1c-a3e4-6a41ddcec98f%2Fpublic.svg?1528830915543')
 
-.search-results,
 .user-page,
 .team-page,
 .category-page
@@ -199,12 +190,3 @@ project-avatar-size = 42px
   &:focus
     outline: transparent
     background: #efefef
-
-.user-page .projects-container > li
-  // Permit a 2-column layout on the user-page
-  // in between mediumViewport and largeViewport
-  @media (max-width: largeViewport)
-    width: 48%
-        
-  @media (max-width: mediumViewport)
-    width: 100%

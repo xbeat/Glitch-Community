@@ -4,6 +4,7 @@ import Pluralize from 'react-pluralize';
 import { sampleSize, flatMap, uniq } from 'lodash';
 import Markdown from 'Components/text/markdown';
 import Heading from 'Components/text/heading';
+import { ProjectsUL } from 'Components/containers/projects-list';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
@@ -13,7 +14,6 @@ import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/ap
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
 
@@ -23,7 +23,6 @@ const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   const featuredProjects = sampleSize(collection.projects, 3);
   const featuredProjectsHaveAtLeastOneNote = featuredProjects.filter((p) => !!p.note).length > 0;
-
   return (
     <article className="collection-wide projects" style={{ backgroundColor: collection.coverColor }}>
       <header className={`collection ${dark}`}>
@@ -82,6 +81,7 @@ const loadCollection = async (api, { owner, name }) => {
     }
     captureException(error);
   }
+
   return null;
 };
 

@@ -7,7 +7,9 @@ import TeamNameInput from 'Components/fields/team-name-input';
 import TeamUrlInput from 'Components/fields/team-url-input';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
-import { AnalyticsContext } from '../analytics';
+import FeaturedProject from 'Components/project/featured-project';
+
+import { AnalyticsContext } from '../segment-analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
@@ -26,7 +28,6 @@ import NameConflictWarning from '../includes/name-conflict';
 import AddTeamProject from '../includes/add-team-project';
 import DeleteTeam from '../includes/delete-team';
 import { AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam } from '../includes/team-users';
-import EntityPageFeaturedProject from '../entity-page-featured-project';
 import EntityPageProjects from '../entity-page-projects';
 import ProjectsLoader from '../projects-loader';
 import TeamAnalytics from '../includes/team-analytics';
@@ -198,7 +199,7 @@ class TeamPage extends React.Component {
         </ErrorBoundary>
 
         {featuredProject && (
-          <EntityPageFeaturedProject
+          <FeaturedProject
             featuredProject={featuredProject}
             isAuthorized={this.props.currentUserIsOnTeam}
             unfeatureProject={this.props.unfeatureProject}
@@ -221,6 +222,8 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           projectOptions={this.getProjectOptions()}
+          enablePagination
+          enableFiltering={recentProjects.length > 6}
         />
 
         {team.projects.length === 0 && this.props.currentUserIsOnTeam && (
