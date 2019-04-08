@@ -19,18 +19,6 @@ const collectionColorStyles = (collection) => ({
 
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
-const useTeamOrUser = createAPIHook(async (api, teamId, userId) => {
-  if (teamId > 0) {
-    const value = await getSingleItem(api, `/v1/teams/by/id/?id=${teamId}`, teamId);
-    return { ...value, type: 'team' };
-  }
-  if (userId > 0) {
-    const value = await getSingleItem(api, `/v1/users/by/id/?id=${userId}`, userId);
-    return { ...value, type: 'user' };
-  }
-  return null;
-});
-
 const CollectionCurator = ({ collection }) => {
   const { value: teamOrUser } = useTeamOrUser(collection.teamId, collection.userId);
   if (!teamOrUser) {

@@ -58,7 +58,6 @@ function ProjectWithDataLoading({ project, ...props }) {
   const { value: users } = useUsers(project.userIDs);
   const { value: teams } = useTeams(project.teamIDs);
   const projectWithData = { ...project, users, teams };
-  console.log(projectWithData);
   return <ProjectItem project={projectWithData} {...props} />;
 }
 
@@ -77,6 +76,20 @@ function ProjectResult({ result }) {
 
   return <ProjectItem {...props} />;
 }
+
+function CollectionWithDataLoading ({ collection }) {
+  const { value: users } = useUsers(collection.userIDs);
+  const { value: teams } = useTeams(collection.teamIDs);
+  
+}
+
+function CollectionResult({ result }) {
+  if (!result.user && !result.team) {
+    return <CollectionWithDataLoading collection={result} />
+  }
+  return <SmallCollectionItem collection={result} />
+}
+
 
 const groups = [
   { id: 'team', label: 'Teams' },
