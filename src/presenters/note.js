@@ -13,9 +13,12 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({ collection, project, update, hideNote }) => {
+const Note = ({ collection, project, update, hideNote, saveNote }) => {
   function updateNoteVisibility(description) {
     description = _.trim(description);
+    if (description && saveNote) {
+      saveNote({ description, projectId: project.id })
+    }
     if (!description || description.length === 0) {
       setTimeout(() => hideNote(project.id), 500);
     }
