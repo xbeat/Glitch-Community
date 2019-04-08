@@ -38,17 +38,28 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
-const useProjectUsers = createAPIHook(async (api, userIDs) => {
+const useUsers = createAPIHook(async (api, userIDs) => {
+  if (!userIDs.length) { return [] }
   const idString = userIDs.map((id) => `id=${id}`).join('&');
 
   const { data } = await api.get(`/v1/users/by/id/?${idString}`);
   return Object.values(data);
 });
 
-function ProjectWithUserLoading({ project, ...props }) {
-  const users = useProjectUsers(project.userIDs);
-  const projectWithUsers = { ...project, users: users.value };
-  return <ProjectItem project={projectWithUsers} {...props} />;
+const useTeams = createAPIHook(async (api, teamIDs) => {
+  if (!teamIDs.length) { return [] }
+  const idString = teamIDs.map((id) => `id=${id}`).join('&');
+
+  const { data } = await api.get(`/v1/teams/by/id/?${idString}`);
+  return Object.values(data);
+});
+
+function ProjectWithDataLoading({ project, ...props }) {
+  const { value: users } = useUsers(project.userIDs);
+  const { value: teams } = useTeams(project.teamIDs);
+  const projectWithData = { ...project, users, teams };
+  console.log(projectWithData);
+  return <ProjectItem project={projectWithData} {...props} />;
 }
 
 function ProjectResult({ result }) {
@@ -61,7 +72,7 @@ function ProjectResult({ result }) {
   }
 
   if (!result.users) {
-    return <ProjectWithUserLoading {...props} />;
+    return <ProjectWithDataLoading {...props} />;
   }
 
   return <ProjectItem {...props} />;
