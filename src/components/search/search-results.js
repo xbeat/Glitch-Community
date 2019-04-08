@@ -14,7 +14,7 @@ import StarterKitItem from 'Components/search/starter-kit-result';
 import NotFound from 'Components/errors/not-found';
 import Loader from 'Components/loaders/loader';
 
-import { useAPI } from '../../state/api';
+import { useAPI, createAPIHook } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import styles from './search-results.styl';
@@ -42,12 +42,21 @@ function addProjectToCollection(api, project, collection) {
   return api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
+const useProjectUsers = createAPIHook(async (api, members) => {
+  const idString = members.map(id => `id=${id}`).join('&')
+  
+  const { data } = await api.get(`/v1/users/by/id/?${idString}`);
+  return Object.values(data)
+});
+
+
 function ProjectResult({ result }) {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
+  const users = useProjectUsers(result.members)
   return currentUser.login ? (
     <ProjectItem
-      project={result}
+      project={{ ...result, users: users.value || [] }}
       projectOptions={{
         addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
       }}

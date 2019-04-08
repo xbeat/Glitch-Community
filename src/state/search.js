@@ -120,7 +120,7 @@ const formatAlgoliaResult = (type) => ({ hits }) =>
   }));
 
 const algoliaProvider = {
-  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 500 }).then(formatAlgoliaResult(type))),
+  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 100 }).then(formatAlgoliaResult(type))),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
 };
 
