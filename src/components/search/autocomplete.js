@@ -1,4 +1,4 @@
-snoc  import React from 'react';
+import React from 'react';
 import MaskImage from 'Components/images/mask-image';
 import { Link, TeamLink, UserLink, ProjectLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from 'Components/images/avatar';
@@ -117,8 +117,10 @@ export const AutocompleteResults = ({ query, results }) => {
   );
 };
 
+function useLas
+
 const Autocomplete = ({ query }) => {
-  const debouncedQuery = useDebouncd
+  const debounced = useDebouncedValue(query, 100);
   const results = useAlgoliaSearch(query);
   if (results.totalHits > 0 && results.status === 'ready') {
     return (
