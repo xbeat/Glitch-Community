@@ -55,7 +55,6 @@ class TeamAnalyticsReferrers extends React.PureComponent {
       <div className="referrers-content">
         { activeFilter === "views" &&
           <article className="referrers-column app-views">
-            <h4>Total App Views</h4>
             <ul>
               <ReferrerPlaceholder count={totalAppViews} />
               <ReferrerItem count={totalDirectAppViews} total={totalAppViews} description="direct views" />
@@ -67,7 +66,6 @@ class TeamAnalyticsReferrers extends React.PureComponent {
         }
         { activeFilter === "remixes" && 
           <article className="referrers-column remixes">
-            <h4>Remixes</h4>
             <ul>
               <ReferrerPlaceholder count={totalRemixes} />
               <ReferrerItem count={totalDirectRemixes} total={totalRemixes} description="direct remixes" />

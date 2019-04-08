@@ -1,16 +1,10 @@
-analytics-app-views = #2077b4
-analytics-remixes = #ff7f0f
+analytics-app-views-color-color = #9588ea
+analytics-remix-color = #23d5e7
 
 .team-analytics
   position: relative
   section
-    margin-top: 1rem
-
-  .summary-item
-    cursor: pointer
-    &:hover
-      .summary-label
-        text-decoration: underline
+    margin-top: 1rem    
 
   .controls
     margin: 0
@@ -22,9 +16,9 @@ analytics-remixes = #ff7f0f
     padding: 3px 5px
     color: primary-background
     &.app-views    
-      background-color: analytics-app-views
+      background-color: analytics-app-views-color
     &.remixes
-      background-color: analytics-remixes
+      background-color: analytics-remix-color
 
   .activity
     margin-bottom: 0
@@ -51,15 +45,15 @@ analytics-remixes = #ff7f0f
     &.app-views    
       progress
         &::-webkit-progress-value
-          background-color: analytics-app-views
+          background-color: analytics-app-views-color
         &::-moz-progress-bar
-          background-color: analytics-app-views
+          background-color: analytics-app-views-color
     &.remixes
       progress
         &::-webkit-progress-value
-          background-color: analytics-remixes
+          background-color: analytics-remix-color
         &::-moz-progress-bar
-          background-color: analytics-remixes
+          background-color: analytics-remix-color
     // @media (max-width: mediumSmallViewport)
     //   width: calc(50% - 20px)
     @media (max-width: smallViewport)
