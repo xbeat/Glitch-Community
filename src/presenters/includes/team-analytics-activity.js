@@ -67,7 +67,7 @@ const dateFormat = (currentTimeFrame) => {
   return '%b-%d';
 };
 
-const renderChart = (c3, analytics, currentTimeFrame) => {
+const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics, currentTimeFrame);
@@ -91,14 +91,26 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
         },
       },
     },
+    legend: {
+      show: false,
+    },
   });
+  
+  window.chart = chart;
+  
+  if(activeFilter === "view"){
+    chart.hide(['remixes']);
+  }else if(activeFilter === "remixes"){
+    chart.hide(['appViews']);
+  }
+  
 };
 
 class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.isGettingData === true && this.props.isGettingData === false) {
       // graph total app views
-      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame);
+      renderChart(this.props.activeFilter, this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
 
@@ -108,6 +120,7 @@ class TeamAnalyticsActivity extends React.Component {
 }
 
 TeamAnalyticsActivity.propTypes = {
+  activeFilter: PropTypes.string.isRequired,
   c3: PropTypes.object.isRequired,
   analytics: PropTypes.object.isRequired,
   currentTimeFrame: PropTypes.string.isRequired,

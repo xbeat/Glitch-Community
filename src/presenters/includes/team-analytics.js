@@ -202,6 +202,7 @@ class TeamAnalytics extends React.Component {
           {(this.state.isGettingData || this.state.isGettingC3) && <Loader />}
           {!this.state.isGettingC3 && (
             <TeamAnalyticsActivity
+              activeFilter={this.state.activeFilter}
               c3={this.state.c3}
               analytics={this.state.analytics}
               isGettingData={this.state.isGettingData}
