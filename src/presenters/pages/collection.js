@@ -87,6 +87,8 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
+  console.log("collection", collection);
+  
   return (
     <>
       <Helmet title={collection.name} />
@@ -137,9 +139,9 @@ const CollectionPageContents = ({
                 <div className="collection-project-container-header">
                   {currentUserIsAuthor && <AddCollectionProject addProjectToCollection={addProjectToCollection} collection={collection} />}
                 </div>
-                {collection.featuredProjectId && (
+                {collection.featuredProject && (
                   <FeaturedProject
-                    featuredProject={{id: collection.featuredProject}}
+                    featuredProject={collection.featuredProject}
                     isAuthorized={true}
                     unfeatureProject={() => console.log("work on this")}
                     addProjectToCollection={() => console.log("work on this")}
@@ -221,6 +223,10 @@ async function loadCollection(api, ownerName, collectionName) {
       collection.user = await getSingleItem(api, `v1/users/by/id?id=${collection.user.id}`, collection.user.id);
     } else {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
+    }
+    
+    if (collection.featuredProjectId) {
+      collection.featuredProject = await getSingleItem(api, `v1/projects/by/id?id=${collection.featuredProjectId}`, collection.featuredProjectId);
     }
 
     // fetch users for each project
