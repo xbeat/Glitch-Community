@@ -25,6 +25,7 @@ function findStarterKits(query) {
 
 // byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
 const byPriority = (...prioritizedKeys) => (items, query) => {
+  console.log(prioritizedKeys, items, query);
   const normalizedQuery = normalize(query);
   for (const key of prioritizedKeys) {
     const match = items.find((item) => normalize(item[key]) === normalizedQuery);
@@ -42,9 +43,9 @@ const findTop = {
 const getTopResults = (resultsByType, query) =>
   [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
-
 // search provider logic -- shared between algolia & legacy API
 function useSearchProvider(provider, query) {
+  const { handleError } = useErrorHandlers();
   const emptyResults = mapValues(provider, () => []);
   const [results, setResults] = useState(emptyResults);
   const [status, setStatus] = useState('init');
@@ -54,20 +55,22 @@ function useSearchProvider(provider, query) {
       return;
     }
     setStatus('loading');
-    allByKeys(mapValues(provider, (index) => index(query))).then((res) => {
-      setResults(res);
-      setStatus('ready');
-    });
+    allByKeys(mapValues(provider, (index) => index(query)))
+      .then((res) => {
+        setResults(res);
+        setStatus('ready');
+      })
+      .catch(handleError);
   }, [query]);
 
   const totalHits = sumBy(Object.values(results), (items) => items.length);
+  const resultsWithEmpties = { ...emptyResults, ...results };
 
   return {
-    ...emptyResults,
     status,
     totalHits,
-    topResults: getTopResults(results, query),
-    ...results,
+    topResults: getTopResults(resultsWithEmpties, query),
+    ...resultsWithEmpties,
   };
 }
 
@@ -80,8 +83,14 @@ const searchIndices = {
   collection: searchClient.initIndex('search_collections'),
 };
 
+const formatAlgoliaResult = (type) => ({ hits }) => hits.map((value) => ({ 
+  type,
+  id: value.objectID.replace(`${type}_`, ''),
+  ...value 
+}));
+
 const algoliaProvider = {
-  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query }).then((value) => ({ type, value }))),
+  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query }).then(formatAlgoliaResult(type))),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
 };
 
@@ -91,7 +100,7 @@ export function useAlgoliaSearch(query) {
 
 // legacy search
 
-const formatLegacyResult = (type) => (hit) => ({ ...hit.data, type });
+const formatLegacyResult = (type) => ({ data }) => data.map((value) => ({ type, ...value }));
 
 const getLegacyProvider = (api) => ({
   team: (query) => api.get(`teams/search?q=${query}`).then(formatLegacyResult('team')),
@@ -103,6 +112,6 @@ const getLegacyProvider = (api) => ({
 
 export function useLegacySearch(query) {
   const api = useAPI();
-  const provider = getLegacyProvider(api);
-  return useSearchProvider(algoliaProvider, query);
+  const legacyProvider = getLegacyProvider(api);
+  return useSearchProvider(legacyProvider, query);
 }
