@@ -57,8 +57,10 @@ class CollectionEditor extends React.Component {
     console.log("this function is getting called");
     console.log("YOOOO", { note, projectId })
     note = _.trim(note);
+    console.log("ye old note");
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
+        console.log(project.id, projectId)
         if (project.id === projectId) {
           project.note = note;
         }
