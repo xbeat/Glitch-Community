@@ -80,23 +80,19 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
   return (
     <dialog className="pop-over project-options-pop">
-      {!!props.addPin && (
         <section className="pop-over-actions">
           {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
-          <TrackClick name="Project Pinned">
-            <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin" />
-          </TrackClick>
+          {!!props.addPin && (
+            <TrackClick name="Project Pinned">
+              <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin" />
+            </TrackClick>
+          )}
+          {!!props.removePin && (
+            <TrackClick name="Project Un-Pinned">
+              <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin" />
+            </TrackClick>
+          )}
         </section>
-      )}
-      {!!props.removePin && (
-        <section className="pop-over-actions">
-          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
-          <TrackClick name="Project Un-Pinned">
-            <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin" />
-          </TrackClick>
-        </section>
-      )}
-
       {showAddNote && (
         <section className="pop-over-actions">
           <PopoverButton onClick={toggleAndDisplayNote} {...props} text="Add Note" emoji="spiral_note_pad" />
