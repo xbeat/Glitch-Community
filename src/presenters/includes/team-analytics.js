@@ -188,18 +188,6 @@ class TeamAnalytics extends React.Component {
           </section>
         )}
 
-        <section className="summary">
-          {this.state.isGettingData ? (
-            <Loader />
-          ) : (
-            <TeamAnalyticsSummary
-              activeFilter={this.state.activeFilter}
-              totalAppViews={this.state.totalAppViews}
-              totalRemixes={this.state.totalRemixes}
-            />
-          )}
-        </section>
-
         <section className="activity">
           <figure id="chart" className="c3" />
           {(this.state.isGettingData || this.state.isGettingC3) && <Loader />}
@@ -210,6 +198,18 @@ class TeamAnalytics extends React.Component {
               analytics={this.state.analytics}
               isGettingData={this.state.isGettingData}
               currentTimeFrame={this.state.currentTimeFrame}
+            />
+          )}
+        </section>
+        
+        <section className="summary">
+          {this.state.isGettingData ? (
+            <Loader />
+          ) : (
+            <TeamAnalyticsSummary
+              activeFilter={this.state.activeFilter}
+              totalAppViews={this.state.totalAppViews}
+              totalRemixes={this.state.totalRemixes}
             />
           )}
         </section>
