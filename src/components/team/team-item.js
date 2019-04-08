@@ -42,7 +42,6 @@ const TeamItem = ({ team }) => (
 
 TeamItem.propTypes = {
   team: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

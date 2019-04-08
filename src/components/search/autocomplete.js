@@ -1,10 +1,11 @@
-import React from 'react';
+snoc  import React from 'react';
 import MaskImage from 'Components/images/mask-image';
-import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
-import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
+import { Link, TeamLink, UserLink, ProjectLink } from '../../presenters/includes/link';
+import { TeamAvatar, UserAvatar } from 'Components/images/avatar';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { useAlgoliaSearch } from '../../state/search';
+import useDebouncedValue from '../../hooks/use-debounced-value';
 import styles from './autocomplete.styl';
 
 const StarterKitResult = ({ value: starterKit }) => (
@@ -22,7 +23,7 @@ const StarterKitResult = ({ value: starterKit }) => (
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
-      <TeamAvatar hideTooltip team={team} />
+      <TeamAvatar hideTooltip team={{ ...team, hasAvatarImage: true }} />
     </div>
     <div className={styles.infoContainer}>
       <div className={styles.infoPrimary}>{team.name}</div>
@@ -53,6 +54,12 @@ const ProjectResult = ({ value: project }) => (
       <div className={styles.infoSecondary}>{project.description}</div>
     </div>
   </ProjectLink>
+);
+
+const CollectionLink = ({ collection, children, ...props }) => (
+  <a href={`/@${collection.fullUrl}`} {...props}>
+    {children}
+  </a>
 );
 
 const CollectionResult = ({ value: collection }) => (
@@ -111,6 +118,7 @@ export const AutocompleteResults = ({ query, results }) => {
 };
 
 const Autocomplete = ({ query }) => {
+  const debouncedQuery = useDebouncd
   const results = useAlgoliaSearch(query);
   if (results.totalHits > 0 && results.status === 'ready') {
     return (

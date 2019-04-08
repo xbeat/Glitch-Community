@@ -106,7 +106,7 @@ const formatByType = {
   }),
   collection: (collection) => ({
     coverColor: '#eee',
-    color: '',
+    color: '#eee',
     ...collection,
     id: Number(collection.objectID.replace('collection-', '')),
     team: null,

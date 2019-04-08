@@ -12,20 +12,15 @@ import styles from './avatar.styl';
 
 export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withinButton }) => {
   let onError = null;
-  if (srcFallback) {
-    onError = (event) => {
-      event.target.src = srcFallback;
-    };
-  }
 
   const contents = (
     <Image
       width="32px"
       height="32px"
       src={src}
+      defaultSrc={srcFallback}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={onError}
       className={styles[type]}
     />
   );
@@ -90,7 +85,7 @@ UserAvatar.propTypes = {
     login: PropTypes.string,
     name: PropTypes.string,
     avatarThumbnailUrl: PropTypes.string,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
   }).isRequired,
   suffix: PropTypes.string,
   hideTooltip: PropTypes.bool,
