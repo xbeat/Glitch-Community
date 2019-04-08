@@ -9,7 +9,7 @@ import { UserAvatar, TeamAvatar } from 'Components/images/avatar';
 import { createAPIHook } from '../../state/api';
 import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
-import { CollectionLink, UserLink, TeamLink } from '../../presenters/includes/link';
+import { UserLink, TeamLink } from '../../presenters/includes/link';
 
 import styles from './collection-item.styl';
 
@@ -52,6 +52,8 @@ const CollectionCurator = ({ collection }) => {
   );
 };
 
+const CollectionLink = ({ collection, ...props }) => <a href={`/@${collection.fullUrl}`} {...props} />;
+
 const SmallCollectionItem = ({ collection }) => (
   <div className={styles.smallContainer}>
     <div className={styles.curator}>
@@ -75,7 +77,7 @@ const SmallCollectionItem = ({ collection }) => (
         </div>
       </div>
       <div className={styles.smallProjectCount}>
-        <Pluralize count={collection.projectCount} singular="project" /> →
+        <Pluralize count={collection.projects.length} singular="project" /> →
       </div>
     </CollectionLink>
   </div>
