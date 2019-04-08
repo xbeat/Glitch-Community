@@ -97,9 +97,12 @@ const formatByType = {
   project: (project) => ({
     description: '',
     showAsGlitchTeam: false,
-    users: [],
     ...project,
     id: project.objectID.replace('project-', ''),
+    users: null,
+    teams: null,
+    userIDs: project.members,
+    teamIDs: project.teams,
   }),
   collection: (collection) => ({
     coverColor: '#eee',

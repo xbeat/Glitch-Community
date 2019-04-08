@@ -19,11 +19,18 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
+const ProjectMembers = ({ project }) =>
+  project.users || project.teams ? (
+    <StaticUsersList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+  ) : (
+    <div className={styles.placeholderMemberAvatar} />
+  );
+
 const ProjectItem = ({ project, projectOptions }) => (
   <div className={styles.container}>
     <header className={styles.header}>
       <div className={styles.userListContainer}>
-        <StaticUsersList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+        <ProjectMembers project={project} />
       </div>
       <div className={styles.projectOptionsContainer}>
         <ProjectOptionsPop project={project} projectOptions={projectOptions} />
@@ -54,7 +61,7 @@ ProjectItem.propTypes = {
     id: PropTypes.string.isRequired,
     private: PropTypes.bool,
     showAsGlitchTeam: PropTypes.bool.isRequired,
-    users: PropTypes.array.isRequired,
+    users: PropTypes.array,
     teams: PropTypes.array,
   }).isRequired,
   projectOptions: PropTypes.object,

@@ -9,7 +9,6 @@ import { UserAvatar, TeamAvatar } from 'Components/images/avatar';
 import { createAPIHook } from '../../state/api';
 import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
-import { UserLink, TeamLink } from '../../presenters/includes/link';
 
 import styles from './collection-item.styl';
 
@@ -39,20 +38,16 @@ const CollectionCurator = ({ collection }) => {
   }
 
   if (teamOrUser.type === 'user') {
-    return (
-      <UserLink user={teamOrUser}>
-        <UserAvatar user={teamOrUser} />
-      </UserLink>
-    );
+    return <UserAvatar user={teamOrUser} />;
   }
-  return (
-    <TeamLink team={teamOrUser}>
-      <TeamAvatar team={teamOrUser} />
-    </TeamLink>
-  );
+  return <TeamAvatar team={teamOrUser} />;
 };
 
-const CollectionLink = ({ collection, ...props }) => <a href={`/@${collection.fullUrl}`} {...props} />;
+const CollectionLink = ({ collection, children, ...props }) => (
+  <a href={`/@${collection.fullUrl}`} {...props}>
+    {children}
+  </a>
+);
 
 const SmallCollectionItem = ({ collection }) => (
   <div className={styles.smallContainer}>

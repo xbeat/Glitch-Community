@@ -2,14 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'Components/images/image';
-import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
-import { getProfileStyle as getUserProfileStyle } from '../../models/user';
 import styles from './search-result-cover-bar.styl';
-
-const getProfileStyles = {
-  team: getTeamProfileStyle,
-  user: getUserProfileStyle,
-};
 
 const cacheBuster = Math.floor(Math.random() * 1000);
 

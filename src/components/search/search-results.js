@@ -38,32 +38,33 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
-function addProjectToCollection(api, project, collection) {
-  return api.patch(`collections/${collection.id}/add/${project.id}`);
-}
+const useProjectUsers = createAPIHook(async (api, userIDs) => {
+  const idString = userIDs.map((id) => `id=${id}`).join('&');
 
-const useProjectUsers = createAPIHook(async (api, members) => {
-  const idString = members.map(id => `id=${id}`).join('&')
-  
   const { data } = await api.get(`/v1/users/by/id/?${idString}`);
-  return Object.values(data)
+  return Object.values(data);
 });
 
+function ProjectWithUserLoading({ project, ...props }) {
+  const users = useProjectUsers(project.userIDs);
+  const projectWithUsers = { ...project, users: users.value };
+  return <ProjectItem project={projectWithUsers} {...props} />;
+}
 
 function ProjectResult({ result }) {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
-  const users = useProjectUsers(result.members)
-  return currentUser.login ? (
-    <ProjectItem
-      project={{ ...result, users: users.value || [] }}
-      projectOptions={{
-        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-      }}
-    />
-  ) : (
-    <ProjectItem project={result} />
-  );
+
+  const props = { project: result };
+  if (currentUser.login) {
+    props.addProjectToCollection = (project, collection) => api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+
+  if (!result.users) {
+    return <ProjectWithUserLoading {...props} />;
+  }
+
+  return <ProjectItem {...props} />;
 }
 
 const groups = [
