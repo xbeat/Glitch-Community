@@ -3,9 +3,9 @@ const body =
 
 // make sure image urls use https
 export default {
-  image: 'https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FGlitch_Illo_TechArt-VR-Headline%20(1).png?1554716782829',
+  image: 'https://community.glitch.me/culture/content/images/2019/04/Glitch_Illo_TechArt-VR-Headline-v1--1-.png',
   mask: 'mask-4',
-  title: 'Master WebVR With a Week of Experiments',
+  title: 'Master WebVR This Week',
   appDomain: 'aframe-bvh-mocap',
   blogUrl: '/master-webvr-with-a-week-of-experiments/',
   body,
