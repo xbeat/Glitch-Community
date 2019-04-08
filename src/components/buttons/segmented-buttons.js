@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styles from './segmented-buttons.styl';
 import Button from './button';
 
-const SegmentedButtons = ({ value, buttons, onChange }) => (
+const SegmentedButtons = ({ value, buttons, onChange, type }) => (
   <div className={styles.segmentedButtons}>
     {buttons.map((button) => (
-      <Button key={button.name} size="small" type="tertiary" active={button.name === value} onClick={() => onChange(button.name)}>
+      <Button key={button.name} type="tertiary" active={button.name === value} onClick={() => onChange(button.name)}>
         {button.contents}
       </Button>
     ))}
@@ -24,5 +24,6 @@ SegmentedButtons.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
 
 export default SegmentedButtons;
