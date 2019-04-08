@@ -1,5 +1,5 @@
 const body =
-  '<p>Join virtual reality expert Andres Cuérvo for a week of experiments that will both teach and inspire you to create your own WebVR experiences.</p>';
+  '<p>Join virtual reality expert Andrés Cuervo for a week of experiments that will both teach and inspire you to create your own WebVR experiences.</p>';
 
 // make sure image urls use https
 export default {
