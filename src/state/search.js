@@ -83,29 +83,38 @@ const searchIndices = {
 };
 
 const formatByType = {
-  user: (user) => ({ 
+  user: (user) => ({
     hasCoverImage: true,
     color: '',
-    ...user, 
+    ...user,
     id: Number(user.objectID.replace('user-', '')),
     thanksCount: user.thanks,
   }),
-  team: (team) => ({ 
+  team: (team) => ({
     users: [],
     hasAvatarImage: true,
     hasCoverImage: true,
     isVerified: false,
-    ...team, 
+    ...team,
     id: Number(team.objectID.replace('team-', '')),
   }),
-  project: (project) => ({ 
+  project: (project) => ({
     description: '',
     showAsGlitchTeam: false,
     users: [],
-    ...project, 
-    id: Number(project.objectID.replace('project-', '')),
+    ...project,
+    id: project.objectID.replace('project-', ''),
   }),
-  collection: (collection) => ({ ...collection, id: collection.objectID.replace('collection-', '') }),
+  collection: (collection) => ({
+    coverColor: '#eee',
+    color: '',
+    ...collection,
+    id: Number(collection.objectID.replace('collection-', '')),
+    team: {},
+    user: {},
+    teamId: collection.team,
+    userId: collection.user,
+  }),
 };
 
 const formatAlgoliaResult = (type) => ({ hits }) =>
