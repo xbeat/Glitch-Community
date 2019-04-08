@@ -281,6 +281,7 @@ storiesOf('SmallCollectionItem', module).add(
           description: 'A collection of cool projects',
           coverColor: '#efe',
           user: users.modernserf,
+          projects: [{}],
         }}
       />
     </div>
