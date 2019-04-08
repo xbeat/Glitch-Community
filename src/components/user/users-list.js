@@ -35,7 +35,12 @@ export const StaticUsersList = ({ users, teams, layout }) => {
 
 StaticUsersList.propTypes = {
   users: PropTypes.array.isRequired,
+  teams: PropTypes.array,
   layout: PropTypes.oneOf(['row', 'block']).isRequired,
+};
+
+StaticUsersList.defaultProps = {
+  teams: [],
 };
 
 // UserTile
@@ -102,17 +107,17 @@ const GlitchTeamUsersList = ({ layout }) => {
 
 const PlaceholderUsersList = () => (
   <ul className={styles.container}>
-      <li className={styles.listItem}>
-        <div className={styles.placeholder}/>
-      </li>
+    <li className={styles.listItem}>
+      <div className={styles.placeholder} />
+    </li>
   </ul>
-)
+);
 
 const UsersList = ({ glitchTeam, users, layout, teams, avatarsOnly }) => {
   if (!users || !teams) {
-    return <PlaceholderUsersList />
+    return <PlaceholderUsersList />;
   }
-  
+
   if (glitchTeam) {
     return <GlitchTeamUsersList layout={layout} />;
   }

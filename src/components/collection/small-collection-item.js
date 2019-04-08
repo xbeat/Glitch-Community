@@ -6,8 +6,6 @@ import Markdown from 'Components/text/markdown';
 import Button from 'Components/buttons/button';
 import { UserAvatar, TeamAvatar } from 'Components/images/avatar';
 
-import { createAPIHook } from '../../state/api';
-import { getSingleItem } from '../../../shared/api';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 
 import styles from './collection-item.styl';
@@ -20,15 +18,13 @@ const collectionColorStyles = (collection) => ({
 const PrivateIcon = () => <span className="project-badge private-project-badge" aria-label="private" />;
 
 const CollectionCurator = ({ collection }) => {
-  const { value: teamOrUser } = useTeamOrUser(collection.teamId, collection.userId);
-  if (!teamOrUser) {
-    return <div className={styles.placeholderAvatar} />;
+  if (collection.user) {
+    return <UserAvatar user={collection.user} />;
   }
-
-  if (teamOrUser.type === 'user') {
-    return <UserAvatar user={teamOrUser} />;
+  if (collection.team) {
+    return <TeamAvatar team={collection.team} />;
   }
-  return <TeamAvatar team={teamOrUser} />;
+  return <div className={styles.placeholderAvatar} />;
 };
 
 const CollectionLink = ({ collection, children, ...props }) => (

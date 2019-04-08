@@ -38,8 +38,11 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
+// Project and collection search results do not contain th
 const useUsers = createAPIHook(async (api, userIDs) => {
-  if (!userIDs.length) { return [] }
+  if (!userIDs.length) {
+    return [];
+  }
   const idString = userIDs.map((id) => `id=${id}`).join('&');
 
   const { data } = await api.get(`/v1/users/by/id/?${idString}`);
@@ -47,7 +50,9 @@ const useUsers = createAPIHook(async (api, userIDs) => {
 });
 
 const useTeams = createAPIHook(async (api, teamIDs) => {
-  if (!teamIDs.length) { return [] }
+  if (!teamIDs.length) {
+    return [];
+  }
   const idString = teamIDs.map((id) => `id=${id}`).join('&');
 
   const { data } = await api.get(`/v1/teams/by/id/?${idString}`);
@@ -77,19 +82,19 @@ function ProjectResult({ result }) {
   return <ProjectItem {...props} />;
 }
 
-function CollectionWithDataLoading ({ collection }) {
-  const { value: users } = useUsers(collection.userIDs);
-  const { value: teams } = useTeams(collection.teamIDs);
-  
+function CollectionWithDataLoading({ collection }) {
+  const { value: users = [] } = useUsers(collection.userIDs);
+  const { value: teams = [] } = useTeams(collection.teamIDs);
+  const collectionWithData = { ...collection, user: users[0], team: teams[0] };
+  return <SmallCollectionItem collection={collectionWithData} />;
 }
 
 function CollectionResult({ result }) {
   if (!result.user && !result.team) {
-    return <CollectionWithDataLoading collection={result} />
+    return <CollectionWithDataLoading collection={result} />;
   }
-  return <SmallCollectionItem collection={result} />
+  return <SmallCollectionItem collection={result} />;
 }
-
 
 const groups = [
   { id: 'team', label: 'Teams' },
@@ -102,7 +107,7 @@ const resultComponents = {
   team: ({ result }) => <TeamItem team={result} />,
   user: ({ result }) => <UserItem user={result} />,
   project: ProjectResult,
-  collection: ({ result }) => <SmallCollectionItem collection={result} />,
+  collection: CollectionResult,
 };
 
 const ResultComponent = ({ result }) => {

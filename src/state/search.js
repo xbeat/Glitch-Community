@@ -109,10 +109,10 @@ const formatByType = {
     color: '',
     ...collection,
     id: Number(collection.objectID.replace('collection-', '')),
-    team: {},
-    user: {},
-    teamId: collection.team,
-    userId: collection.user,
+    team: null,
+    user: null,
+    teamIDs: collection.team > 0 ? [collection.team] : [],
+    userIDs: collection.user > 0 ? [collection.user] : [],
   }),
 };
 
