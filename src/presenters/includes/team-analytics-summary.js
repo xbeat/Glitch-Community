@@ -5,7 +5,7 @@ import Pluralize from 'react-pluralize';
 class TeamAnalyticsSummary extends React.Component {
 
   render() {
-    const {activeFilter} = this.props;
+    const {activeFilter, currentProjectDomain, currentTimeFrame} = this.props;
     return (
       <>
         { activeFilter === "views" && 
@@ -32,6 +32,8 @@ class TeamAnalyticsSummary extends React.Component {
 }
 
 TeamAnalyticsSummary.propTypes = {
+  currentProjectDomain: PropTypes.string.isRequired,
+  currentTimeFrame: PropTypes.string.isRequired,
   activeFilter: PropTypes.string.isRequired,
   totalAppViews: PropTypes.number.isRequired,
   totalRemixes: PropTypes.number.isRequired,

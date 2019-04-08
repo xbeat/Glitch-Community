@@ -114,6 +114,8 @@ analytics-remix-color = #23d5e7
 /*-- Tooltip --*/
 .c3-tooltip-container
   z-index: 10
+  border: 1px solid secondary
+  border-radius: 3px
 
 .c3-tooltip
   border-collapse: collapse
@@ -123,7 +125,7 @@ analytics-remix-color = #23d5e7
   -webkit-box-shadow: 7px 7px 12px -9px #777777
   -moz-box-shadow: 7px 7px 12px -9px #777777
   box-shadow: 7px 7px 12px -9px #777777
-  opacity: 0.9
+  opacity: 0.95
 
 .c3-tooltip tr
   &:first
@@ -136,6 +138,7 @@ analytics-remix-color = #23d5e7
 
 .c3-tooltip th
   background: secondary-background-active
+  border-bottom: 1px solid secondary
   color: primary
   font-size: 14px
   padding: 5px
@@ -158,6 +161,7 @@ analytics-remix-color = #23d5e7
 
 .c3-tooltip td.value
   text-align: left
+  background: none
 
 /*-- Area --*/
 .c3-area
