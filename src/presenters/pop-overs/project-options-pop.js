@@ -77,9 +77,11 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
   const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.displayNewNote;
+  const showPinOrFeatureSection = props.addPin || props.removePin || props.featureProject;
 
   return (
     <dialog className="pop-over project-options-pop">
+      { showPinOrFeatureSection && (
         <section className="pop-over-actions">
           {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
           {!!props.addPin && (
@@ -93,6 +95,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
             </TrackClick>
           )}
         </section>
+      )}
       {showAddNote && (
         <section className="pop-over-actions">
           <PopoverButton onClick={toggleAndDisplayNote} {...props} text="Add Note" emoji="spiral_note_pad" />
