@@ -39,10 +39,10 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote }) => {
     <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
         <AuthDescription
-          authorized={!!update}
+          authorized={!!updateNote}
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={update}
+          update={(note) => updateNote({ note, projectId: project.id })}
           onBlur={updateNoteVisibility}
           allowImages
         />
