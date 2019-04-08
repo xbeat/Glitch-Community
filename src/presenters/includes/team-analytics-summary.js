@@ -13,8 +13,8 @@ class TeamAnalyticsSummary extends React.Component {
           <span className="total app-views">{this.props.totalAppViews.toLocaleString('en')}</span>{' '}
           <Pluralize
             className="summary-label"
-            singular="Total App View"
-            plural="Total App Views"
+            singular="App View"
+            plural="App Views"
             count={this.props.totalAppViews}
             showCount={false}
           />
