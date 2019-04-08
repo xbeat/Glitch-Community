@@ -1,3 +1,6 @@
+viewColor = #9588ea;
+remixColor = #23d5e7;
+
 /*-- Chart --*/
 .c3
   margin: 0
@@ -183,9 +186,19 @@
 
 /*-- Custom Styling for Glitch Analytics --*/
 .c3-line-Total-App-Views{
-  stroke: #9588ea !important;
+  stroke: viewColor !important
+  stroke-width: 3px
+}
+
+.c3-selected-circles-Total-App-Views circle{
+  fill: viewColor !important
 }
 
 .c3-line-Remixes{
-  stroke: #23d5e7 !important;
+  stroke: remixColor !important
+  stroke-width: 3px
+}
+
+.c3-selected-circles-Remixes circle{
+  fill: remixColor !important
 }

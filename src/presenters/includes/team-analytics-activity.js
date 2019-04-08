@@ -64,7 +64,7 @@ const dateFormat = (currentTimeFrame) => {
   if (currentTimeFrame === 'Last 24 Hours') {
     return '%H:%M %p';
   }
-  return '%b-%d';
+  return '%b %d';
 };
 
 const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
@@ -93,6 +93,7 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
       y:{
         min: 0,
         padding: {bottom: 0},
+
       },
     },
     legend: {
