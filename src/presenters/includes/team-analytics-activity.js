@@ -99,6 +99,18 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
     legend: {
       show: false,
     },
+    tooltip: {
+      format: {
+        value: function (value, ratio, id) {
+          console.log(value, ratio, id);
+          if(id === 'views'){
+            return value + " views";
+          }else if(id === 'remixes'){
+            return value + " remixes";
+          }
+        },
+      },
+    },
   });
   
   if(activeFilter === "views"){
