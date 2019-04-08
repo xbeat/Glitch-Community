@@ -5,7 +5,7 @@ import Heading from 'Components/text/heading';
 import ProjectEmbed from 'Components/project/project-embed';
 import Emoji from 'Components/images/emoji';
 import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-project-options-pop';
-
+import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
@@ -15,7 +15,11 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       Featured Project
       <Emoji name="clapper" />
       {featuredProject.note && (
-        <div>{featuredProject.note} by {featuredProject.users[0].name}</div>
+        <Note 
+          collection
+          project={featuredProject}
+          update={update} 
+          hideNote={hideNote} })
       )}
     </Heading>
   );
