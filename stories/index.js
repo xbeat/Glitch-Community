@@ -280,9 +280,7 @@ storiesOf('SmallCollectionItem', module).add(
           name: 'Cool Projects',
           description: 'A collection of cool projects',
           coverColor: '#efe',
-          userId: 271885,
-          user: { id: 271885 },
-          teamId: -1,
+          user: users.modernserf,
         }}
       />
     </div>

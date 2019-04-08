@@ -38,7 +38,7 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
-// Project and collection search results (from algolia) do not contain their associated users, 
+// Project and collection search results (from algolia) do not contain their associated users,
 // so those need to be fetched after the search results have loaded.
 const useUsers = createAPIHook(async (api, userIDs) => {
   if (!userIDs.length) {

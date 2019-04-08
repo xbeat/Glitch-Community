@@ -11,8 +11,6 @@ import styles from './avatar.styl';
 // UserAvatar
 
 export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withinButton }) => {
-  let onError = null;
-
   const contents = (
     <Image
       width="32px"

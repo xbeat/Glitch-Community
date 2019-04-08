@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MaskImage from 'Components/images/mask-image';
-import { Link, TeamLink, UserLink, ProjectLink } from '../../presenters/includes/link';
 import { TeamAvatar, UserAvatar } from 'Components/images/avatar';
+import { Link, TeamLink, UserLink, ProjectLink } from '../../presenters/includes/link';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { useAlgoliaSearch } from '../../state/search';
-import useDebouncedValue from '../../hooks/use-debounced-value';
 import styles from './autocomplete.styl';
 
 const StarterKitResult = ({ value: starterKit }) => (
@@ -117,12 +116,21 @@ export const AutocompleteResults = ({ query, results }) => {
   );
 };
 
-function useLas
+// when results are loading, show the previous set of results instead.
+function useLastCompleteSearchResult(query) {
+  const results = useAlgoliaSearch(query);
+  const [lastCompleteResults, setLastCompleteResults] = useState(results);
+  useEffect(() => {
+    if (results.status === 'ready') {
+      setLastCompleteResults(results);
+    }
+  }, [results.status]);
+  return lastCompleteResults;
+}
 
 const Autocomplete = ({ query }) => {
-  const debounced = useDebouncedValue(query, 100);
-  const results = useAlgoliaSearch(query);
-  if (results.totalHits > 0 && results.status === 'ready') {
+  const results = useLastCompleteSearchResult(query);
+  if (query && results.totalHits > 0 && results.status === 'ready') {
     return (
       <div className={styles.popOver}>
         <AutocompleteResults query={query} results={results} />
