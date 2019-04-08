@@ -178,13 +178,14 @@ class TeamAnalytics extends React.Component {
         {!!this.props.projects.length && (
           <section className="controls">
             <SegmentedButtons value={this.state.activeFilter} buttons={buttons} onChange={this.setFilter.bind(this)} />
-
-            <TeamAnalyticsProjectPop
-              updateProjectDomain={this.updateProjectDomain.bind(this)}
-              currentProjectDomain={this.state.currentProjectDomain}
-              projects={this.props.projects}
-            />
-            <TeamAnalyticsTimePop updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
+            <div className="options">
+              <TeamAnalyticsProjectPop
+                updateProjectDomain={this.updateProjectDomain.bind(this)}
+                currentProjectDomain={this.state.currentProjectDomain}
+                projects={this.props.projects}
+              />
+              <TeamAnalyticsTimePop updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
+            </div>
           </section>
         )}
 
