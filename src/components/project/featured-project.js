@@ -15,7 +15,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       <Emoji name="clapper" />
       {featuredProject.note && (
         <div>{featuredProject.note}</div>
-        {featuredProject.u}
+        {featuredProject.users[0].name}
       )}
     </Heading>
   );
