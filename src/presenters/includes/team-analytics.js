@@ -153,19 +153,19 @@ class TeamAnalytics extends React.Component {
       },
     );
   }
-  
-  setFilter(filter){
-    this.setState({ activeFilter: filter});
+
+  setFilter(filter) {
+    this.setState({ activeFilter: filter });
   }
 
   render() {
     if (!this.props.currentUserIsOnTeam) {
       return null;
     }
-    
+
     // segmented button filters
-    const buttons = [{name: "views", contents: "App Views"}, {name: "remixes", contents: "Remixes"}];
-    
+    const buttons = [{ name: 'views', contents: 'App Views' }, { name: 'remixes', contents: 'Remixes' }];
+
     return (
       <section className="team-analytics">
         <h2>
@@ -176,10 +176,9 @@ class TeamAnalytics extends React.Component {
         </h2>
 
         {!!this.props.projects.length && (
-          
           <section className="controls">
             <SegmentedButtons value={this.state.activeFilter} buttons={buttons} onChange={this.setFilter.bind(this)} />
-            
+
             <TeamAnalyticsProjectPop
               updateProjectDomain={this.updateProjectDomain.bind(this)}
               currentProjectDomain={this.state.currentProjectDomain}
@@ -193,7 +192,11 @@ class TeamAnalytics extends React.Component {
           {this.state.isGettingData ? (
             <Loader />
           ) : (
-            <TeamAnalyticsSummary activeFilter={this.state.activeFilter} totalAppViews={this.state.totalAppViews} totalRemixes={this.state.totalRemixes} />
+            <TeamAnalyticsSummary
+              activeFilter={this.state.activeFilter}
+              totalAppViews={this.state.totalAppViews}
+              totalRemixes={this.state.totalRemixes}
+            />
           )}
         </section>
 
