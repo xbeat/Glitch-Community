@@ -55,6 +55,7 @@ module.exports = function(app) {
     // Do the actual proxy
     app.use(routeWithLeadingSlash, (req, ...args) => {
       if (/\/sitemap.*(\.xml|\.xsl)$/.test(req.path)) {
+        console.log('sitemap');
         return sitemapProxy(req, ...args);
       }
       return genericProxy(req, ...args);
