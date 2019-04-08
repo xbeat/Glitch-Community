@@ -54,7 +54,8 @@ class CollectionEditor extends React.Component {
   }
 
   updateNote({ note, projectId }) {
-    console.log({ note, projectId })
+    console.log("this function is getting called");
+    console.log("YOOOO", { note, projectId })
     note = _.trim(note);
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
@@ -100,7 +101,7 @@ class CollectionEditor extends React.Component {
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       displayNewNote: (projectId) => this.displayNewNote(projectId),
-      updateNote: ({ note, projectId }) => this.updateNote({ note, projectId }),
+      updateNote: this.updateNote,
       saveNote: ({ note, projectId }) => this.saveNote({ note, projectId }),
       hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),

@@ -18,9 +18,9 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
         <Note 
           project={featuredProject}
           collection={noteOptions.collection}
-          update={isAuthorized ? noteOptions.updateNote : null} 
-          hideNote={isAuthorized ? noteOptions.hideNote : null}
-          saveNote={isAuthorized ? noteOptions.saveNote : null}
+          update={noteOptions.updateNote} 
+          hideNote={noteOptions.hideNote}
+          saveNote={noteOptions.saveNote}
           isAuthorized={isAuthorized}
         />
       )}

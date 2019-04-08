@@ -42,7 +42,10 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorize
           authorized={isAuthorized}
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={(note) => updateNote({ note, projectId: project.id })}
+          update={(note) => {
+            console.log("inside update", note, project.id, updateNote)
+            updateNote({ note, projectId: project.id })
+          }}
           onBlur={updateNoteVisibility}
           allowImages
         />
