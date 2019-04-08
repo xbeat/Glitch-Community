@@ -10,11 +10,12 @@ import UsersList from './users-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
-const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props }) => (
+const ProjectItem = ({ project, collection, hideProjectDescriptions, isAuthorized, ...props }) => (
   <>
     <Note
       collection={collection}
       project={project}
+      isAuthorized={isAuthorized}
       updateNote={props.projectOptions.updateNote}
       saveNote={props.projectOptions.saveNote}
       hideNote={props.projectOptions.hideNote}

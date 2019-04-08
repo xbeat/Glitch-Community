@@ -53,7 +53,8 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
-  async updateNote({ note, projectId }) {
+  updateNote({ note, projectId }) {
+    console.log({ note, projectId })
     note = _.trim(note);
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {

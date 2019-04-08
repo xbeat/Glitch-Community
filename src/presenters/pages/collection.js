@@ -149,9 +149,9 @@ const CollectionPageContents = ({
                     trackingOrigin="collection page"
                     noteOptions={{
                       collection: collection,
-                      updateNote: updateNote,
-                      hideNote: hideNote,
-                      saveNote: saveNote,
+                      updateNote,
+                      hideNote,
+                      saveNote,
                     }}
                   />
                 )}
@@ -160,6 +160,7 @@ const CollectionPageContents = ({
                     {...props}
                     projects={collection.projects}
                     collection={collection}
+                    isAuthorized={currentUserIsAuthor}
                     projectOptions={{
                       removeProjectFromCollection,
                       addProjectToCollection,

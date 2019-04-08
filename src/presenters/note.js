@@ -13,11 +13,11 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({ collection, project, updateNote, hideNote, saveNote }) => {
-  function updateNoteVisibility(description) {
+const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorized }) => {
+  async function updateNoteVisibility(description) {
     description = _.trim(description);
     if (description && saveNote) {
-      saveNote({ description, projectId: project.id })
+      await saveNote({ note: description, projectId: project.id })
     }
     if (!description || description.length === 0) {
       setTimeout(() => hideNote(project.id), 500);
@@ -39,7 +39,7 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote }) => {
     <div className="note">
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
         <AuthDescription
-          authorized={!!updateNote}
+          authorized={isAuthorized}
           description={project.note || ''}
           placeholder="Share why you love this app."
           update={(note) => updateNote({ note, projectId: project.id })}
