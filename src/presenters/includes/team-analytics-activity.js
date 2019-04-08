@@ -112,7 +112,6 @@ class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.activeFilter !== this.props.activeFilter || (prevProps.isGettingData === true && this.props.isGettingData === false)) {
       // graph total app views
-      console.log('render chart');
       renderChart(this.props.activeFilter, this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }

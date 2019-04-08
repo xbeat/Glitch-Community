@@ -215,6 +215,7 @@ class TeamAnalytics extends React.Component {
           <h3>Referrers</h3>
           {(this.state.isGettingData && <Loader />) || (
             <TeamAnalyticsReferrers
+              activeFilter={this.state.activeFilter}
               analytics={this.state.analytics}
               totalRemixes={this.state.totalRemixes}
               totalAppViews={this.state.totalAppViews}
