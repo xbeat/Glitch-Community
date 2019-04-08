@@ -1,20 +1,13 @@
 /* eslint-disable prefer-default-export */
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
-import { mapValues } from 'lodash';
+import { mapValues, sumBy } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
 import starterKits from '../curated/starter-kits';
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
-
-const searchIndices = {
-  team: searchClient.initIndex('search_teams'),
-  user: searchClient.initIndex('search_users'),
-  project: searchClient.initIndex('search_projects'),
-  collection: searchClient.initIndex('search_collections'),
-};
 
 // TODO: this is super hacky; this would probably work a lot better with algolia
 const normalize = (str) =>
@@ -49,47 +42,59 @@ const findTop = {
 const getTopResults = (resultsByType, query) =>
   [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
-const emptyResults = { team: [], user: [], project: [], collection: [], starterKit: [] };
-
-export function useAlgoliaSearch(query) {
+function useSearchProvider(provider, query) {
+  const emptyResults = mapValues(provider, () => []);
   const [results, setResults] = useState(emptyResults);
   const [status, setStatus] = useState('init');
-
   useEffect(() => {
-    const searchParams = {
-      query,
-      hitsPerPage: 500,
-    };
-
     if (!query) {
       setResults(emptyResults);
       return;
     }
     setStatus('loading');
-    allByKeys(mapValues(searchIndices, (index) => index.search(searchParams))).then((res) => {
-      setResults(mapValues(res, (value, type) => ({ type, ...value })));
+    allByKeys(mapValues(provider, (index) => index(query))).then((res) => {
+      setResults(res);
       setStatus('ready');
     });
   }, [query]);
 
-  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
+  const totalHits = sumBy(Object.values(results), (items) => items.length);
 
   return {
     ...emptyResults,
     status,
-    totalHits: allHits.length,
+    totalHits,
     topResults: getTopResults(results, query),
     ...results,
-    starterKit: findStarterKits(query),
   };
+}
+
+const searchIndices = {
+  team: searchClient.initIndex('search_teams'),
+  user: searchClient.initIndex('search_users'),
+  project: searchClient.initIndex('search_projects'),
+  collection: searchClient.initIndex('search_collections'),
+};
+
+const algoliaProvider = {
+  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query }).then((value) => ({ type, value }))),
+  starterKit: (query) => Promise.resolve(findStarterKits(query)),
+};
+
+export function useAlgoliaSearch(query) {
+  return useSearchProvider(algoliaProvider, query);
+}
+
+const legacyProvider = {
+  team: async (api, query) => {
+  const { data } = await api.get(`teams/search?q=${query}`);
+  return data.map(formatLegacyResult('team'));
+}
 }
 
 const formatLegacyResult = (type) => (hit) => ({ ...hit, type });
 
-async function searchTeams(api, query) {
-  const { data } = await api.get(`teams/search?q=${query}`);
-  return data.map(formatLegacyResult('team'));
-}
+
 
 async function searchUsers(api, query) {
   const { data } = await api.get(`users/search?q=${query}`);
