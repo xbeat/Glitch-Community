@@ -25,7 +25,6 @@ function findStarterKits(query) {
 
 // byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
 const byPriority = (...prioritizedKeys) => (items, query) => {
-  console.log(prioritizedKeys, items, query);
   const normalizedQuery = normalize(query);
   for (const key of prioritizedKeys) {
     const match = items.find((item) => normalize(item[key]) === normalizedQuery);
@@ -83,11 +82,23 @@ const searchIndices = {
   collection: searchClient.initIndex('search_collections'),
 };
 
-const formatAlgoliaResult = (type) => ({ hits }) => hits.map((value) => ({ 
-  type,
-  id: value.objectID.replace(`${type}_`, ''),
-  ...value 
-}));
+const formatByType = {
+  user: (user) => ({ 
+    ...user, 
+    id: Number(user.objectID.replace('user-', '')),
+    thanksCount: user.thanks,
+    hasCoverImage: true,
+  }),
+  team: (team) => ({ ...team, id: Number(team.objectID.replace('team-', '')) }),
+  project: (project) => ({ ...project, id: project.objectID.replace('project-', '') }),
+  collection: (collection) => ({ ...collection, id: collection.objectID.replace('collection-', '') }),
+};
+
+const formatAlgoliaResult = (type) => ({ hits }) =>
+  hits.map((value) => ({
+    type,
+    ...formatByType[type](value),
+  }));
 
 const algoliaProvider = {
   ...mapValues(searchIndices, (index, type) => (query) => index.search({ query }).then(formatAlgoliaResult(type))),
