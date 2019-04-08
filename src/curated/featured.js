@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'You Make The Rules',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-03.png?1554128528198',
-    link: 'https://abiding-cyclone.glitch.me/',
+    title: 'Live Code a Visualization',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_3%20(1).png?1554715798287',
+    link: 'https://glitch.com/~hydra-editor',
   },
   {
-    title: 'Generate Freestyle Weaving Patterns',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-02.png?1554128529639',
-    link: 'https://weaving-pattern.glitch.me/',
+    title: 'Bring the Party to Images 🎉',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_2%20(1).png?1554715798287',
+    link: 'https://glitch.com/~paas',
   },
   {
-    title: 'Channel Your Inner Bach',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_final-08.png?1554128529037',
-    link: 'https://coconet.glitch.me/',  
+    title: 'Play Drums With a Micro:bit',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_3%20(1).png?1554715796316',
+    link: 'https://glitch.com/~microbit-drums',  
   }
 ];
