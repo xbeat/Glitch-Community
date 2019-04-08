@@ -79,8 +79,9 @@ const CollectionPageContents = ({
   addProjectToCollection,
   removeProjectFromCollection,
   updateColor,
-  updateOrAddNote,
   displayNewNote,
+  updateNote,
+  saveNote,
   hideNote,
   featureProject,
   ...props
@@ -148,8 +149,9 @@ const CollectionPageContents = ({
                     trackingOrigin="collection page"
                     noteOptions={{
                       collection: collection,
-                      update: updateOrAddNote,
+                      updateNote: updateNote,
                       hideNote: hideNote,
+                      saveNote: saveNote,
                     }}
                   />
                 )}
@@ -158,12 +160,13 @@ const CollectionPageContents = ({
                     {...props}
                     projects={collection.projects}
                     collection={collection}
-                    hideNote={hideNote}
                     projectOptions={{
                       removeProjectFromCollection,
                       addProjectToCollection,
-                      updateOrAddNote,
                       displayNewNote,
+                      updateNote,
+                      saveNote,
+                      hideNote,
                       featureProject,
                     }}
                   />
@@ -204,13 +207,13 @@ CollectionPageContents.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   currentUserIsAuthor: PropTypes.bool.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
-  updateOrAddNote: PropTypes.func,
+  saveNote: PropTypes.func,
   displayNewNote: PropTypes.func,
   hideNote: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
-  updateOrAddNote: null,
+  saveNote: null,
   displayNewNote: null,
   hideNote: null,
 };

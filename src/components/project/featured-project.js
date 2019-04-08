@@ -20,7 +20,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
           collection={noteOptions.collection}
           update={isAuthorized ? noteOptions.updateNote : null} 
           hideNote={isAuthorized ? noteOptions.hideNote : null}
-          saveNote={
+          saveNote={isAuthorized ? noteOptions.saveNote : null}
         />
       )}
     </Heading>
