@@ -9,13 +9,13 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin }) => {
+  console.log(featuredProject)
   const TopLeft = () => (
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" />
       {featuredProject.note && (
-        <div>{featuredProject.note}</div>
-        {featuredProject.users[0].name}
+        <div>{featuredProject.note} by {featuredProject.users[0].name}</div>
       )}
     </Heading>
   );
