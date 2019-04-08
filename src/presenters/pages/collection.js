@@ -141,7 +141,7 @@ const CollectionPageContents = ({
                 {collection.featuredProject && (
                   <FeaturedProject
                     featuredProject={collection.featuredProject}
-                    isAuthorized={true}
+                    isAuthorized={currentUserIsAuthor}
                     unfeatureProject={() => console.log("work on this")}
                     addProjectToCollection={addProjectToCollection}
                     currentUser={currentUser}

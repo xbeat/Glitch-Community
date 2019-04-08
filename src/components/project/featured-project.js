@@ -18,8 +18,8 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
         <Note 
           project={featuredProject}
           collection={noteOptions.collection}
-          update={noteOptions.update} 
-          hideNote={noteOptions.hideNote}
+          update={isAuthorized ? noteOptions.update : null} 
+          hideNote={isAuthorized ? noteOptions.hideNote : null}
         />
       )}
     </Heading>
