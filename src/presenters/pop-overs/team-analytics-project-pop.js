@@ -103,9 +103,11 @@ class TeamAnalyticsProjectPop extends React.Component {
 
   render() {
     const { updateProjectDomain, currentProjectDomain, projects } = this.props;
+    const dropdown = <div className="down-arrow" aria-label="options" />;
+    
     return (
       <PopoverWithButton buttonClass="button-small button-tertiary" 
-        buttonText={ currentProjectDomain ? `Project: ${currentProjectDomain}` : 'All Projects'}>
+        buttonText={ currentProjectDomain ? `Project: ${currentProjectDomain} ${dropdown}`  : `All Projects `}>
         {({ togglePopover }) => (
           <PopOver
             projects={projects}
