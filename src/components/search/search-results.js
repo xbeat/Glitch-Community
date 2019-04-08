@@ -10,6 +10,7 @@ import UserItem from 'Components/user/user-item';
 import TeamItem from 'Components/team/team-item';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import StarterKitItem from 'Components/search/starter-kit-result';
 import NotFound from 'Components/errors/not-found';
 import Loader from 'Components/loaders/loader';
 
@@ -109,7 +110,7 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
   }
   const ready = searchResults.status === 'ready';
   const noResults = ready && searchResults.totalHits === 0;
-  const showTopResults = searchResults.topResults.length > 0 && activeFilter === 'all';
+  const showTopResults = ready && searchResults.starterKit.length + searchResults.topResults.length > 0 && activeFilter === 'all';
 
   const filters = [
     { id: 'all', label: 'All' },
@@ -129,15 +130,6 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
     }))
     .filter((group) => group.results.length > 0);
 
-  if (showTopResults) {
-    renderedGroups.unshift({
-      id: 'top',
-      label: 'Top Results',
-      results: searchResults.topResults,
-      canShowMoreResults: false,
-    });
-  }
-
   return (
     <main className={styles.page}>
       {searchResults.status === 'loading' && (
@@ -149,19 +141,39 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
       {ready && searchResults.totalHits > 0 && (
         <FilterContainer filters={filters} setFilter={setActiveFilter} activeFilter={activeFilter} query={query} />
       )}
-      {renderedGroups.map(({ id, label, results, canShowMoreResults }) => (
-        <article key={id} className={classnames(styles.groupContainer, id === 'top' && styles.topResults)}>
-          <Heading tagName="h2">{label}</Heading>
+      {showTopResults && (
+        <article className={classnames(styles.groupContainer, styles.topResults)}>
+          <Heading tagName="h2">Top Results</Heading>
+          <ul className={classnames(styles.resultsContainer, styles.starterKitResultsContainer)}>
+            {searchResults.starterKit.map((result) => (
+              <li key={result.id} className={styles.resultItem}>
+                <StarterKitItem result={result} />
+              </li>
+            ))}
+          </ul>
           <ul className={styles.resultsContainer}>
-            {results.map((result) => (
+            {searchResults.topResults.map((result) => (
               <li key={result.id} className={styles.resultItem}>
                 <ResultComponent result={result} />
               </li>
             ))}
           </ul>
-          {canShowMoreResults && <ShowAllButton label={label} onClick={() => setActiveFilter(id)} />}
         </article>
-      ))}
+      )}
+      {ready &&
+        renderedGroups.map(({ id, label, results, canShowMoreResults }) => (
+          <article key={id} className={styles.groupContainer}>
+            <Heading tagName="h2">{label}</Heading>
+            <ul className={styles.resultsContainer}>
+              {results.map((result) => (
+                <li key={result.id} className={styles.resultItem}>
+                  <ResultComponent result={result} />
+                </li>
+              ))}
+            </ul>
+            {canShowMoreResults && <ShowAllButton label={label} onClick={() => setActiveFilter(id)} />}
+          </article>
+        ))}
       {noResults && <NotFound name="any results" />}
     </main>
   );

@@ -5,6 +5,7 @@ import { groupBy, sample } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
+import starterKits from '../curated/starter-kits';
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
@@ -58,9 +59,15 @@ function formatCollection(hit) {
   };
 }
 
-// top results
+// TODO: this is super hacky; this would probably work a lot better with algolia
+const normalize = (str) => (str || '').trim().replace(/[^\w\d\s]/g, '').toLowerCase();
 
-const normalize = (str) => (str || '').trim().toLowerCase();
+function findStarterKits(query) {
+  const normalizedQuery = normalize(query);
+  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery));
+}
+
+// top results
 
 // byPriority('domain', 'name') -- first try to match domain, then try matching name, then return `null`
 const byPriority = (...prioritizedKeys) => (items, query) => {
@@ -78,7 +85,6 @@ const findTop = {
   user: byPriority('login', 'name'),
 };
 
-// TODO: starter kits go at the front of this list
 const getTopResults = (resultsByType, query) =>
   [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
@@ -97,37 +103,40 @@ function formatHit(hit) {
   }
 }
 
-const emptyResults = { team: [], user: [], project: [], collection: [] };
+const emptyResults = { team: [], user: [], project: [], collection: [], starterKit: [] };
 
 export function useAlgoliaSearch(query) {
   const [hits, setHits] = useState([]);
+  const [status, setStatus] = useState('init');
   useEffect(() => {
     if (!query) {
       setHits([]);
       return;
     }
+    setStatus('loading');
     searchIndex
       .search({
         query,
         hitsPerPage: 500,
       })
-      .then((res) => setHits(res.hits.map(formatHit)));
+      .then((res) => {
+        setHits(res.hits.map(formatHit));
+        setStatus('ready');
+      });
   }, [query]);
 
   const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
 
   return {
-    status: 'ready',
+    status,
     totalHits: hits.length,
     topResults: getTopResults(resultsByType, query),
     ...resultsByType,
+    starterKit: findStarterKits(query),
   };
 }
 
-const formatLegacyResult = (type) => (hit) => ({
-  ...hit,
-  type,
-});
+const formatLegacyResult = (type) => (hit) => ({ ...hit, type });
 
 async function searchTeams(api, query) {
   const { data } = await api.get(`teams/search?q=${query}`);
@@ -187,6 +196,7 @@ export function useLegacySearch(query) {
     status,
     totalHits: allHits.length,
     topResults: getTopResults(results, query),
+    starterKit: findStarterKits(query),
     ...results,
   };
 }
