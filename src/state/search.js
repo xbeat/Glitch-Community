@@ -1,7 +1,7 @@
 /* eslint-disable prefer-default-export */
 import algoliasearch from 'algoliasearch/lite';
 import { useState, useEffect } from 'react';
-import { groupBy, sample } from 'lodash';
+import { mapValues } from 'lodash';
 import { useAPI } from './api';
 import { allByKeys } from '../../shared/api';
 import useErrorHandlers from '../presenters/error-handlers';
@@ -9,58 +9,19 @@ import starterKits from '../curated/starter-kits';
 
 const searchClient = algoliasearch('LAS7VGSQIQ', '27938e7e8e998224b9e1c3f61dd19160');
 
-const searchIndex = searchClient.initIndex('search');
-
-// TODO: all this really ought to be in the raw data
-function formatUser(hit) {
-  return {
-    ...hit,
-    id: Number(hit.objectID.split('-')[1]),
-    thanksCount: hit.thanks,
-    hasCoverImage: false,
-    color: '',
-  };
-}
-
-function formatTeam(hit) {
-  return {
-    ...hit,
-    id: Number(hit.objectID.split('-')[1]),
-    hasCoverImage: false,
-    hasAvatarImage: false,
-    isVerified: false,
-    url: '',
-    users: [],
-  };
-}
-
-function formatProject(hit) {
-  return {
-    ...hit,
-    id: hit.objectID.replace('project-', ''),
-    description: '',
-    users: [],
-    showAsGlitchTeam: false,
-    teams: [],
-  };
-}
-
-function formatCollection(hit) {
-  return {
-    ...hit,
-    id: Number(hit.objectID.split('-')[1]),
-    coverColor: sample(['#cff', '#fcf', '#ffc', '#ccf', '#cfc', '#fcc']),
-    projects: [],
-    url: '',
-    teamId: hit.team,
-    userId: hit.user,
-    team: hit.team > 0 ? { id: hit.team, url: '' } : null,
-    user: hit.user > 0 ? { id: hit.user, login: '' } : null,
-  };
-}
+const searchIndices = {
+  team: searchClient.initIndex('search_teams'),
+  user: searchClient.initIndex('search_users'),
+  project: searchClient.initIndex('search_projects'),
+  collection: searchClient.initIndex('search_collections'),
+};
 
 // TODO: this is super hacky; this would probably work a lot better with algolia
-const normalize = (str) => (str || '').trim().replace(/[^\w\d\s]/g, '').toLowerCase();
+const normalize = (str) =>
+  (str || '')
+    .trim()
+    .replace(/[^\w\d\s]/g, '')
+    .toLowerCase();
 
 function findStarterKits(query) {
   const normalizedQuery = normalize(query);
@@ -88,50 +49,37 @@ const findTop = {
 const getTopResults = (resultsByType, query) =>
   [findTop.project(resultsByType.project, query), findTop.team(resultsByType.team, query), findTop.user(resultsByType.user, query)].filter(Boolean);
 
-function formatHit(hit) {
-  switch (hit.type) {
-    case 'user':
-      return formatUser(hit);
-    case 'team':
-      return formatTeam(hit);
-    case 'project':
-      return formatProject(hit);
-    case 'collection':
-      return formatCollection(hit);
-    default:
-      return hit;
-  }
-}
-
 const emptyResults = { team: [], user: [], project: [], collection: [], starterKit: [] };
 
 export function useAlgoliaSearch(query) {
-  const [hits, setHits] = useState([]);
+  const [results, setResults] = useState(emptyResults);
   const [status, setStatus] = useState('init');
+
   useEffect(() => {
+    const searchParams = {
+      query,
+      hitsPerPage: 500,
+    };
+
     if (!query) {
-      setHits([]);
+      setResults(emptyResults);
       return;
     }
     setStatus('loading');
-    searchIndex
-      .search({
-        query,
-        hitsPerPage: 500,
-      })
-      .then((res) => {
-        setHits(res.hits.map(formatHit));
-        setStatus('ready');
-      });
+    allByKeys(mapValues(searchIndices, (index) => index.search(searchParams))).then((res) => {
+      setResults(mapValues(res, (value, type) => ({ type, ...value })));
+      setStatus('ready');
+    });
   }, [query]);
 
-  const resultsByType = { ...emptyResults, ...groupBy(hits, (hit) => hit.type) };
+  const allHits = [...results.team, ...results.user, ...results.project, ...results.collection];
 
   return {
+    ...emptyResults,
     status,
-    totalHits: hits.length,
-    topResults: getTopResults(resultsByType, query),
-    ...resultsByType,
+    totalHits: allHits.length,
+    topResults: getTopResults(results, query),
+    ...results,
     starterKit: findStarterKits(query),
   };
 }
