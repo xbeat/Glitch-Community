@@ -59,7 +59,8 @@ function formatCollection(hit) {
   };
 }
 
-const normalize = (str) => (str || '').trim().toLowerCase();
+// TODO: this is super hacky; this would probably work a lot better with algolia
+const normalize = (str) => (str || '').trim().replace(/[^\w\d\s]/g, '').toLowerCase();
 
 function findStarterKits(query) {
   const normalizedQuery = normalize(query);
