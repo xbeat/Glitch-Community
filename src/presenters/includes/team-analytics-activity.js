@@ -90,26 +90,29 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
           format: dateFormat(currentTimeFrame),
         },
       },
+      y:{
+        min: 0,
+        padding: {bottom: 0},
+      },
     },
     legend: {
       show: false,
     },
   });
   
-  window.chart = chart;
-  
-  if(activeFilter === "view"){
-    chart.hide(['remixes']);
+  if(activeFilter === "views"){
+    chart.hide(['Remixes']);
   }else if(activeFilter === "remixes"){
-    chart.hide(['appViews']);
+    chart.hide(['Total App Views']);
   }
   
 };
 
 class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.isGettingData === true && this.props.isGettingData === false) {
+    if (prevProps.activeFilter !== this.props.activeFilter || (prevProps.isGettingData === true && this.props.isGettingData === false)) {
       // graph total app views
+      console.log('render chart');
       renderChart(this.props.activeFilter, this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
