@@ -84,16 +84,12 @@ const searchIndices = {
 
 const formatByType = {
   user: (user) => ({
-    hasCoverImage: true,
-    color: '',
     ...user,
     id: Number(user.objectID.replace('user-', '')),
     thanksCount: user.thanks,
   }),
   team: (team) => ({
     users: [],
-    hasAvatarImage: true,
-    hasCoverImage: true,
     isVerified: false,
     ...team,
     id: Number(team.objectID.replace('team-', '')),
@@ -124,7 +120,7 @@ const formatAlgoliaResult = (type) => ({ hits }) =>
   }));
 
 const algoliaProvider = {
-  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 100 }).then(formatAlgoliaResult(type))),
+  ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 500 }).then(formatAlgoliaResult(type))),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
 };
 
