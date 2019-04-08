@@ -7,6 +7,8 @@ import Helmet from 'react-helmet';
 import Text from 'Components/text/text';
 import { ProjectsUL } from 'Components/containers/projects-list';
 import Image from 'Components/images/image';
+import FeaturedProject from 'Components/project/featured-project';
+
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
@@ -85,7 +87,7 @@ const CollectionPageContents = ({
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  
+  collection.featuredProjectId = "2e00fd67-9577-4e34-b0e3-3ed0194a334b" //mock
   return (
     <>
       <Helmet title={collection.name} />
