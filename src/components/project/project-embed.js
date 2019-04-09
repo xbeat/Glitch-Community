@@ -47,7 +47,7 @@ const ProjectEmbed = ({ project, topLeft, topRight, isAuthorized, currentUser, a
   );
 
   return (
-    <section className={styles.projectEmbed}>
+    <section>
       <div className={styles.buttonContainer}>
         <div className={styles.left}>{topLeft}</div>
         <div className={styles.right}>{topRight}</div>

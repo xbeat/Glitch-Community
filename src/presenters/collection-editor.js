@@ -55,42 +55,34 @@ class CollectionEditor extends React.Component {
 
   async updateNote({ note, projectId }) {
     note = _.trim(note);
+    this.updateProject({ note, isAddingANewNote: true }, projectId);
+    
+    await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });    
+  }
+
+  displayNewNote(projectId) {
+    this.updateProject({ isAddingANewNote: true }, projectId);
+  }
+
+  hideNote(projectId) {
+    this.updateProject({ isAddingANewNote: false }, projectId);
+  }
+  
+  updateProject(projectUpdates, projectId) {
     let stateUpdates = {};
+    
     stateUpdates.projects = this.state.projects.map((project) => {
       if (project.id === projectId) {
-        project.note = note;
+        return { ...project, ...projectUpdates }; 
       }
       return { ...project };
     })
     
     if (this.state.featuredProject.id === projectId) {
-      stateUpdates.featuredProject = { ...this.state.featuredProject, note }; 
+      stateUpdates.featuredProject = { ...this.state.featuredProject, ...projectUpdates }; 
     }
     
     this.setState(stateUpdates);
-    await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });
-  }
-
-  displayNewNote(projectId) {
-    this.setState(({ projects }) => ({
-      projects: projects.map((project) => {
-        if (project.id === projectId) {
-          project.isAddingANewNote = true;
-        }
-        return { ...project };
-      }),
-    }));
-  }
-
-  hideNote(projectId) {
-    this.setState(({ projects }) => ({
-      projects: projects.map((project) => {
-        if (project.id === projectId) {
-          project.isAddingANewNote = false;
-        }
-        return { ...project };
-      }),
-    }));
   }
 
   render() {

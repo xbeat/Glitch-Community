@@ -146,11 +146,10 @@ const CollectionPageContents = ({
                     addProjectToCollection={addProjectToCollection}
                     currentUser={currentUser}
                     trackingOrigin="collection page"
-                    noteOptions={{
-                      collection: collection,
-                      updateNote,
-                      hideNote,
-                    }}
+                    collection={collection}
+                    displayNewNote={displayNewNote}
+                    updateNote={updateNote}
+                    hideNote={hideNote}
                   />
                 )}
                 {currentUserIsAuthor && (
@@ -219,7 +218,7 @@ CollectionPageContents.defaultProps = {
 async function loadCollection(api, ownerName, collectionName) {
   try {
     const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
-    const collectionProjects = await getAllPages(
+    let collectionProjects = await getAllPages(
       api,
       `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=updatedAt&orderDirection=ASC&limit=100`,
     );
@@ -235,6 +234,7 @@ async function loadCollection(api, ownerName, collectionName) {
     
     if (collection.featuredProjectId) {
       collection.featuredProject = collectionProjects.find(({id}) => id === collection.featuredProjectId);
+      collectionProjects = collectionProjects.filter(({id}) => id !== collection.featuredProjectId);
     }
 
     // fetch users for each project

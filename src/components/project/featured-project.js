@@ -8,49 +8,37 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
-const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, noteOptions }) => {
-  //Does work
-  const topLeft = (
-    <Heading tagName="h2">
-      Featured Project
-      <Emoji name="clapper" />
-      {featuredProject.note && (
-        <Note 
-          project={featuredProject}
-          collection={noteOptions.collection}
-          updateNote={noteOptions.updateNote} 
-          hideNote={noteOptions.hideNote}
-          isAuthorized={isAuthorized}
-        />
-      )}
-    </Heading>
-  );
-  
-  // Does not work (todo think about this later): 
-  // const TopLeft = () => (
-  //   <Heading tagName="h2">
-  //     Featured Project
-  //     <Emoji name="clapper" />
-  //     {featuredProject.note && (
-  //       <Note 
-  //         project={featuredProject}
-  //         collection={noteOptions.collection}
-  //         updateNote={noteOptions.updateNote} 
-  //         hideNote={noteOptions.hideNote}
-  //         isAuthorized={isAuthorized}
-  //       />
-  //     )}
-  //   </Heading>
-  // );
+const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthorized }) => (
+  <Heading tagName="h2">
+    Featured Project
+    <Emoji name="clapper" />
+    <Note 
+      project={featuredProject}
+      collection={collection}
+      updateNote={updateNote} 
+      hideNote={hideNote}
+      isAuthorized={isAuthorized}
+      isFromFeatured={true}
+    />
+  </Heading>
+);
 
+
+const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, collection, displayNewNote, updateNote, hideNote }) => {
   const TopRight = () => {
     if (!isAuthorized) return null;
-    return <div className={styles.unfeatureBtn} id="featured-project-embed"><FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} /></div>;
+    return <div className={styles.unfeatureBtn} id="featured-project-embed"><FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} displayNewNote={() => displayNewNote(featuredProject.id)} /></div>;
   };
 
   return (
     <ProjectEmbed
-      topLeft={topLeft}
+      topLeft={<TopLeft 
+        featuredProject={featuredProject}
+        collection={collection}
+        hideNote={hideNote}
+        updateNote={updateNote}
+        isAuthorized={isAuthorized}
+      />}
       topRight={<TopRight />}
       project={featuredProject}
       unfeatureProject={unfeatureProject}
