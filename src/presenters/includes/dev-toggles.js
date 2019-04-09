@@ -19,7 +19,7 @@ const toggleData = [
     name: 'Email Invites',
     description: 'Enables invite-by-email behavior on the team page.',
   },
-  { 
+  {
     name: 'Slack Auth',
     description: 'Sign in with your Slack account!',
   },
