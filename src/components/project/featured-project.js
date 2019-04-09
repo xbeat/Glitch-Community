@@ -9,6 +9,7 @@ import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, noteOptions }) => {
+  //Does work
   const topLeft = (
     <Heading tagName="h2">
       Featured Project
@@ -24,6 +25,23 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       )}
     </Heading>
   );
+  
+  // Does not work: 
+  // const TopLeft = () => (
+  //   <Heading tagName="h2">
+  //     Featured Project
+  //     <Emoji name="clapper" />
+  //     {featuredProject.note && (
+  //       <Note 
+  //         project={featuredProject}
+  //         collection={noteOptions.collection}
+  //         updateNote={noteOptions.updateNote} 
+  //         hideNote={noteOptions.hideNote}
+  //         isAuthorized={isAuthorized}
+  //       />
+  //     )}
+  //   </Heading>
+  // );
 
   const TopRight = () => {
     if (!isAuthorized) return null;
