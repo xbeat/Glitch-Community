@@ -12,16 +12,23 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
   <Heading tagName="h2">
     Featured Project
     <Emoji name="clapper" />
-    <Note
+    {collection && (<Note
       project={featuredProject}
       collection={collection}
       updateNote={updateNote}
       hideNote={hideNote}
       isAuthorized={isAuthorized}
-    />
+    />)}
   </Heading>
 );
 
+const TopRight = (props) => {
+  if (!isAuthorized) return null;
+  return (
+    <div className={styles.unfeatureBtn} id="featured-project-embed">
+      <FeaturedProjectOptionsPop ...props />
+    </div>;
+};
 const FeaturedProject = ({
   addProjectToCollection,
   collection,
@@ -33,10 +40,7 @@ const FeaturedProject = ({
   updateNote,
   unfeatureProject,
 }) => {
-  const TopRight = () => {
-    if (!isAuthorized) return null;
-    return <div className={styles.unfeatureBtn} id="featured-project-embed"><FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} displayNewNote={() => displayNewNote(featuredProject.id)} /></div>;
-  };
+
 
   return (
     <ProjectEmbed
@@ -59,15 +63,19 @@ const FeaturedProject = ({
 
 FeaturedProject.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
-  collection: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  displayNewNote: PropTypes.func.isRequired,
   featuredProject: PropTypes.func.isRequired,
   hideNote: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   updateNote: PropTypes.func.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
+  collection: PropTypes.object,
+  displayNewNote: PropTypes.func,
 };
 
+FeaturedProject.defaultProps = {
+  collection: null,
+  displayNewNote: null,
+};
 
 export default FeaturedProject;
