@@ -18,7 +18,7 @@ const normalize = (str) =>
 
 function findStarterKits(query) {
   const normalizedQuery = normalize(query);
-  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery));
+  return starterKits.filter((kit) => kit.keywords.includes(normalizedQuery)).map(kit => ({ type: 'starterKit', ...kit }))
 }
 
 // top results

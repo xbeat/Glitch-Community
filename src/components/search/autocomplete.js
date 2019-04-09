@@ -79,30 +79,56 @@ const SeeAllResults = ({ query }) => (
   </Link>
 );
 
+const resultComponents = {
+  starterKit: StarterKitResult,
+  team: TeamResult,
+  user: UserResult,
+  project: ProjectResult,
+  collection: CollectionResult,
+};
+
+const Result = ({ value }) => {
+  const Component = resultComponents[value.type];
+  if (!Component) return null;
+  return <Component value={value} />;
+};
+
 const resultGroups = [
-  { id: 'starterKit', label: 'Top Results', Component: StarterKitResult },
-  { id: 'team', label: 'Teams', Component: TeamResult },
-  { id: 'user', label: 'Users', Component: UserResult },
-  { id: 'project', label: 'Projects', Component: ProjectResult },
-  { id: 'collection', label: 'Collection Results', Component: CollectionResult },
+  { id: 'team', label: 'Teams' },
+  { id: 'user', label: 'Users' },
+  { id: 'project', label: 'Projects' },
+  { id: 'collection', label: 'Collections' },
 ];
 
 const MAX_RESULTS_PER_TYPE = 3;
 
 export const AutocompleteResults = ({ query, results }) => {
   const resultGroupsWithItems = resultGroups
-    .map((group) => ({ ...group, items: results[group.id].slice(0, MAX_RESULTS_PER_TYPE) }))
+    .map((group) => ({ ...group, items: results[group.id].filter((result) => !results.topResults.includes(result)).slice(0, MAX_RESULTS_PER_TYPE) }))
     .filter((group) => group.items.length > 0);
+  const topResultItems = [...results.starterKit, ...results.topResults];
   return (
     <div className={styles.container}>
       <ul>
-        {resultGroupsWithItems.map(({ id, label, Component, items }) => (
+        {topResultItems.length > 0 && (
+          <li>
+            <header className={styles.resultGroupHeader}>Top Results</header>
+            <ul>
+              {topResultItems.map((item) => (
+                <li key={item.id} className={styles.resultItem}>
+                  <Result value={item} />
+                </li>
+              ))}
+            </ul>
+          </li>
+        )}
+        {resultGroupsWithItems.map(({ id, label, items }) => (
           <li key={id}>
             <header className={styles.resultGroupHeader}>{label}</header>
             <ul>
               {items.map((item) => (
                 <li key={item.id} className={styles.resultItem}>
-                  <Component value={item} />
+                  <Result value={item} />
                 </li>
               ))}
             </ul>
