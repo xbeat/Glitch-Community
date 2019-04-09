@@ -42,11 +42,13 @@ module.exports = function(app) {
 
     const sitemapProxy = proxy(target, {
       userResDecorator: (res, data) => {
+        console.log('target', target);
+        
         // do gross stuff to rewrite urls
         // this is dangerous to do on a full page, but the sitemap is simple
         const regexp = new RegExp(escapeRegExp(target), 'g');
         const newUrl = data.toString().replace(regexp, new URL(APP_URL).hostname);
-        console.log(newUrl);
+        console.log('newUrl', newUrl);
         return newUrl;
       },
       ...proxyConfig,
@@ -54,8 +56,9 @@ module.exports = function(app) {
 
     // Do the actual proxy
     app.use(routeWithLeadingSlash, (req, ...args) => {
+      console.log(req.path);
       if (/\/sitemap.*(\.xml|\.xsl)$/.test(req.path)) {
-        console.log('sitemap');
+        console.log('sitemap req.path', req.path);
         return sitemapProxy(req, ...args);
       }
       return genericProxy(req, ...args);
