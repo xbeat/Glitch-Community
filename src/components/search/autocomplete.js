@@ -103,8 +103,9 @@ const resultGroups = [
 const MAX_RESULTS_PER_TYPE = 3;
 
 export const AutocompleteResults = ({ query, results }) => {
+  const notTopResult = (result) => !results.topResults.includes(result);
   const resultGroupsWithItems = resultGroups
-    .map((group) => ({ ...group, items: results[group.id].filter((result) => !results.topResults.includes(result)).slice(0, MAX_RESULTS_PER_TYPE) }))
+    .map((group) => ({ ...group, items: results[group.id].filter(notTopResult).slice(0, MAX_RESULTS_PER_TYPE) }))
     .filter((group) => group.items.length > 0);
   const topResultItems = [...results.starterKit, ...results.topResults];
   return (
