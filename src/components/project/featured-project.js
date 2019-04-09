@@ -9,7 +9,6 @@ import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, noteOptions }) => {
-  
   const TopLeft = () => (
     <Heading tagName="h2">
       Featured Project

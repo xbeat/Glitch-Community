@@ -67,6 +67,7 @@ class CollectionEditor extends React.Component {
         return { ...project };
       }),
     }));
+    console.log(this.state.projects)
   }
   
   async saveNote({ note, projectId }) {
