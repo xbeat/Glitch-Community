@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Avatar, UserAvatar, TeamAvatar } from 'Components/images/avatar';
 import { UserLink, TeamLink } from './includes/link';
-import { Avatar, UserAvatar, TeamAvatar } from './includes/avatar';
 
 // StaticUsersList
 

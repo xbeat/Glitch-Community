@@ -17,6 +17,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
       event.target.src = srcFallback;
     };
   }
+  console.log(color);
 
   const contents = (
     <Image
@@ -24,7 +25,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
       height="32px"
       src={src}
       alt={name}
-      style={color ? { backgroundColor: color } : null}
+      backgroundColor={color}
       onError={onError}
       className={styles[type]}
     />
