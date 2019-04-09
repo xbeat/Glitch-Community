@@ -9,7 +9,7 @@ import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
 const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, noteOptions }) => {
-  const TopLeft = ({ featuredProject, noteOptions, isAuthorized }) => (
+  const topLeft = (
     <Heading tagName="h2">
       Featured Project
       <Emoji name="clapper" />
@@ -32,7 +32,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
 
   return (
     <ProjectEmbed
-      topLeft={<TopLeft featuedProject={featuredProject} noteOptions={noteOptions} isAuthorized={isAuthorized} />}
+      topLeft={topLeft}
       topRight={<TopRight />}
       project={featuredProject}
       unfeatureProject={unfeatureProject}
