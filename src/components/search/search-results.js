@@ -172,7 +172,7 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
 
   return (
     <main className={styles.page}>
-      {searchResults.status === 'loading' && (
+      {!ready && (
         <>
           <Loader />
           <h1>All results for {query}</h1>
