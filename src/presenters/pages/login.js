@@ -31,7 +31,6 @@ function notifyParent(message = {}) {
 
 const RedirectToDestination = () => {
   const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
-  console.log(destination)
 
   React.useEffect(() => {
     setDestination(undefined);
@@ -105,10 +104,6 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
-};
-
-LoginPage.defaultProps = {
-  destination: null,
 };
 
 const LoginPageContainer = (props) => {

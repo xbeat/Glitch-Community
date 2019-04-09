@@ -48,9 +48,9 @@ function slackAuthLink() {
   return `${API_URL}/auth/slack?${params}`;
 }
 
-const SignInPopButton = (props) => (
-  <Button href={props.href} onClick={props.onClick} size="small">
-    Sign in with {props.company} <Emoji name={props.emoji} />
+const SignInPopButton = ({ company, emoji, href, onClick }) => (
+  <Button href={href} onClick={onClick} size="small">
+    Sign in with {company} <Emoji name={emoji} />
   </Button>
 );
 
