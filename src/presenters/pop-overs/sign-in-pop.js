@@ -12,6 +12,7 @@ import { captureException } from '../../utils/sentry';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
+import useDevToggle from '../includes/dev-toggles';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL, API_URL */
 
@@ -274,6 +275,7 @@ const TermsAndPrivacySection = () => (
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api, location, hash } = props;
+  const slackAuthEnabled = useDevToggle('Slack Auth');
   const [, setDestination] = useLocalStorage('destinationAfterAuth');
   const onClick = () =>
     setDestination({
@@ -299,7 +301,7 @@ const SignInPopWithoutRouter = (props) => {
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
                 <SignInPopButton href={googleAuthLink()} company="Google" emoji="google" onClick={onClick} />
-                <SignInPopButton href={slackAuthLink()} company="Slack" emoji="slack" onClick={onClick} />
+                {slackAuthEnabled && <SignInPopButton href={slackAuthLink()} company="Slack" emoji="slack" onClick={onClick} /> }
                 <EmailSignInButton
                   onClick={() => {
                     onClick();
