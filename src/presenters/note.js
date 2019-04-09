@@ -13,12 +13,9 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorized }) => {
-  async function updateNoteVisibility(description) {
+const Note = ({ collection, project, updateNote, hideNote, isAuthorized }) => {
+  function updateNoteVisibility(description) {
     description = _.trim(description);
-    if (description && saveNote) {
-      await saveNote({ note: description, projectId: project.id })
-    }
     if (!description || description.length === 0) {
       setTimeout(() => hideNote(project.id), 500);
     }
@@ -42,9 +39,7 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorize
           authorized={isAuthorized}
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={(note) => {
-            updateNote({ note, projectId: project.id })
-          }}
+          update={(note) => updateNote({ note, projectId: project.id })}
           onBlur={updateNoteVisibility}
           allowImages
         />

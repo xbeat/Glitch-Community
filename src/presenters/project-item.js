@@ -17,7 +17,6 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, isAuthorize
       project={project}
       isAuthorized={isAuthorized}
       updateNote={props.projectOptions.updateNote}
-      saveNote={props.projectOptions.saveNote}
       hideNote={props.projectOptions.hideNote}
     />
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />

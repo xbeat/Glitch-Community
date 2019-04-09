@@ -81,7 +81,6 @@ const CollectionPageContents = ({
   updateColor,
   displayNewNote,
   updateNote,
-  saveNote,
   hideNote,
   featureProject,
   ...props
@@ -151,7 +150,6 @@ const CollectionPageContents = ({
                       collection: collection,
                       updateNote,
                       hideNote,
-                      saveNote,
                     }}
                   />
                 )}
@@ -166,7 +164,6 @@ const CollectionPageContents = ({
                       addProjectToCollection,
                       displayNewNote,
                       updateNote,
-                      saveNote,
                       hideNote,
                       featureProject,
                     }}
@@ -208,14 +205,14 @@ CollectionPageContents.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   currentUserIsAuthor: PropTypes.bool.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
-  saveNote: PropTypes.func,
   displayNewNote: PropTypes.func,
+  updateNote: PropTypes.func,
   hideNote: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
-  saveNote: null,
   displayNewNote: null,
+  updateNote: null,
   hideNote: null,
 };
 
