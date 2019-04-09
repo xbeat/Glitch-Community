@@ -17,7 +17,6 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
       event.target.src = srcFallback;
     };
   }
-  console.log(color);
 
   const contents = (
     <Image
