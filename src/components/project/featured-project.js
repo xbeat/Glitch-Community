@@ -8,7 +8,6 @@ import FeaturedProjectOptionsPop from '../../presenters/pop-overs/featured-proje
 import Note from '../../presenters/note';
 import styles from './featured-project.styl';
 
-<<<<<<< HEAD
 const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthorized }) => (
   <Heading tagName="h2">
     Featured Project
@@ -22,16 +21,6 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
     />
   </Heading>
 );
-=======
-const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection }) => {
-  const TopLeft = () => (
-    <Heading tagName="h2">
-      Featured Project
-      <Emoji name="clapper" />
-    </Heading>
-  );
->>>>>>> 2403c2e6eb317bd173907f5edafd3110e9067231
-
 
 const FeaturedProject = ({
   addProjectToCollection,
@@ -41,7 +30,6 @@ const FeaturedProject = ({
   featuredProject,
   hideNote,
   isAuthorized,
-  trackingOrigin,
   updateNote,
   unfeatureProject,
 }) => {
@@ -77,19 +65,9 @@ FeaturedProject.propTypes = {
   featuredProject: PropTypes.func.isRequired,
   hideNote: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-<<<<<<< HEAD
-  trackingOrigin: PropTypes.string.isRequired,
   updateNote: PropTypes.func.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
-=======
-  featuredProject: PropTypes.object.isRequired,
-  addProjectToCollection: PropTypes.func.isRequired,
-  unfeatureProject: PropTypes.func,
 };
 
-FeaturedProject.defaultProps = {
-  unfeatureProject: null,
->>>>>>> 2403c2e6eb317bd173907f5edafd3110e9067231
-};
 
 export default FeaturedProject;

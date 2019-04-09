@@ -75,6 +75,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     props.togglePopover();
     props.displayNewNote(props.project.id);
   }
+
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
   const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.displayNewNote;
   const showPinOrFeatureSection = props.addPin || props.removePin || props.featureProject;
@@ -91,14 +92,10 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
         <section className="pop-over-actions">
           {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
           {!!props.addPin && (
-            <TrackClick name="Project Pinned">
-              <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin" />
-            </TrackClick>
+            <PopoverButton onClick={onClickAddPin} text="Pin " emoji="pushpin" />
           )}
           {!!props.removePin && (
-            <TrackClick name="Project Un-Pinned">
-              <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin" />
-            </TrackClick>
+            <PopoverButton onClick={onClickRemovePin} text="Un-Pin " emoji="pushpin" />
           )}
         </section>
       )}

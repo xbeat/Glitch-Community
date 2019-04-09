@@ -146,7 +146,6 @@ const CollectionPageContents = ({
                     featuredProject={collection.featuredProject}
                     unfeatureProject={unfeatureProject}
                     addProjectToCollection={addProjectToCollection}
-                    trackingOrigin="collection page"
                     collection={collection}
                     displayNewNote={displayNewNote}
                     updateNote={updateNote}
