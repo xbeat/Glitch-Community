@@ -67,13 +67,9 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
 
-  function featureProject() {
-    props.featureProject(props.project.id);
+  function featureProject(event) {
+    animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
-  // not working yet for some reason
-  // function featureProject(event) {
-  //   animate(event, 'slide-up', () => props.featureProject(props.project.id)); not working yet
-  // }
 
   function toggleAndDisplayNote() {
     props.togglePopover();
