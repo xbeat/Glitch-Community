@@ -26,7 +26,7 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
     </Heading>
   );
   
-  // Does not work: 
+  // Does not work (todo think about this later): 
   // const TopLeft = () => (
   //   <Heading tagName="h2">
   //     Featured Project
