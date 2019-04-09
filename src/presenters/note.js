@@ -44,7 +44,7 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorize
           description={project.note || ''}
           placeholder="Share why you love this app."
           update={(note) => {
-            console.log("inside update", note, project.id, updateNote)
+            console.log("inside update", note, project.id)
             updateNote({ note, projectId: project.id })
           }}
           onBlur={updateNoteVisibility}
