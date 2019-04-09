@@ -14,7 +14,6 @@ import { isDarkColor } from '../models/collection';
  * Note Component
  */
 const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorized }) => {
-  console.log("updateNote", updateNote)
   async function updateNoteVisibility(description) {
     description = _.trim(description);
     if (description && saveNote) {
@@ -44,7 +43,6 @@ const Note = ({ collection, project, updateNote, hideNote, saveNote, isAuthorize
           description={project.note || ''}
           placeholder="Share why you love this app."
           update={(note) => {
-            console.log("inside update", note, project.id)
             updateNote({ note, projectId: project.id })
           }}
           onBlur={updateNoteVisibility}
