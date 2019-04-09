@@ -53,21 +53,21 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
-  updateNote({ note, projectId }) {
-    console.log("this function is getting called");
-    console.log("YOOOO", { note, projectId })
+  async updateNote({ note, projectId }) {
     note = _.trim(note);
-    console.log("ye old note");
-    this.setState(({ projects }) => ({
-      projects: projects.map((project) => {
-        console.log(project.id, projectId)
-        if (project.id === projectId) {
-          project.note = note;
-        }
-        return { ...project };
-      }),
-    }));
-    console.log(this.state.projects)
+    let stateUpdates = {};
+    stateUpdates.projects = this.state.projects.map((project) => {
+      if (project.id === projectId) {
+        project.note = note;
+      }
+      return { ...project };
+    })
+    
+    if (this.state.featuredProject.id === projectId) {
+      stateUpdates.featuredProject = { ...this.state.featuredProject, note }; 
+    }
+    
+    this.setState(stateUpdates);
   }
   
   async saveNote({ note, projectId }) {
@@ -104,7 +104,7 @@ class CollectionEditor extends React.Component {
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       displayNewNote: (projectId) => this.displayNewNote(projectId),
-      updateNote: this.updateNote,
+      updateNote: ({ note, projectId }) => this.updateNote({ note, projectId }),
       saveNote: ({ note, projectId }) => this.saveNote({ note, projectId }),
       hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
