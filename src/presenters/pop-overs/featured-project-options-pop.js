@@ -29,7 +29,9 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject, displayNew
             <dialog className="pop-over project-options-pop">
               <section className="pop-over-actions">
                 <PopoverButton onClick={() => animateThenUnfeature(togglePopover)} text="Un-feature" emoji="arrow-down" />
-                <PopoverButton onClick={() => toggleAndDisplayNewNote(togglePopover)} text="Add note" emoji="spiral_note_pad" />
+                {displayNewNote && (
+                  <PopoverButton onClick={() => toggleAndDisplayNewNote(togglePopover)} text="Add note" emoji="spiral_note_pad" />
+                )}
               </section>
             </dialog>
           )}
@@ -41,4 +43,9 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject, displayNew
 
 FeaturedProjectOptionsPop.propTypes = {
   unfeatureProject: PropTypes.func.isRequired,
+  displayNewNote: PropTypes.func,
+};
+
+FeaturedProjectOptionsPop.defaultProps = {
+  displayNewNote: null,
 };

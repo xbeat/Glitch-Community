@@ -23,12 +23,14 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
 );
 
 const TopRight = (props) => {
-  if (!isAuthorized) return null;
+  if (!props.isAuthorized) return null;
   return (
     <div className={styles.unfeatureBtn} id="featured-project-embed">
-      <FeaturedProjectOptionsPop ...props />
-    </div>;
+      <FeaturedProjectOptionsPop {...props} />
+    </div>
+  );
 };
+
 const FeaturedProject = ({
   addProjectToCollection,
   collection,
@@ -39,43 +41,45 @@ const FeaturedProject = ({
   isAuthorized,
   updateNote,
   unfeatureProject,
-}) => {
-
-
-  return (
-    <ProjectEmbed
-      topLeft={<TopLeft
-        featuredProject={featuredProject}
-        collection={collection}
-        hideNote={hideNote}
-        updateNote={updateNote}
-        isAuthorized={isAuthorized}
-      />}
-      topRight={<TopRight />}
-      project={featuredProject}
-      unfeatureProject={unfeatureProject}
+}) => (
+  <ProjectEmbed
+    topLeft={<TopLeft
+      featuredProject={featuredProject}
+      collection={collection}
+      hideNote={hideNote}
+      updateNote={updateNote}
       isAuthorized={isAuthorized}
-      currentUser={currentUser}
-      addProjectToCollection={addProjectToCollection}
-    />
-  );
-};
+    />}
+    topRight={<TopRight
+      isAuthorized={isAuthorized}
+      unfeatureProject={unfeatureProject}
+      displayNewNote={displayNewNote ? () => displayNewNote(featuredProject.id) : null}
+    />}
+    project={featuredProject}
+    isAuthorized={isAuthorized}
+    currentUser={currentUser}
+    addProjectToCollection={addProjectToCollection}
+  />
+);
+
 
 FeaturedProject.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
-  featuredProject: PropTypes.func.isRequired,
-  hideNote: PropTypes.func.isRequired,
+  featuredProject: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  updateNote: PropTypes.func.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
   collection: PropTypes.object,
   displayNewNote: PropTypes.func,
+  hideNote: PropTypes.func,
+  updateNote: PropTypes.func,
 };
 
 FeaturedProject.defaultProps = {
   collection: null,
   displayNewNote: null,
+  hideNote: null,
+  updateNote: null,
 };
 
 export default FeaturedProject;
