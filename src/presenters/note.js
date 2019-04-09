@@ -56,8 +56,13 @@ Note.propTypes = {
     isAddingANewNote: PropTypes.bool,
     collectionCoverColor: PropTypes.string,
   }).isRequired,
-  updateNote: PropTypes.func.isRequired,
-  hideNote: PropTypes.func.isRequired,
+  updateNote: PropTypes.func,
+  hideNote: PropTypes.func,
+};
+
+Note.defaultProps = {
+  updateNote: null,
+  hideNote: null,
 };
 
 export default Note;
