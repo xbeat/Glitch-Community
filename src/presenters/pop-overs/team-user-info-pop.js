@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
@@ -17,35 +17,34 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = (props) => (
-  <section className="pop-over-actions danger-zone">
-    <TrackClick name="Remove from Team clicked">
-      <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
+const RemoveFromTeam = ({ onClick, ...props }) => {
+  const onClickTracked = useTrackedFunc(onClick, 'Remove from Team clicked');
+  return (
+    <section className="pop-over-actions danger-zone">
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={onClickTracked} {...props}>
         Remove from Team <span className="emoji wave" role="img" aria-label="" />
       </button>
-    </TrackClick>
-  </section>
-);
+    </section>
+  );
+};
 
 // Admin Actions Section ⏫⏬
 
 const AdminActions = ({ user, userIsTeamAdmin, updateUserPermissions, canChangeUserAdminStatus }) => {
+  const onClickRemoveAdmin = useTrackedFunc(() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL), 'Remove Admin Status clicked');
+  const onClickMakeAdmin = useTrackedFunc(() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL), 'Make an Admin clicked');
   if (!canChangeUserAdminStatus) return null;
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">Admins can update team info, billing, and remove users</p>
       {userIsTeamAdmin ? (
-        <TrackClick name="Remove Admin Status clicked">
-          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
-            Remove Admin Status <span className="emoji fast-down" />
-          </button>
-        </TrackClick>
+        <button className="button-small button-tertiary has-emoji" onClick={onClickRemoveAdmin}>
+          Remove Admin Status <span className="emoji fast-down" />
+        </button>
       ) : (
-        <TrackClick name="Make an Admin clicked">
-          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
-            Make an Admin <span className="emoji fast-up" />
-          </button>
-        </TrackClick>
+        <button className="button-small button-tertiary has-emoji" onClick={onClickMakeAdmin}>
+          Make an Admin <span className="emoji fast-up" />
+        </button>
       )}
     </section>
   );

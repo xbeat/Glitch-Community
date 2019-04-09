@@ -1,5 +1,6 @@
 const path = require('path');
 const appConfig = require('../webpack.config.js');
+const AutoprefixerStylus = require('autoprefixer-stylus');
 
 module.exports = async ({ config, mode }) => {
   // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -22,6 +23,9 @@ module.exports = async ({ config, mode }) => {
       },
       {
         loader: 'stylus-loader',
+        options: {        
+          use: [AutoprefixerStylus()],
+        },
       },
     ],
     include: path.resolve(__dirname, '..'),

@@ -7,7 +7,7 @@ import Heading from 'Components/text/heading';
 import { ProjectsUL } from 'Components/containers/projects-list';
 import Layout from '../layout';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { DataLoader } from '../includes/loader';
 import ProjectsLoader from '../projects-loader';
 import MoreIdeas from '../more-ideas';

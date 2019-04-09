@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TrackClick } from '../analytics';
+import { useTrackedFunc } from '../segment-analytics';
 import PopoverWithButton from './popover-with-button';
 import { NestedPopover } from './popover-nested';
 import { useCurrentUser } from '../../state/current-user';
@@ -79,6 +79,12 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.displayNewNote;
   const showPinOrFeatureSection = props.addPin || props.removePin || props.featureProject;
 
+  const onClickAddPin = useTrackedFunc(animateThenAddPin, 'Project Pinned');
+  const onClickRemovePin = useTrackedFunc(animateThenRemovePin, 'Project Un-Pinned');
+  const onClickLeaveTeamProject = useTrackedFunc(leaveTeamProject, 'Leave Project clicked');
+  const onClickLeaveProject = useTrackedFunc(leaveProject, 'Leave Project clicked');
+  const onClickDeleteProject = useTrackedFunc(animateThenDeleteProject, 'Delete Project clicked');
+
   return (
     <dialog className="pop-over project-options-pop">
       { showPinOrFeatureSection && (
@@ -116,17 +122,13 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {props.leaveTeamProject && props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
-          <TrackClick name="Leave Project clicked">
-            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave" />
-          </TrackClick>
+          <PopoverButton onClick={onClickLeaveTeamProject} text="Leave Project " emoji="wave" />
         </section>
       )}
 
       {showLeaveProject && (
         <section className="pop-over-actions collaborator-actions">
-          <TrackClick name="Leave Project clicked">
-            <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave" />
-          </TrackClick>
+          <PopoverButton onClick={onClickLeaveProject} text="Leave Project " emoji="wave" />
         </section>
       )}
 
@@ -137,9 +139,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
           )}
 
           {props.currentUserIsOnProject && !props.removeProjectFromCollection && (
-            <TrackClick name="Delete Project clicked">
-              <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb" />
-            </TrackClick>
+            <PopoverButton onClick={onClickDeleteProject} text="Delete Project " emoji="bomb" />
           )}
         </section>
       )}

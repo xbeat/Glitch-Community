@@ -56,7 +56,6 @@ popover-secondary-background()
   aside
     color: text-on-secondary-background
     font-size: 12px
-    text-align: center
     padding: 10px 12px
   .content-editable
     padding-left: 5px
@@ -67,6 +66,8 @@ popover-secondary-background()
 
   .results-list
     padding: 6px
+    > li 
+      word-break: break-word
   
   .clickable-label
     width: 100%
@@ -431,7 +432,7 @@ popover-secondary-background()
     &.active
       background-color: general-link
 
-.analytics-project-pop, .add-collection-project-pop
+.analytics-projects-pop, .add-collection-project-pop
   .users
     project-result-avatar-size = 22px
     users-results-height = project-result-avatar-size + 6px

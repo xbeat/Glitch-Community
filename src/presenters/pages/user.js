@@ -9,7 +9,7 @@ import FeaturedProject from 'Components/project/featured-project';
 
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { useCurrentUser } from '../../state/current-user';
 import { AuthDescription } from '../includes/description-field';
 import EditableField from '../includes/editable-field';
@@ -136,7 +136,6 @@ const UserPage = ({
           unfeatureProject={unfeatureProject}
           addProjectToCollection={addProjectToCollection}
           currentUser={maybeCurrentUser}
-          trackingOrigin="user page"
         />
       )}
 

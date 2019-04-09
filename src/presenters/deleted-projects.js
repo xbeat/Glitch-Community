@@ -5,11 +5,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Heading from 'Components/text/heading';
+import Loader from 'Components/loaders/loader';
 import { getAvatarUrl } from '../models/project';
-import { TrackClick } from './analytics';
-import { Loader } from './includes/loader';
 
 import { useAPI } from '../state/api';
+import { useTrackedFunc } from './segment-analytics';
 
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');
@@ -17,17 +17,19 @@ function clickUndelete(event, callback) {
   node.classList.add('slide-up');
 }
 
-const DeletedProject = ({ id, domain, onClick }) => (
-  <TrackClick name="Undelete clicked">
-    <button className="button-unstyled" onClick={(evt) => clickUndelete(evt, onClick)}>
+const DeletedProject = ({ id, domain, onClick }) => {
+  const onClickUndelete = (evt) => clickUndelete(evt, onClick);
+  const onClickTracked = useTrackedFunc(onClickUndelete, 'Undelete clicked');
+  return (
+    <button className="button-unstyled" onClick={onClickTracked}>
       <div className="deleted-project">
         <img className="avatar" src={getAvatarUrl(id)} alt="" />
         <div className="deleted-project-name">{domain}</div>
         <div className="button button-small">Undelete</div>
       </div>
     </button>
-  </TrackClick>
-);
+  );
+};
 DeletedProject.propTypes = {
   id: PropTypes.string.isRequired,
   domain: PropTypes.string.isRequired,

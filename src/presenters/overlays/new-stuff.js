@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Markdown from 'Components/text/markdown';
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import Text from 'Components/text/text';
+import { useTracker } from '../segment-analytics';
 import { Link } from '../includes/link';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
@@ -62,30 +63,21 @@ NewStuffOverlay.propTypes = {
   ).isRequired,
 };
 
-class NewStuff extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      log: newStuffLog,
-    };
-  }
+const NewStuff = ({ children, isSignedIn, showNewStuff, setShowNewStuff, newStuffReadId, setNewStuffReadId }) => {
+  const [log, setLog] = React.useState(newStuffLog);
+  const track = useTracker('Pupdate');
 
-  showNewStuff(setVisible) {
-    setVisible(true);
-    const unreadStuff = newStuffLog.filter(({ id }) => id > this.props.newStuffReadId);
-    this.setState({ log: unreadStuff.length ? unreadStuff : newStuffLog });
-    this.props.setNewStuffReadId(latestId);
-  }
-
-  renderOuter({ visible, setVisible }) {
-    const { children, isSignedIn, showNewStuff, newStuffReadId } = this.props;
+  const renderOuter = ({ visible, setVisible }) => {
     const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
+
     const show = () => {
-      if (window.analytics) {
-        window.analytics.track('Pupdate');
-      }
-      this.showNewStuff(setVisible);
+      track();
+      setVisible(true);
+      const unreadStuff = newStuffLog.filter(({ id }) => id > newStuffReadId);
+      setLog(unreadStuff.length ? unreadStuff : newStuffLog);
+      setNewStuffReadId(latestId);
     };
+
     return (
       <>
         {children(show)}
@@ -108,16 +100,14 @@ class NewStuff extends React.Component {
         {visible && <div className="overlay-background" role="presentation" />}
       </>
     );
-  }
+  };
 
-  render() {
-    return (
-      <PopoverContainer outer={this.renderOuter.bind(this)}>
-        {({ visible }) => (visible ? <NewStuffOverlay {...this.props} newStuff={this.state.log} /> : null)}
-      </PopoverContainer>
-    );
-  }
-}
+  return (
+    <PopoverContainer outer={renderOuter}>
+      {({ visible }) => (visible ? <NewStuffOverlay showNewStuff={showNewStuff} setShowNewStuff={setShowNewStuff} newStuff={log} /> : null)}
+    </PopoverContainer>
+  );
+};
 NewStuff.propTypes = {
   children: PropTypes.func.isRequired,
   isSignedIn: PropTypes.bool.isRequired,

@@ -4,11 +4,11 @@ import { parseOneAddress } from 'email-addresses';
 import _ from 'lodash';
 import axios from 'axios';
 import TextArea from 'Components/inputs/text-area';
+import Loader from 'Components/loaders/loader';
 import { PureEditableField } from '../includes/editable-field';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { getAbuseReportTitle, getAbuseReportBody } from '../../utils/abuse-reporting';
-import { Loader } from '../includes/loader';
 
 import { useCurrentUser } from '../../state/current-user';
 
