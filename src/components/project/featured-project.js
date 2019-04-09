@@ -42,6 +42,13 @@ const FeaturedProject = ({
 
   return (
     <ProjectEmbed
+      topLeft={<TopLeft
+        featuredProject={featuredProject}
+        collection={collection}
+        hideNote={hideNote}
+        updateNote={updateNote}
+        isAuthorized={isAuthorized}
+      />}
       topRight={<TopRight />}
       project={featuredProject}
       unfeatureProject={unfeatureProject}
@@ -49,15 +56,7 @@ const FeaturedProject = ({
       currentUser={currentUser}
       addProjectToCollection={addProjectToCollection}
       trackingOrigin={trackingOrigin}
-    >
-      <TopLeft
-        featuredProject={featuredProject}
-        collection={collection}
-        hideNote={hideNote}
-        updateNote={updateNote}
-        isAuthorized={isAuthorized}
-      />
-    </ProjectEmbed>
+    />
   );
 };
 
