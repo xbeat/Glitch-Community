@@ -54,10 +54,11 @@ class CollectionEditor extends React.Component {
   }
 
   async updateNote({ note, projectId }) {
+    console.log("updateNote was called with", {note, projectId})
     note = _.trim(note);
     this.updateProject({ note, isAddingANewNote: true }, projectId);
-    
-    await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });    
+
+    await this.props.api.patch(`collections/${this.state.id}/project/${projectId}`, { annotation: note });
   }
 
   displayNewNote(projectId) {
@@ -67,21 +68,21 @@ class CollectionEditor extends React.Component {
   hideNote(projectId) {
     this.updateProject({ isAddingANewNote: false }, projectId);
   }
-  
+
   updateProject(projectUpdates, projectId) {
     let stateUpdates = {};
-    
+
     stateUpdates.projects = this.state.projects.map((project) => {
       if (project.id === projectId) {
-        return { ...project, ...projectUpdates }; 
+        return { ...project, ...projectUpdates };
       }
       return { ...project };
-    })
-    
+    });
+
     if (this.state.featuredProject.id === projectId) {
-      stateUpdates.featuredProject = { ...this.state.featuredProject, ...projectUpdates }; 
+      stateUpdates.featuredProject = { ...this.state.featuredProject, ...projectUpdates };
     }
-    
+
     this.setState(stateUpdates);
   }
 

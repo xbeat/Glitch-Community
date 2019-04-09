@@ -12,10 +12,10 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
   <Heading tagName="h2">
     Featured Project
     <Emoji name="clapper" />
-    <Note 
+    <Note
       project={featuredProject}
       collection={collection}
-      updateNote={updateNote} 
+      updateNote={updateNote}
       hideNote={hideNote}
       isAuthorized={isAuthorized}
     />
@@ -23,7 +23,18 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
 );
 
 
-const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, currentUser, addProjectToCollection, trackingOrigin, collection, displayNewNote, updateNote, hideNote }) => {
+const FeaturedProject = ({
+  addProjectToCollection,
+  collection,
+  currentUser,
+  displayNewNote,
+  featuredProject,
+  hideNote,
+  isAuthorized,
+  trackingOrigin,
+  updateNote,
+  unfeatureProject,
+}) => {
   const TopRight = () => {
     if (!isAuthorized) return null;
     return <div className={styles.unfeatureBtn} id="featured-project-embed"><FeaturedProjectOptionsPop unfeatureProject={unfeatureProject} displayNewNote={() => displayNewNote(featuredProject.id)} /></div>;
@@ -31,13 +42,6 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
 
   return (
     <ProjectEmbed
-      topLeft={<TopLeft 
-        featuredProject={featuredProject}
-        collection={collection}
-        hideNote={hideNote}
-        updateNote={updateNote}
-        isAuthorized={isAuthorized}
-      />}
       topRight={<TopRight />}
       project={featuredProject}
       unfeatureProject={unfeatureProject}
@@ -45,23 +49,29 @@ const FeaturedProject = ({ featuredProject, unfeatureProject, isAuthorized, curr
       currentUser={currentUser}
       addProjectToCollection={addProjectToCollection}
       trackingOrigin={trackingOrigin}
-    />
+    >
+      <TopLeft
+        featuredProject={featuredProject}
+        collection={collection}
+        hideNote={hideNote}
+        updateNote={updateNote}
+        isAuthorized={isAuthorized}
+      />
+    </ProjectEmbed>
   );
 };
 
 FeaturedProject.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-  isAuthorized: PropTypes.bool.isRequired,
-  featuredProject: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
+  collection: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  displayNewNote: PropTypes.func.isRequired,
+  featuredProject: PropTypes.func.isRequired,
+  hideNote: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
   trackingOrigin: PropTypes.string.isRequired,
-  unfeatureProject: PropTypes.func,
-  noteOptions: PropTypes.object,
-};
-
-FeaturedProject.defaultProps = {
-  unfeatureProject: null,
-  noteOptions: {},
+  updateNote: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func.isRequired,
 };
 
 export default FeaturedProject;

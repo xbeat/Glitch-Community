@@ -13,10 +13,10 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({ collection, project, updateNote, hideNote, isAuthorized}) => {
+const Note = ({ collection, project, updateNote, hideNote, isAuthorized }) => {
   function updateNoteVisibility(description) {
     description = _.trim(description);
-    
+
     if (!description || description.length === 0) {
       setTimeout(() => hideNote(project.id), 500);
     }
@@ -56,12 +56,8 @@ Note.propTypes = {
     isAddingANewNote: PropTypes.bool,
     collectionCoverColor: PropTypes.string,
   }).isRequired,
-  update: PropTypes.any,
+  updateNote: PropTypes.func.isRequired,
   hideNote: PropTypes.func.isRequired,
-};
-
-Note.defaultProps = {
-  update: null,
 };
 
 export default Note;
