@@ -86,7 +86,7 @@ const Router = () => (
       <Route
         path="/login/slack"
         exact
-        render={({ location }) => <SlackLoginPage key={location.key} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />}
+        render={({ location }) => <SlackLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} hash={parse(location.search, 'hash')} />}
       />
       <Route
         path="/login/email"

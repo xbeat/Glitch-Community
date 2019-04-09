@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { parseOneAddress } from 'email-addresses';
 import debounce from 'lodash/debounce';
+import Button from 'Components/buttons/button';
+import Emoji from 'Components/images/emoji';
 import TextInput from 'Components/inputs/text-input';
 import { Link } from '../includes/link';
 import useLocalStorage from '../../state/local-storage';
@@ -47,9 +49,9 @@ function slackAuthLink() {
 }
 
 const SignInPopButton = (props) => (
-  <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
-    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
-  </Link>
+  <Button href={props.href} onClick={props.onClick} size="small">
+    Sign in with {props.company} <Emoji name={props.emoji} />
+  </Button>
 );
 
 class EmailHandler extends React.Component {
