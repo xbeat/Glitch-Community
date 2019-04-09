@@ -68,7 +68,6 @@ class CollectionEditor extends React.Component {
   }
 
   updateProject(projectUpdates, projectId) {
-    console.log("updateProject was called")
     const stateUpdates = {};
 
     stateUpdates.projects = this.state.projects.map((project) => {
@@ -78,10 +77,9 @@ class CollectionEditor extends React.Component {
       return { ...project };
     });
 
-    if (this.state.featuredProject.id === projectId) {
+    if (this.state.featuredProject && this.state.featuredProject.id === projectId) {
       stateUpdates.featuredProject = { ...this.state.featuredProject, ...projectUpdates };
     }
-    console.log(stateUpdates)
 
     this.setState(stateUpdates);
   }
