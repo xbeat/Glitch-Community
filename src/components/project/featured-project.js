@@ -18,7 +18,6 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
       updateNote={updateNote} 
       hideNote={hideNote}
       isAuthorized={isAuthorized}
-      isFromFeatured={true}
     />
   </Heading>
 );

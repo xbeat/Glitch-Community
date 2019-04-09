@@ -13,7 +13,7 @@ import { isDarkColor } from '../models/collection';
 /**
  * Note Component
  */
-const Note = ({ collection, project, updateNote, hideNote, isAuthorized, isFromFeatured }) => {
+const Note = ({ collection, project, updateNote, hideNote, isAuthorized}) => {
   function updateNoteVisibility(description) {
     description = _.trim(description);
     
@@ -21,7 +21,7 @@ const Note = ({ collection, project, updateNote, hideNote, isAuthorized, isFromF
       setTimeout(() => hideNote(project.id), 500);
     }
   }
-  console.log("isAddingANewNote", project.isAddingANewNote, "isFromFeatured", isFromFeatured)
+
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }

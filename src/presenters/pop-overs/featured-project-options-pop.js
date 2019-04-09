@@ -12,7 +12,7 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject, displayNew
     togglePopover();
     unfeatureProject();
   }
-  
+
   function toggleAndDisplayNewNote(togglePopover) {
     togglePopover();
     displayNewNote();

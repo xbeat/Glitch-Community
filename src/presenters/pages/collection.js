@@ -83,11 +83,12 @@ const CollectionPageContents = ({
   updateNote,
   hideNote,
   featureProject,
+  unfeatureProject,
   ...props
 }) => {
   const collectionHasProjects = !!collection && !!collection.projects;
   const userIsLoggedIn = currentUser && currentUser.login;
-  
+
   return (
     <>
       <Helmet title={collection.name} />
@@ -140,11 +141,11 @@ const CollectionPageContents = ({
                 </div>
                 {collection.featuredProject && (
                   <FeaturedProject
-                    featuredProject={collection.featuredProject}
                     isAuthorized={currentUserIsAuthor}
-                    unfeatureProject={() => console.log("work on this")}
-                    addProjectToCollection={addProjectToCollection}
                     currentUser={currentUser}
+                    featuredProject={collection.featuredProject}
+                    unfeatureProject={unfeatureProject}
+                    addProjectToCollection={addProjectToCollection}
                     trackingOrigin="collection page"
                     collection={collection}
                     displayNewNote={displayNewNote}
@@ -228,13 +229,10 @@ async function loadCollection(api, ownerName, collectionName) {
     } else {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     }
-    
-    // mock todo remove
-    collection.featuredProjectId = "dcfb2eed-3f27-4f30-8d17-b9a67f1b6b66";
-    
+
     if (collection.featuredProjectId) {
-      collection.featuredProject = collectionProjects.find(({id}) => id === collection.featuredProjectId);
-      collectionProjects = collectionProjects.filter(({id}) => id !== collection.featuredProjectId);
+      collection.featuredProject = collectionProjects.find(({ id }) => id === collection.featuredProjectId);
+      collectionProjects = collectionProjects.filter(({ id }) => id !== collection.featuredProjectId);
     }
 
     // fetch users for each project
