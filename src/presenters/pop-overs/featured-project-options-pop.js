@@ -8,6 +8,7 @@ import PopoverButton from './popover-button';
 export default function FeaturedProjectOptionsPop({ unfeatureProject, displayNewNote }) {
   function animateThenUnfeature(togglePopover) {
     const featuredContainer = document.getElementById('featured-project-embed');
+    console.log("featuredContainer", featuredContainer)
     featuredContainer.classList.add('slide-down');
     togglePopover();
     unfeatureProject();
