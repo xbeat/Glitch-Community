@@ -42,23 +42,17 @@ module.exports = function(app) {
 
     const sitemapProxy = proxy(target, {
       userResDecorator: (res, data) => {
-        console.log('target', target);
-        
         // do gross stuff to rewrite urls
         // this is dangerous to do on a full page, but the sitemap is simple
         const regexp = new RegExp(escapeRegExp(target), 'g');
-        const newUrl = data.toString().replace(regexp, new URL(APP_URL).hostname);
-        console.log('newUrl', newUrl);
-        return newUrl;
+        return data.toString().replace(regexp, new URL(APP_URL).hostname);
       },
       ...proxyConfig,
     });
 
     // Do the actual proxy
     app.use(routeWithLeadingSlash, (req, ...args) => {
-      console.log(req.path);
       if (/\/sitemap.*(\.xml|\.xsl)$/.test(req.path)) {
-        console.log('sitemap req.path', req.path);
         return sitemapProxy(req, ...args);
       }
       return genericProxy(req, ...args);
@@ -82,6 +76,8 @@ module.exports = function(app) {
   ['faq', 'forplatforms', 'email-sales'].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
 
   proxyGlitch('teams', 'teams.glitch.me');
+  
+  // proxy projects, users, teams, collections sitemaps
   proxyGlitch('sitemaps', 'sitemaps.glitch.me');
 
   return routes;
