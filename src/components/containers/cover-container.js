@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
+import { getProfileStyle as getUserProfileStyle } from '../../models/user';
 
-export const CoverContainer = ({ buttons, children, className, ...props }) => (
+const getProfileStyles = {
+  team: getTeamProfileStyle,
+  user: getUserProfileStyle,
+};
+
+const CoverContainer = ({ buttons, children, className, ...props }) => (
   <div className={`cover-container ${className}`} {...props}>
     {children}
     {buttons}
@@ -18,3 +25,5 @@ CoverContainer.defaultProps = {
   className: '',
   buttons: null,
 };
+
+export default CoverContainer

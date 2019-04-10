@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { sampleSize } from 'lodash';
 
+import CoverContainer from 'Components/containers/cover-container';
+
 import { getSingleItem } from '../../shared/api';
 
 import { getProfileStyle as getUserStyle, getDisplayName } from '../models/user';
 import { getProfileStyle as getTeamStyle } from '../models/team';
 
 import { DataLoader } from './includes/loader';
-import { CoverContainer } from './includes/profile';
 import { UserLink, TeamLink } from './includes/link';
 
 import CollectionItem from './collection-item';
