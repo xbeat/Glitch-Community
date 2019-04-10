@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Markdown from 'Components/text/markdown';
 import Button from 'Components/buttons/button';
 import Image from 'Components/images/image';
-import { StaticUsersList } from 'Components/user/users-list';
+import UsersList from 'Components/user/users-list';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from 'Models/project';
 import { ProjectLink } from '../../presenters/includes/link';
 import ProjectOptionsPop from '../../presenters/pop-overs/project-options-pop';
@@ -23,7 +23,7 @@ const ProjectItem = ({ project, projectOptions }) => (
   <div className={styles.container}>
     <header className={styles.header}>
       <div className={styles.userListContainer}>
-        <StaticUsersList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+        <UsersList avatarsOnly layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
       </div>
       <div className={styles.projectOptionsContainer}>
         <ProjectOptionsPop project={project} projectOptions={projectOptions} />
@@ -54,7 +54,7 @@ ProjectItem.propTypes = {
     id: PropTypes.string.isRequired,
     private: PropTypes.bool,
     showAsGlitchTeam: PropTypes.bool.isRequired,
-    users: PropTypes.array.isRequired,
+    users: PropTypes.array,
     teams: PropTypes.array,
   }).isRequired,
   projectOptions: PropTypes.object,

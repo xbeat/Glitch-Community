@@ -14,7 +14,7 @@ import StarterKitItem from 'Components/search/starter-kit-result';
 import NotFound from 'Components/errors/not-found';
 import Loader from 'Components/loaders/loader';
 
-import { useAPI } from '../../state/api';
+import { useAPI, createAPIHook } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 
 import styles from './search-results.styl';
@@ -38,23 +38,63 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
-function addProjectToCollection(api, project, collection) {
-  return api.patch(`collections/${collection.id}/add/${project.id}`);
+// Project and collection search results (from algolia) do not contain their associated users,
+// so those need to be fetched after the search results have loaded.
+const useUsers = createAPIHook(async (api, userIDs) => {
+  if (!userIDs.length) {
+    return [];
+  }
+  const idString = userIDs.map((id) => `id=${id}`).join('&');
+
+  const { data } = await api.get(`/v1/users/by/id/?${idString}`);
+  return Object.values(data);
+});
+
+const useTeams = createAPIHook(async (api, teamIDs) => {
+  if (!teamIDs.length) {
+    return [];
+  }
+  const idString = teamIDs.map((id) => `id=${id}`).join('&');
+
+  const { data } = await api.get(`/v1/teams/by/id/?${idString}`);
+  return Object.values(data);
+});
+
+function ProjectWithDataLoading({ project, ...props }) {
+  const { value: users } = useUsers(project.userIDs);
+  const { value: teams } = useTeams(project.teamIDs);
+  const projectWithData = { ...project, users, teams };
+  return <ProjectItem project={projectWithData} {...props} />;
 }
 
 function ProjectResult({ result }) {
   const { currentUser } = useCurrentUser();
   const api = useAPI();
-  return currentUser.login ? (
-    <ProjectItem
-      project={result}
-      projectOptions={{
-        addProjectToCollection: (project, collection) => addProjectToCollection(api, project, collection),
-      }}
-    />
-  ) : (
-    <ProjectItem project={result} />
-  );
+
+  const props = { project: result };
+  if (currentUser.login) {
+    props.addProjectToCollection = (project, collection) => api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+
+  if (!result.users) {
+    return <ProjectWithDataLoading {...props} />;
+  }
+
+  return <ProjectItem {...props} />;
+}
+
+function CollectionWithDataLoading({ collection }) {
+  const { value: users = [] } = useUsers(collection.userIDs);
+  const { value: teams = [] } = useTeams(collection.teamIDs);
+  const collectionWithData = { ...collection, user: users[0], team: teams[0] };
+  return <SmallCollectionItem collection={collectionWithData} />;
+}
+
+function CollectionResult({ result }) {
+  if (!result.user && !result.team) {
+    return <CollectionWithDataLoading collection={result} />;
+  }
+  return <SmallCollectionItem collection={result} />;
 }
 
 const groups = [
@@ -68,7 +108,7 @@ const resultComponents = {
   team: ({ result }) => <TeamItem team={result} />,
   user: ({ result }) => <UserItem user={result} />,
   project: ProjectResult,
-  collection: ({ result }) => <SmallCollectionItem collection={result} />,
+  collection: CollectionResult,
 };
 
 const ResultComponent = ({ result }) => {
@@ -132,7 +172,7 @@ function SearchResults({ query, searchResults, activeFilter, setActiveFilter }) 
 
   return (
     <main className={styles.page}>
-      {searchResults.status === 'loading' && (
+      {!ready && (
         <>
           <Loader />
           <h1>All results for {query}</h1>
