@@ -110,7 +110,7 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
               )}
             </Heading>
             <div className="users-information">
-              <UsersList users={users} />
+              <UsersList users={users} layout="block" />
               {!!teams.length && <TeamsList teams={teams} />}
             </div>
             <AuthDescription
