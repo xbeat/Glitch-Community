@@ -154,21 +154,24 @@ class TeamAnalyticsProjectDetails extends React.Component {
     return (
       <>
         <ProjectDetails projectDetails={this.state.projectDetails} />
-        <article className="project-remixes">
-          <h4>Latest Remixes</h4>
-          <div className="project-remixes-container">
-            {this.state.projectRemixes.length === 0 && <Text>No remixes yet (／_^)／ ●</Text>}
-            {this.state.projectRemixes.map((remix) => (
-              <ProjectRemixItem key={remix.id} remix={remix} />
-            ))}
-          </div>
-        </article>
+        { this.props.activeFilter === "remixes" && 
+          <article className="project-remixes">
+            <h4>Latest Remixes</h4>
+            <div className="project-remixes-container">
+              {this.state.projectRemixes.length === 0 && <Text>No remixes yet (／_^)／ ●</Text>}
+              {this.state.projectRemixes.map((remix) => (
+                <ProjectRemixItem key={remix.id} remix={remix} />
+              ))}
+            </div>
+          </article>
+        }
       </>
     );
   }
 }
 
 TeamAnalyticsProjectDetails.propTypes = {
+  activeFilter: PropTypes.string.isRequired,
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };

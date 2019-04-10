@@ -232,7 +232,11 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} />
+            <TeamAnalyticsProjectDetails
+              currentProjectDomain={this.state.currentProjectDomain}
+              id={this.props.id}
+              activeFilter={this.state.activeFilter}
+            />
           </section>
         )}
 
