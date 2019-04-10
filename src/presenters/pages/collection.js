@@ -229,9 +229,6 @@ async function loadCollection(api, ownerName, collectionName) {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     }
     
-    //MOCK plz remove:
-    collection.featuredProjectId = "dcfb2eed-3f27-4f30-8d17-b9a67f1b6b66"
-    
     if (collection.featuredProjectId) {
       collection.featuredProject = collectionProjects.find(({ id }) => id === collection.featuredProjectId);
       collectionProjects = collectionProjects.filter(({ id }) => id !== collection.featuredProjectId);
