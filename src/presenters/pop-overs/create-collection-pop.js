@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { kebabCase, orderBy } from 'lodash';
+import Loader from 'Components/loaders/loader';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
-import { TrackClick } from '../analytics';
+import { useTracker } from '../segment-analytics';
 import { getLink, createCollection } from '../../models/collection';
 import { useAPI } from '../../state/api';
 
@@ -13,7 +14,6 @@ import { AddProjectToCollectionMsg, useNotifications } from '../notifications';
 import { NestedPopoverTitle } from './popover-nested';
 import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
-import { Loader } from '../includes/loader';
 
 // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
 function getTeamOptions(teams) {
@@ -33,6 +33,23 @@ function getTeamOptions(teams) {
   });
   return teamOptions;
 }
+
+const SubmitButton = ({ disabled }) => {
+  const track = useTracker('Create Collection clicked', (inherited) => ({
+    ...inherited,
+    origin: `${inherited.origin} project`,
+  }));
+  return (
+    <div className="button-wrap">
+      <button type="submit" onClick={track} className="create-collection button-small" disabled={disabled}>
+        Create
+      </button>
+    </div>
+  );
+};
+SubmitButton.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+};
 
 class CreateCollectionPop extends React.Component {
   constructor(props) {
@@ -159,19 +176,7 @@ class CreateCollectionPop extends React.Component {
             )}
 
             {!this.state.loading ? (
-              <TrackClick
-                name="Create Collection clicked"
-                properties={(inherited) => ({
-                  ...inherited,
-                  origin: `${inherited.origin} project`,
-                })}
-              >
-                <div className="button-wrap">
-                  <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
-                    Create
-                  </button>
-                </div>
-              </TrackClick>
+              <SubmitButton disabled={!!queryError || !submitEnabled} />
             ) : (
               <Loader />
             )}

@@ -1,21 +1,33 @@
-import React from 'react';
-import { Link, TeamLink, UserLink, ProjectLink, CollectionLink } from '../../presenters/includes/link';
-import { TeamAvatar, UserAvatar } from '../../presenters/includes/avatar';
+import React, { useState, useEffect } from 'react';
+import MaskImage from 'Components/images/mask-image';
+import { TeamAvatar, UserAvatar } from 'Components/images/avatar';
+import { Link, TeamLink, UserLink, ProjectLink } from '../../presenters/includes/link';
 import ProjectAvatar from '../../presenters/includes/project-avatar';
 import CollectionAvatar from '../../presenters/includes/collection-avatar';
 import { useAlgoliaSearch } from '../../state/search';
 import styles from './autocomplete.styl';
 
+const StarterKitResult = ({ value: starterKit }) => (
+  <a href={starterKit.url} className={styles.resultContainer}>
+    <div className={styles.avatarContainer}>
+      <MaskImage src={starterKit.imageURL} />
+    </div>
+    <div className={styles.infoContainer}>
+      <div className={styles.infoPrimary}>{starterKit.name}</div>
+      <div className={styles.infoSecondary}>{starterKit.description}</div>
+    </div>
+  </a>
+);
+
 const TeamResult = ({ value: team }) => (
   <TeamLink team={team} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
-      <TeamAvatar hideTooltip team={team} />
+      <TeamAvatar hideTooltip team={{ ...team, hasAvatarImage: true }} />
     </div>
     <div className={styles.infoContainer}>
       <div className={styles.infoPrimary}>{team.name}</div>
       <div className={styles.infoSecondary}>@{team.url}</div>
     </div>
-    {/* <div className={styles.memberContainer}>MAYBE: user avatars</div> */}
   </TeamLink>
 );
 
@@ -43,6 +55,12 @@ const ProjectResult = ({ value: project }) => (
   </ProjectLink>
 );
 
+const CollectionLink = ({ collection, children, ...props }) => (
+  <a href={`/@${collection.fullUrl}`} {...props}>
+    {children}
+  </a>
+);
+
 const CollectionResult = ({ value: collection }) => (
   <CollectionLink collection={collection} className={styles.resultContainer}>
     <div className={styles.avatarContainer}>
@@ -52,7 +70,6 @@ const CollectionResult = ({ value: collection }) => (
       <div className={styles.infoPrimary}>{collection.name}</div>
       <div className={styles.infoSecondary}>@{collection.fullUrl}</div>
     </div>
-    {/* <div className={styles.memberContainer}>MAYBE: project avatars</div> */}
   </CollectionLink>
 );
 
@@ -62,29 +79,57 @@ const SeeAllResults = ({ query }) => (
   </Link>
 );
 
+const resultComponents = {
+  starterKit: StarterKitResult,
+  team: TeamResult,
+  user: UserResult,
+  project: ProjectResult,
+  collection: CollectionResult,
+};
+
+const Result = ({ value }) => {
+  const Component = resultComponents[value.type];
+  if (!Component) return null;
+  return <Component value={value} />;
+};
+
 const resultGroups = [
-  { id: 'team', label: 'Teams', Component: TeamResult },
-  { id: 'user', label: 'Users', Component: UserResult },
-  { id: 'project', label: 'Projects', Component: ProjectResult },
-  { id: 'collection', label: 'Collection Results', Component: CollectionResult },
+  { id: 'team', label: 'Teams' },
+  { id: 'user', label: 'Users' },
+  { id: 'project', label: 'Projects' },
+  { id: 'collection', label: 'Collections' },
 ];
 
 const MAX_RESULTS_PER_TYPE = 3;
 
 export const AutocompleteResults = ({ query, results }) => {
+  const notTopResult = (result) => !results.topResults.includes(result);
   const resultGroupsWithItems = resultGroups
-    .map((group) => ({ ...group, items: results[group.id].slice(0, MAX_RESULTS_PER_TYPE) }))
+    .map((group) => ({ ...group, items: results[group.id].filter(notTopResult).slice(0, MAX_RESULTS_PER_TYPE) }))
     .filter((group) => group.items.length > 0);
+  const topResultItems = [...results.starterKit, ...results.topResults];
   return (
     <div className={styles.container}>
       <ul>
-        {resultGroupsWithItems.map(({ id, label, Component, items }) => (
+        {topResultItems.length > 0 && (
+          <li>
+            <header className={styles.resultGroupHeader}>Top Results</header>
+            <ul>
+              {topResultItems.map((item) => (
+                <li key={item.id} className={styles.resultItem}>
+                  <Result value={item} />
+                </li>
+              ))}
+            </ul>
+          </li>
+        )}
+        {resultGroupsWithItems.map(({ id, label, items }) => (
           <li key={id}>
             <header className={styles.resultGroupHeader}>{label}</header>
             <ul>
               {items.map((item) => (
                 <li key={item.id} className={styles.resultItem}>
-                  <Component value={item} />
+                  <Result value={item} />
                 </li>
               ))}
             </ul>
@@ -98,9 +143,21 @@ export const AutocompleteResults = ({ query, results }) => {
   );
 };
 
-const AutocompleteSearch = ({ query }) => {
+// when results are loading, show the previous set of results instead.
+function useLastCompleteSearchResult(query) {
   const results = useAlgoliaSearch(query);
-  if (results.totalHits > 0 && results.status === 'ready') {
+  const [lastCompleteResults, setLastCompleteResults] = useState(results);
+  useEffect(() => {
+    if (results.status === 'ready') {
+      setLastCompleteResults(results);
+    }
+  }, [results.status]);
+  return lastCompleteResults;
+}
+
+const Autocomplete = ({ query }) => {
+  const results = useLastCompleteSearchResult(query);
+  if (query && results.totalHits > 0 && results.status === 'ready') {
     return (
       <div className={styles.popOver}>
         <AutocompleteResults query={query} results={results} />
@@ -110,4 +167,4 @@ const AutocompleteSearch = ({ query }) => {
   return null;
 };
 
-export default AutocompleteSearch;
+export default Autocomplete;

@@ -42,11 +42,7 @@ const TeamItem = ({ team }) => (
 
 TeamItem.propTypes = {
   team: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    hasAvatarImage: PropTypes.bool.isRequired,
-    hasCoverImage: PropTypes.bool.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     users: PropTypes.array.isRequired,

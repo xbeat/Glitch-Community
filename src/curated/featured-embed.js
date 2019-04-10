@@ -1,13 +1,13 @@
 const body =
-  '<p>How today’s tech, from artificial intelligence to virtual reality, is changing the way art is made.</p>';
+  '<p>Join virtual reality expert Andrés Cuervo for a week of experiments that will both teach and inspire you to create your own WebVR experiences.</p>';
 
 // make sure image urls use https
 export default {
-  image: 'https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FartCodeBanner%20(1).png?1553776037425',
+  image: 'https://community.glitch.me/culture/content/images/2019/04/Glitch_Illo_TechArt-VR-Headline-v1--1-.png',
   mask: 'mask-4',
-  title: 'When Art Meets Algorithm',
-  appDomain: 'orbit',
-  blogUrl: '/art-meets-algorithm/',
+  title: 'Master WebVR This Week',
+  appDomain: 'aframe-vr-10-print',
+  blogUrl: '/master-webvr-with-a-week-of-experiments/',
   body,
-  color: '#f5f5f5'
+  color: '#f5f5f5',
 };

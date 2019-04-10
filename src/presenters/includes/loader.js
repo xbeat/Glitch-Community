@@ -1,14 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loader from 'Components/loaders/loader';
 
-export const Loader = () => (
-  <div className="loader">
-    <div className="moon" />
-    <div className="earth" />
-    <div className="asteroid" />
-    <div className="asteroid-dust" />
-  </div>
-);
+// eslint-disable-next-line import/prefer-default-export
 export class DataLoader extends React.Component {
   constructor(props) {
     super(props);

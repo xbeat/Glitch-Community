@@ -9,7 +9,7 @@ import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
 import FeaturedProject from 'Components/project/featured-project';
 
-import { AnalyticsContext } from '../analytics';
+import { AnalyticsContext } from '../segment-analytics';
 import { useAPI } from '../../state/api';
 import { useCurrentUser } from '../../state/current-user';
 import { DataLoader } from '../includes/loader';
@@ -205,7 +205,6 @@ class TeamPage extends React.Component {
             unfeatureProject={this.props.unfeatureProject}
             addProjectToCollection={this.props.addProjectToCollection}
             currentUser={this.props.currentUser}
-            trackingOrigin="team page"
           />
         )}
 

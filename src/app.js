@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import ErrorBoundary from './presenters/includes/error-boundary';
-import { AnalyticsContext } from './presenters/analytics';
+import { AnalyticsContext } from './presenters/segment-analytics';
 import { CurrentUserProvider } from './state/current-user';
 import { APIContextProvider } from './state/api';
 import { UserPrefsProvider } from './presenters/includes/user-prefs';
