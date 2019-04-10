@@ -18,7 +18,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withi
       src={src}
       defaultSrc={srcFallback}
       alt={name}
-      style={color ? { backgroundColor: color } : null}
+      backgroundColor={color}
       className={styles[type]}
     />
   );

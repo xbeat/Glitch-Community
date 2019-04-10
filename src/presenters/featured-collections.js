@@ -5,6 +5,7 @@ import { sampleSize, flatMap, uniq } from 'lodash';
 import Markdown from 'Components/text/markdown';
 import Heading from 'Components/text/heading';
 import { ProjectsUL } from 'Components/containers/projects-list';
+import { UserTile } from 'Components/user/users-list';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
@@ -15,7 +16,6 @@ import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
 import { TeamTile } from './teams-list';
-import { UserTile } from './users-list';
 
 import { useAPI } from '../state/api';
 

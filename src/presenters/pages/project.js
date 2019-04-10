@@ -7,6 +7,7 @@ import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
 import NotFound from 'Components/errors/not-found';
 import ProjectEmbed from 'Components/project/project-embed';
+import UsersList from 'Components/user/users-list';
 import { getAvatarUrl } from '../../models/project';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
@@ -19,7 +20,6 @@ import { AuthDescription } from '../includes/description-field';
 import { InfoContainer, ProjectInfoContainer } from '../includes/profile';
 import { ShowButton, EditButton } from '../includes/project-actions';
 import TeamsList from '../teams-list';
-import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
 import IncludedInCollections from '../includes/included-in-collections';
 import { addBreadcrumb } from '../../utils/sentry';
