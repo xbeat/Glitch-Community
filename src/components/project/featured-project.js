@@ -25,7 +25,7 @@ const TopLeft = ({ featuredProject, collection, updateNote, hideNote, isAuthoriz
 const TopRight = (props) => {
   if (!props.isAuthorized) return null;
   return (
-    <div className={styles.unfeatureBtn} id="featured-project-embed">
+    <div className={styles.unfeatureBtn}>
       <FeaturedProjectOptionsPop {...props} />
     </div>
   );
