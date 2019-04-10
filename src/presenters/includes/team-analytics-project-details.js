@@ -154,7 +154,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
     return (
       <>
         <ProjectDetails projectDetails={this.state.projectDetails} />
-        { this.props.activeFilter === "remixes" && 
+        {this.props.activeFilter === 'remixes' && (
           <article className="project-remixes">
             <h4>Latest Remixes</h4>
             <div className="project-remixes-container">
@@ -164,7 +164,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
               ))}
             </div>
           </article>
-        }
+        )}
       </>
     );
   }

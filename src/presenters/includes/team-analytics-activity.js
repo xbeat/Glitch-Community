@@ -100,7 +100,7 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
     },
     tooltip: {
       format: {
-        value: function(value, ratio, id) {
+        value: (value, ratio, id) => {
           if (id === 'Total App Views') return `${value} views`;
           if (id === 'Remixes') return `${value} remixes`;
           return null;
