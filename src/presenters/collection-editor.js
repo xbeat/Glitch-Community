@@ -77,11 +77,17 @@ class CollectionEditor extends React.Component {
       return { ...project };
     });
 
-    if (this.state.featuredProject && this.state.featuredProject.id === projectId) {
-      stateUpdates.featuredProject = { ...this.state.featuredProject, ...projectUpdates };
+    if (this.state.featuredProjectId && this.state.featuredProjectId === projectId) {
+      const featuredProject = this.state.projects.find((id) => id === projectId); 
+      stateUpdates.featuredProject = { ...featuredProject, ...projectUpdates };
     }
 
     this.setState(stateUpdates);
+  }
+  
+  async featureProject(id) {
+    this.updateFields({ featuredProjectId: id });
+    this.updateProject({ featuredProject});
   }
 
   render() {
@@ -96,7 +102,7 @@ class CollectionEditor extends React.Component {
       hideNote: (projectId) => this.hideNote(projectId),
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
-      featureProject: (id) => this.updateFields({ featuredProjectId: id }).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
       unfeatureProject: () => this.updateFields({ featuredProjectId: null }).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsAuthor());
