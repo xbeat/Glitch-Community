@@ -7,7 +7,7 @@ import { orderBy, partition } from 'lodash';
 import Heading from 'Components/text/heading';
 import FeaturedProject from 'Components/project/featured-project';
 
-import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
+import { getAvatarStyle, getLink } from '../../models/user';
 
 import { AnalyticsContext } from '../segment-analytics';
 import { useCurrentUser } from '../../state/current-user';
