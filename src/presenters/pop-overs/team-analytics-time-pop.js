@@ -54,7 +54,7 @@ TeamAnalyticsTimePop.propTypes = {
 };
 
 const TeamAnalyticsTimePopButton = ({ updateTimeFrame, currentTimeFrame }) => (
-  <PopoverWithButton buttonClass="button-small button-tertiary button-select" buttonText={<span>{[currentTimeFrame, <div className="down-arrow" aria-label="options" />]}</span>}>
+  <PopoverWithButton buttonClass="button-small button-tertiary button-select" buttonText={[currentTimeFrame, <div className="down-arrow" aria-label="options" />]}>
     {({ togglePopover }) => (
       <TeamAnalyticsTimePop updateTimeFrame={updateTimeFrame} currentTimeFrame={currentTimeFrame} togglePopover={togglePopover} />
     )}
