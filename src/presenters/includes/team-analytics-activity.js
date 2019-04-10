@@ -90,10 +90,9 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
           format: dateFormat(currentTimeFrame),
         },
       },
-      y:{
+      y: {
         min: 0,
-        padding: {bottom: 0},
-
+        padding: { bottom: 0 },
       },
     },
     legend: {
@@ -101,23 +100,22 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
     },
     tooltip: {
       format: {
-        value: function (value, ratio, id) {
-          if(id === 'Total App Views'){
+        value: function(value, ratio, id) {
+          if (id === 'Total App Views') {
             return value + ' views';
-          }else if(id === 'Remixes'){
+          } else if (id === 'Remixes') {
             return value + ' remixes';
           }
         },
       },
     },
   });
-  
-  if(activeFilter === "views"){
+
+  if (activeFilter === 'views') {
     chart.hide(['Remixes']);
-  }else if(activeFilter === "remixes"){
+  } else if (activeFilter === 'remixes') {
     chart.hide(['Total App Views']);
   }
-  
 };
 
 class TeamAnalyticsActivity extends React.Component {

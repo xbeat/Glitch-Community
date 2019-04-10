@@ -98,6 +98,10 @@ class TeamAnalytics extends React.Component {
     }
   }
 
+  setFilter(filter) {
+    this.setState({ activeFilter: filter });
+  }
+
   updateTotals() {
     let totalAppViews = 0;
     let totalRemixes = 0;
@@ -152,10 +156,6 @@ class TeamAnalytics extends React.Component {
         this.updateAnalytics();
       },
     );
-  }
-
-  setFilter(filter) {
-    this.setState({ activeFilter: filter });
   }
 
   render() {

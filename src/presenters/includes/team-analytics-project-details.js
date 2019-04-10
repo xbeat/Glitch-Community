@@ -50,9 +50,9 @@ const ProjectDetails = ({ projectDetails }) => (
     </ProjectLink>
     <table>
       <tbody>
-         <tr>
+        <tr>
           <td className="label">Name</td>
-          <td>{projectDetails.doamin}</td>
+          <td>{projectDetails.domain}</td>
         </tr>
         <tr>
           <td className="label">Created</td>
@@ -156,10 +156,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
         <ProjectDetails projectDetails={this.state.projectDetails} />
         <article className="project-remixes">
           <h4>Latest Remixes</h4>
-          {this.state.projectRemixes.length === 0 && <Text>No remixes yet (／_^)／ ●</Text>}
-          {this.state.projectRemixes.map((remix) => (
-            <ProjectRemixItem key={remix.id} remix={remix} />
-          ))}
+          <div className="project-remixes-container">
+            {this.state.projectRemixes.length === 0 && <Text>No remixes yet (／_^)／ ●</Text>}
+            {this.state.projectRemixes.map((remix) => (
+              <ProjectRemixItem key={remix.id} remix={remix} />
+            ))}
+          </div>
         </article>
       </>
     );

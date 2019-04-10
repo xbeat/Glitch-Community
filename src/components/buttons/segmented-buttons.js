@@ -25,5 +25,4 @@ SegmentedButtons.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-
 export default SegmentedButtons;

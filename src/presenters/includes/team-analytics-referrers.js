@@ -53,7 +53,7 @@ class TeamAnalyticsReferrers extends React.PureComponent {
     const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes');
     return (
       <div className="referrers-content">
-        { activeFilter === "views" &&
+        {activeFilter === 'views' && (
           <article className="referrers-column app-views">
             <ul>
               <ReferrerPlaceholder count={totalAppViews} />
@@ -63,8 +63,8 @@ class TeamAnalyticsReferrers extends React.PureComponent {
               ))}
             </ul>
           </article>
-        }
-        { activeFilter === "remixes" && 
+        )}
+        {activeFilter === 'remixes' && (
           <article className="referrers-column remixes">
             <ul>
               <ReferrerPlaceholder count={totalRemixes} />
@@ -74,7 +74,7 @@ class TeamAnalyticsReferrers extends React.PureComponent {
               ))}
             </ul>
           </article>
-        }
+        )}
       </div>
     );
   }
