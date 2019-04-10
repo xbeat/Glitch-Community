@@ -71,7 +71,7 @@ export class ProfileContainer extends React.PureComponent {
   render() {
     const { avatarStyle, avatarButtons, type, item, coverButtons, children, teams } = this.props;
     return (
-      <CoverContainer type={type} item={user} buttons={coverButtons}>
+      <CoverContainer type={type} item={item} buttons={coverButtons}>
         <InfoContainer>
           <div className="avatar-container">
             <div className="user-avatar" style={avatarStyle} />
