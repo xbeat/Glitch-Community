@@ -114,7 +114,7 @@ const PlaceholderUsersList = () => (
 );
 
 const UsersList = ({ glitchTeam, users, layout, teams, avatarsOnly }) => {
-  if (!users || !teams) {
+  if (!users && !teams) {
     return <PlaceholderUsersList />;
   }
 
