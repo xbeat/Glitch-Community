@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'Components/buttons/button';
+import CoverContainer from 'Components/containers/cover-container';
+
 import { useTrackedFunc } from '../segment-analytics';
 import TeamsList from '../teams-list';
 
@@ -61,7 +63,6 @@ export const InfoContainer = ({ children }) => <div className="profile-info">{ch
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 
 
 // Profile Container
