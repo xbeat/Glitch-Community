@@ -9,6 +9,23 @@
   display: inline-block
   margin-right: -7px
   
+.placeholder
+  width: 32px
+  height: 32px
+  border-radius: 50%
+  background: linear-gradient(to right, secondary-background-hover 8%, input-border 20%, secondary-background-hover 35%);
+  background-size: 800px 104px;
+  animation: loadingGradient 1.8s cubic-bezier(0.4, 0, 1, 1) infinite;
+
+@keyframes loadingGradient{
+  0%{
+      background-position: 50% 0
+  }
+  100%{
+      background-position: -50% 0
+  }
+}
+  
 .row
   white-space: nowrap
   overflow: hidden

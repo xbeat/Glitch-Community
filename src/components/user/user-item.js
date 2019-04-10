@@ -43,9 +43,7 @@ const UserItem = ({ user }) => (
 UserItem.propTypes = {
   user: PropTypes.shape({
     avatarUrl: PropTypes.string,
-    coverColor: PropTypes.string,
     description: PropTypes.string,
-    hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
     login: PropTypes.string.isRequired,
     name: PropTypes.string,
