@@ -105,7 +105,8 @@ const UserPage = ({
       <section>
         <ProfileContainer
           avatarStyle={getAvatarStyle(user)}
-          coverStyle={getProfileStyle({ ...user, cache: _cacheCover })}
+          type="user"
+          item={user}
           coverButtons={
             isAuthorized &&
             !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null} />

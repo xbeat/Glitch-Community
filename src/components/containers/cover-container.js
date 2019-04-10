@@ -8,8 +8,8 @@ const getProfileStyles = {
   user: getUserProfileStyle,
 };
 
-const CoverContainer = ({ buttons, children, className, ...props }) => (
-  <div className={`cover-container ${className}`} {...props}>
+const CoverContainer = ({ buttons, children, className, type, item }) => (
+  <div className={`cover-container ${className}`} style={getProfileStyles[type](item)}>
     {children}
     {buttons}
   </div>
