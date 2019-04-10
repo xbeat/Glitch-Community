@@ -65,7 +65,7 @@ module.exports = function(app) {
     // Proxy all the requests to /{route}/ over to glitchTarget
     proxyGlitch(route, glitchTarget, urlJoin('/', pathOnTarget, route));
   }
-  
+
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost('help', 'help-center.glitch.me');
   proxyGhost('culture', 'culture-zine.glitch.me');
@@ -76,7 +76,7 @@ module.exports = function(app) {
   ['faq', 'forplatforms', 'email-sales'].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
 
   proxyGlitch('teams', 'teams.glitch.me');
-  
+
   // proxy projects, users, teams, collections sitemaps
   proxyGlitch('sitemaps', 'sitemaps.glitch.me');
 
