@@ -54,6 +54,7 @@ const FeaturedProject = ({
       isAuthorized={isAuthorized}
       unfeatureProject={unfeatureProject}
       displayNewNote={displayNewNote ? () => displayNewNote(featuredProject.id) : null}
+      hasNote={!!featuredProject.note}
     />}
     project={featuredProject}
     isAuthorized={isAuthorized}
