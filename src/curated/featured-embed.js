@@ -6,7 +6,7 @@ export default {
   image: 'https://community.glitch.me/culture/content/images/2019/04/Glitch_Illo_TechArt-VR-Headline-v1--1-.png',
   mask: 'mask-4',
   title: 'Master WebVR This Week',
-  appDomain: 'aframe-bvh-mocap',
+  appDomain: 'aframe-torus-knots',
   blogUrl: '/master-webvr-with-a-week-of-experiments/',
   body,
   color: '#f5f5f5',
