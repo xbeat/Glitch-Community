@@ -9,7 +9,7 @@ const getProfileStyles = {
 };
 
 const CoverContainer = ({ buttons, children, className, type, item }) => (
-  <div className={`cover-container ${className}`} style={getProfileStyles[type](item)}>
+  <div className={`cover-container ${className}`} style={getProfileStyles[type]({ ...item, cache: item._cacheCover })}>
     {children}
     {buttons}
   </div>
