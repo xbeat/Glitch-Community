@@ -29,8 +29,7 @@ class CollectionEditor extends React.Component {
     // A note here: we don't want to setState with the data from the server from this call, as it doesn't return back the projects in depth with users and notes and things
     // maybe a sign we want to think of something a little more powerful for state management, as we're getting a little hairy here.
     this.setState(changes);
-    const { data } = await this.props.api.patch(`collections/${this.state.id}`, changes);
-    console.log(data)
+    await this.props.api.patch(`collections/${this.state.id}`, changes);
   }
 
   async addProjectToCollection(project, collection) {
@@ -86,9 +85,19 @@ class CollectionEditor extends React.Component {
   }
   
   async featureProject(id) {
+    // make request to server and update featuredProjectId property in state
     this.updateFields({ featuredProjectId: id });
-    const featuredProject = this.state.projects.find((p) => p.id === id);
-    this.updateProject({ featuredProject: featuredProject }, id);
+
+    // update state so that current featuredProject is put back and new featured project is removed from projects
+    const stateUpdates = {};
+    const oldFeaturedProject = this.state.featuredProject;
+    const newFeaturedProject = this.state.projects.find((p) => p.id === id);
+    stateUpdates.featuredProject = newFeaturedProject;
+    if (oldFeaturedProject) {
+      stateUpdates.projects = this.state.projects.concat([oldFeaturedProject]);
+    }
+    stateUpdates.projects = stateUpdates.projects.filter((p)
+    
   }
 
   render() {
