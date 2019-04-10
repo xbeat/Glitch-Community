@@ -67,6 +67,8 @@ const dateFormat = (currentTimeFrame) => {
   return '%b %d';
 };
 
+cons
+
 const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
