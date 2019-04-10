@@ -10,18 +10,37 @@ const getContainerClass = (layout) => classnames(styles.container, styles[layout
 
 // StaticUsersList
 
-export const StaticUsersList = ({ users, layout }) => (
-  <ul className={getContainerClass(layout)}>
-    {users.map((user) => (
-      <li key={user.id} className={styles.listItem}>
-        <UserAvatar user={user} />
-      </li>
-    ))}
-  </ul>
-);
+export const StaticUsersList = ({ users, teams, layout }) => {
+  if (users.length) {
+    return (
+      <ul className={getContainerClass(layout)}>
+        {users.map((user) => (
+          <li key={user.id} className={styles.listItem}>
+            <UserAvatar user={user} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <ul className={getContainerClass(layout)}>
+      {teams.map((team) => (
+        <li key={team.id} className={styles.listItem}>
+          <TeamAvatar team={team} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 StaticUsersList.propTypes = {
   users: PropTypes.array.isRequired,
+  teams: PropTypes.array,
   layout: PropTypes.oneOf(['row', 'block']).isRequired,
+};
+
+StaticUsersList.defaultProps = {
+  teams: [],
 };
 
 // UserTile
@@ -86,9 +105,24 @@ const GlitchTeamUsersList = ({ layout }) => {
   );
 };
 
-const UsersList = ({ glitchTeam, users, layout, teams }) => {
+const PlaceholderUsersList = () => (
+  <ul className={styles.container}>
+    <li className={styles.listItem}>
+      <div className={styles.placeholder} />
+    </li>
+  </ul>
+);
+
+const UsersList = ({ glitchTeam, users, layout, teams, avatarsOnly }) => {
+  if (!users || !teams) {
+    return <PlaceholderUsersList />;
+  }
+
   if (glitchTeam) {
     return <GlitchTeamUsersList layout={layout} />;
+  }
+  if (avatarsOnly) {
+    return <StaticUsersList users={users} layout={layout} teams={teams} />;
   }
   return <PopulatedUsersList users={users} layout={layout} teams={teams} />;
 };
