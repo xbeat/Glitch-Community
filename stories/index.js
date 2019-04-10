@@ -28,6 +28,7 @@ import { Context as APIContext } from '../src/state/api';
 import Embed from 'Components/project/embed';
 import ProjectEmbed from 'Components/project/project-embed';
 import FeaturedProject from 'Components/project/featured-project';
+import CoverContainer from 'Components/containers/cover-container';
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
@@ -474,3 +475,23 @@ storiesOf('FeaturedProject', module)
       />
     )),
   );
+
+const team = {
+  backgroundColor: "rgb(116,236,252)",
+  coverColor: "rgb(12,84,124)",
+  hasCoverImage: true,
+  name: "Glitch",
+  id: 74
+}
+
+storiesOf('CoverContainer', module)
+  .add('when passed a user', () => (
+    <CoverContainer item={users.modernserf} type="user">
+      <div>I'm the children</div>
+    </CoverContainer>
+  ))
+  .add('when passed a team', () => (
+    <CoverContainer item={team} type="team">
+      <div>I'm the children</div>
+    </CoverContainer>
+  ))
