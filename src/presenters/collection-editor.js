@@ -91,13 +91,17 @@ class CollectionEditor extends React.Component {
     // update state so that current featuredProject is put back and new featured project is removed from projects
     const stateUpdates = {};
     const oldFeaturedProject = this.state.featuredProject;
-    const newFeaturedProject = this.state.projects.find((p) => p.id === id);
-    stateUpdates.featuredProject = newFeaturedProject;
+    const newFeaturedProjectIdx = this.state.projects.findIndex((p) => p.id === id);
+    debugger
+    stateUpdates.projects = [...this.state.projects];
+    debugger
     if (oldFeaturedProject) {
-      stateUpdates.projects = this.state.projects.concat([oldFeaturedProject]);
+      stateUpdates.featuredProject = stateUpdates.projects.splice(newFeaturedProjectIdx, 1, oldFeaturedProject)[0];
+    } else {
+      stateUpdates.featuredProject = stateUpdates.projects.splice(newFeaturedProjectIdx, 1)[0];
     }
-    stateUpdates.projects = stateUpdates.projects.filter((p)
-    
+    debugger
+    this.setState(stateUpdates);
   }
 
   render() {
