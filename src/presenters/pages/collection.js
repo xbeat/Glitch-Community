@@ -218,7 +218,7 @@ CollectionPageContents.defaultProps = {
 async function loadCollection(api, ownerName, collectionName) {
   try {
     const collection = await getSingleItem(api, `v1/collections/by/fullUrl?fullUrl=${ownerName}/${collectionName}`, `${ownerName}/${collectionName}`);
-    let collectionProjects = await getAllPages(
+    const collectionProjects = await getAllPages(
       api,
       `v1/collections/by/fullUrl/projects?fullUrl=${ownerName}/${collectionName}&orderKey=updatedAt&orderDirection=ASC&limit=100`,
     );
@@ -239,12 +239,12 @@ async function loadCollection(api, ownerName, collectionName) {
       );
       collection.projects = projectsWithUsers;
     }
-    
+
     if (collection.featuredProjectId) {
       collection.featuredProject = collection.projects.find(({ id }) => id === collection.featuredProjectId);
       collection.projects = collection.projects.filter(({ id }) => id !== collection.featuredProjectId);
     }
-    
+
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
