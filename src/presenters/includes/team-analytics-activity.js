@@ -95,6 +95,9 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
         padding: { bottom: 0 },
       },
     },
+    point: {
+      r: 3,
+    },
     legend: {
       show: false,
     },
@@ -118,7 +121,9 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
 
 class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.activeFilter !== this.props.activeFilter || (prevProps.isGettingData === true && this.props.isGettingData === false)) {
+    const newFilter = prevProps.activeFilter !== this.props.activeFilter;
+    const stillGettingData = prevProps.isGettingData && !this.props.isGettingData;
+    if (newFilter || stillGettingData) {
       renderChart(this.props.activeFilter, this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
