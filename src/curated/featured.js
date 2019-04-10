@@ -19,9 +19,9 @@ export default [
     link: 'https://glitch.com/~hydra-editor',
   },
   {
-    title: 'Bring the Party to Images',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_2%20(1).png?1554715798287',
-    link: 'https://glitch.com/~paas',
+    title: 'Support the Girls Club',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F6_3%20(1).png?1554715798287',
+    link: 'https://girlsclubspringfling.org',
   },
   {
     title: 'Play Drums With a Micro:bit',
