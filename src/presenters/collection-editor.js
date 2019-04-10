@@ -88,7 +88,10 @@ class CollectionEditor extends React.Component {
     // make request to server and update featuredProjectId property in state
     this.updateFields({ featuredProjectId: id });
 
-    // update state so that current featuredProject is put back and new featured project is removed from projects
+    // update state:
+    // - if there was an old featured project put the Old Featured Project back in the projects array
+    // - set featuredProject to the new featured project
+    // - remove the new featured project from the projects array
     const stateUpdates = {};
     const oldFeaturedProject = this.state.featuredProject;
     const newFeaturedProjectIdx = this.state.projects.findIndex((p) => p.id === id);
@@ -98,11 +101,16 @@ class CollectionEditor extends React.Component {
     } else {
       stateUpdates.featuredProject = stateUpdates.projects.splice(newFeaturedProjectIdx, 1)[0];
     }
-    console.log({
-      old: {...this.state},
-      stateUpdates: {...stateUpdates}
-    })
+
     this.setState(stateUpdates);
+  }
+  
+  async unfeatureProject() {
+    this.updateFields({ featuredProjectId: null });
+    this.setState(({ projects, featuredProject }) => ({
+      projects: [...projects, featuredProject],
+      featuredProject: null
+    }));
   }
 
   render() {
@@ -118,7 +126,7 @@ class CollectionEditor extends React.Component {
       updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       updateColor: (color) => this.updateFields({ coverColor: color }),
       featureProject: (id) => this.featureProject(id).catch(handleError),
-      unfeatureProject: () => this.updateFields({ featuredProjectId: null }).catch(handleError),
+      unfeatureProject: () => this.unfeatureProject().catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsAuthor());
   }

@@ -228,11 +228,6 @@ async function loadCollection(api, ownerName, collectionName) {
     } else {
       collection.team = await getSingleItem(api, `v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     }
-    
-    if (collection.featuredProjectId) {
-      collection.featuredProject = collectionProjects.find(({ id }) => id === collection.featuredProjectId);
-      collectionProjects = collectionProjects.filter(({ id }) => id !== collection.featuredProjectId);
-    }
 
     // fetch users for each project
     if (collectionProjects) {
@@ -244,6 +239,12 @@ async function loadCollection(api, ownerName, collectionName) {
       );
       collection.projects = projectsWithUsers;
     }
+    
+    if (collection.featuredProjectId) {
+      collection.featuredProject = collection.projects.find(({ id }) => id === collection.featuredProjectId);
+      collection.projects = collection.projects.filter(({ id }) => id !== collection.featuredProjectId);
+    }
+    
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {

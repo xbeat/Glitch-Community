@@ -18,7 +18,6 @@ const PopoverButton = ({ onClick, text, emoji }) => (
 const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
-    console.log(projectContainer)
     projectContainer.addEventListener('animationend', func, { once: true });
     projectContainer.classList.add(className);
     props.togglePopover();
@@ -69,7 +68,6 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
 
   function featureProject(event) {
-    // props.featureProject(props.project.id)
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
 
