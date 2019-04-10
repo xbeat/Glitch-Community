@@ -67,8 +67,6 @@ const dateFormat = (currentTimeFrame) => {
   return '%b %d';
 };
 
-cons
-
 const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
@@ -103,11 +101,9 @@ const renderChart = (activeFilter, c3, analytics, currentTimeFrame) => {
     tooltip: {
       format: {
         value: function(value, ratio, id) {
-          if (id === 'Total App Views') {
-            return value + ' views';
-          } else if (id === 'Remixes') {
-            return value + ' remixes';
-          }
+          if (id === 'Total App Views') return `${value} views`;
+          if (id === 'Remixes') return `${value} remixes`;
+          return null;
         },
       },
     },
