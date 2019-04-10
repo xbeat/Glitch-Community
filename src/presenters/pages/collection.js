@@ -50,7 +50,6 @@ const ProjectsUL = ({ projects, collection, ...props }) => (
         <div>
           <ProjectItem project={project} {...props} />
         </div>
-        
       </li>
     ))}
   </ul>
