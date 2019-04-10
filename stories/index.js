@@ -488,16 +488,16 @@ const buttons = <><button>one</button><button>two</button></>
 storiesOf('CoverContainer', module)
   .add('when passed a user', () => (
     <CoverContainer item={users.modernserf} type="user">
-      <div style={{backgroundColor: "white"}}>I'm the children</div>
+      <div style={{backgroundColor: "white"}}>We are the children</div>
     </CoverContainer>
   ))
   .add('when passed a team', () => (
     <CoverContainer item={team} type="team">
-      <div style={{backgroundColor: "white"}}>I'm the children</div>
+      <div style={{backgroundColor: "white"}}>We are the children</div>
     </CoverContainer>
   ))
   .add('when passed buttons', () => (
     <CoverContainer item={team} type="team" buttons={buttons}>
-      <div style={{backgroundColor: "white"}}>I'm the children</div>
+      <div style={{backgroundColor: "white"}}>We are the children</div>
     </CoverContainer>
   ))
