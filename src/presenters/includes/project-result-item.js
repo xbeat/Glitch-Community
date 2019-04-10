@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ProjectLink } from './link';
-import { StaticUsersList } from '../users-list';
+import { StaticUsersList } from 'Components/user/users-list';
 import ProjectAvatar from './project-avatar';
 
 const ProjectResultItem = ({ onClick, isActive, isPrivate, ...project }) => {
