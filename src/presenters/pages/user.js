@@ -73,7 +73,6 @@ const UserPage = ({
   user: {
     // has science gone too far?
     _deletedProjects,
-    _cacheCover,
     featuredProjectId,
     ...user
   },
