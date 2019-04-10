@@ -47,7 +47,10 @@ const ProjectsUL = ({ projects, collection, ...props }) => (
           update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
           hideNote={props.hideNote}
         />
-        <ProjectItem project={project} {...props} />
+        <div>
+          <ProjectItem project={project} {...props} />
+        </div>
+        
       </li>
     ))}
   </ul>
