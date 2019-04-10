@@ -15,8 +15,10 @@ const PROJECT_COUNT = 3;
 
 const RelatedProjectsBody = ({ projects, type, item }) =>
   projects.length > 0 ? (
-    <CoverContainer type={type} item={item} className="projects">
-      <ProjectsUL projects={projects} />
+    <CoverContainer type={type} item={item}>
+      <div className="projects">
+        <ProjectsUL projects={projects} />
+      </div>
     </CoverContainer>
   ) : null;
 
