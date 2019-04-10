@@ -50,6 +50,10 @@ const ProjectDetails = ({ projectDetails }) => (
     </ProjectLink>
     <table>
       <tbody>
+         <tr>
+          <td className="label">Name</td>
+          <td>{projectDetails.doamin}</td>
+        </tr>
         <tr>
           <td className="label">Created</td>
           <td>{dayjs(projectDetails.createdAt).fromNow()}</td>
