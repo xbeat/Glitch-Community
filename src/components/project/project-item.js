@@ -19,11 +19,11 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
-const ProjectItem = ({ project, projectOptions }) => (
+const ProjectItem = ({ project, projectOptions, usersAreAvatarsOnly }) => (
   <div className={styles.container}>
     <header className={styles.header}>
       <div className={styles.userListContainer}>
-        <UsersList avatarsOnly layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+        <UsersList avatarsOnly={usersAreAvatarsOnly} layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
       </div>
       <div className={styles.projectOptionsContainer}>
         <ProjectOptionsPop project={project} projectOptions={projectOptions} />
@@ -58,10 +58,12 @@ ProjectItem.propTypes = {
     teams: PropTypes.array,
   }).isRequired,
   projectOptions: PropTypes.object,
+  usersAreAvatarsOnly: PropTypes.bool,
 };
 
 ProjectItem.defaultProps = {
   projectOptions: {},
+  usersAreAvatarsOnly: false,
 };
 
 export default ProjectItem;
