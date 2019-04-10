@@ -5,8 +5,7 @@ import { sampleSize, difference } from 'lodash';
 import { ProjectsUL } from 'Components/containers/projects-list';
 import CoverContainer from 'Components/containers/cover-container';
 
-import { getProfileStyle as getTeamProfileStyle } from '../../models/team';
-import { getDisplayName, getProfileStyle as getUserProfileStyle } from '../../models/user';
+import { getDisplayName } from '../../models/user';
 
 import { DataLoader } from './loader';
 import { TeamLink, UserLink } from './link';
@@ -14,9 +13,9 @@ import { useAPI } from '../../state/api';
 
 const PROJECT_COUNT = 3;
 
-const RelatedProjectsBody = ({ projects, coverStyle }) =>
+const RelatedProjectsBody = ({ projects, type, item }) =>
   projects.length > 0 ? (
-    <CoverContainer style={coverStyle} className="projects">
+    <CoverContainer type={type} item={item} className="projects">
       <ProjectsUL projects={projects} />
     </CoverContainer>
   ) : null;
@@ -75,7 +74,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <TeamLink team={team}>More by {team.name} →</TeamLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} coverStyle={getTeamProfileStyle(team)} />
+                    <RelatedProjectsBody projects={projects} type="team" item={team} />
                   </>
                 )
               }
@@ -91,7 +90,7 @@ class RelatedProjects extends React.Component {
                     <h2>
                       <UserLink user={user}>More by {getDisplayName(user)} →</UserLink>
                     </h2>
-                    <RelatedProjectsBody projects={projects} coverStyle={getUserProfileStyle(user)} />
+                    <RelatedProjectsBody projects={projects} type="user" item={user} />
                   </>
                 )
               }

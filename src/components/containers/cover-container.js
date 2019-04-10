@@ -12,12 +12,12 @@ const getProfileStyles = {
 const CoverContainer = ({ buttons, children, type, item }) => {
   const cache = item._cacheCover; // eslint-disable-line no-underscore-dangle
   return (
-    <div className={styles.coverContainer} style={getProfileStyles[type]({ ...item, cache})}>
+    <div className={styles.coverContainer} style={getProfileStyles[type]({ ...item, cache })}>
       {children}
       {buttons}
     </div>
   );
-}
+};
 
 CoverContainer.propTypes = {
   buttons: PropTypes.node,
