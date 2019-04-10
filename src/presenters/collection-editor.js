@@ -92,15 +92,16 @@ class CollectionEditor extends React.Component {
     const stateUpdates = {};
     const oldFeaturedProject = this.state.featuredProject;
     const newFeaturedProjectIdx = this.state.projects.findIndex((p) => p.id === id);
-    debugger
     stateUpdates.projects = [...this.state.projects];
-    debugger
     if (oldFeaturedProject) {
       stateUpdates.featuredProject = stateUpdates.projects.splice(newFeaturedProjectIdx, 1, oldFeaturedProject)[0];
     } else {
       stateUpdates.featuredProject = stateUpdates.projects.splice(newFeaturedProjectIdx, 1)[0];
     }
-    debugger
+    console.log({
+      old: {...this.state},
+      stateUpdates: {...stateUpdates}
+    })
     this.setState(stateUpdates);
   }
 
