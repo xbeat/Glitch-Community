@@ -89,7 +89,7 @@ storiesOf('Button', module)
       </Button>
     </div>
   ))
-  .add('with aria-label', () => <Button aria-label="Close">x</Button>);  
+  .add('icon', () => <Button icon label="Close">x</Button>);  
 
 storiesOf('Emoji', module)
   .add('standard', () => <Emoji name="herb" />)
