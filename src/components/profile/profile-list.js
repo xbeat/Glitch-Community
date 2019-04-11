@@ -27,6 +27,9 @@ const TeamItem = ({ team, hasLinks }) =>
     <TeamAvatar team={team} />
   );
 
+const RowContainer = ({ ) 
+
+
 const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => (
   <ul className={getContainerClass(layout)}>
     {teams.map((team) => (
