@@ -44,7 +44,7 @@ const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => (
 
 const GLITCH_TEAM_AVATAR = 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267';
 
-const GlitchTeamUsersList = () => (
+const GlitchTeamList = () => (
   <ul className={styles.container}>
     <li className={styles.listItem}>
       <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
@@ -52,7 +52,7 @@ const GlitchTeamUsersList = () => (
   </ul>
 );
 
-const PlaceholderUsersList = () => (
+const PlaceholderList = () => (
   <ul className={styles.container}>
     <li className={styles.listItem}>
       <div className={styles.placeholder} />
@@ -62,20 +62,29 @@ const PlaceholderUsersList = () => (
 
 const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
   if (glitchTeam) {
-    return <GlitchTeamUsersList />;
+    return <GlitchTeamList />;
   }
 
   if (!users.length && !teams.length) {
-    return <PlaceholderUsersList />;
+    return <PlaceholderList />;
   }
 
-  return <PopulatedUsersList users={users} teams={teams} layout={layout} hasLinks={hasLinks} />;
+  return <PopulatedProfileList users={users} teams={teams} layout={layout} hasLinks={hasLinks} />;
 };
 
 ProfileList.propTypes = {
+  layout: PropTypes.oneOf(['row', 'block', 'blockSpaced']).isRequired,
   users: PropTypes.array,
   teams: PropTypes.array,
-  layout: PropTypes.oneOf(['row', 'block', 'blockSpaced']),
-}
+  glitchTeam: PropTypes.bool,
+  hasLinks: PropTypes.bool,
+};
+
+ProfileList.defaultProps = {
+  users: [],
+  teams: [],
+  glitchTeam: false,
+  hasLinks: false,
+};
 
 export default ProfileList;
