@@ -31,7 +31,9 @@ const CollectionWide = ({ collection }) => {
         <CollectionLink className="collection-name" collection={collection}>
           <Heading tagName="h2">{collection.name}</Heading>
         </CollectionLink>
-        <ProfileItem hasLinks team={collection.team} user={collection.user} />
+        <div className="collection-owner">
+          <ProfileItem hasLinks team={collection.team} user={collection.user} />
+        </div>
         <div className="collection-description">
           <Markdown length={80}>{collection.description}</Markdown>
         </div>
