@@ -58,23 +58,26 @@ const useResizeObserver = () => {
   return { ref, width };
 };
 
-const full
+const getWidth = (count, width, offset) => width * count + offset * (count - 1);
 
 const RowContainer = ({ users, teams, hasLinks }) => {
-  const { ref, width } = useResizeObserver()
-  const avatarWidth = 32
-  const userOffset = -7
-  const teamOffset = 7
-  const teamWidth = teams.length * (avatarWidth + teamOffset)
-  
+  const { ref, width } = useResizeObserver();
+  const avatarWidth = 32;
+  const userOffset = -7;
+  const teamOffset = 7;
+  const maxTeams = Math.floor((width + teamOffset) / (avatarWidth + teamOffset));
+  const remainingWidth = width - (avatarWidth + teamOffset) * teams.length + teamOffset;
+  const maxUsers = Math.floor((remainingWidth + teamOffset) / (avatarWidth + teamOffset));
+  console.log({ width, maxTeams, remainingWidth, maxUsers })
+
   return (
-    <ul className={classnames(styles.container, styles.row)} >
-      {teams.map((team) => (
+    <ul ref={ref} className={classnames(styles.container, styles.row)}>
+      {teams.slice(0, maxTeams).map((team) => (
         <li key={`team-${team.id}`} className={styles.teamItem}>
           <TeamItem team={team} hasLinks={hasLinks} />
         </li>
       ))}
-      {users.map((user) => (
+      {users.slice(0, maxUsers).map((user) => (
         <li key={`user-${user.id}`} className={styles.userItem}>
           <UserItem user={user} hasLinks={hasLinks} />
         </li>
