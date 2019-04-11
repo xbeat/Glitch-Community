@@ -28,7 +28,6 @@ const TeamItem = ({ team, hasLinks }) =>
     <TeamAvatar team={team} />
   );
 
-
 // NOTE: ResizeObserver is not widely supported
 // see https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
 // window 'resize' event is mostly adequate for this use case,
@@ -39,7 +38,7 @@ const useResizeObserver = () => {
   useEffect(() => {
     const setWidthOfRef = () => {
       setWidth(ref.current.getBoundingClientRect().width);
-    }
+    };
     const debouncedSetWidth = debounce(setWidthOfRef, 100);
     setWidthOfRef();
 
@@ -50,12 +49,11 @@ const useResizeObserver = () => {
       return () => {
         observer.unobserve(ref.current);
       };
-    } else {
-      window.addEventListener('resize', debouncedSetWidth);
-      return () => {
-        window.removeEventListener('resize', debouncedSetWidth);
-      }
-    }    
+    }
+    window.addEventListener('resize', debouncedSetWidth);
+    return () => {
+      window.removeEventListener('resize', debouncedSetWidth);
+    };
   }, [ref, setWidth]);
   return { ref, width };
 };

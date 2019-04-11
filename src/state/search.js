@@ -98,8 +98,7 @@ const formatByType = {
   }),
   project: (project) => ({
     description: '',
-    // showAsGlitchTeam: !!(project.teams || []).includes(GLITCH_TEAM_ID),
-    showAsGlitchTeam: false,
+    showAsGlitchTeam: !!(project.teams || []).includes(GLITCH_TEAM_ID),
     ...project,
     id: project.objectID.replace('project-', ''),
     users: null,
