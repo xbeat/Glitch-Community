@@ -43,19 +43,15 @@ const RedirectToDestination = () => {
   return <Redirect to="/" />;
 };
 
-class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      done: false,
-      error: false,
-      errorMessage: null,
-    };
-  }
+const LoginPage = ({ provider, url }) => {
+  const api = useAPI();
+  const { login } = useCurrentUser();
+  
+  const [done, setDone] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
-  async componentDidMount() {
-    const { api, provider, url } = this.props;
-
+  const perform = async () => {
     try {
       const { data } = await api.post(url);
       if (data.id <= 0) {
