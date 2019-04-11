@@ -60,7 +60,11 @@ const PlaceholderList = () => (
   </ul>
 );
 
-expo
+const maybeList = (item) => (item ? [item] : []);
+
+export const ProfileItem = ({ user, team, hasLinks, glitchTeam }) => (
+  <ProfileList layout="spaced" users={maybeList(user)} teams={maybeList(team)} hasLinks={hasLinks} glitchTeam={glitchTeam} />
+);
 
 const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
   if (glitchTeam) {
@@ -75,7 +79,7 @@ const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
 };
 
 ProfileList.propTypes = {
-  layout: PropTypes.oneOf(['row', 'block', 'spaced']),
+  layout: PropTypes.oneOf(['row', 'block', 'spaced']).isRequired,
   users: PropTypes.array,
   teams: PropTypes.array,
   glitchTeam: PropTypes.bool,
@@ -83,7 +87,6 @@ ProfileList.propTypes = {
 };
 
 ProfileList.defaultProps = {
-  layout: 'spaced',
   users: [],
   teams: [],
   glitchTeam: false,

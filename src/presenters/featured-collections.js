@@ -5,7 +5,7 @@ import { sampleSize, flatMap, uniq } from 'lodash';
 import Markdown from 'Components/text/markdown';
 import Heading from 'Components/text/heading';
 import { ProjectsUL } from 'Components/containers/projects-list';
-import ProfileList from 'Components/profile/profile-list';
+import { ProfileItem } from 'Components/profile/profile-list';
 import { captureException } from '../utils/sentry';
 
 import { featuredCollections } from '../curated/collections';
@@ -18,8 +18,6 @@ import { DataLoader } from './includes/loader';
 import { TeamTile } from './teams-list';
 
 import { useAPI } from '../state/api';
-
-const maybeList = (item) => item ? [item] : [];
 
 const CollectionWide = ({ collection }) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
@@ -34,9 +32,7 @@ const CollectionWide = ({ collection }) => {
         <CollectionLink className="collection-name" collection={collection}>
           <Heading tagName="h2">{collection.name}</Heading>
         </CollectionLink>
-        <ProfileList layout="block" team={maybeList(collection.team)} user={}
-        {!!collection.team && <TeamTile team={collection.team} />}
-        {!!collection.user && <UserTile {...collection.user} />}
+        <ProfileItem hasLinks team={collection.team} user={collection.user} />
         <div className="collection-description">
           <Markdown length={80}>{collection.description}</Markdown>
         </div>
