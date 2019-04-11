@@ -27,23 +27,33 @@ const TeamItem = ({ team, hasLinks }) =>
     <TeamAvatar team={team} />
   );
 
-const RowContainer = ({ ) 
+const useResizeObserver = () => {
+  const ref = useRef()
+  useEffect
+})
 
+const RowContainer = ({ layout, items }) => {};
 
-const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => (
-  <ul className={getContainerClass(layout)}>
-    {teams.map((team) => (
+const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => {
+  const items = [
+    ...teams.map((team) => (
       <li key={`team-${team.id}`} className={styles.listItem}>
         <TeamItem team={team} hasLinks={hasLinks} />
       </li>
-    ))}
-    {users.map((user) => (
+    )),
+    ...users.map((user) => (
       <li key={`user-${user.id}`} className={styles.listItem}>
         <UserItem user={user} hasLinks={hasLinks} />
       </li>
-    ))}
-  </ul>
-);
+    )),
+  ];
+
+  // if (layout === "row") {
+  //   return <RowContainer items={items} />
+  // }
+
+  return <ul className={getContainerClass(layout)}>{items}</ul>;
+};
 
 const GLITCH_TEAM_AVATAR = 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267';
 
@@ -97,3 +107,4 @@ ProfileList.defaultProps = {
 };
 
 export default ProfileList;
+(
