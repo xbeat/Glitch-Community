@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { debounce } from 'lodash';
 import { Avatar, UserAvatar, TeamAvatar } from 'Components/images/avatar';
 
 import { UserLink, TeamLink } from '../../presenters/includes/link';
@@ -27,31 +28,42 @@ const TeamItem = ({ team, hasLinks }) =>
     <TeamAvatar team={team} />
   );
 
+
+// NOTE: ResizeObserver is not widely supported
+// see https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
+// window 'resize' event is mostly adequate for this use case,
+// but continue to use clip-path to handle edge cases
 const useResizeObserver = () => {
   const ref = useRef();
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    const setWidthOfRef = () => {
+    const setWidthOfRef = debounce(() => {
       setWidth(ref.current.getBoundingClientRect().width);
-    };
+    }, 100);
     setWidthOfRef();
 
-    if (!window.ResizeObserver) {
-      return undefined;
-    }
-    const observer = new ResizeObserver(setWidthOfRef);
-    observer.observe(ref.current);
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(setWidthOfRef);
+      observer.observe(ref.current);
 
-    return () => {
-      observer.unobserve(ref.current);
-    };
+      return () => {
+        observer.unobserve(ref.current);
+      };
+    } else {
+      window.addEventListener('resize', setWidthOfRef);
+      return () => {
+        window.removeEventListener('resize', setWidthOfRef);
+      }
+    }    
   }, [ref, setWidth]);
   return { ref, width };
 };
 
 const RowContainer = ({ items }) => {
   const { ref, width } = useResizeObserver();
-  const lastIndex = Math.floor((width - 7) / 25)
+  const avatarWidth = 32;
+  const overlapWidth = 7;
+  const lastIndex = Math.floor((width - overlapWidth) / (avatarWidth - overlapWidth));
 
   return (
     <ul ref={ref} className={getContainerClass('row')}>
