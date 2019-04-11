@@ -5,7 +5,6 @@ import Button from 'Components/buttons/button';
 import ProfileList from 'Components/profile/profile-list';
 import { useTrackedFunc } from '../segment-analytics';
 
-
 // Image Buttons
 
 export const ImageButtons = ({ name, uploadImage, clearImage }) => {

@@ -109,9 +109,11 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
                 </>
               )}
             </Heading>
-            <div className="users-information">
-              <ProfileList hasLinks users={users} layout="block" />
-            </div>
+            {!!users.length && (
+              <div className="users-information">
+                <ProfileList hasLinks users={users} layout="block" />
+              </div>
+            )}
             {!!teams.length && (
               <div className="teams-information">
                 <ProfileList hasLinks teams={teams} layout="spaced" />
