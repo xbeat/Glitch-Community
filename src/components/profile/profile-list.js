@@ -58,38 +58,42 @@ const useResizeObserver = () => {
   return { ref, width };
 };
 
-const RowContainer = ({ items }) => {
-  const { ref, width } = useResizeObserver();
-  const avatarWidth = 32;
-  const overlapWidth = 7;
-  const lastIndex = Math.floor((width - overlapWidth) / (avatarWidth - overlapWidth));
-
+const RowContainer = ({ users, teams, hasLinks }) => {
   return (
-    <ul ref={ref} className={getContainerClass('row')}>
-      {items.slice(0, lastIndex)}
+    <ul className={classnames(styles.container, styles.row)}>
+      {teams.map((team) => (
+        <li key={`team-${team.id}`} className={styles.teamItem}>
+          <TeamItem team={team} hasLinks={hasLinks} />
+        </li>
+      ))}
+      {users.map((user) => (
+        <li key={`user-${user.id}`} className={styles.userItem}>
+          <UserItem user={user} hasLinks={hasLinks} />
+        </li>
+      ))}
     </ul>
   );
 };
 
 const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => {
-  const items = [
-    ...teams.map((team) => (
-      <li key={`team-${team.id}`} className={styles.listItem}>
-        <TeamItem team={team} hasLinks={hasLinks} />
-      </li>
-    )),
-    ...users.map((user) => (
-      <li key={`user-${user.id}`} className={styles.listItem}>
-        <UserItem user={user} hasLinks={hasLinks} />
-      </li>
-    )),
-  ];
-
   if (layout === 'row') {
-    return <RowContainer items={items} />;
+    return <RowContainer users={users} teams={teams} hasLinks={hasLinks} />;
   }
 
-  return <ul className={getContainerClass(layout)}>{items}</ul>;
+  return (
+    <ul className={styles.container}>
+      {teams.map((team) => (
+        <li key={`team-${team.id}`} className={styles.teamItem}>
+          <TeamItem team={team} hasLinks={hasLinks} />
+        </li>
+      ))}
+      {users.map((user) => (
+        <li key={`user-${user.id}`} className={styles.userItem}>
+          <UserItem user={user} hasLinks={hasLinks} />
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 const GLITCH_TEAM_AVATAR = 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267';
@@ -113,7 +117,7 @@ const PlaceholderList = () => (
 const maybeList = (item) => (item ? [item] : []);
 
 export const ProfileItem = ({ user, team, hasLinks, glitchTeam }) => (
-  <ProfileList layout="spaced" users={maybeList(user)} teams={maybeList(team)} hasLinks={hasLinks} glitchTeam={glitchTeam} />
+  <ProfileList layout="block" users={maybeList(user)} teams={maybeList(team)} hasLinks={hasLinks} glitchTeam={glitchTeam} />
 );
 
 const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
@@ -129,7 +133,7 @@ const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
 };
 
 ProfileList.propTypes = {
-  layout: PropTypes.oneOf(['row', 'block', 'spaced']).isRequired,
+  layout: PropTypes.oneOf(['row', 'block']).isRequired,
   users: PropTypes.array,
   teams: PropTypes.array,
   glitchTeam: PropTypes.bool,
