@@ -76,6 +76,13 @@ Button.propTypes = {
     }
     return null;
   },
+  /** a label that describes the onClick action, only use if the button is an icon button with no meaningful text label */
+  label: (props, propName, componentName) => {
+    if (props.label && !props.icon) {
+      return new Error(`prop 'icon' was not specified in '${componentName}'.`);
+    }
+    return null;
+  },
   /** OR its decorative, because its inside a larger button/link */
   decorative: PropTypes.bool,
   /** button disabled */
@@ -90,8 +97,6 @@ Button.propTypes = {
   matchBackground: PropTypes.bool,
   /** whether the button is active or not */
   active: PropTypes.bool,
-  /** a label that describes the button, only use if the button */
-  label: PropTypes.string,
 };
 
 Button.defaultProps = {
