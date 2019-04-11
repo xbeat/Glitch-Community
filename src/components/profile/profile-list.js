@@ -8,8 +8,6 @@ import { UserLink, TeamLink } from '../../presenters/includes/link';
 
 import styles from './profile-list.styl';
 
-const getContainerClass = (layout) => classnames(styles.container, styles[layout]);
-
 const UserItem = ({ user, hasLinks }) =>
   hasLinks ? (
     <UserLink user={user}>
@@ -58,8 +56,6 @@ const useResizeObserver = () => {
   return { ref, width };
 };
 
-const getWidth = (count, width, offset) => width * count + offset * (count - 1);
-
 const RowContainer = ({ users, teams, hasLinks }) => {
   const { ref, width } = useResizeObserver();
   const avatarWidth = 32;
@@ -85,7 +81,7 @@ const RowContainer = ({ users, teams, hasLinks }) => {
   );
 };
 
-const BlockContainer = ({ users, teams, layout, hasLinks }) => (
+const BlockContainer = ({ users, teams, hasLinks }) => (
   <>
     {teams.length > 0 && (
       <ul className={styles.container}>
@@ -145,7 +141,7 @@ const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
     return <RowContainer users={users} teams={teams} hasLinks={hasLinks} />;
   }
 
-  return <BlockContainer users={users} teams={teams} layout={layout} hasLinks={hasLinks} />;
+  return <BlockContainer users={users} teams={teams} hasLinks={hasLinks} />;
 };
 
 ProfileList.propTypes = {

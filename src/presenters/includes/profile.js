@@ -96,7 +96,7 @@ export class ProfileContainer extends React.PureComponent {
         </InfoContainer>
         {!!teams && !!teams.length && (
           <div className="teams-information">
-            <ProfileList layout="spaced" hasLinks teams={teams} />
+            <ProfileList layout="block" hasLinks teams={teams} />
           </div>
         )}
       </CoverContainer>
