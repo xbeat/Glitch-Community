@@ -82,6 +82,8 @@ const searchIndices = {
   collection: searchClient.initIndex('search_collections'),
 };
 
+const GLITCH_TEAM_ID = 74;
+
 const formatByType = {
   user: (user) => ({
     ...user,
@@ -96,7 +98,7 @@ const formatByType = {
   }),
   project: (project) => ({
     description: '',
-    showAsGlitchTeam: false,
+    showAsGlitchTeam: !!(project.teams || []).includes(GLITCH_TEAM_ID),
     ...project,
     id: project.objectID.replace('project-', ''),
     users: null,

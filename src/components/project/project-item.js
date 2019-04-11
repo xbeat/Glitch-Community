@@ -19,16 +19,11 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
-const ProjectProfiles = ({ project, hasProfileLinks }) => {
-  const showAsGlitchTeam = project.showAsGlitchTeam || (project.teams || []).find(team => team.id === 74)
-  return <ProfileList layout="row" hasLinks={hasProfileLinks} glitchTeam={!!showAsGlitchTeam} users={project.users} teams={project.teams} />
-}
-
 const ProjectItem = ({ project, projectOptions, hasProfileLinks }) => (
   <div className={styles.container}>
     <header className={styles.header}>
       <div className={styles.userListContainer}>
-        <ProjectProfiles project={project} hasLinks={hasProfileLinks} />
+        <ProfileList layout="row" hasLinks={hasProfileLinks} glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
       </div>
       <div className={styles.projectOptionsContainer}>
         <ProjectOptionsPop project={project} projectOptions={projectOptions} />
