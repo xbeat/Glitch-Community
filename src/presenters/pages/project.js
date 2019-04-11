@@ -109,13 +109,9 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
                 </>
               )}
             </Heading>
+            {(users.length  + teams.length) > 0 && (
               <div className="users-information">
-                <ProfileList hasLinks users={users} layout="block" />
-              </div>
-            )}
-            {!!teams.length && (
-              <div className="teams-information">
-                <ProfileList hasLinks teams={teams} layout="block" />
+                <ProfileList hasLinks teams={teams} users={users} layout="block" />
               </div>
             )}
             <AuthDescription
