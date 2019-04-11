@@ -108,7 +108,7 @@ const GLITCH_TEAM_AVATAR = 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-20439
 
 const GlitchTeamList = () => (
   <ul className={styles.container}>
-    <li className={styles.listItem}>
+    <li className={styles.teamItem}>
       <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc" type="team" />
     </li>
   </ul>
@@ -116,7 +116,7 @@ const GlitchTeamList = () => (
 
 const PlaceholderList = () => (
   <ul className={styles.container}>
-    <li className={styles.listItem}>
+    <li className={styles.userItem}>
       <div className={styles.placeholder} />
     </li>
   </ul>
