@@ -70,23 +70,23 @@ const Router = () => (
         path="/login/facebook"
         exact
         render={({ location }) => (
-          <FacebookLoginPage key={location.key} location={location} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />
+          <FacebookLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />
         )}
       />
       <Route
         path="/login/github"
         exact
-        render={({ location }) => <GitHubLoginPage key={location.key} location={location} code={parse(location.search, 'code')} />}
+        render={({ location }) => <GitHubLoginPage key={location.key} code={parse(location.search, 'code')} />}
       />
       <Route
         path="/login/google"
         exact
-        render={({ location }) => <GoogleLoginPage key={location.key} location={location} code={parse(location.search, 'code')} />}
+        render={({ location }) => <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} />}
       />
       <Route
         path="/login/slack"
         exact
-        render={({ location }) => <SlackLoginPage key={location.key} location={location} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />}
+        render={({ location }) => <SlackLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />}
       />
       <Route
         path="/login/email"

@@ -46,9 +46,9 @@ const RedirectToDestination = () => {
 const LoginPage = ({ provider, url }) => {
   const api = useAPI();
   const { login } = useCurrentUser();
-  
+
   const [done, setDone] = React.useState(false);
-  const [error, setError] = React.useState(false);
+  const [didError, setDidError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   const perform = async () => {
@@ -69,7 +69,7 @@ const LoginPage = ({ provider, url }) => {
       if (errorData && errorData.message) {
         setErrorMessage(errorData.message);
       }
-      setError(true);
+      setDidError(true);
 
       if (error && error.response && error.response.status !== 401) {
         console.error('Login error.', errorData);
@@ -78,7 +78,7 @@ const LoginPage = ({ provider, url }) => {
       const details = { provider, error: errorData };
       notifyParent({ success: false, details });
     }
-  }
+  };
   React.useEffect(() => {
     perform();
   }, [provider, url]);
@@ -86,7 +86,7 @@ const LoginPage = ({ provider, url }) => {
   if (done) {
     return <RedirectToDestination />;
   }
-  if (error) {
+  if (didError) {
     const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
     if (provider === 'Email') {
       return <EmailErrorPage title={`${provider} Login Problem`} description={errorMessage || genericDescription} />;
@@ -99,6 +99,9 @@ LoginPage.propTypes = {
   provider: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };
+
+const OAuthLoginPage = withRouter(({ provider, url }) => {
+});
 
 export const FacebookLoginPage = ({ code, error }) => {
   if (error === 'access_denied') {
