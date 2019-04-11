@@ -51,11 +51,11 @@ const useResizeObserver = () => {
 
 const RowContainer = ({ items }) => {
   const { ref, width } = useResizeObserver();
-  console.log('containerWidth:', width);
+  const lastIndex = Math.floor((width - 7) / 25)
 
   return (
     <ul ref={ref} className={getContainerClass('row')}>
-      {width ? items.slice(0, width / 32) : items}
+      {width ? items.slice(0, lastIndex) : items}
     </ul>
   );
 };
