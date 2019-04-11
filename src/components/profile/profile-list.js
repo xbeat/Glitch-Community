@@ -60,6 +60,8 @@ const PlaceholderList = () => (
   </ul>
 );
 
+expo
+
 const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
   if (glitchTeam) {
     return <GlitchTeamList />;
@@ -81,7 +83,7 @@ ProfileList.propTypes = {
 };
 
 ProfileList.defaultProps = {
-  layout: '
+  layout: 'spaced',
   users: [],
   teams: [],
   glitchTeam: false,
