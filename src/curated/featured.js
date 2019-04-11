@@ -14,9 +14,9 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Live Code a Visualization',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_3%20(1).png?1554715798287',
-    link: 'https://glitch.com/~hydra-editor',
+    title: 'Generate Random Game Systems',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F4_3%20(1).png?1554715796559',
+    link: 'https://glitch.com/~pbta-generator',
   },
   {
     title: 'Support the Girls Club',
@@ -24,8 +24,8 @@ export default [
     link: 'https://girlsclubspringfling.org',
   },
   {
-    title: 'Play Drums With a Micro:bit',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_3%20(1).png?1554715796316',
-    link: 'https://glitch.com/~microbit-drums',  
+    title: 'Make a Web Map with Leaflet',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F5_2%20(1).png?1554715796764',
+    link: 'https://glitch.com/~starter-leaflet',  
   }
 ];
