@@ -76,12 +76,12 @@ const Router = () => (
       <Route
         path="/login/github"
         exact
-        render={({ location }) => <GitHubLoginPage key={location.key} code={parse(location.search, 'code')} />}
+        render={({ location }) => <GitHubLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />}
       />
       <Route
         path="/login/google"
         exact
-        render={({ location }) => <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} />}
+        render={({ location }) => <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} />}
       />
       <Route
         path="/login/slack"

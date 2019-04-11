@@ -100,36 +100,40 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-const OAuthLoginPage = withRouter(({ provider, url }) => {
-});
-
-export const FacebookLoginPage = ({ code, error }) => {
+const OAuthLoginPage = ({ error, provider, url }) => {
   if (error === 'access_denied') {
     return <RedirectToDestination />;
   }
+  return <LoginPage provider={provider} url={url} />;
+};
+OAuthLoginPage.propTypes = {
+  error: PropTypes.string,
+};
+OAuthLoginPage.defaultProps = {
+  error: null,
+};
+
+export const FacebookLoginPage = ({ code, error }) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
   const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPage provider="Facebook" url={url} />;
+  return <OAuthLoginPage error={error} provider="Facebook" url={url} />;
 };
 
-export const GitHubLoginPage = ({ code }) => {
+export const GitHubLoginPage = ({ code, error }) => {
   const url = `/auth/github/${code}`;
-  return <LoginPage provider="GitHub" url={url} />;
+  return <OAuthLoginPage error={error} provider="GitHub" url={url} />;
 };
 
-export const GoogleLoginPage = ({ code }) => {
+export const GoogleLoginPage = ({ code, error }) => {
   const callbackUrl = `${APP_URL}/login/google`;
   const url = `/auth/google/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPage provider="Google" url={url} />;
+  return <OAuthLoginPage error={error} provider="Google" url={url} />;
 };
 
 export const SlackLoginPage = ({ code, error }) => {
-  if (error === 'access_denied') {
-    return <RedirectToDestination />;
-  }
   const callbackUrl = `${APP_URL}/login/slack`;
   const url = `/auth/slack/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPage provider="Slack" url={url} />;
+  return <OAuthLoginPage error={error} provider="Slack" url={url} />;
 };
 
 export const EmailTokenLoginPage = ({ token }) => {
