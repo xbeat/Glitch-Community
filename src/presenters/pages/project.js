@@ -111,11 +111,12 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
             </Heading>
             <div className="users-information">
               <ProfileList hasLinks users={users} layout="block" />
-              {!!teams.length && 
-                <div>
-                  
-                <ProfileList hasLinks teams={teams} layout="spaced" />}
             </div>
+            {!!teams.length && (
+              <div className="teams-information">
+                <ProfileList hasLinks teams={teams} layout="spaced" />
+              </div>
+            )}
             <AuthDescription
               authorized={isAuthorized}
               description={project.description}
@@ -129,12 +130,7 @@ const ProjectPage = ({ project, addProjectToCollection, currentUser, isAuthorize
           </ProjectInfoContainer>
         </InfoContainer>
       </section>
-      <ProjectEmbed
-        project={project}
-        isAuthorized={isAuthorized}
-        currentUser={currentUser}
-        addProjectToCollection={addProjectToCollection}
-      />
+      <ProjectEmbed project={project} isAuthorized={isAuthorized} currentUser={currentUser} addProjectToCollection={addProjectToCollection} />
       <section id="readme">
         <ReadmeLoader domain={domain} />
       </section>
