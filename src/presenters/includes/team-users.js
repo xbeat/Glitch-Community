@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { uniqBy } from 'lodash';
 
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { UserAvatar } from 'Components/images/avatar';
-import ProfileList from 'Components/profile/profile-list';
 import { getDisplayName } from '../../models/user';
 import { useTrackedFunc } from '../segment-analytics';
 import { WhitelistedDomainIcon } from './team-elements';
@@ -169,7 +169,7 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
-    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(this.state.newlyInvited);
+    const alreadyInvitedAndNewInvited = uniqBy(this.props.invitedMembers.concat(this.state.newlyInvited), (user) => user.id);
     const { inviteEmail, inviteUser, setWhitelistedDomain, ...props } = this.props;
     return (
       <PopoverContainer>
@@ -177,7 +177,12 @@ export class AddTeamUser extends React.Component {
           const onClickToggle = useTrackedFunc(togglePopover, 'Add to Team clicked');
           return (
             <span className="add-user-container">
-              {alreadyInvitedAndNewInvited.length > 0 && <ProfileList hasLinks layout="block" users={alreadyInvitedAndNewInvited} />}
+              <span className="users">
+                {alreadyInvitedAndNewInvited.map(user => (
+                <span key={user.id}><UserAvatar user={user}/></span>
+              ))}
+              </span>
+              
               <button onClick={onClickToggle} className="button button-small button-tertiary add-user">
                 Add
               </button>
