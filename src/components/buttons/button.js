@@ -14,7 +14,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active, decorative }) => {
+const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active, decorative, label }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -28,11 +28,10 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     hover,
     decorative,
   });
-  console.log(children.nodeType);
 
   if (href) {
     return (
-      <Link to={href} onClick={onClick} className={className}>
+      <Link to={href} onClick={onClick} className={className} title={label}>
         {children}
       </Link>
     );
@@ -47,7 +46,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
   }
 
   return (
-    <button onClick={onClick} className={className} disabled={disabled}>
+    <button onClick={onClick} className={className} disabled={disabled} aria-label={label}>
       {children}
     </button>
   );
@@ -72,8 +71,8 @@ Button.propTypes = {
   },
   /** it's an icon button (no text label) */
   icon: (props, propName, componentName) => {
-    if (props.icon && !props.ariaLabel) {
-      return new Error(`prop 'ariaLabel' was not specified in '${componentName}'.`);
+    if (props.icon && !props.label) {
+      return new Error(`prop 'label' was not specified in '${componentName}'.`);
     }
     return null;
   },
@@ -91,6 +90,8 @@ Button.propTypes = {
   matchBackground: PropTypes.bool,
   /** whether the button is active or not */
   active: PropTypes.bool,
+  /** a label that describes the button, only use if the button */
+  label: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -104,6 +105,7 @@ Button.defaultProps = {
   matchBackground: false,
   active: false,
   decorative: false,
+  label: null,
 };
 
 export default Button;
