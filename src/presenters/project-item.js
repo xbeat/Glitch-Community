@@ -6,7 +6,7 @@ import Image from 'Components/images/image';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
-import UsersList from './users-list';
+import ProfileList from 'Components/profile/profile-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
@@ -18,7 +18,9 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
       update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
       hideNote={props.hideNote}
     />
-    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
+    <div className="project-profile-list-wrap">
+      <ProfileList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
+    </div>
     <ProjectOptionsPop project={project} {...props} />
     <WrappingLink href={getLink(project)} className="button-area">
       <div

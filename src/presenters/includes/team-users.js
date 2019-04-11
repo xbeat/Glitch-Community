@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TooltipContainer from 'Components/tooltips/tooltip-container';
 import { UserAvatar } from 'Components/images/avatar';
-import 
+import ProfileList from 'Components/profile/profile-list';
 import { getDisplayName } from '../../models/user';
 import { useTrackedFunc } from '../segment-analytics';
 import { WhitelistedDomainIcon } from './team-elements';
@@ -177,7 +177,7 @@ export class AddTeamUser extends React.Component {
           const onClickToggle = useTrackedFunc(togglePopover, 'Add to Team clicked');
           return (
             <span className="add-user-container">
-              {alreadyInvitedAndNewInvited.length > 0 && <UsersList users={alreadyInvitedAndNewInvited} />}
+              {alreadyInvitedAndNewInvited.length > 0 && <ProfilesList hasLinks layout="block" users={alreadyInvitedAndNewInvited} />}
               <button onClick={onClickToggle} className="button button-small button-tertiary add-user">
                 Add
               </button>
