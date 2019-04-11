@@ -73,7 +73,7 @@ const ProfileList = ({ users, teams, layout, hasLinks, glitchTeam }) => {
 };
 
 ProfileList.propTypes = {
-  layout: PropTypes.oneOf(['row', 'block', 'blockSpaced']).isRequired,
+  layout: PropTypes.oneOf(['row', 'block', 'spaced']),
   users: PropTypes.array,
   teams: PropTypes.array,
   glitchTeam: PropTypes.bool,
@@ -81,6 +81,7 @@ ProfileList.propTypes = {
 };
 
 ProfileList.defaultProps = {
+  layout: '
   users: [],
   teams: [],
   glitchTeam: false,
