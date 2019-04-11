@@ -59,18 +59,17 @@ const LoginPage = ({ provider, url }) => {
       }
 
       console.log('LOGGED IN', data.id);
-      this.props.setUser(data);
+      login(data);
 
-      this.setState({ done: true });
+      setDone(true);
       analytics.track('Signed In', { provider });
       notifyParent({ success: true, details: { provider } });
     } catch (error) {
-      this.setState({ error: true });
-
       const errorData = error && error.response && error.response.data;
       if (errorData && errorData.message) {
-        this.setState({ errorMessage: errorData.message });
+        setErrorMessage(errorData.message);
       }
+      setError(true);
 
       if (error && error.response && error.response.status !== 401) {
         console.error('Login error.', errorData);
@@ -80,49 +79,42 @@ const LoginPage = ({ provider, url }) => {
       notifyParent({ success: false, details });
     }
   }
+  React.useEffect(() => {
+    perform();
+  }, [provider, url]);
 
-  render() {
-    if (this.state.done) {
-      return <RedirectToDestination />;
-    }
-    if (this.state.error) {
-      const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
-      if (this.props.provider === 'Email') {
-        return <EmailErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription} />;
-      }
-      return <OauthErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription} />;
-    }
-    return <div className="content" />;
+  if (done) {
+    return <RedirectToDestination />;
   }
-}
-LoginPage.propTypes = {
-  api: PropTypes.any.isRequired,
-  url: PropTypes.string.isRequired,
-  provider: PropTypes.string.isRequired,
-  setUser: PropTypes.func.isRequired,
+  if (error) {
+    const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
+    if (provider === 'Email') {
+      return <EmailErrorPage title={`${provider} Login Problem`} description={errorMessage || genericDescription} />;
+    }
+    return <OauthErrorPage title={`${provider} Login Problem`} description={errorMessage || genericDescription} />;
+  }
+  return <div className="content" />;
 };
-
-const LoginPageContainer = (props) => {
-  const api = useAPI();
-  const { login } = useCurrentUser();
-  return <LoginPage setUser={login} api={api} {...props} />;
+LoginPage.propTypes = {
+  provider: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export const FacebookLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
   const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPageContainer {...props} provider="Facebook" url={url} />;
+  return <LoginPage {...props} provider="Facebook" url={url} />;
 };
 
 export const GitHubLoginPage = ({ code, ...props }) => {
   const url = `/auth/github/${code}`;
-  return <LoginPageContainer {...props} provider="GitHub" url={url} />;
+  return <LoginPage {...props} provider="GitHub" url={url} />;
 };
 
 export const GoogleLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/google`;
   const url = `/auth/google/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPageContainer {...props} provider="Google" url={url} />;
+  return <LoginPage {...props} provider="Google" url={url} />;
 };
 
 export const SlackLoginPage = ({ code, error, ...props }) => {
@@ -131,10 +123,10 @@ export const SlackLoginPage = ({ code, error, ...props }) => {
   }
   const callbackUrl = `${APP_URL}/login/slack`;
   const url = `/auth/slack/callback?code=${code}&callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPageContainer {...props} provider="Slack" url={url} />;
+  return <LoginPage {...props} provider="Slack" url={url} />;
 };
 
 export const EmailTokenLoginPage = ({ token, ...props }) => {
   const url = `/auth/email/${token}`;
-  return <LoginPageContainer {...props} provider="Email" url={url} />;
+  return <LoginPage {...props} provider="Email" url={url} />;
 };
