@@ -11,6 +11,7 @@ import AddTeamUserPop from '../pop-overs/add-team-user-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import PopoverContainer from '../pop-overs/popover-container';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
+import { UserLink } from './link';
 
 // Team Users list (in profile container)
 
@@ -177,12 +178,16 @@ export class AddTeamUser extends React.Component {
           const onClickToggle = useTrackedFunc(togglePopover, 'Add to Team clicked');
           return (
             <span className="add-user-container">
-              <span className="users">
-                {alreadyInvitedAndNewInvited.map(user => (
-                <span key={user.id}><UserAvatar user={user}/></span>
-              ))}
-              </span>
-              
+              <ul className="users">
+                {alreadyInvitedAndNewInvited.map((user) => (
+                  <li key={user.id}>
+                    <UserLink user={user} className="user">
+                      <UserAvatar user={user} />
+                    </UserLink>
+                  </li>
+                ))}
+              </ul>
+
               <button onClick={onClickToggle} className="button button-small button-tertiary add-user">
                 Add
               </button>
