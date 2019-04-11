@@ -89,7 +89,8 @@ storiesOf('Button', module)
       </Button>
     </div>
   ))
-  .add('icon', () => <Button icon label="Close">x</Button>);  
+  .add('icon', () => <Button icon label="Close">x</Button>)
+  .add('icon (link)', () => <Button href="http://butts.com" icon label="Butts"><span aria-hidden="true">( | )</span></Button>);
 
 storiesOf('Emoji', module)
   .add('standard', () => <Emoji name="herb" />)
