@@ -19,10 +19,12 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
+const hasOptions = (projectOptions) => Object.ketys
+
 const ProjectItem = ({ project, projectOptions, hasProfileLinks }) => (
   <div className={styles.container}>
     <header className={styles.header}>
-      <div className={styles.userListContainer}>
+      <div className={classnames(styles.userListContainer, {[styles.spaceForOptions]: hasOptions(projectOptions)})}>
         <ProfileList layout="row" hasLinks={hasProfileLinks} glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
       </div>
       <div className={styles.projectOptionsContainer}>

@@ -37,22 +37,23 @@ const useResizeObserver = () => {
   const ref = useRef();
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    const setWidthOfRef = debounce(() => {
+    const setWidthOfRef = () => {
       setWidth(ref.current.getBoundingClientRect().width);
-    }, 100);
+    }
+    const debouncedSetWidth = debounce(setWidthOfRef, 100);
     setWidthOfRef();
 
     if (window.ResizeObserver) {
-      const observer = new ResizeObserver(setWidthOfRef);
+      const observer = new ResizeObserver(debouncedSetWidth);
       observer.observe(ref.current);
 
       return () => {
         observer.unobserve(ref.current);
       };
     } else {
-      window.addEventListener('resize', setWidthOfRef);
+      window.addEventListener('resize', debouncedSetWidth);
       return () => {
-        window.removeEventListener('resize', setWidthOfRef);
+        window.removeEventListener('resize', debouncedSetWidth);
       }
     }    
   }, [ref, setWidth]);
@@ -67,7 +68,7 @@ const RowContainer = ({ items }) => {
 
   return (
     <ul ref={ref} className={getContainerClass('row')}>
-      {width ? items.slice(0, lastIndex) : items}
+      {items.slice(0, lastIndex)}
     </ul>
   );
 };
