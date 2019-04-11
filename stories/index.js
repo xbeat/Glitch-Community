@@ -7,6 +7,7 @@ import TooltipContainer from 'Components/tooltips/tooltip-container';
 import TextInput from 'Components/inputs/text-input';
 import TextArea from 'Components/inputs/text-area';
 import Image from 'Components/images/image';
+import MaskImage from 'Components/images/mask-image';
 import Text from 'Components/text/text';
 import Heading from 'Components/text/heading';
 import Markdown from 'Components/text/markdown';
@@ -14,12 +15,24 @@ import Badge from 'Components/badges/badge';
 import SegmentedButtons from 'Components/buttons/segmented-buttons';
 import ProjectItem from 'Components/project/project-item';
 import SmallCollectionItem from 'Components/collection/small-collection-item';
+import TeamItem from 'Components/team/team-item';
+import UserItem from 'Components/user/user-item';
+import SearchResultCoverBar from 'Components/blocks/search-result-cover-bar';
+import Thanks from 'Components/blocks/thanks';
+import Loader from 'Components/loaders/loader';
+import NotFound from 'Components/errors/not-found';
+import SearchResults from 'Components/search/search-results';
+import StarterKitResult from 'Components/search/starter-kit-result';
 import { Context as CurrentUserContext } from '../src/state/current-user';
 import { Context as APIContext } from '../src/state/api';
-
+import Embed from 'Components/project/embed';
+import ProjectEmbed from 'Components/project/project-embed';
+import FeaturedProject from 'Components/project/featured-project';
 
 // initialize globals
 window.CDN_URL = 'https://cdn.glitch.com';
+window.EDITOR_URL = 'https://glitch.com/edit/';
+window.APP_URL = 'https://glitch.com';
 
 const helloAlert = () => {
   alert('hello');
@@ -208,9 +221,25 @@ storiesOf('Segmented-Buttons', module)
 
 const users = {
   modernserf: {
+    isSupport: false,
+    isInfrastructureUser: false,
     id: 271885,
-    login: 'modernserf',
+    avatarUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-large.jpg',
     avatarThumbnailUrl: 'https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-avatar/560e4b07-a70b-4f87-b8d4-699d738792d0-small.jpg',
+    login: 'modernserf',
+    name: 'Justin Falcone',
+    location: 'Brooklyn, NY',
+    color: '#ea6996',
+    description:
+      'programmer & writer\n\n[🐦](https://twitter.com/modernserf) [🐙](https://github.com/modernserf) [🏠](https://justinfalcone.com) [☄](http://pronoun.is/they/.../themselves)',
+    hasCoverImage: true,
+    coverColor: 'rgb(84,138,53)',
+    thanksCount: 1,
+    utcOffset: -240,
+    featuredProjectId: '22a883dc-a45d-4257-b44c-a43b6b8cabe9',
+    createdAt: '2017-03-21T00:14:37.651Z',
+    updatedAt: '2019-04-03T13:34:21.147Z',
+    features: [],
   },
 };
 
@@ -252,11 +281,196 @@ storiesOf('SmallCollectionItem', module).add(
           name: 'Cool Projects',
           description: 'A collection of cool projects',
           coverColor: '#efe',
-          userId: 271885,
-          user: { id: 271885 },
-          teamId: -1,
+          user: users.modernserf,
+          projects: [{}],
         }}
       />
     </div>
   )),
 );
+
+storiesOf('UserItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <UserItem user={users.modernserf} />
+  </div>
+));
+
+storiesOf('TeamItem', module).add('base', () => (
+  <div style={{ margin: '2em', width: '25%' }}>
+    <TeamItem
+      team={{
+        id: 12345,
+        coverColor: '#efe',
+        description: 'An example team',
+        hasAvatarImage: false,
+        hasCoverImage: false,
+        isVerified: false,
+        name: ['Example Team'],
+        url: 'example-team',
+        users: [users.modernserf],
+      }}
+    />
+  </div>
+));
+
+storiesOf('SearchResultCoverBar', module)
+  .add('user', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <SearchResultCoverBar type="user" item={users.modernserf} size="medium" />
+    </div>
+  ))
+  .add('user without cover', () => (
+    <div style={{ margin: '2em', width: '25%' }}>
+      <SearchResultCoverBar type="user" item={{ id: 123, login: 'nobody' }} size="medium" />
+    </div>
+  ));
+
+storiesOf('Thanks', module).add('variations', () => (
+  <div>
+    <Thanks count={1} />
+    <Thanks count={2} />
+    <Thanks count={3} />
+    <Thanks count={3} short />
+  </div>
+));
+
+storiesOf('Loader', module).add('loader', () => <Loader />);
+
+storiesOf('NotFound', module).add('not found', () => <NotFound name="any results" />);
+
+storiesOf('SearchResults', module).add(
+  'results',
+  provideContext(
+    { currentUser: {}, api: mockAPI },
+    withState('all', ({ state, setState }) => (
+      <SearchResults
+        query="modernserf"
+        activeFilter={state}
+        setActiveFilter={setState}
+        searchResults={{
+          status: 'ready',
+          totalHits: 2,
+          topResults: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          team: [],
+          user: [{ ...users.modernserf, type: 'user', isExactMatch: true }],
+          project: [
+            {
+              type: 'project',
+              id: 'foo',
+              domain: 'modernserf-zebu',
+              description: 'a modernserf project that does zebu things',
+              private: false,
+              showAsGlitchTeam: false,
+              users: [users.modernserf],
+              teams: [],
+            },
+          ],
+          collection: [],
+        }}
+      />
+    )),
+  ),
+);
+
+storiesOf('MaskImage', module)
+  .add('random mask', () => <MaskImage src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />)
+  .add(
+    'select mask',
+    withState('mask1', ({ state, setState }) => (
+      <div>
+        <MaskImage maskClass={state} src="https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg" />
+        <select value={state} onChange={(e) => setState(e.target.value)}>
+          <option value="mask1">Mask 1</option>
+          <option value="mask2">Mask 2</option>
+          <option value="mask3">Mask 3</option>
+          <option value="mask4">Mask 4</option>
+        </select>
+      </div>
+    )),
+  );
+
+storiesOf('StarterKit', module).add('react', () => (
+  <StarterKitResult
+    result={{
+      id: 1,
+      type: 'starter-kit',
+      keywords: ['react'],
+      imageURL: 'https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg',
+      name: 'Build a Web App with React',
+      url: 'https://glitch.com/culture/react-starter-kit/',
+      description: 'A free, 5-part video course with interactive code examples that will help you learn React.',
+      coverColor: '#f0fcff',
+    }}
+  />
+));
+
+storiesOf('Embed', module).add('regular', () => <Embed domain="community-staging" />);
+
+const TopLeft = <h2>This project is bananas</h2>;
+const TopRight = <button>I am on top</button>;
+const BottomRight = (
+  <>
+    <button>one</button>
+    <button>two</button>
+  </>
+);
+const BottomLeft = <button>Everything you own in a box to the left</button>;
+const addProjectToCollection = () => {};
+
+storiesOf('ProjectEmbed', module)
+  .add(
+    'does not own project, not logged in',
+    provideContext({ currentUser: {} }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: null }}
+        addProjectToCollection={addProjectToCollection}
+      />
+    )),
+  )
+  .add(
+    'does not own project, is logged in',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <ProjectEmbed
+        project={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+      />
+    )),
+  )
+  .add('owns project, is logged in', () => (
+    <ProjectEmbed
+      project={{ id: '123', domain: 'community-staging' }}
+      isAuthorized={true}
+      currentUser={{ login: '@sarahzinger' }}
+      addProjectToCollection={addProjectToCollection}
+    />
+  ));
+
+const unfeatureProject = () => {};
+
+storiesOf('FeaturedProject', module)
+  .add(
+    'owns featured project',
+    provideContext({ currentUser: {} }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={true}
+        currentUser={{ login: '@sarahzinger' }}
+        addProjectToCollection={addProjectToCollection}
+        unfeatureProject={unfeatureProject}
+      />
+    )),
+  )
+  .add(
+    'does not own featured project',
+    provideContext({ currentUser: { login: '@sarahzinger' } }, () => (
+      <FeaturedProject
+        featuredProject={{ id: '123', domain: 'community-staging' }}
+        isAuthorized={false}
+        currentUser={{ login: '@sarahzinger' }}
+      />
+    )),
+  );

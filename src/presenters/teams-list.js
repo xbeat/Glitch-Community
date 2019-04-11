@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { TeamAvatar } from 'Components/images/avatar';
 import { TeamLink } from './includes/link';
-import { TeamAvatar } from './includes/avatar';
 
 export const TeamTile = ({ team }) => (
   <TeamLink team={team} className="user">

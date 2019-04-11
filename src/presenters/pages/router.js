@@ -8,16 +8,16 @@ import rootTeams from '../../curated/teams';
 import { useCurrentUser } from '../../state/current-user';
 
 import IndexPage from './index';
-import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, EmailTokenLoginPage } from './login';
+import { FacebookLoginPage, GitHubLoginPage, GoogleLoginPage, SlackLoginPage, EmailTokenLoginPage } from './login';
 import JoinTeamPage from './join-team';
 import QuestionsPage from './questions';
 import ProjectPage from './project';
 import { TeamPage, UserPage, TeamOrUserPage } from './team-or-user';
-import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
 import OauthSignIn from './sign-in';
+import SearchPage from './search';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */
@@ -84,6 +84,11 @@ const Router = () => (
         render={({ location }) => <GoogleLoginPage key={location.key} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')} />}
       />
       <Route
+        path="/login/slack"
+        exact
+        render={({ location }) => <SlackLoginPage key={location.key} code={parse(location.search, 'code')} error={parse(location.search, 'error')} hash={parse(location.search, 'hash')} />}
+      />
+      <Route
         path="/login/email"
         exact
         render={({ location }) => (
@@ -122,7 +127,14 @@ const Router = () => (
         <Route key={name} path={`/${name}`} exact render={({ location }) => <TeamPage key={location.key} id={rootTeams[name]} name={name} />} />
       ))}
 
-      <Route path="/search" exact render={({ location }) => <SearchPage key={location.key} query={parse(location.search, 'q')} />} />
+      <Route
+        path="/search"
+        exact
+        render={({ location }) => {
+          const query = parse(location.search, 'q');
+          return <SearchPage key={query} query={query} activeFilter={parse(location.search, 'activeFilter')} />;
+        }}
+      />
 
       {categories.map((category) => (
         <Route

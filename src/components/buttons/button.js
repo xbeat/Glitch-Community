@@ -14,7 +14,7 @@ export const SIZES = ['small'];
  * Button Component
  */
 
-const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active, decorative, ...props }) => {
+const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, children, active, decorative }) => {
   const className = cx({
     btn: true,
     cta: type === 'cta',
@@ -32,7 +32,7 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
 
   if (href) {
     return (
-      <Link to={href} className={className} {...props}>
+      <Link to={href} onClick={onClick} className={className}>
         {children}
       </Link>
     );
@@ -40,14 +40,14 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
 
   if (decorative) {
     return (
-      <button className={className} disabled={disabled} tabIndex={-1} {...props}>
+      <button className={className} disabled={disabled} tabIndex={-1}>
         {children}
       </button>
     );
   }
 
   return (
-    <button onClick={onClick} className={className} disabled={disabled} {...props}>
+    <button onClick={onClick} className={className} disabled={disabled}>
       {children}
     </button>
   );

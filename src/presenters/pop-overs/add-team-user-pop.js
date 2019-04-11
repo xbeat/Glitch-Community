@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import { parseOneAddress } from 'email-addresses';
-import { captureException } from '../../utils/sentry';
 
+import Loader from 'Components/loaders/loader';
+import { captureException } from '../../utils/sentry';
 import useDevToggle from '../includes/dev-toggles';
-import { Loader } from '../includes/loader';
 import UserResultItem, { InviteByEmail, WhitelistEmailDomain } from '../includes/user-result-item';
 
 import { useAPI } from '../../state/api';

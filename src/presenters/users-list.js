@@ -1,30 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Avatar, UserAvatar, TeamAvatar } from 'Components/images/avatar';
 import { UserLink, TeamLink } from './includes/link';
-import { Avatar, UserAvatar, TeamAvatar } from './includes/avatar';
-
-// StaticUsersList
-
-export const StaticUsersList = ({ users, extraClass }) => (
-  <ul className={`users ${extraClass}`}>
-    {users.map((user) => (
-      <li key={user.id}>
-        <span className="user">
-          <UserAvatar user={user} />
-        </span>
-      </li>
-    ))}
-  </ul>
-);
-StaticUsersList.propTypes = {
-  users: PropTypes.array.isRequired,
-  extraClass: PropTypes.string,
-};
-
-StaticUsersList.defaultProps = {
-  extraClass: '',
-};
 
 // UserTile
 

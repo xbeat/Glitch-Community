@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TrackedExternalLink } from '../analytics';
-import { Loader } from '../includes/loader';
+import Loader from 'Components/loaders/loader';
+import { TrackedExternalLink } from '../segment-analytics';
 import ProjectAvatar from '../includes/project-avatar';
 import PopoverWithButton from './popover-with-button';
 

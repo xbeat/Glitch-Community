@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import NotFound from 'Components/errors/not-found';
 import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 import { useAPI } from '../../state/api';
-
 import { DataLoader } from '../includes/loader';
-import NotFound from '../includes/not-found';
 
 import Layout from '../layout';
 import TeamPage from './team';
