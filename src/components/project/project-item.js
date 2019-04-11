@@ -19,7 +19,7 @@ const getLinkBodyStyles = (project) =>
     [styles.private]: project.private,
   });
 
-const hasOptions = (projectOptions) => Object.ketys
+const hasOptions = (projectOptions) => Object.keys(projectOptions).length > 0
 
 const ProjectItem = ({ project, projectOptions, hasProfileLinks }) => (
   <div className={styles.container}>
