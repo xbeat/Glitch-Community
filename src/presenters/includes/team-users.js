@@ -177,7 +177,7 @@ export class AddTeamUser extends React.Component {
           const onClickToggle = useTrackedFunc(togglePopover, 'Add to Team clicked');
           return (
             <span className="add-user-container">
-              {alreadyInvitedAndNewInvited.length > 0 && <ProfilesList hasLinks layout="block" users={alreadyInvitedAndNewInvited} />}
+              {alreadyInvitedAndNewInvited.length > 0 && <ProfileList hasLinks layout="block" users={alreadyInvitedAndNewInvited} />}
               <button onClick={onClickToggle} className="button button-small button-tertiary add-user">
                 Add
               </button>

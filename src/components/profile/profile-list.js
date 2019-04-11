@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Avatar, UserAvatar, TeamAvatar } from 'Components/images/avatar';
@@ -28,11 +28,37 @@ const TeamItem = ({ team, hasLinks }) =>
   );
 
 const useResizeObserver = () => {
-  const ref = useRef()
-  useEffect
-})
+  const ref = useRef();
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const setWidthOfRef = () => {
+      setWidth(ref.current.getBoundingClientRect().width);
+    };
+    setWidthOfRef();
 
-const RowContainer = ({ layout, items }) => {};
+    if (!window.ResizeObserver) {
+      return undefined;
+    }
+    const observer = new ResizeObserver(setWidthOfRef);
+    observer.observe(ref.current);
+
+    return () => {
+      observer.unobserve(ref.current);
+    };
+  }, [ref, setWidth]);
+  return { ref, width };
+};
+
+const RowContainer = ({ items }) => {
+  const { ref, width } = useResizeObserver();
+  console.log('containerWidth:', width);
+
+  return (
+    <ul ref={ref} className={getContainerClass('row')}>
+      {width ? items.slice(0, width / 32) : items}
+    </ul>
+  );
+};
 
 const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => {
   const items = [
@@ -48,9 +74,9 @@ const PopulatedProfileList = ({ users, teams, layout, hasLinks }) => {
     )),
   ];
 
-  // if (layout === "row") {
-  //   return <RowContainer items={items} />
-  // }
+  if (layout === 'row') {
+    return <RowContainer items={items} />;
+  }
 
   return <ul className={getContainerClass(layout)}>{items}</ul>;
 };
@@ -107,4 +133,3 @@ ProfileList.defaultProps = {
 };
 
 export default ProfileList;
-(

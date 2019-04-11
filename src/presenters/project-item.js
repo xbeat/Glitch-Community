@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Markdown from 'Components/text/markdown';
 import Image from 'Components/images/image';
+import ProfileList from 'Components/profile/profile-list';
 import { getAvatarUrl, getLink } from '../models/project';
 import { ProjectLink } from './includes/link';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
-import ProfileList from 'Components/profile/profile-list';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
