@@ -15,7 +15,6 @@ import { getSingleItem, getFromApi, joinIdsToQueryString } from '../../shared/ap
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import { TeamTile } from './teams-list';
 
 import { useAPI } from '../state/api';
 
