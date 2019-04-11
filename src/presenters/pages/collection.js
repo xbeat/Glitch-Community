@@ -104,7 +104,6 @@ const CollectionPageContents = ({
             <div className="collection-owner">
               <ProfileItem hasLink team={collection.team} user={collection.user} />
             </div>
-            
 
             <div className="collection-description">
               <AuthDescription

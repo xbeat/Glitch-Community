@@ -7,7 +7,7 @@ import Image from 'Components/images/image';
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
 import { Thanks } from './includes/thanks';
-import UsersList from './users-list';
+import ProfileList from 'Components/';
 import WrappingLink from './includes/wrapping-link';
 import { VerifiedBadge } from './includes/team-elements';
 
