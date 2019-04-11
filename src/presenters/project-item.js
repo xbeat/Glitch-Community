@@ -10,6 +10,8 @@ import ProjectOptionsPop from './pop-overs/project-options-pop';
 import Note from './note';
 import WrappingLink from './includes/wrapping-link';
 
+const hasOptions = (projectOptions) => Object.keys(projectOptions).length > 0;
+
 const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props }) => (
   <>
     <Note
@@ -18,7 +20,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
       update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
       hideNote={props.hideNote}
     />
-    <div className={`project-profile-list-wrap`}>
+    <div className={`project-profile-list-wrap ${hasOptions(props.propjectOptions) ? 'project--has-options' : ''}`}>
       <ProfileList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
     </div>
     <ProjectOptionsPop project={project} {...props} />

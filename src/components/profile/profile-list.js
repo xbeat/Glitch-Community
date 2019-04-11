@@ -65,10 +65,9 @@ const RowContainer = ({ users, teams, hasLinks }) => {
   const avatarWidth = 32;
   const userOffset = -7;
   const teamOffset = 7;
-  const maxTeams = Math.floor((width + teamOffset) / (avatarWidth + teamOffset));
-  const remainingWidth = width - (avatarWidth + teamOffset) * teams.length + teamOffset;
-  const maxUsers = Math.floor((remainingWidth + teamOffset) / (avatarWidth + teamOffset));
-  console.log({ width, maxTeams, remainingWidth, maxUsers })
+  const maxTeams = Math.floor(width / (avatarWidth + teamOffset));
+  const remainingWidth = width - (avatarWidth + teamOffset) * teams.length - teamOffset;
+  const maxUsers = Math.floor((remainingWidth + userOffset) / (avatarWidth + userOffset));
 
   return (
     <ul ref={ref} className={classnames(styles.container, styles.row)}>
