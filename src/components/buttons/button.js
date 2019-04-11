@@ -7,7 +7,7 @@ import { Link } from '../../presenters/includes/link';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown', 'icon'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone', 'dropDown'];
 export const SIZES = ['small'];
 
 /**
@@ -37,9 +37,10 @@ const Button = ({ onClick, href, disabled, type, size, matchBackground, hover, c
     );
   }
 
+  // 
   if (decorative) {
     return (
-      <button className={className} disabled={disabled} tabIndex={-1}>
+      <button className={className} disabled={disabled} tabIndex={-1} aria-label={label}>
         {children}
       </button>
     );
@@ -76,7 +77,7 @@ Button.propTypes = {
     }
     return null;
   },
-  /** a label that describes the onClick action, only use if the button is an icon button with no meaningful text label */
+  /** a label that describes the button, only use if the button is an icon button with no meaningful text label */
   label: (props, propName, componentName) => {
     if (props.label && !props.icon) {
       return new Error(`prop 'icon' was not specified in '${componentName}'.`);
