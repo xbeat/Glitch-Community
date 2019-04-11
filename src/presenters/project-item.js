@@ -18,7 +18,7 @@ const ProjectItem = ({ project, collection, hideProjectDescriptions, ...props })
       update={props.projectOptions.updateOrAddNote ? (note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id }) : null}
       hideNote={props.hideNote}
     />
-    <div className="project-profile-list-wrap">
+    <div className={`project-profile-list-wrap`}>
       <ProfileList layout="row" glitchTeam={project.showAsGlitchTeam} users={project.users} teams={project.teams} />
     </div>
     <ProjectOptionsPop project={project} {...props} />
