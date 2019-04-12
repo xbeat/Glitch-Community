@@ -38,11 +38,28 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
+const useTeamUsers = createAPIHook(async (api, teamID) => {
+  const { data } = await api.get(`/v1/teams/by/id/users?id=${teamID}`)
+  return data
+})
+
+function TeamWithDataLoading({ team }) {
+  const { data: users } = useTeamUsers(team.id)
+  return <TeamItem team={{...team, users }} />
+}
+
+const TeamResult = ({ result }) => {
+  if (!result.users) {
+    return <TeamWithDataLoading team={result} />
+  }
+  return <TeamItem team={result} />
+}
+
 // Project and collection search results (from algolia) do not contain their associated users,
 // so those need to be fetched after the search results have loaded.
 const useUsers = createAPIHook(async (api, userIDs) => {
   if (!userIDs.length) {
-    return [];
+    return undefined;
   }
   const idString = userIDs.map((id) => `id=${id}`).join('&');
 
@@ -52,16 +69,13 @@ const useUsers = createAPIHook(async (api, userIDs) => {
 
 const useTeams = createAPIHook(async (api, teamIDs) => {
   if (!teamIDs.length) {
-    return [];
+    return undefined;
   }
   const idString = teamIDs.map((id) => `id=${id}`).join('&');
 
   const { data } = await api.get(`/v1/teams/by/id/?${idString}`);
   return Object.values(data);
 });
-
-
-
 
 function ProjectWithDataLoading({ project, ...props }) {
   const { value: users } = useUsers(project.userIDs);
@@ -108,7 +122,7 @@ const groups = [
 ];
 
 const resultComponents = {
-  team: ({ result }) => <TeamItem team={result} />,
+  team: TeamResult,
   user: ({ result }) => <UserItem user={result} />,
   project: ProjectResult,
   collection: CollectionResult,
