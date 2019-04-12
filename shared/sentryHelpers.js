@@ -2,7 +2,7 @@ const onProductionSite = (projectDomain, apiEnvironment) =>
   (projectDomain === 'community' || projectDomain === 'community-staging') && apiEnvironment === 'production';
 
 const filterSecrets = function(jsonEvent) {
-  const tokens = ['facebookToken', 'gitAccessToken', 'githubToken', 'inviteToken', 'persistentToken'];
+  const tokens = ['facebookToken', 'gitAccessToken', 'githubToken', 'googleToken', 'email', 'inviteToken', 'persistentToken', 'slackToken'];
   tokens.forEach((token) => {
     const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
     jsonEvent = jsonEvent.replace(regexp, `"${token}":"****"`);
