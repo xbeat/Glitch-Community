@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
 
-import { OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage } from './field-helpers';
+import useOptimisticValue from 'Components/fields/use-optimistic-value';
+import { TrimmedValue, FieldErrorIcon, FieldErrorMessage } from './field-helpers';
 
 class PureEditableFieldHolder extends React.Component {
   constructor(props) {
@@ -131,15 +132,14 @@ PureEditableField.defaultProps = {
   inputType: 'text',
 };
 
-const EditableField = ({ value, update, ...props }) => (
-  <OptimisticValue value={value} update={update} resetOnError={false}>
-    {({ optimisticValue, optimisticUpdate, error }) => (
-      <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
-        {(valueProps) => <PureEditableField {...props} {...valueProps} error={error} />}
-      </TrimmedValue>
-    )}
-  </OptimisticValue>
-);
+const EditableField = ({ value, update, ...props }) => {
+  const [optimisticValue, error, optimisticUpdate] = useOptimisticValue(value, update);
+  return (
+    <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
+      {(valueProps) => <PureEditableField {...props} {...valueProps} error={error} />}
+    </TrimmedValue>
+  );
+};
 EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
