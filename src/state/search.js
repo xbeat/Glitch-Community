@@ -125,17 +125,17 @@ const formatAlgoliaResult = (type) => ({ hits }) =>
 const algoliaProvider = {
   ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 100 }).then(formatAlgoliaResult(type))),
   project: (query, { notSafeForKids }) =>
-    searchIndices.project.search({ 
-      query, 
-      hitsPerPage: 100, 
-      facetFilters: [
-        notSafeForKids ? '' : `notSafeForKids:false`
-      ] 
-    }).then(formatAlgoliaResult('project')),
+    searchIndices.project
+      .search({
+        query,
+        hitsPerPage: 100,
+        facetFilters: [notSafeForKids ? '' : `notSafeForKids:false`],
+      })
+      .then(formatAlgoliaResult('project')),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
 };
 
-const defaultParams = { notSafeForKids: false }
+const defaultParams = { notSafeForKids: false };
 
 export function useAlgoliaSearch(query, params = defaultParams) {
   return useSearchProvider(algoliaProvider, query, params);
