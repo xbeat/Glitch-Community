@@ -61,7 +61,7 @@ PureEditableWrappingField.defaultProps = {
 
 export const EditableWrappingField = ({ value, update, ...props }) => {
   const [optimisticValue, error, optimisticUpdate] = useOptimisticText(value, update);
-  return <PureEditableWrappingField value={optimisticValue} update={optimisticUpdate} error={error} />;
+  return <PureEditableWrappingField value={optimisticValue} update={optimisticUpdate} error={error} {...props} />;
 };
 EditableWrappingField.propTypes = {
   value: PropTypes.string.isRequired,
