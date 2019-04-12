@@ -2,30 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { kebabCase } from 'lodash';
 
-import useOptimisticText from 'Components/fields/use-optimistic-value';
-import { TrimmedValue } from './field-helpers';
+import useOptimisticText from 'Components/fields/use-optimistic-text';
 import { PureEditableWrappingField } from './editable-wrapping-field';
 
 // This recreates EditableField but useOptimisticValue tracks both the name and url
 // That way the url preview updates in real time as you type into the name field
 
-const EditCollectionNameAndUrl = ({ name, url, update, isAuthorized }) => {
+const EditCollectionNameAndUrl = ({ name, update, isAuthorized }) => {
   const placeholder = 'Name your collection';
   const updateWithUrl = (name) => update({ name: name, url: kebabCase(name) })
-  const [optimisticValue, error, optimisticUpdate] = useOptimisticText({ name, url }, updateWithUrl);
+  const [optimisticValue, error, optimisticUpdate] = useOptimisticText(name, updateWithUrl);
+  
   return (
-    <TrimmedValue value={optimisticValue.name} update={(newName) => optimisticUpdate({ name: newName, url: kebabCase(newName) })}>
-      {({ value: trimmedValue, update: trimmedUpdate }) => (
-        <h1 className="collection-name">
-          {isAuthorized ? <PureEditableWrappingField value={trimmedValue} update={trimmedUpdate} placeholder={placeholder} error={error} /> : name}
-        </h1>
-      )}
-    </TrimmedValue>
+    <h1 className="collection-name">
+      {isAuthorized ? <PureEditableWrappingField value={optimisticValue} update={optimisticUpdate} placeholder={placeholder} error={error} /> : name}
+    </h1>
   );
 };
 EditCollectionNameAndUrl.propTypes = {
   name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
