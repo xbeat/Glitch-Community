@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 
 import Markdown from 'Components/text/markdown';
-import { OptimisticValue } from './field-helpers';
+import useOptimisticValue from 'Components/fields/use-optimistic-value';
 
 function EditableDescriptionImpl({ description, placeholder, maxLength, allowImages, maxRows, update, onBlur: outerOnBlur }) {
   const [focused, setFocused] = useState(false);
@@ -64,21 +64,21 @@ EditableDescriptionImpl.defaultProps = {
   maxLength: 524288, // this is the built in default
 };
 
-const EditableDescription = ({ description, placeholder, update, onBlur, maxLength, allowImages, maxRows }) => (
-  <OptimisticValue value={description} update={update}>
-    {({ optimisticValue, optimisticUpdate }) => (
-      <EditableDescriptionImpl
-        description={optimisticValue}
-        update={optimisticUpdate}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        maxLength={maxLength}
-        allowImages={allowImages}
-        maxRows={maxRows}
-      />
-    )}
-  </OptimisticValue>
-);
+const EditableDescription = ({ description, placeholder, update, onBlur, maxLength, allowImages, maxRows }) => {
+  const [optimisticValue, , optimisticUpdate] = useOptimisticValue(description, update);
+  return (
+    <EditableDescriptionImpl
+      description={optimisticValue}
+      update={optimisticUpdate}
+      onBlur={onBlur}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      allowImages={allowImages}
+      maxRows={maxRows}
+    />
+  );
+};
+
 EditableDescription.propTypes = {
   allowImages: PropTypes.bool,
   description: PropTypes.string.isRequired,
