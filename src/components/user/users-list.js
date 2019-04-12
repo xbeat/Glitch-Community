@@ -34,12 +34,13 @@ export const StaticUsersList = ({ users, teams, layout }) => {
 };
 
 StaticUsersList.propTypes = {
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
   teams: PropTypes.array,
   layout: PropTypes.oneOf(['row', 'block']).isRequired,
 };
 
 StaticUsersList.defaultProps = {
+  users: [],
   teams: [],
 };
 
