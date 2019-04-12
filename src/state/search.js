@@ -129,7 +129,7 @@ const algoliaProvider = {
       .search({
         query,
         hitsPerPage: 100,
-        facetFilters: [notSafeForKids ? '' : `notSafeForKids:false`],
+        facetFilters: [notSafeForKids ? "" : `notSafeForKids:false`],
       })
       .then(formatAlgoliaResult('project')),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
