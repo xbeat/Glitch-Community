@@ -124,6 +124,8 @@ const formatAlgoliaResult = (type) => ({ hits }) =>
 
 const algoliaProvider = {
   ...mapValues(searchIndices, (index, type) => (query) => index.search({ query, hitsPerPage: 100 }).then(formatAlgoliaResult(type))),
+  project: (query) =>
+    searchIndices.project.search({ query, hitsPerPage: 100, facetFilters: ['notSafeForKids:false'] }).then(formatAlgoliaResult('project')),
   starterKit: (query) => Promise.resolve(findStarterKits(query)),
 };
 
