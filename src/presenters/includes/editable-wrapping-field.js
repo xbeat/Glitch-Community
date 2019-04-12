@@ -5,7 +5,16 @@ import { uniqueId } from 'lodash';
 import classNames from 'classnames';
 
 import useOptimisticText from 'Components/fields/use-optimistic-text';
-import { FieldErrorMessage } from './field-helpers';
+import InputErrorIcon from 'Components/inputs/input-error-icon';
+
+const FieldErrorMessage = ({ error }) => (
+  <span className="editable-field-error-message">
+    <span className="editable-field-error-icon">
+      <InputErrorIcon />
+    </span>
+    {error}
+  </span>
+);
 
 function useUniqueId(prefix) {
   const ref = useRef(uniqueId(prefix));
