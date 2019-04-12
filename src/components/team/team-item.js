@@ -33,9 +33,7 @@ const TeamItem = ({ team }) => (
         <div className={styles.usersList}>
           <UsersList avatarsOnly users={team.users} layout="block" />
         </div>
-        <div className={styles.descriptionWrap}>
-          <Markdown length={96}>{team.description || ' '}</Markdown>
-        </div>
+        <Markdown length={96}>{team.description || ' '}</Markdown>
         <Thanks count={getTeamThanksCount(team)} />
       </div>
     </div>

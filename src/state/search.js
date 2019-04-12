@@ -89,7 +89,7 @@ const formatByType = {
     thanksCount: user.thanks,
   }),
   team: (team) => ({
-  isVerified: false,
+    isVerified: false,
     ...team,
     id: Number(team.objectID.replace('team-', '')),
   }),
