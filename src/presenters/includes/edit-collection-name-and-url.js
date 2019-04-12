@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { kebabCase } from 'lodash';
 
-import useOptimisticValue from 'Components/fields/use-optimistic-value';
+import useOptimisticText from 'Components/fields/use-optimistic-value';
 import { TrimmedValue } from './field-helpers';
 import { PureEditableWrappingField } from './editable-wrapping-field';
 
@@ -11,7 +11,8 @@ import { PureEditableWrappingField } from './editable-wrapping-field';
 
 const EditCollectionNameAndUrl = ({ name, url, update, isAuthorized }) => {
   const placeholder = 'Name your collection';
-  const [optimisticValue, error, optimisticUpdate] = useOptimisticValue({ name, url }, update);
+  const updateWithUrl = (name) => update({ name: name, url: kebabCase(name) })
+  const [optimisticValue, error, optimisticUpdate] = useOptimisticText({ name, url }, updateWithUrl);
   return (
     <TrimmedValue value={optimisticValue.name} update={(newName) => optimisticUpdate({ name: newName, url: kebabCase(newName) })}>
       {({ value: trimmedValue, update: trimmedUpdate }) => (

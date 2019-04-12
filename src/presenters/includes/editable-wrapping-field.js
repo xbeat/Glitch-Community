@@ -4,8 +4,8 @@ import TextArea from 'react-textarea-autosize';
 import { uniqueId } from 'lodash';
 import classNames from 'classnames';
 
-import useOptimisticValue from 'Components/fields/use-optimistic-value';
-import { TrimmedValue, FieldErrorMessage } from './field-helpers';
+import useOptimisticText from 'Components/fields/use-optimistic-text';
+import { FieldErrorMessage } from './field-helpers';
 
 function useUniqueId(prefix) {
   const ref = useRef(uniqueId(prefix));
@@ -51,15 +51,9 @@ PureEditableWrappingField.defaultProps = {
 };
 
 export const EditableWrappingField = ({ value, update, ...props }) => {
-  const [optimisticValue, error, optimisticUpdate] = useOptimisticValue(value, update)
-  <OptimisticValue value={value} update={update} resetOnError={false}>
-    {({  }) => (
-      <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
-        {(valueProps) => <PureEditableWrappingField {...props} {...valueProps} error={error} />}
-      </TrimmedValue>
-    )}
-  </OptimisticValue>
-);
+  const [optimisticValue, error, optimisticUpdate] = useOptimisticText(value, update);
+  return <PureEditableWrappingField value={optimisticValue} update={optimisticUpdate} error={error} />;
+};
 EditableWrappingField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
@@ -71,4 +65,3 @@ EditableWrappingField.defaultProps = {
 };
 
 export default EditableWrappingField;
-
