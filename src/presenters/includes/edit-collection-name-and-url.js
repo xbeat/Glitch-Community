@@ -10,9 +10,9 @@ import { PureEditableWrappingField } from './editable-wrapping-field';
 
 const EditCollectionNameAndUrl = ({ name, update, isAuthorized }) => {
   const placeholder = 'Name your collection';
-  const updateWithUrl = (name) => update({ name: name, url: kebabCase(name) })
+  const updateWithUrl = (name) => update({ name: name, url: kebabCase(name) });
   const [optimisticValue, error, optimisticUpdate] = useOptimisticText(name, updateWithUrl);
-  
+
   return (
     <h1 className="collection-name">
       {isAuthorized ? <PureEditableWrappingField value={optimisticValue} update={optimisticUpdate} placeholder={placeholder} error={error} /> : name}
