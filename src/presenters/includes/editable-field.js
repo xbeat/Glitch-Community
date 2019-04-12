@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
 
 import useOptimisticText from 'Components/fields/use-optimistic-text';
-import { FieldErrorIcon, FieldErrorMessage } from './field-helpers';
+import InputErrorIcon from 'Components/inputs/input-error-icon';
 
 class PureEditableFieldHolder extends React.Component {
   constructor(props) {
@@ -38,9 +38,13 @@ class PureEditableFieldHolder extends React.Component {
       type: this.props.inputType,
     };
 
-    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon />;
+    const maybeErrorIcon = !!this.props.error && (
+      <span className="editable-field-error-icon">
+        <InputErrorIcon />
+      </span>
+    );
 
-    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error} hideIcon />;
+    const maybeErrorMessage = !!this.props.error && <span className="editable-field-error-message">{this.props.error}</span>;
 
     const maybePrefix = !!this.props.prefix && <span className={`content-editable-affix ${classes}`}>{this.props.prefix}</span>;
 
