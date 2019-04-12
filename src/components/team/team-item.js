@@ -33,7 +33,9 @@ const TeamItem = ({ team }) => (
         <div className={styles.usersList}>
           <UsersList avatarsOnly users={team.users} layout="block" />
         </div>
-        <Markdown length={96}>{team.description || ' '}</Markdown>
+        <div className={styles.descriptionWrap}>
+          <Markdown length={96}>{team.description || ' '}</Markdown>
+        </div>
         <Thanks count={getTeamThanksCount(team)} />
       </div>
     </div>
@@ -45,7 +47,7 @@ TeamItem.propTypes = {
     description: PropTypes.string.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
-    users: PropTypes.array.isRequired,
+    users: PropTypes.array,
     url: PropTypes.string.isRequired,
   }).isRequired,
 };

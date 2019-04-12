@@ -38,25 +38,25 @@ const FilterContainer = ({ filters, activeFilter, setFilter, query }) => {
   );
 };
 
+// Search results from algolia do not contain their associated users or teams,
+// so those need to be fetched after the search results have loaded.
 const useTeamUsers = createAPIHook(async (api, teamID) => {
-  const { data } = await api.get(`/v1/teams/by/id/users?id=${teamID}`)
-  return data
-})
+  const res = await api.get(`/v1/teams/by/id/users?id=${teamID}`);
+  return res.data.items;
+});
 
 function TeamWithDataLoading({ team }) {
-  const { data: users } = useTeamUsers(team.id)
-  return <TeamItem team={{...team, users }} />
+  const { value: users } = useTeamUsers(team.id);
+  return <TeamItem team={{ ...team, users }} />;
 }
 
 const TeamResult = ({ result }) => {
   if (!result.users) {
-    return <TeamWithDataLoading team={result} />
+    return <TeamWithDataLoading team={result} />;
   }
-  return <TeamItem team={result} />
-}
+  return <TeamItem team={result} />;
+};
 
-// Project and collection search results (from algolia) do not contain their associated users,
-// so those need to be fetched after the search results have loaded.
 const useUsers = createAPIHook(async (api, userIDs) => {
   if (!userIDs.length) {
     return undefined;
